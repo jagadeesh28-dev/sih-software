@@ -1,0 +1,13 @@
+{
+  "picp_coverage": 0.8715083798882681,
+  "picp_pct": 87.15083798882681,
+  "target_coverage": 0.9,
+  "coverage_error": -0.028491620111731897,
+  "mpiw_interval_width": 56.35473298393098,
+  "mpiw": 56.35473298393098,
+  "nmpiw_normalized_width": 0.11427675873753318,
+  "pinball_loss_q05": 1.658297698216778,
+  "pinball_loss_q50": 3.338334340043396,
+  "pinball_loss_q95": 1.7620239026623665,
+  "mean_pinball_loss": 2.2528853136408467
+}

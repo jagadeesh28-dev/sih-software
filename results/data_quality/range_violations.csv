@@ -1,0 +1,5 @@
+row_index,column,value,min_allowed,max_allowed,severity
+10,latitude,95.5,-90.0,90.0,INVALID
+11,longitude,-195.0,-180.0,180.0,INVALID
+25,fuel_mass_flow_kg_h,-120.0,0.0,8000.0,INVALID
+26,wave_height_m,-2.5,0.0,20.0,INVALID

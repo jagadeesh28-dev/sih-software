@@ -1,0 +1,5 @@
+{
+  "mean_holdout_ml_mae": 45.948912320708864,
+  "mean_holdout_hybrid_mae": 176.934019321076,
+  "mean_holdout_physics_mae": 448.7861574275773
+}

@@ -1,0 +1,3 @@
+category_column,category,sample_count,mae,rmse,mean_bias
+vessel_type,container_feeder,120,20.386996827192384,30.875473021693686,1.4994884686450107
+vessel_type,bulk_handymax,59,23.447443357024184,30.425296033598997,7.674115938657094

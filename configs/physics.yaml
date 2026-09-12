@@ -1,0 +1,66 @@
+# Physics Configuration & Hydrodynamic Constants
+# Units: SI (m, s, kg, N, W, Pa, rad) unless explicitly noted.
+
+environment:
+  gravity: 9.80665              # m/s^2, Standard gravitational acceleration (ISO 80000-3)
+  seawater_density: 1025.0       # kg/m^3, Standard seawater density (ITTC 2011)
+  seawater_viscosity: 1.188e-6   # m^2/s, Kinematic viscosity at 15 deg C (ITTC 2011)
+  air_density: 1.225             # kg/m^3, Standard air density at 15 deg C, 101.325 kPa
+
+hydrodynamics:
+  friction_line: "ITTC-1957"
+  # Cf = 0.075 / (log10(Re) - 2)^2
+  form_factor_method: "holtrop_mennen_1982"
+  wave_resistance_method: "holtrop_mennen_1982"
+  appendage_resistance: true
+  bulbous_bow_correction: true
+  transom_immersion_correction: true
+
+added_resistance_waves:
+  method: "stawave_2"           # ITTC Recommended Procedure 7.5-02-07-02.2
+  valid_wave_length_ratio:
+    min: 0.5
+    max: 2.0
+  bow_reflection_coefficient: 0.65
+
+wind_resistance:
+  method: "blendermann_1994"     # Empirical wind resistance coefficient dataset
+  transverse_drag_coefficient: 0.85
+  longitudinal_drag_coefficient: 0.70
+
+propulsion:
+  propeller_open_water_efficiency_nominal: 0.68  # eta_0
+  hull_efficiency_nominal: 1.05                  # eta_H = (1 - t) / (1 - w)
+  relative_rotative_efficiency_nominal: 1.00     # eta_R
+  shaft_transmission_efficiency: 0.98            # eta_S
+  # Overall quasi-propulsive efficiency: eta_D = eta_0 * eta_H * eta_R
+
+engine:
+  type: "two_stroke_low_speed_diesel"
+  nominal_mcr_kw: 15000.0        # kW, Maximum Continuous Rating
+  nominal_sfc_g_kwh: 165.0       # g/kWh, Specific Fuel Oil Consumption at 75-85% MCR (ISO conditions)
+  minimum_load_ratio: 0.15       # Minimum safe engine operating point
+  auxiliary_power_baseline_kw: 450.0  # Hotel and auxiliary electrical load
+  boiler_fuel_rate_kg_h: 80.0    # In-port / low-load steam generation
+
+reference_vessels:
+  container_feeder:
+    loa: 140.0                   # m, Length overall
+    lwl: 133.0                   # m, Length on waterline
+    beam: 22.5                   # m, Moulded breadth
+    draft: 8.2                   # m, Design draft
+    displacement: 15200.0        # tonnes
+    block_coefficient_cb: 0.62   # Block coefficient
+    wetted_surface_m2: 3600.0    # m^2
+    service_speed_knots: 16.0    # knots
+    design_teu: 1000             # TEU capacity
+  bulk_handymax:
+    loa: 190.0
+    lwl: 182.0
+    beam: 32.2
+    draft: 12.0
+    displacement: 58000.0
+    block_coefficient_cb: 0.82
+    wetted_surface_m2: 9200.0
+    service_speed_knots: 14.0
+    dwt: 52000                   # tonnes deadweight

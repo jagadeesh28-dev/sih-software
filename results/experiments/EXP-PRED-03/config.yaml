@@ -1,0 +1,78 @@
+experiment_id: EXP-PRED-03
+description: Hybrid Physics-guided ML residual regressor with validation-tuned alpha
+  weighting.
+dataset_id: DS-SYNTH-2026-01
+dataset_type: SYNTHETIC_TEST_DATA
+timestamp_utc: '2026-09-12T13:34:43.654522+00:00'
+git_commit: UNKNOWN_NON_GIT_WORKSPACE
+environment:
+  timestamp_utc: '2026-09-12T13:34:43.617850+00:00'
+  python_version: 3.14.0 (tags/v3.14.0:ebf955d, Oct  7 2025, 10:15:03) [MSC v.1944
+    64 bit (AMD64)]
+  platform: Windows-11-10.0.26200-SP0
+  processor: Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+  cpu_count: 20
+  git_commit: UNKNOWN_NON_GIT_WORKSPACE
+  packages:
+    numpy: 2.2.6
+    scipy: 1.17.0
+    pandas: 2.3.3
+    scikit-learn: not_installed
+    lightgbm: 4.7.0
+    xgboost: 3.1.3
+    pymoo: 0.6.2
+    pulp: 3.3.2
+    statsmodels: 0.15.0
+    pyyaml: not_installed
+    pydantic: 2.12.5
+    matplotlib: 3.10.8
+    plotly: 6.5.2
+    streamlit: 1.54.0
+    onnx: 1.20.1
+    onnxruntime: 1.24.2
+    pytest: 9.1.1
+model_config:
+  feature_columns:
+  - stw_kn
+  - sog_kn
+  - draft_m
+  - displacement_t
+  - rpm
+  - shaft_power_kw
+  - shaft_torque_nm
+  - engine_load_pct
+  - wind_speed_ms
+  - wind_direction_deg
+  - wave_height_m
+  - wave_period_s
+  - wave_direction_deg
+  - current_speed_ms
+  - current_direction_deg
+  - water_depth_m
+  - vessel_type
+  - fuel_type
+  feature_config: CONFIG-A
+  hyperparameters:
+    n_estimators: 150
+    learning_rate: 0.05
+    num_leaves: 31
+    max_depth: 6
+    min_child_samples: 20
+    subsample: 0.8
+    colsample_bytree: 0.8
+    reg_alpha: 0.1
+    reg_lambda: 1.0
+    random_state: 42
+    n_jobs: -1
+    verbose: -1
+  alpha: 1.0
+  alpha_sweep_scores:
+    0.0: 450.4920921302474
+    0.25: 338.970805483051
+    0.5: 227.44951883585466
+    0.75: 115.92823218865828
+    1.0: 24.283077524133247
+  training_rows: 833
+  validation_rows: 178
+  random_seed: 42
+  best_iteration: 150

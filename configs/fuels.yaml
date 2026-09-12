@@ -1,0 +1,112 @@
+# Well-to-Wake Fuel Pathway Registry
+# Framework Reference: IMO Resolution MEPC.391(81) (2024 Guidelines on Life Cycle GHG Intensity of Marine Fuels)
+# Units:
+#   density: kg/m^3
+#   lhv_mj_per_kg: MJ/kg (Lower Heating Value)
+#   wtt_ghg_g_co2e_per_mj: g CO2e / MJ fuel energy (Well-to-Tank)
+#   ttw_co2_factor_g_per_g_fuel: g CO2 / g fuel
+#   ttw_ch4_factor_g_per_g_fuel: g CH4 / g fuel
+#   ttw_n2o_factor_g_per_g_fuel: g N2O / g fuel
+#   methane_gwp100: Global Warming Potential 100-year basis (IPCC AR6 / IMO MEPC.391(81))
+#   n2o_gwp100: Global Warming Potential 100-year basis (IPCC AR6 / IMO MEPC.391(81))
+#   price_usd_per_tonne: Reference market cost in USD / metric tonne
+#   tank_volume_multiplier: Storage volume ratio relative to VLSFO
+#   cargo_capacity_penalty_pct: Percentage loss of cargo capacity due to fuel containment
+
+global_gwp_factors:
+  co2_gwp100: 1.0
+  ch4_gwp100: 29.8            # IPCC AR6 (fossil CH4 = 29.8, biogenic = 27.2)
+  n2o_gwp100: 273.0           # IPCC AR6
+
+pathways:
+  vlsfo:
+    name: "Very Low Sulphur Fuel Oil (0.5% S)"
+    category: "fossil_liquid"
+    density_kg_m3: 940.0
+    lhv_mj_kg: 40.2
+    wtt_ghg_g_co2e_mj: 13.5     # IMO MEPC.391(81) default fossil refinery pathway
+    ttw_co2_g_per_g_fuel: 3.114 # IMO default Cf for VLSFO
+    ttw_ch4_g_per_g_fuel: 0.00005
+    ttw_n2o_g_per_g_fuel: 0.00018
+    methane_slip_fraction: 0.0
+    engine_compatibility: ["two_stroke_low_speed", "four_stroke_medium_speed"]
+    price_usd_per_tonne: 620.0
+    tank_volume_multiplier: 1.0
+    cargo_capacity_penalty_pct: 0.0
+    source: "IMO MEPC.391(81) / Clarksons Shipping Intelligence 2024"
+    confidence: "HIGH"
+
+  fossil_lng:
+    name: "Liquefied Natural Gas (Fossil)"
+    category: "fossil_gas"
+    density_kg_m3: 450.0        # Cryogenic liquid at -162 C
+    lhv_mj_kg: 48.0
+    wtt_ghg_g_co2e_mj: 18.5     # Upstream extraction, liquefaction, transport
+    ttw_co2_g_per_g_fuel: 2.750 # IMO default Cf for LNG
+    ttw_ch4_g_per_g_fuel: 0.0   # Accounted via engine-specific methane slip
+    ttw_n2o_g_per_g_fuel: 0.00011
+    methane_slip_fraction: 0.022 # 2.2% slip for Otto-cycle low-pressure dual fuel (LPDF) 4-stroke; 0.2% for HP-DF
+    engine_compatibility: ["dual_fuel_lpdf", "dual_fuel_hpdf"]
+    price_usd_per_tonne: 680.0
+    tank_volume_multiplier: 1.8 # Cryogenic insulation + cylindrical/spherical geometry factor
+    cargo_capacity_penalty_pct: 2.0
+    source: "IMO MEPC.391(81) / ICCT 2024 Methane Slip Study"
+    confidence: "MEDIUM_HIGH"
+
+  bio_methanol:
+    name: "Biomethane-derived Methanol (E-Biomethanol)"
+    category: "biofuel"
+    density_kg_m3: 792.0
+    lhv_mj_kg: 19.9
+    wtt_ghg_g_co2e_mj: 15.0     # Sustainable biogenic feedstock with certified supply chain
+    ttw_co2_g_per_g_fuel: 1.375 # Biogenic CO2 (climate neutral combustion when sustainably sourced)
+    ttw_ch4_g_per_g_fuel: 0.0
+    ttw_n2o_g_per_g_fuel: 0.00005
+    methane_slip_fraction: 0.0
+    engine_compatibility: ["methanol_dual_fuel"]
+    price_usd_per_tonne: 950.0
+    tank_volume_multiplier: 2.3
+    cargo_capacity_penalty_pct: 3.5
+    source: "IMO MEPC.391(81) / Methanol Institute 2024"
+    confidence: "MEDIUM"
+
+  green_ammonia:
+    name: "Renewable Electrolytic Ammonia (NH3)"
+    category: "e_fuel"
+    density_kg_m3: 681.0        # Liquid under pressure / -33 C
+    lhv_mj_kg: 18.6
+    wtt_ghg_g_co2e_mj: 8.0      # Zero-carbon electricity + Haber-Bosch + storage losses
+    ttw_co2_g_per_g_fuel: 0.0   # Carbon-free fuel molecule
+    ttw_ch4_g_per_g_fuel: 0.0
+    ttw_n2o_g_per_g_fuel: 0.00050 # Uncombusted N2O / slip requires DeNOx SCR
+    methane_slip_fraction: 0.0
+    engine_compatibility: ["ammonia_dual_fuel"]
+    price_usd_per_tonne: 1100.0
+    tank_volume_multiplier: 2.7
+    cargo_capacity_penalty_pct: 5.0
+    source: "IMO MEPC.391(81) / DNV Maritime Forecast to 2050"
+    confidence: "MEDIUM"
+
+  liquid_hydrogen:
+    name: "Liquid Hydrogen (LH2)"
+    category: "e_fuel"
+    density_kg_m3: 71.0         # Cryogenic liquid at -253 C
+    lhv_mj_kg: 120.0
+    wtt_ghg_g_co2e_mj: 12.0     # Electrolysis + cryogenic liquefaction energy
+    ttw_co2_g_per_g_fuel: 0.0
+    ttw_ch4_g_per_g_fuel: 0.0
+    ttw_n2o_g_per_g_fuel: 0.0
+    methane_slip_fraction: 0.0
+    engine_compatibility: ["hydrogen_fuel_cell", "hydrogen_ice"]
+    price_usd_per_tonne: 4200.0
+    tank_volume_multiplier: 4.8 # Large cryogenic vacuum insulation & boil-off management
+    cargo_capacity_penalty_pct: 9.5
+    source: "IMO MEPC.391(81) / IEA Hydrogen Review 2024"
+    confidence: "LOW_MEDIUM"
+
+shore_power:
+  name: "Onshore Power Supply (Cold Ironing)"
+  grid_emission_factor_g_co2e_kwh: 450.0  # Regional average grid intensity (g CO2e / kWh)
+  price_usd_per_kwh: 0.18
+  connection_fee_usd_per_call: 500.0
+  max_power_mw: 2.5

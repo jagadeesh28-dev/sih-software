@@ -1,0 +1,90 @@
+experiment_id: EXP-PRED-07
+description: Ablation study evaluating model architectures, environmental feature
+  contributions, and vessel ID memorization.
+dataset_id: DS-SYNTH-2026-01
+dataset_type: SYNTHETIC_TEST_DATA
+timestamp_utc: '2026-09-12T13:35:52.786062+00:00'
+git_commit: UNKNOWN_NON_GIT_WORKSPACE
+environment:
+  timestamp_utc: '2026-09-12T13:35:52.751100+00:00'
+  python_version: 3.14.0 (tags/v3.14.0:ebf955d, Oct  7 2025, 10:15:03) [MSC v.1944
+    64 bit (AMD64)]
+  platform: Windows-11-10.0.26200-SP0
+  processor: Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+  cpu_count: 20
+  git_commit: UNKNOWN_NON_GIT_WORKSPACE
+  packages:
+    numpy: 2.2.6
+    scipy: 1.17.0
+    pandas: 2.3.3
+    scikit-learn: not_installed
+    lightgbm: 4.7.0
+    xgboost: 3.1.3
+    pymoo: 0.6.2
+    pulp: 3.3.2
+    statsmodels: 0.15.0
+    pyyaml: not_installed
+    pydantic: 2.12.5
+    matplotlib: 3.10.8
+    plotly: 6.5.2
+    streamlit: 1.54.0
+    onnx: 1.20.1
+    onnxruntime: 1.24.2
+    pytest: 9.1.1
+model_config:
+  ablation_table:
+  - ablation_category: Model Family
+    variant: A. ML-Only (CONFIG-A)
+    test_mae: 5.6131657816813565
+    test_rmse: 9.595402354466115
+    test_r2: 0.986164911850433
+  - ablation_category: Model Family
+    variant: B. ML-Only (No Metocean Environment)
+    test_mae: 5.621637943530902
+    test_rmse: 9.41238602712443
+    test_r2: 0.9866876413072916
+  - ablation_category: Model Family
+    variant: C. Physics + ML Residual (alpha tuned)
+    test_mae: 21.39574735937158
+    test_rmse: 30.727819343062187
+    test_r2: 0.8581207017779345
+  - ablation_category: Model Family
+    variant: D. Physics + ML Residual + QPSO
+    test_mae: 21.118304739373446
+    test_rmse: 29.688047047534308
+    test_r2: 0.867560110677478
+  - ablation_category: Feature Ablation
+    variant: Without Wind
+    test_mae: 5.682506380856888
+    test_rmse: 9.455161130617984
+    test_r2: 0.9865663688819639
+  - ablation_category: Feature Ablation
+    variant: Without Waves
+    test_mae: 5.738697995242668
+    test_rmse: 9.501507114401923
+    test_r2: 0.9864343519410728
+  - ablation_category: Feature Ablation
+    variant: Without Current
+    test_mae: 5.605972464698668
+    test_rmse: 9.449466056510609
+    test_r2: 0.986582546815501
+  - ablation_category: Feature Ablation
+    variant: Without Draft/Displacement
+    test_mae: 5.4819875168863925
+    test_rmse: 9.446241914779398
+    test_r2: 0.986591701277859
+  - ablation_category: Feature Ablation
+    variant: Without RPM
+    test_mae: 5.670533308957495
+    test_rmse: 9.55004208826881
+    test_r2: 0.9862954076693354
+  - ablation_category: Feature Ablation
+    variant: Without Shaft Power
+    test_mae: 7.917524762076232
+    test_rmse: 11.700606665148834
+    test_r2: 0.9794281992086097
+  - ablation_category: Vessel ID Memorization
+    variant: CONFIG-B (Including vessel_id)
+    test_mae: 5.6813912378871025
+    test_rmse: 9.396299825438634
+    test_r2: 0.9867331052936057

@@ -1,0 +1,82 @@
+# Scenario Definitions
+# Weather, carbon price sweeps, alternative fuel transitions, and regulatory baselines.
+
+weather_scenarios:
+  source: "synthetic_calibrated_benchmark" # Clearly labeled per guidelines
+  is_synthetic: true
+  description: "Standardized metocean benchmark test conditions (Beaufort scale calibrated)"
+  scenarios:
+    calm:
+      name: "Calm Sea (Beaufort 2)"
+      significant_wave_height_m: 0.5
+      peak_wave_period_s: 5.0
+      mean_wave_direction_deg: 0.0     # Head sea = 0 deg
+      wind_speed_m_s: 3.0
+      wind_direction_deg: 0.0
+      current_speed_m_s: 0.2
+      current_direction_deg: 0.0
+    moderate:
+      name: "Moderate Sea (Beaufort 4)"
+      significant_wave_height_m: 1.5
+      peak_wave_period_s: 7.0
+      mean_wave_direction_deg: 15.0
+      wind_speed_m_s: 7.5
+      wind_direction_deg: 20.0
+      current_speed_m_s: 0.5
+      current_direction_deg: 10.0
+    monsoon:
+      name: "Monsoon Season Sea (Beaufort 6)"
+      significant_wave_height_m: 3.5
+      peak_wave_period_s: 9.5
+      mean_wave_direction_deg: 30.0
+      wind_speed_m_s: 13.0
+      wind_direction_deg: 35.0
+      current_speed_m_s: 1.2
+      current_direction_deg: 25.0
+    extreme:
+      name: "Severe Gale / Storm Sea (Beaufort 8)"
+      significant_wave_height_m: 6.0
+      peak_wave_period_s: 12.0
+      mean_wave_direction_deg: 45.0
+      wind_speed_m_s: 19.5
+      wind_direction_deg: 45.0
+      current_speed_m_s: 1.8
+      current_direction_deg: 40.0
+
+carbon_price_sweep:
+  currency: "USD"
+  unit: "USD / metric tonne CO2e"
+  default_price: 50.0
+  sweep_values: [0.0, 25.0, 50.0, 75.0, 100.0, 125.0, 150.0]
+
+regulatory_standards:
+  imo_cii:
+    framework: "IMO MARPOL Annex VI"
+    reference_year: 2019
+    reduction_factor_2026_pct: 11.0 # 11% reduction required in 2026 relative to reference line
+    rating_boundaries:
+      A: 0.83                       # Superior
+      B: 0.94                       # Minor superior
+      C: 1.06                       # Moderate (compliant threshold)
+      D: 1.19                       # Minor inferior
+      E: 999.0                      # Inferior (corrective action plan mandatory)
+  fueleu_maritime:
+    framework: "Regulation (EU) 2023/1805"
+    reference_baseline_g_co2e_per_mj: 91.16 # Reference GHG intensity based on 2020 fleet average
+    target_reduction_2025_pct: 2.0         # 2% reduction (2025-2029 target: 89.34 gCO2e/MJ)
+    compliance_penalty_eur_per_t_vlsfo_equiv: 2400.0
+    eur_to_usd_rate: 1.08
+
+routes:
+  route_mumbai_colombo:
+    origin: "INBOM"
+    destination: "LKCMB"
+    distance_nautical_miles: 890.0
+    target_transit_time_hours: 60.0
+    cargo_demand_teu: 850
+  route_chennai_singapore:
+    origin: "INMAA"
+    destination: "SGSIN"
+    distance_nautical_miles: 1650.0
+    target_transit_time_hours: 115.0
+    cargo_demand_teu: 1200

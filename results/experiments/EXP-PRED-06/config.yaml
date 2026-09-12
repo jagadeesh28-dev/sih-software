@@ -1,0 +1,75 @@
+experiment_id: EXP-PRED-06
+description: Leave-vessel-out evaluation across all 3 vessels using CONFIG-A to prevent
+  identity memorization.
+dataset_id: DS-SYNTH-2026-01
+dataset_type: SYNTHETIC_TEST_DATA
+timestamp_utc: '2026-09-12T13:35:51.779546+00:00'
+git_commit: UNKNOWN_NON_GIT_WORKSPACE
+environment:
+  timestamp_utc: '2026-09-12T13:35:51.745067+00:00'
+  python_version: 3.14.0 (tags/v3.14.0:ebf955d, Oct  7 2025, 10:15:03) [MSC v.1944
+    64 bit (AMD64)]
+  platform: Windows-11-10.0.26200-SP0
+  processor: Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+  cpu_count: 20
+  git_commit: UNKNOWN_NON_GIT_WORKSPACE
+  packages:
+    numpy: 2.2.6
+    scipy: 1.17.0
+    pandas: 2.3.3
+    scikit-learn: not_installed
+    lightgbm: 4.7.0
+    xgboost: 3.1.3
+    pymoo: 0.6.2
+    pulp: 3.3.2
+    statsmodels: 0.15.0
+    pyyaml: not_installed
+    pydantic: 2.12.5
+    matplotlib: 3.10.8
+    plotly: 6.5.2
+    streamlit: 1.54.0
+    onnx: 1.20.1
+    onnxruntime: 1.24.2
+    pytest: 9.1.1
+model_config:
+  holdout_folds:
+  - holdout_vessel: VESSEL_FE_01
+    vessel_type: container_feeder
+    feature_config: CONFIG-A (No vessel_id)
+    train_vessels: '[''VESSEL_FE_02'', ''VESSEL_HM_03'']'
+    train_samples: 798
+    test_samples: 392
+    physics_mae: 301.85299064264103
+    ml_mae: 7.674207581867354
+    hybrid_mae: 24.56389878630372
+    hybrid_r2: 0.7808092218384466
+    physics_r2: -12.68536946248461
+    ml_r2: 0.9758443855950398
+    best_model: ML
+  - holdout_vessel: VESSEL_FE_02
+    vessel_type: container_feeder
+    feature_config: CONFIG-A (No vessel_id)
+    train_vessels: '[''VESSEL_FE_01'', ''VESSEL_HM_03'']'
+    train_samples: 791
+    test_samples: 399
+    physics_mae: 288.98626196793373
+    ml_mae: 8.827151944325808
+    hybrid_mae: 27.520517372107168
+    hybrid_r2: 0.8152660061592998
+    physics_r2: -10.745950478316134
+    ml_r2: 0.9699967169845211
+    best_model: ML
+  - holdout_vessel: VESSEL_HM_03
+    vessel_type: bulk_handymax
+    feature_config: CONFIG-A (No vessel_id)
+    train_vessels: '[''VESSEL_FE_01'', ''VESSEL_FE_02'']'
+    train_samples: 791
+    test_samples: 399
+    physics_mae: 755.5192196721571
+    ml_mae: 121.34537743593343
+    hybrid_mae: 478.71764180481705
+    hybrid_r2: -39.52003709669171
+    physics_r2: -98.40542163112102
+    ml_r2: -1.5984460138554155
+    best_model: ML
+  feature_config: CONFIG-A (Excludes vessel_id)

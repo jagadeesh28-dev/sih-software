@@ -1,0 +1,25 @@
+# Dataset Card: Zenodo / External Open Maritime Telemetry
+# Section 10: Prevents blind acceptance of external unverified metadata.
+
+dataset_id: "DS-EXT-ZENODO-01"
+dataset_name: "External Open Maritime Telemetry Dataset"
+dataset_type: "EXTERNAL_BENCHMARK_CANDIDATE"
+source: "Zenodo Marine Telemetry Repository"
+source_url: "PENDING_VALIDATION"
+DOI: "PENDING_VALIDATION"
+license: "UNKNOWN"
+provider: "UNKNOWN"
+download_date: "PENDING_VALIDATION"
+original_filename: "UNKNOWN"
+original_format: "UNKNOWN"
+temporal_resolution: "UNKNOWN"
+geographic_coverage: "UNKNOWN"
+vessel_count: 0
+row_count: 0
+variables: []
+units: {}
+preprocessing: "NONE_RAW"
+known_limitations: "Dataset has not been physically retrieved or schema-validated against canonical maritime contract."
+validation_status: "PENDING_VALIDATION"
+research_allowed: false
+research_usage_restriction: "Must undergo full data quality audit and schema mapping before admission into experimental training."

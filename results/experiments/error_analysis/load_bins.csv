@@ -1,0 +1,5 @@
+feature,bin,sample_count,mae,rmse,mean_bias
+engine_load_pct,"[0.0, 30.0)",179,21.39574735937158,30.727819343062187,3.5347008749618425
+engine_load_pct,"[30.0, 60.0)",0,,,
+engine_load_pct,"[60.0, 80.0)",0,,,
+engine_load_pct,"[80.0, 100.0)",0,,,

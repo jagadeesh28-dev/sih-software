@@ -1,0 +1,20 @@
+# SIH26138 Core Dependencies
+# Every dependency has an explicit rationale.
+
+numpy>=1.24.0              # Numerical linear algebra, array operations, vectorization
+scipy>=1.10.0              # Statistical distributions, numerical integration, optimization
+pandas>=2.0.0              # Tabular data handling, time-series operations, schema ingestion
+scikit-learn>=1.3.0        # Baseline ML regressors, preprocessing, CV splits, evaluation metrics
+lightgbm>=4.0.0            # Gradient boosting residual regressor and pinball quantile loss regression
+xgboost>=2.0.0             # Gradient boosting comparison baseline
+pymoo>=0.6.0               # Multi-objective optimization frameworks (NSGA-III, MOEA/D, Pareto metrics)
+pulp>=2.7.0                # Mixed-integer linear programming (MILP) exact baseline for small instances
+statsmodels>=0.14.0        # Statistical testing (Wilcoxon signed-rank, effect size, bootstrap CI)
+pyyaml>=6.0                # Machine-readable configuration and scientific claim ledger loading
+pydantic>=2.0.0            # Strict data validation and schema enforcement
+matplotlib>=3.7.0          # Publication-quality static scientific figures and Pareto front plots
+plotly>=5.15.0             # Interactive data exploration for Streamlit dashboard
+streamlit>=1.30.0          # Multi-page interactive decision dashboard
+onnx>=1.14.0               # Standardized ML model representation
+onnxruntime>=1.15.0        # High-performance low-latency cross-platform inference engine
+pytest>=7.4.0              # Automated unit and integration testing harness

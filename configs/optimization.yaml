@@ -1,0 +1,78 @@
+# Optimization Configuration
+# Mathematical problem definition, objectives, constraints, and algorithm parameters.
+
+budget:
+  default_evaluations: 50000     # Equal computational budget across all metaheuristics
+  independent_seeds: 30          # Random seeds 1 through 30 for statistical rigor
+  population_size: 100
+  max_iterations: 500            # 100 * 500 = 50,000 evaluations
+
+objectives:
+  primary:
+    - name: "total_fuel_consumption_tonnes"
+      sense: "minimize"
+      unit: "metric_tonnes"
+    - name: "total_operational_cost_usd"
+      sense: "minimize"
+      unit: "usd"
+    - name: "well_to_wake_ghg_emissions_tonnes_co2e"
+      sense: "minimize"
+      unit: "tonnes_co2e"
+  risk_treatment: "constraint"   # Options: 'constraint' or 'fourth_objective'
+  cvar_alpha: 0.95               # Confidence level for Conditional Value at Risk
+  max_allowable_cvar_delay_hours: 12.0
+
+decision_space:
+  cruising_speed_knots:
+    min: 10.0
+    max: 20.0
+    step: 0.1
+  fuel_options:
+    - "vlsfo"
+    - "fossil_lng"
+    - "bio_methanol"
+    - "green_ammonia"
+    - "liquid_hydrogen"
+  shore_power_options:
+    - true
+    - false
+
+constraints:
+  handling_hierarchy:
+    - "repair"                  # 1. Structural projection & repair of integer choices
+    - "projection"              # 2. Continuous box/capacity clamping
+    - "penalty"                 # 3. Objective penalty for soft deadline violations
+  penalty_multiplier: 1e5
+  min_cargo_demand_satisfaction_pct: 100.0
+  max_tank_capacity_factor: 1.0
+  require_cii_compliance: true
+
+algorithms:
+  qpso:
+    type: "quantum_inspired_pso"
+    beta_schedule: "linear_decay" # beta(t) contraction-expansion coefficient
+    beta_start: 1.0
+    beta_end: 0.5
+    potential_well: "delta_potential"
+    mbest_aggregation: "mean"
+    description: "Quantum-behaved PSO using stochastic delta-potential well dynamics (Sun et al. 2004)"
+
+  nsga3:
+    type: "genetic_algorithm_reference_points"
+    crossover_prob: 0.9
+    crossover_eta: 20.0
+    mutation_prob: 0.1
+    mutation_eta: 20.0
+    n_partitions: 12            # Generates Das-Dennis structured reference directions
+
+  moead:
+    type: "decomposition"
+    decomposition_method: "tchebycheff"
+    neighborhood_size: 20
+    prob_neighbor_mating: 0.9
+
+  milp:
+    type: "exact_branch_and_bound"
+    solver: "PULP_CBC_CMD"
+    max_vessels_for_exact_run: 5 # MILP baseline used only for small tractable instances
+    time_limit_seconds: 300

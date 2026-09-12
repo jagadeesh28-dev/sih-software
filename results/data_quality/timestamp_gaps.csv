@@ -1,0 +1,2 @@
+vessel_id,start_index,end_index,gap_seconds,start_time,end_time
+VESSEL_FE_01,49,50,14700.0,2026-03-01 04:05:00+00:00,2026-03-01 08:10:00+00:00

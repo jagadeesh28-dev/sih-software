@@ -1,0 +1,208 @@
+# Canonical Maritime Observation Schema
+# Section 3: Machine-readable data contract for vessel telemetry and environmental records.
+# Units strictly adhere to SI and standardized maritime navigation conventions.
+
+schema_version: "1.0.0"
+dataset_type_field: "dataset_type"
+
+fields:
+  timestamp:
+    datatype: "string"
+    format: "ISO-8601 UTC (YYYY-MM-DDTHH:MM:SSZ)"
+    physical_unit: "timestamp_utc"
+    allowable_range: ["2000-01-01T00:00:00Z", "2030-12-31T23:59:59Z"]
+    nullable: false
+    description: "Coordinated Universal Time of observation"
+    provenance: "Onboard GPS / NMEA-0183 ZDA sentence"
+
+  vessel_id:
+    datatype: "string"
+    physical_unit: "identifier"
+    allowable_range: null
+    nullable: false
+    description: "Unique anonymized vessel identifier"
+    provenance: "Vessel management database"
+
+  vessel_type:
+    datatype: "string"
+    physical_unit: "category"
+    allowable_range: ["container_feeder", "bulk_handymax", "tanker_mr", "general_cargo"]
+    nullable: false
+    description: "Vessel classification category"
+    provenance: "Ship registry specification"
+
+  latitude:
+    datatype: "float"
+    physical_unit: "decimal_degrees"
+    allowable_range: [-90.0, 90.0]
+    nullable: false
+    description: "WGS-84 geographic latitude"
+    provenance: "Onboard GPS / NMEA-0183 GLL sentence"
+
+  longitude:
+    datatype: "float"
+    physical_unit: "decimal_degrees"
+    allowable_range: [-180.0, 180.0]
+    nullable: false
+    description: "WGS-84 geographic longitude"
+    provenance: "Onboard GPS / NMEA-0183 GLL sentence"
+
+  sog_kn:
+    datatype: "float"
+    physical_unit: "knots"
+    allowable_range: [0.0, 35.0]
+    nullable: false
+    description: "Speed Over Ground derived from satellite positioning"
+    provenance: "GPS / NMEA-0183 RMC sentence"
+
+  stw_kn:
+    datatype: "float"
+    physical_unit: "knots"
+    allowable_range: [0.0, 35.0]
+    nullable: false
+    description: "Speed Through Water measured via Doppler speed log"
+    provenance: "Doppler Speed Log / NMEA-0183 VBW sentence"
+
+  draft_m:
+    datatype: "float"
+    physical_unit: "meters"
+    allowable_range: [2.0, 25.0]
+    nullable: false
+    description: "Mean molded draft (fore and aft average)"
+    provenance: "Draft sensor / stability loading computer"
+
+  displacement_t:
+    datatype: "float"
+    physical_unit: "metric_tonnes"
+    allowable_range: [1000.0, 400000.0]
+    nullable: false
+    description: "Total vessel displacement including cargo, fuel, ballast"
+    provenance: "Loading computer hydrostatics calculation"
+
+  rpm:
+    datatype: "float"
+    physical_unit: "revolutions_per_minute"
+    allowable_range: [0.0, 250.0]
+    nullable: false
+    description: "Propeller shaft rotational speed"
+    provenance: "Shaft optical encoder / engine telemetry"
+
+  shaft_power_kw:
+    datatype: "float"
+    physical_unit: "kilowatts"
+    allowable_range: [0.0, 80000.0]
+    nullable: false
+    description: "Mechanical shaft power measured at the propulsion shaft"
+    provenance: "Shaft torque & RPM meter"
+
+  shaft_torque_nm:
+    datatype: "float"
+    physical_unit: "newton_meters"
+    allowable_range: [0.0, 5000000.0]
+    nullable: true
+    description: "Mechanical shaft torque"
+    provenance: "Strain gauge torque meter"
+
+  fuel_mass_flow_kg_h:
+    datatype: "float"
+    physical_unit: "kg_per_hour"
+    allowable_range: [0.0, 8000.0]
+    nullable: false
+    description: "Mass flow rate of fuel consumed by main and auxiliary engines"
+    provenance: "Coriolis mass flow meter"
+
+  wind_speed_ms:
+    datatype: "float"
+    physical_unit: "meters_per_second"
+    allowable_range: [0.0, 60.0]
+    nullable: false
+    description: "Apparent wind speed at anemometer mast height"
+    provenance: "Ultrasonic anemometer / NMEA-0183 MWV sentence"
+
+  wind_direction_deg:
+    datatype: "float"
+    physical_unit: "degrees"
+    allowable_range: [0.0, 360.0]
+    nullable: false
+    description: "Apparent wind direction relative to ship bow (0 deg = head wind)"
+    provenance: "Ultrasonic anemometer"
+
+  wave_height_m:
+    datatype: "float"
+    physical_unit: "meters"
+    allowable_range: [0.0, 20.0]
+    nullable: false
+    description: "Significant wave height Hs"
+    provenance: "Wave radar / ECMWF ERA5 hindcast reanalysis"
+
+  wave_period_s:
+    datatype: "float"
+    physical_unit: "seconds"
+    allowable_range: [1.0, 30.0]
+    nullable: false
+    description: "Peak wave spectral period Tp"
+    provenance: "Wave radar / ECMWF ERA5 hindcast reanalysis"
+
+  wave_direction_deg:
+    datatype: "float"
+    physical_unit: "degrees"
+    allowable_range: [0.0, 360.0]
+    nullable: false
+    description: "Mean wave encounter direction relative to bow (0 deg = head sea)"
+    provenance: "Wave radar / ECMWF ERA5 hindcast reanalysis"
+
+  current_speed_ms:
+    datatype: "float"
+    physical_unit: "meters_per_second"
+    allowable_range: [0.0, 5.0]
+    nullable: false
+    description: "Ocean surface current velocity magnitude"
+    provenance: "ADCP / Copernicus Marine Service (CMEMS)"
+
+  current_direction_deg:
+    datatype: "float"
+    physical_unit: "degrees"
+    allowable_range: [0.0, 360.0]
+    nullable: false
+    description: "Ocean current direction towards which current flows"
+    provenance: "ADCP / CMEMS ocean reanalysis"
+
+  water_depth_m:
+    datatype: "float"
+    physical_unit: "meters"
+    allowable_range: [5.0, 11000.0]
+    nullable: true
+    description: "Under-keel or total water depth"
+    provenance: "Echo sounder / GEBCO bathymetry grid"
+
+  cargo_mass_t:
+    datatype: "float"
+    physical_unit: "metric_tonnes"
+    allowable_range: [0.0, 350000.0]
+    nullable: false
+    description: "Payload cargo mass on current voyage leg"
+    provenance: "Cargo manifest / draft survey"
+
+  cargo_demand_t:
+    datatype: "float"
+    physical_unit: "metric_tonnes"
+    allowable_range: [0.0, 350000.0]
+    nullable: false
+    description: "Target cargo delivery commitment for the voyage"
+    provenance: "Commercial chartering agreement"
+
+  engine_load_pct:
+    datatype: "float"
+    physical_unit: "percentage"
+    allowable_range: [0.0, 110.0]
+    nullable: false
+    description: "Main engine load relative to Maximum Continuous Rating (MCR)"
+    provenance: "Engine Electronic Control Unit (ECU)"
+
+  fuel_type:
+    datatype: "string"
+    physical_unit: "category"
+    allowable_range: ["vlsfo", "fossil_lng", "bio_methanol", "green_ammonia", "liquid_hydrogen"]
+    nullable: false
+    description: "Current bunker fuel pathway in combustion"
+    provenance: "Bunker Delivery Note (BDN)"

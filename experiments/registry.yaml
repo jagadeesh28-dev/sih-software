@@ -1,0 +1,73 @@
+# Experiment Registry
+# Section 17: Machine-readable catalogue of all research, validation, and benchmark experiments.
+
+experiments:
+  - experiment_id: "EXP-DATA-01"
+    title: "16-Dimension Data Quality Audit"
+    objective: "Detect schema violations, out-of-bounds metrics, timestamp gaps, and physical impossibilities."
+    input_dataset: "data/synthetic/synthetic_vessel_telemetry.csv"
+    configuration: "data/schemas/canonical_schema.yaml"
+    random_seed: 42
+    software_version: "0.1.0"
+    output_location: "results/data_quality/"
+    status: "READY"
+
+  - experiment_id: "EXP-DATA-02"
+    title: "Chronological Temporal Split Validation"
+    objective: "Verify strictly monotonic non-shuffled 70/15/15 train/val/test partitions without time leakage."
+    input_dataset: "data/synthetic/synthetic_vessel_telemetry.csv"
+    configuration: "default_70_15_15"
+    random_seed: 42
+    software_version: "0.1.0"
+    output_location: "results/data_quality/temporal_split_metrics.json"
+    status: "READY"
+
+  - experiment_id: "EXP-DATA-03"
+    title: "Leave-Vessel-Out Evaluation Partitioning"
+    objective: "Isolate target vessel from training set to establish rigorous cross-vessel generalization test."
+    input_dataset: "data/synthetic/synthetic_vessel_telemetry.csv"
+    configuration: "holdout_vessel: VESSEL_HM_03"
+    random_seed: 42
+    software_version: "0.1.0"
+    output_location: "results/data_quality/vessel_holdout_metrics.json"
+    status: "READY"
+
+  - experiment_id: "EXP-DATA-04"
+    title: "Sister-Vessel Group Isolation"
+    objective: "Prevent near-identical sister ships from straddling training and test sets."
+    input_dataset: "data/synthetic/synthetic_vessel_telemetry.csv"
+    configuration: "sister_group_mapping: CLASS_FEEDER_1000"
+    random_seed: 42
+    software_version: "0.1.0"
+    output_location: "results/data_quality/sister_group_metrics.json"
+    status: "READY"
+
+  - experiment_id: "EXP-PHYS-01"
+    title: "Independent Physics & Propulsion Validation"
+    objective: "Validate P = R * V, SFC engine curves, and ITTC-1957 line against independent analytical formulas."
+    input_dataset: "NONE_ANALYTICAL"
+    configuration: "configs/physics.yaml"
+    random_seed: 42
+    software_version: "0.1.0"
+    output_location: "results/scientific_validation/physics_validation.json"
+    status: "READY"
+
+  - experiment_id: "EXP-LCA-01"
+    title: "Independent Life Cycle Assessment & Methane Slip Audit"
+    objective: "Trace mass, LHV, energy, WtT, TtW, and dimensional methane slip across all 5 registered fuels."
+    input_dataset: "configs/fuels.yaml"
+    configuration: "IMO Resolution MEPC.391(81)"
+    random_seed: 42
+    software_version: "0.1.0"
+    output_location: "results/scientific_validation/lca_audit.csv"
+    status: "READY"
+
+  - experiment_id: "EXP-QPSO-01"
+    title: "QPSO Mathematical Function Benchmark"
+    objective: "Empirically evaluate QPSO convergence on Sphere, Rastrigin, and Rosenbrock benchmark functions."
+    input_dataset: "NONE_MATHEMATICAL_LANDSCAPES"
+    configuration: "dim: 5, particles: 40, iterations: 150"
+    random_seed: 42
+    software_version: "0.1.0"
+    output_location: "results/qpso_benchmarks/qpso_mathematical_benchmarks.json"
+    status: "READY"

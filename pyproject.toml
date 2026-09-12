@@ -1,0 +1,71 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sih26138_platform"
+version = "0.1.0"
+description = "Quantum-Inspired Fuel Consumption Prediction and Green Fleet Optimization Platform (SIH26138)"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "SIH26138 Engineering Research Team"}
+]
+keywords = [
+    "maritime",
+    "decarbonization",
+    "qpso",
+    "quantum-inspired",
+    "fleet-optimization",
+    "fuel-prediction",
+    "imo-cii",
+    "fueleu-maritime",
+    "lifecycle-assessment"
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14"
+]
+
+dependencies = [
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "pandas>=2.0.0",
+    "scikit-learn>=1.3.0",
+    "lightgbm>=4.0.0",
+    "xgboost>=2.0.0",
+    "pymoo>=0.6.0",
+    "pulp>=2.7.0",
+    "statsmodels>=0.14.0",
+    "pyyaml>=6.0",
+    "pydantic>=2.0.0",
+    "matplotlib>=3.7.0",
+    "plotly>=5.15.0",
+    "streamlit>=1.30.0",
+    "onnx>=1.14.0",
+    "onnxruntime>=1.15.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0"
+]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+addopts = "-v --strict-markers"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["*"]
+exclude = ["tests*", "results*", "data/raw*"]

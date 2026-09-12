@@ -1,0 +1,58 @@
+# Dataset Card: Synthetic Benchmark Test Telemetry
+# Strictly labeled SYNTHETIC_TEST_DATA. Validates software and auditor pipelines ONLY.
+
+dataset_id: "DS-SYNTH-2026-01"
+dataset_name: "Controlled Synthetic Maritime Operational Telemetry"
+dataset_type: "SYNTHETIC_TEST_DATA"
+source: "In-platform physics-calibrated synthetic telemetry generator"
+source_url: "local://sih26138_platform/data/synthetic_generator.py"
+DOI: "NONE_SYNTHETIC"
+license: "Apache-2.0"
+provider: "SIH26138 Engineering Research Team"
+download_date: "2026-09-12"
+original_filename: "synthetic_vessel_telemetry.csv"
+original_format: "CSV"
+temporal_resolution: "300 seconds (5 minutes nominal)"
+geographic_coverage: "Arabian Sea (Mumbai to Colombo transit corridor)"
+vessel_count: 3
+row_count: 1203
+variables:
+  - timestamp
+  - vessel_id
+  - vessel_type
+  - sister_group_id
+  - latitude
+  - longitude
+  - sog_kn
+  - stw_kn
+  - draft_m
+  - displacement_t
+  - rpm
+  - shaft_power_kw
+  - shaft_torque_nm
+  - fuel_mass_flow_kg_h
+  - wind_speed_ms
+  - wind_direction_deg
+  - wave_height_m
+  - wave_period_s
+  - wave_direction_deg
+  - current_speed_ms
+  - current_direction_deg
+  - water_depth_m
+  - cargo_mass_t
+  - cargo_demand_t
+  - engine_load_pct
+  - fuel_type
+units:
+  speed: "knots"
+  power: "kW"
+  fuel_flow: "kg/h"
+  distance: "meters"
+  mass: "metric tonnes"
+  wind_current: "m/s"
+  angles: "degrees"
+preprocessing: "Injected controlled anomalies (missing values, duplicates, out-of-bound coordinates, negative fuel, timestamp jumps) to validate auditor."
+known_limitations: "Artificially generated. Does not represent actual sea trials or hull fouling degradation. Unsuitable for claiming real-world fuel savings."
+validation_status: "VALIDATED_FOR_SOFTWARE_TESTING_ONLY"
+research_allowed: false
+research_usage_restriction: "MUST NOT be used as evidence for empirical fuel savings, prediction accuracy, or cross-vessel generalization."

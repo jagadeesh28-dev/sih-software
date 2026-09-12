@@ -1,0 +1,284 @@
+# Evidence and Claim Governance Ledger
+# SIH26138 - Egreen Quanta Platform
+# Enforces strict epistemic classification across reports, papers, and dashboard presentations.
+#
+# Epistemic Taxonomy:
+# - FACT: Documented requirement, mathematical theorem, verified architecture, or code contract.
+# - MEASURED_RESULT: Empirically verified metric from executed simulation/benchmark.
+# - HYPOTHESIS: Unproven conjecture subject to empirical refutation.
+# - TARGET: Quantitative goal established by stakeholders or regulations.
+# - ASSUMPTION: Unverified premise required for modeling.
+
+claims:
+  - claim_id: "CLM-001"
+    claim: "Quantum-Behaved Particle Swarm Optimization (QPSO) is an offline classical metaheuristic running on conventional CPU hardware, inspired by quantum delta-potential well dynamics."
+    type: "FACT"
+    source: "Mathematical formulation (Sun, Feng, Xu, 2004); optimization.yaml"
+    status: "CONFIRMED"
+    allowed_wording:
+      - "Quantum-inspired metaheuristic"
+      - "Offline classical optimization"
+      - "Delta-potential well stochastic search"
+    forbidden_wording:
+      - "Quantum supremacy"
+      - "Quantum computer execution"
+      - "QPU acceleration"
+      - "Quantum speedup"
+      - "Quantum tunneling"
+
+  - claim_id: "CLM-002"
+    claim: "The fleet routing optimization problem is NP-hard due to combinatorial port sequence permutations and non-linear speed-fuel power curves."
+    type: "FACT"
+    source: "Operations Research literature; Psaraftis & Kontovas (2013)"
+    status: "CONFIRMED"
+    allowed_wording:
+      - "NP-hard combinatorial optimization problem"
+      - "Non-convex MINLP formulation"
+    forbidden_wording:
+      - "Easily solvable polynomial time problem"
+
+  - claim_id: "CLM-003"
+    claim: "QPSO achieves lower mean objective values than standard PSO, GA, and Random Search on maritime route scheduling benchmarks."
+    type: "HYPOTHESIS"
+    source: "Phase 0 Problem Statement SIH26138"
+    status: "PENDING_BENCHMARK"
+    allowed_wording:
+      - "Hypothesized to improve solution quality"
+      - "Evaluated empirically against classical baselines"
+    forbidden_wording:
+      - "Guaranteed global optimum"
+      - "Proven superior to all algorithms"
+
+  - claim_id: "CLM-004"
+    claim: "FuelEU Maritime (Regulation EU 2023/1805) mandates GHG intensity reduction targets of 2% in 2025, 6% in 2030, and 80% by 2050 relative to 91.16 gCO2e/MJ reference."
+    type: "FACT"
+    source: "Official Journal of the European Union; configs/fuels.yaml"
+    status: "CONFIRMED"
+    allowed_wording:
+      - "Statutory European Union maritime regulation"
+      - "Legally binding decarbonization trajectory"
+    forbidden_wording:
+      - "Voluntary industry recommendation"
+
+  - claim_id: "CLM-005"
+    claim: "IMO Carbon Intensity Indicator (CII) computes annual operational carbon intensity in gCO2 per dwt-nautical mile, assigning ratings A through E."
+    type: "FACT"
+    source: "IMO Resolution MEPC.336(76); configs/fuels.yaml"
+    status: "CONFIRMED"
+    allowed_wording:
+      - "IMO statutory operational efficiency rating"
+      - "Annual metric based on reported fuel and distance"
+    forbidden_wording:
+      - "Proprietary rating system"
+
+  - claim_id: "CLM-006"
+    claim: "All random seeds in stochastic components are strictly controllable via configuration to ensure reproducible execution."
+    type: "FACT"
+    source: "common/reproducibility.py; configs/benchmark.yaml"
+    status: "CONFIRMED"
+    allowed_wording:
+      - "Deterministic seed control"
+      - "Reproducible pseudo-random sequences"
+    forbidden_wording:
+      - "True quantum randomness"
+
+  - claim_id: "CLM-007"
+    claim: "Phase 0 target for fleet optimization is a 12% reduction in fleet well-to-wake GHG emissions compared to unoptimized historical routing."
+    type: "TARGET"
+    source: "SIH26138 Scope & Objectives; scenarios.yaml"
+    status: "UNTESTED_TARGET"
+    allowed_wording:
+      - "Design target of 12% GHG reduction"
+      - "Target metric under benchmark evaluation"
+    forbidden_wording:
+      - "Achieved 12% emission savings"
+      - "Demonstrated 12% decarbonization"
+
+  - claim_id: "CLM-008"
+    claim: "The platform has been deployed in commercial operations at Mormugao Port."
+    type: "FACT"
+    source: "Refutation of external enterprise claims"
+    status: "REFUTED"
+    allowed_wording:
+      - "No operational commercial deployment at Mormugao Port exists"
+      - "Prototype developed for academic and hackathon research evaluation"
+    forbidden_wording:
+      - "Deployed at Mormugao Port"
+      - "Operational port software"
+
+  - claim_id: "CLM-009"
+    claim: "Synthetic vessel telemetry is generated strictly for pipeline and data quality auditor validation, and is not experimental evidence of real-world vessel performance."
+    type: "FACT"
+    source: "SIH26138 Data Governance Protocol"
+    status: "CONFIRMED"
+    allowed_wording:
+      - "Controlled synthetic test data"
+      - "Synthetic dataset for software pipeline verification"
+    forbidden_wording:
+      - "Real ship operational telemetry"
+      - "Measured sea trial dataset"
+
+  - claim_id: "CLM-010"
+    claim: "Chronological temporal splitting and sister-vessel group isolation prevent train-test data leakage."
+    type: "FACT"
+    source: "LeakageSafeSplitter architecture verification"
+    status: "CONFIRMED"
+    allowed_wording:
+      - "Chronological train/validation/test partitions"
+      - "Group-aware sister vessel isolation"
+    forbidden_wording:
+      - "Randomly shuffled time series evaluation"
+
+  - claim_id: "CLM-011"
+    claim: "QPSO successfully minimizes standard mathematical benchmark functions (Sphere, Rastrigin, Rosenbrock) with deterministic reproducibility."
+    type: "MEASURED_RESULT"
+    source: "Phase 1 QPSO Mathematical Benchmark Suite"
+    status: "EMPIRICALLY_VERIFIED"
+    allowed_wording:
+      - "Demonstrated objective reduction on standard benchmark functions"
+      - "Verified stochastic exploration on continuous test landscapes"
+    forbidden_wording:
+      - "Proven globally optimal on all continuous problems"
+      - "Faster than all classical algorithms on benchmark functions"
+
+  - claim_id: "CLM-012"
+    claim: "Phase 0 naval architecture resistance and propulsion formulas agree with independent hand calculations within 0.01% error."
+    type: "MEASURED_RESULT"
+    source: "Phase 1 Scientific Validation Gate"
+    status: "EMPIRICALLY_VERIFIED"
+    allowed_wording:
+      - "Verified against analytical hand calculations"
+      - "Validated power conversion and SFC fuel curves"
+    forbidden_wording:
+      - "Physically perfect hydrodynamics"
+      - "CFD equivalent fidelity"
+
+  - claim_id: "CLM-013"
+    claim: "Previously cited Zenodo maritime telemetry repositories require on-disk schema validation before research use."
+    type: "ASSUMPTION"
+    source: "Data provenance audit"
+    status: "PENDING_VALIDATION"
+    allowed_wording:
+      - "External dataset candidate pending validation"
+      - "Unverified external repository"
+    forbidden_wording:
+      - "Verified public vessel database"
+      - "Ingested official dataset"
+
+  - claim_id: "CLM-014"
+    claim: "Life cycle GHG calculations trace fuel mass, LHV, energy, WtT, TtW, CO2, CH4, N2O, and dimensional methane slip consistently across all 5 registered fuels."
+    type: "MEASURED_RESULT"
+    source: "Phase 1 LCA Fuel Registry Audit"
+    status: "EMPIRICALLY_VERIFIED"
+    allowed_wording:
+      - "Dimensionally consistent Well-to-Wake accounting"
+      - "Explicit species-level emission tracking"
+    forbidden_wording:
+      - "Guaranteed real-world bunker lifecycle emissions"
+
+  - claim_id: "CLM-015"
+    claim: "On synthetic dataset DS-SYNTH-2026-01 under chronological split (70/15/15), ML-Only (CONFIG-A) achieved MAE 5.61 kg/h (R² 0.986), outperforming Physics-Only (MAE 453.89 kg/h) and Physics+ML Residual (MAE 21.12 kg/h QPSO tuned)."
+    type: "MEASURED_RESULT"
+    source: "Phase 2 Experiment EXP-PRED-01 through EXP-PRED-04"
+    status: "EMPIRICALLY_VERIFIED"
+    allowed_wording:
+      - "Demonstrated empirical ranking on synthetic benchmark data with controlled model mismatch"
+      - "Evaluated under chronological split with zero test leakage"
+    forbidden_wording:
+      - "Hybrid architecture universally superior"
+      - "Real-world maritime prediction accuracy"
+
+  - claim_id: "CLM-016"
+    claim: "QPSO offline metaheuristic achieved validation MAE 20.54 kg/h vs 22.10 kg/h for Random Search under identical 225-evaluation budgets on the residual model."
+    type: "MEASURED_RESULT"
+    source: "Phase 2 Experiment EXP-PRED-04 (QPSO vs Random Search)"
+    status: "EMPIRICALLY_VERIFIED"
+    allowed_wording:
+      - "Offline metaheuristic parameter optimization"
+      - "Controlled comparison with equal validation evaluation budget"
+    forbidden_wording:
+      - "Quantum supremacy"
+      - "Quantum computing advantage"
+      - "Guaranteed global optimality"
+
+  - claim_id: "CLM-017"
+    claim: "Leave-vessel-out evaluation under CONFIG-A reveals significant transfer degradation when predicting across vessel classes (VESSEL_HM_03 Handymax Bulk holdout MAE: 121.35 kg/h ML, 478.72 kg/h Hybrid, 755.52 kg/h Physics) compared to sister feeder vessels (MAE 7.67 to 8.83 kg/h)."
+    type: "MEASURED_RESULT"
+    source: "Phase 2 Experiment EXP-PRED-06 (Leave-Vessel-Out)"
+    status: "EMPIRICALLY_VERIFIED"
+    allowed_wording:
+      - "Quantified out-of-distribution vessel class transfer error"
+      - "High sister-vessel transfer accuracy with degradation on unseen hull geometry"
+    forbidden_wording:
+      - "Flawless universal cross-vessel generalization"
+      - "Vessel-agnostic foundation model"
+
+  - claim_id: "CLM-018"
+    claim: "Physics-informed residual learning improves cross-vessel generalization over pure ML on maritime telemetry."
+    type: "HYPOTHESIS"
+    source: "Phase 2 Research Question 1"
+    status: "REFUTED_ON_SYNTHETIC"
+    allowed_wording:
+      - "Hypothesis refuted on synthetic benchmark data where pure ML outperformed hybrid"
+      - "Pending real-world telemetry validation where physics bias may provide better domain bounds"
+    forbidden_wording:
+      - "Confirmed superiority of hybrid residual learning"
+      - "Proven inductive bias benefit"
+
+  - claim_id: "CLM-019"
+    claim: "LightGBM direct quantile regression achieved 87.15% empirical coverage (PICP) for nominal 90% prediction interval (q05-q95) with MPIW of 56.35 kg/h."
+    type: "MEASURED_RESULT"
+    source: "Phase 2 Quantile Uncertainty Evaluation"
+    status: "EMPIRICALLY_VERIFIED"
+    allowed_wording:
+      - "Empirical prediction interval coverage probability near nominal 90%"
+      - "Quantile-derived dispersion proxy"
+    forbidden_wording:
+      - "Parametric Gaussian variance"
+      - "Exact aleatoric and epistemic uncertainty decomposition"
+
+  - claim_id: "CLM-020"
+    claim: "Phase 2 primary prediction task is strictly defined as instantaneous fuel mass flow estimation at observation time t (X(t) -> F(t)), not future forecasting."
+    type: "FACT"
+    source: "SIH26138 Phase 2 Correction Protocol (Section 1)"
+    status: "CONFIRMED"
+    allowed_wording:
+      - "Instantaneous operational fuel-flow estimation"
+      - "Synchronous observation mapping X(t) to F(t)"
+    forbidden_wording:
+      - "Future voyage fuel forecasting"
+      - "Next-hour predictive model"
+
+  - claim_id: "CLM-021"
+    claim: "Hydrodynamic resistance and propulsion calculations use Speed Through Water (stw_kn) as the primary vessel speed variable; SOG is preserved for operational context without double-counting current."
+    type: "FACT"
+    source: "SIH26138 Phase 2 Correction Protocol (Section 2 & 3)"
+    status: "CONFIRMED"
+    allowed_wording:
+      - "STW-driven hydrodynamic resistance pipeline"
+      - "Explicit separation of STW, SOG, and current vectors"
+    forbidden_wording:
+      - "Silent substitution of SOG for STW"
+
+  - claim_id: "CLM-022"
+    claim: "Systematic ablation study (EXP-PRED-07) establishes that shaft power is the single most critical predictor (omitting it increases MAE from 5.61 to 7.92 kg/h), followed by wave height and wind speed."
+    type: "MEASURED_RESULT"
+    source: "Phase 2 Experiment EXP-PRED-07 (Ablation Study)"
+    status: "EMPIRICALLY_VERIFIED"
+    allowed_wording:
+      - "Quantified information source contributions via feature ablation"
+      - "Empirically measured feature drop impacts"
+    forbidden_wording:
+      - "Arbitrary feature importance"
+
+  - claim_id: "CLM-023"
+    claim: "The Scientific Real-Data Gate is locked as NOT PASSED because all Phase 2 evaluations were conducted on controlled synthetic test data; no real-world maritime operational claims are made."
+    type: "FACT"
+    source: "SIH26138 Phase 2 Scientific Gate Governance (Section 29)"
+    status: "CONFIRMED"
+    allowed_wording:
+      - "Real-data scientific gate not passed"
+      - "Software and engineering pipeline validation only"
+    forbidden_wording:
+      - "Real-world maritime deployment accuracy"
+      - "Commercial fuel savings"
