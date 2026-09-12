@@ -301,3 +301,66 @@ claims:
     forbidden_wording:
       - "Data leakage between features and target"
 
+  - claim_id: "CLM-025"
+    claim: "An unconstrained optimizer directly minimizing raw LightGBM predictions exploits ungrounded low-power/high-speed regions; SafeFuelObjective neutralizes this exploit by rejecting out-of-domain states with explicit mathematical penalties."
+    type: "MEASURED_RESULT"
+    source: "Phase 2.2 Adversarial Audit (AUDIT-EXPLOIT-001)"
+    status: "EMPIRICALLY_VERIFIED"
+    allowed_wording:
+      - "Unconstrained tree surrogate is vulnerable to adversarial exploitation"
+      - "SafeFuelObjective rejects out-of-domain and physically invalid optimization candidates"
+    forbidden_wording:
+      - "LightGBM surrogate is globally trustworthy without domain guards"
+      - "Optimizer immunity without defensive constraints"
+
+  - claim_id: "CLM-026"
+    claim: "The empirical operating domain is strictly defined by training feature percentiles [P01, P99] and bounds [min, max]; points outside are classified as NEAR_BOUNDARY or OUT_OF_DOMAIN and never silently extrapolated."
+    type: "FACT"
+    source: "Phase 2.2 Domain Envelope Profiling (AUDIT-ENVELOPE-001)"
+    status: "CONFIRMED"
+    allowed_wording:
+      - "Empirical operating domain envelope"
+      - "Multi-dimensional envelope distance metric"
+      - "Explicit rejection of ungrounded extrapolation"
+    forbidden_wording:
+      - "Global valid extrapolation"
+      - "Universal physics grounding outside training bounds"
+
+  - claim_id: "CLM-027"
+    claim: "Quantile prediction intervals (q05, q50, q95) provide a tunable risk-adjusted robust optimization objective J(lambda) = q50 + lambda * (q95 - q05), safely exposing predictive uncertainty to downstream optimization."
+    type: "MEASURED_RESULT"
+    source: "Phase 2.2 Uncertainty-to-Optimization Interface (AUDIT-UNC-INTERFACE-001)"
+    status: "EMPIRICALLY_VERIFIED"
+    allowed_wording:
+      - "Risk-adjusted robust objective function"
+      - "Quantile-derived dispersion proxy penalty"
+    forbidden_wording:
+      - "Parametric variance optimization"
+      - "Exact Bayesian posterior risk"
+
+  - claim_id: "CLM-028"
+    claim: "Discrepancy between pure ML and first-principles physics predictions functions strictly as a diagnostic model-disagreement signal rather than ground-truth error, reflecting known structural offsets in uncalibrated theoretical formulas."
+    type: "FACT"
+    source: "Phase 2.2 Physics Cross-Check & Phase 2.1 Physics Error Decomposition"
+    status: "CONFIRMED"
+    allowed_wording:
+      - "Model-disagreement diagnostic signal"
+      - "First-principles reference baseline"
+    forbidden_wording:
+      - "Physics-based error truth"
+      - "Physics model represents true physical reality"
+
+  - claim_id: "CLM-029"
+    claim: "The prediction layer is conditionally suitable as an optimization objective under the evaluated synthetic operating envelope, subject to real-data validation."
+    type: "TARGET"
+    source: "Phase 2.2 Optimization Readiness Gate"
+    status: "CONDITIONALLY_SUPPORTED"
+    allowed_wording:
+      - "The prediction layer is conditionally suitable as an optimization objective under the evaluated synthetic operating envelope, subject to real-data validation"
+      - "Conditional pass for controlled Phase 3 development using synthetic benchmark data"
+    forbidden_wording:
+      - "The model is ready for deployment"
+      - "Industry-ready optimization engine"
+      - "Validated real-world green fleet optimization"
+
+

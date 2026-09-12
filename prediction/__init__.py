@@ -12,6 +12,9 @@ from .quantile_model import QuantileUncertaintyPredictor
 from .error_analysis import DiagnosticErrorAnalyzer
 from .evaluate import evaluate_predictions, evaluate_quantiles, compute_pinball_loss
 
+from .domain_checker import DomainChecker
+from .safe_objective import SafeFuelObjective
+
 # Aliases for Phase 0 backwards compatibility
 PhysicsOnlyPredictor = PhysicsFuelPredictor
 PureMLBaselinePredictor = PureMLPredictor
@@ -25,6 +28,8 @@ __all__ = [
     "RandomSearchModelSelector",
     "QuantileUncertaintyPredictor",
     "DiagnosticErrorAnalyzer",
+    "DomainChecker",
+    "SafeFuelObjective",
     "evaluate_predictions",
     "evaluate_quantiles",
     "compute_pinball_loss",

@@ -1,0 +1,7 @@
+check_id,name,description,test_scope,violations,status,classification,details
+SANITY-01,Negative Fuel Flow Check,Verify model never outputs negative fuel flow.,All response surface sweeps (N=101),0,PASS,ACCEPTABLE_NON-MONOTONICITY,Zero negative predictions observed across entire operational envelope.
+SANITY-02,Near-Zero Fuel at High Power,Verify fuel does not drop near zero (<200 kg/h) when shaft power > 3500 kW.,Shaft power and interaction sweeps,0,PASS,ACCEPTABLE_NON-MONOTONICITY,Model maintains physically consistent high fuel rates under high shaft power.
+SANITY-03,Shaft Power Monotonicity,Fuel consumption must scale monotonically with shaft power.,Shaft power sweep 500 to 8000 kW,0,PASS,ACCEPTABLE_NON-MONOTONICITY,Observed 0 local inversions exceeding 5 kg/h threshold.
+SANITY-04,Speed Monotonicity (Coupled Hydrodynamics),Fuel consumption must scale monotonically with cruising speed when power scales cubically.,Speed sweep 10 to 22 kn,0,PASS,ACCEPTABLE_NON-MONOTONICITY,Observed 0 inversions across speed range.
+SANITY-05,Decision Tree Step Discontinuity Audit,Audit magnitude of decision tree piecewise constant step jumps.,Shaft power 500 kW step increments,0,PASS,POSSIBLE_MODEL_ARTIFACT,Max discrete jump between adjacent 500 kW steps was 44.41 kg/h (typical tree artifact).
+SANITY-06,Extrapolation Trough Protection,Verify extreme OOD state receives explicit optimization penalty.,"Power = 15,000 kW (OOD)",0,PASS,EXTRAPOLATION_REGION,Extreme power was flagged as OUT_OF_DOMAIN with penalized objective 18805.2 kg/h.
