@@ -1,0 +1,26 @@
+canonical_channel,fuelcast_channel,mapping_type,units,equation,assumptions
+timestamp,index -> ISO-8601 UTC,DERIVED,ISO-8601 UTC,2024-01-01T00:00:00Z + index * 300s,5-minute contiguous sampling
+vessel_id,File stem identifier,DIRECT,string,CPS_Poseidon / CPS_Triton / OSS_Ceto,Physical vessel isolation
+vessel_type,Vessel registry class,DERIVED,category,passenger_cruise / passenger_cruise_small / offshore_supply,Naval architectural classification
+latitude,Weather geographic grid,MISSING,decimal_degrees,N/A (Anonymized),Not needed for operational fuel estimation
+longitude,Weather geographic grid,MISSING,decimal_degrees,N/A (Anonymized),Not needed for operational fuel estimation
+sog_kn,Ship_SpeedOverGround,DIRECT,knots,Ship_SpeedOverGround * 1.94384,GPS satellite speed over ground
+stw_kn,Ship_SpeedThroughWater / Vector,DIRECT_OR_DERIVED,knots,"Doppler STW (Poseidon) / Vector STW (Triton, Ceto)",Vector closure validated r=0.9980
+draft_m,"Ship_DraftFore, Ship_DraftAft",DIRECT_OR_DERIVED,meters,(DraftFore + DraftAft)/2 or Design Draft,Molded hydrostatics
+displacement_t,Vessel specs hydrostatics,DERIVED,metric_tonnes,"42000 (Poseidon), 8500 (Triton), 6000 (Ceto)",Operational displacement
+rpm,Propeller/Engine RotationSpeed,DIRECT,revolutions_per_minute,Mean of port/stbd rotation speed,Shaft tachometer
+shaft_power_kw,Propeller/Consumer_Total_ShaftPower,DIRECT,kilowatts,ShaftPower_W / 1000.0,Mechanical shaft power
+shaft_torque_nm,Propeller ShaftTorque / Computed,DIRECT_OR_DERIVED,newton_meters,Port + Stbd torque (Nm or kNm*1000) or P/(2*pi*n),Shaft torsionmeter
+fuel_mass_flow_kg_h,Consumer_Total_MomentaryFuel,DIRECT,kg/hour,Consumer_Total_MomentaryFuel * 3600.0,Coriolis mass flow differential
+wind_speed_ms,Weather_WindSpeed10M,DIRECT,meters_per_second,Weather_WindSpeed10M,10m metocean wind speed
+wind_direction_deg,Weather_WindDirection10M,DIRECT,degrees,Weather_WindDirection10M % 360,Meteorological wind direction
+wave_height_m,Weather_WaveHeight,DIRECT,meters,Weather_WaveHeight,Significant wave height Hs
+wave_period_s,Weather_WavePeriod,DIRECT,seconds,Weather_WavePeriod,Peak spectral wave period Tp
+wave_direction_deg,Weather_WaveDirection,DIRECT,degrees,Weather_WaveDirection % 360,Mean wave encounter direction
+current_speed_ms,Weather_OceanCurrentVelocity,DIRECT,meters_per_second,Weather_OceanCurrentVelocity,Surface ocean current speed
+current_direction_deg,Weather_OceanCurrentDirection,DIRECT,degrees,Weather_OceanCurrentDirection % 360,Surface ocean current direction
+water_depth_m,Environment_SeaFloorDepth,DIRECT,meters,Environment_SeaFloorDepth,Echo sounder water depth
+cargo_mass_t,Loading condition,NOT_APPLICABLE,metric_tonnes,Captured via displacement_t,Passenger/supply vessel context
+cargo_demand_t,Commercial contract,NOT_APPLICABLE,metric_tonnes,N/A,Not required for operational estimation
+engine_load_pct,Shaft power / MCR,DERIVED,percentage,(shaft_power_kw / rated_power_kw) * 100.0,MCR nominal rating
+fuel_type,Vessel engine room fuel specification,DIRECT,category,"vlsfo (Poseidon, Triton) / mgo (Ceto)",BDN bunker delivery record

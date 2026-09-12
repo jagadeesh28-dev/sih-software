@@ -1,0 +1,27 @@
+canonical_channel,canonical_unit,fuelcast_mapping,fuelcast_classification,pontos_hub_mapping,pontos_classification,smyril_mapping,smyril_classification,shifts_2_mapping,shifts_classification,utas_wmu_mapping,utas_classification
+timestamp,timestamp_utc,index (integer 5-min step),DERIVED,time (TIMESTAMPZ),DIRECT,timestamp (.NET 100ns ticks),DERIVED,time_id (1-min step),DERIVED,noon_report_date,DERIVED
+vessel_id,identifier,"parquet_filename (CPS_Poseidon, etc.)",DIRECT,vessel_id (name_SD401Fredrika),DIRECT,M/S Smyril (implicit),DIRECT,Vessel_1 (implicit),DIRECT,vessel_anon_id,DIRECT
+vessel_type,category,"paper Table 1 (CPS=Cruise, OSS=Offshore)",DIRECT,vessel metadata (fishing boat),EXTERNAL_JOIN,Ro-Pax passenger ferry,DIRECT,Merchant cargo vessel,DIRECT,ship_type (container/bulk),DIRECT
+latitude,decimal_degrees,MISSING (Scrubbed for privacy),MISSING,positioningsystem_latitude_deg,DIRECT,latitude.csv,DIRECT,MISSING (Scrubbed),MISSING,ais_latitude,DIRECT
+longitude,decimal_degrees,MISSING (Scrubbed for privacy),MISSING,positioningsystem_longitude_deg,DIRECT,longitude.csv,DIRECT,MISSING (Scrubbed),MISSING,ais_longitude,DIRECT
+sog_kn,knots,Ship_SpeedOverGround * 1.94384,DERIVED,positioningsystem_sog_kn,DIRECT,speedKnots.csv,DIRECT,diff_speed_overground (accel),DERIVED,ais_sog_kn,DIRECT
+stw_kn,knots,Ship_SpeedThroughWater * 1.94384 (Poseidon); Vector-derived (Triton),DIRECT,positioningsystem_stw_kn,DIRECT,longitudinalWaterSpeed.csv,DIRECT,stw,DIRECT,MISSING,MISSING
+heading_deg,degrees,Ship_Heading,DIRECT,positioningsystem_heading_deg,DIRECT,trueHeading.csv,DIRECT,MISSING (Relative wind/currents),MISSING,ais_heading,DIRECT
+draft_m,meters,0.5*(Ship_DraftAft + Ship_DraftFore) [Triton/Ceto; Poseidon Missing],DERIVED,draft_m (tag defined),EXTERNAL_JOIN,0.5*(level1median + level2median),DERIVED,0.5*(draft_aft + draft_fore),DERIVED,reported_draft,DIRECT
+displacement_t,metric_tonnes,"Gross Tonnage (Poseidon:70k, Triton:11k, Ceto:24k)",EXTERNAL_JOIN,MISSING,MISSING,12500 t (ship particulars),EXTERNAL_JOIN,MISSING (Static deadweight),EXTERNAL_JOIN,deadweight_t,EXTERNAL_JOIN
+rpm,min^-1,Propeller_Port/Starboard_RotationSpeed,DIRECT,propeller_speed_rpm,DIRECT,MISSING,MISSING,MISSING (Integrated in power),MISSING,MISSING,MISSING
+shaft_power_kw,kilowatts,Propeller_Total_ShaftPower / 1000.0,DERIVED,enginemain_power_kw,DIRECT,MISSING,MISSING,power,DIRECT,MISSING,MISSING
+shaft_torque_nm,newton_meters,Propeller_Port/Starboard_ShaftTorque,DIRECT,propeller_torque_nm,DIRECT,MISSING,MISSING,MISSING (Integrated in power),MISSING,MISSING,MISSING
+engine_load_pct,percentage,Consumer_Total_ShaftPower / MCR,DERIVED,enginemain_power_kw / MCR,DERIVED,MISSING,MISSING,MISSING,MISSING,reported_engine_load,DIRECT
+fuel_mass_flow_kg_h,kg_per_hour,Consumer_Total_MomentaryFuel * 3600.0,DIRECT,enginemain_fuelcons_lph * density,DERIVED,fuelVolumeFlowRate * fuelDensity * 3600.0,DERIVED,MISSING (No fuel target),NOT_APPLICABLE,voyage_fuel_tonnes / duration,DERIVED
+wind_speed_ms,meters_per_second,Weather_WindSpeed10M / Ship_AnemometerWindSpeed,DIRECT,anemometer_tws_mps / aws_mps,DIRECT,windSpeed.csv,DIRECT,awind_vcomp / ucomp (knots to m/s),DERIVED,ecmwf_wind_speed,EXTERNAL_JOIN
+wind_direction_deg,degrees,Weather_WindDirection10M / Ship_AnemometerWindDirection,DIRECT,anemometer_twd_deg / awa_deg,DIRECT,windAngle.csv,DIRECT,"arctan2(awind_u, awind_v)",DERIVED,ecmwf_wind_direction,EXTERNAL_JOIN
+wave_height_m,meters,Weather_WaveHeight (Copernicus),DIRECT,MISSING (Requires Copernicus join),EXTERNAL_JOIN,MISSING (Requires Copernicus join),EXTERNAL_JOIN,comb_wind_swell_wave_height,DIRECT,copernicus_swh,EXTERNAL_JOIN
+wave_period_s,seconds,Weather_WavePeriod (Copernicus),DIRECT,MISSING (Requires Copernicus join),EXTERNAL_JOIN,MISSING (Requires Copernicus join),EXTERNAL_JOIN,MISSING (Swell period omitted),MISSING,copernicus_mwp,EXTERNAL_JOIN
+wave_direction_deg,degrees,Weather_WaveDirection (Copernicus),DIRECT,MISSING (Requires Copernicus join),EXTERNAL_JOIN,MISSING (Requires Copernicus join),EXTERNAL_JOIN,MISSING,MISSING,copernicus_mwd,EXTERNAL_JOIN
+current_speed_ms,meters_per_second,Weather_OceanCurrentVelocity (Copernicus),DIRECT,MISSING (Requires Copernicus join),EXTERNAL_JOIN,MISSING (Requires Copernicus join),EXTERNAL_JOIN,sqrt(rcurr_u^2 + rcurr_v^2),DERIVED,copernicus_curr_spd,EXTERNAL_JOIN
+current_direction_deg,degrees,Weather_OceanCurrentDirection (Copernicus),DIRECT,MISSING (Requires Copernicus join),EXTERNAL_JOIN,MISSING (Requires Copernicus join),EXTERNAL_JOIN,"arctan2(rcurr_u, rcurr_v)",DERIVED,copernicus_curr_dir,EXTERNAL_JOIN
+water_depth_m,meters,Environment_SeaFloorDepth (Copernicus),DIRECT,MISSING,MISSING,MISSING,MISSING,MISSING,MISSING,gebco_depth,EXTERNAL_JOIN
+cargo_mass_t,metric_tonnes,MISSING (Inferred from draft),MISSING,MISSING,MISSING,MISSING (Ferry pax/car load),MISSING,MISSING (Telegrams draft only),MISSING,reported_cargo_t,DIRECT
+cargo_demand_t,metric_tonnes,NOT_APPLICABLE (Continuous cruise/OSS),NOT_APPLICABLE,NOT_APPLICABLE,NOT_APPLICABLE,NOT_APPLICABLE (Fixed ferry schedule),NOT_APPLICABLE,NOT_APPLICABLE,NOT_APPLICABLE,reported_cargo_demand,DIRECT
+fuel_type,category,Consumer_*_FuelType (DM / RM 380),DIRECT,MISSING (Bunker log required),EXTERNAL_JOIN,MGO / Low sulfur HFO,EXTERNAL_JOIN,VLSFO (implicit),EXTERNAL_JOIN,bunker_type (VLSFO/LSMGO),DIRECT

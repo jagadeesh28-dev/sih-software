@@ -1,0 +1,9 @@
+Exploit_ID,Description,Modified_Variables,Raw_ML_Predicted_Fuel,SafeFuel_Objective_Value,Domain_Status,Risk_Flag,Exploit_Mitigated,Reason
+ADV-01_NEGATIVE_POWER,Negative shaft power state (-500 kW),{'shaft_power_kw': -500.0},1929.97,100000.0,PHYSICALLY_INVALID,REJECTED,True,"shaft_power_kw=-500.00 violates physical bounds [0.0, 80000.0]"
+ADV-02_ZERO_POWER_CRUISE,"High cruise speed with zero shaft power (18 kn, 0 kW)","{'sog_kn': 18.0, 'stw_kn': 18.0, 'shaft_power_kw': 0.0}",1994.95,100000.0,PHYSICALLY_INVALID,REJECTED,True,Impossible physics: high speed stw=18.0 kn with near-zero power pwr=0.0 kW
+ADV-03_NEGATIVE_SPEED,Negative Speed Through Water (-3.0 kn),{'stw_kn': -3.0},2239.6,100000.0,PHYSICALLY_INVALID,REJECTED,True,"stw_kn=-3.00 violates physical bounds [0.0, 35.0]"
+ADV-04_HURRICANE_SEA,"Extreme hurricane sea state (Hs=25.0m, Wind=65m/s)","{'wave_height_m': 25.0, 'wind_speed_ms': 65.0}",2028.67,100000.0,PHYSICALLY_INVALID,REJECTED,True,"wave_height_m=25.00 violates physical bounds [0.0, 20.0]; wind_speed_ms=65.00 violates physical bounds [0.0, 60.0]"
+ADV-05_IMPOSSIBLE_DRAFT,Impossible draft state (35.0 m),{'draft_m': 35.0},2037.75,100000.0,PHYSICALLY_INVALID,REJECTED,True,"draft_m=35.00 violates physical bounds [1.0, 25.0]"
+ADV-06_EXTREME_CURRENT,Unphysical ocean current (15.0 m/s),{'current_speed_ms': 15.0},2034.9,100000.0,PHYSICALLY_INVALID,REJECTED,True,"current_speed_ms=15.00 violates physical bounds [0.0, 6.0]"
+ADV-07_MEGA_DISPLACEMENT,"Impossible displacement state (600,000 tonnes)",{'displacement_t': 600000.0},2034.9,100000.0,PHYSICALLY_INVALID,REJECTED,True,"displacement_t=600000.00 violates physical bounds [500.0, 400000.0]"
+ADV-08_RPM_WITHOUT_POWER,"High RPM with zero power (200 RPM, 0 kW)","{'rpm': 200.0, 'shaft_power_kw': 0.0}",2850.14,3978.56,UNCERTAIN,CAUTION,False,Operating state fully inside empirical P01-P99 envelope.

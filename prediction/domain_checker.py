@@ -19,22 +19,22 @@ logger = get_logger(__name__)
 
 # Hard physical validity bounds for maritime vessel operations
 PHYSICAL_VALIDITY_BOUNDS = {
-    "stw_kn": (0.1, 32.0),
+    "stw_kn": (0.0, 35.0),
     "sog_kn": (0.0, 35.0),
-    "shaft_power_kw": (0.0, 25000.0),
-    "shaft_torque_nm": (0.0, 3000000.0),
-    "rpm": (0.0, 250.0),
-    "draft_m": (2.0, 22.0),
-    "displacement_t": (500.0, 150000.0),
+    "shaft_power_kw": (0.0, 80000.0),
+    "shaft_torque_nm": (0.0, 5000000.0),
+    "rpm": (0.0, 1000.0),
+    "draft_m": (1.0, 25.0),
+    "displacement_t": (500.0, 400000.0),
     "engine_load_pct": (0.0, 115.0),
-    "wave_height_m": (0.0, 18.0),
+    "wave_height_m": (0.0, 20.0),
     "wave_period_s": (1.0, 30.0),
     "wave_direction_deg": (0.0, 360.0),
-    "wind_speed_ms": (0.0, 50.0),
+    "wind_speed_ms": (0.0, 60.0),
     "wind_direction_deg": (0.0, 360.0),
     "current_speed_ms": (0.0, 6.0),
     "current_direction_deg": (0.0, 360.0),
-    "water_depth_m": (5.0, 11000.0),
+    "water_depth_m": (2.0, 11000.0),
 }
 
 

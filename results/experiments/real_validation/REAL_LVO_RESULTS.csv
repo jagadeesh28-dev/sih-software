@@ -1,0 +1,10 @@
+Fold,Target_Vessel,Configuration,MAE,RMSE,R2,Median_AE,Bias,Description
+Fold_1 (Test=Poseidon),CPS_Poseidon,"CONFIG-REAL-A (Hydrodynamic Only, No vessel_id)",1914.6,2335.12,-1.1102,1380.13,-1914.1,"Trained on small cruise + OSV, tested on 70k GT large cruise ship"
+Fold_1 (Test=Poseidon),CPS_Poseidon,"CONFIG-REAL-B (Machinery-Aware, No vessel_id)",1870.52,2174.36,-0.8296,1493.71,-1870.42,"Trained on small cruise + OSV, tested on 70k GT large cruise ship"
+Fold_1 (Test=Poseidon),CPS_Poseidon,CONFIG-REAL-B + vessel_id (Memorization Test),1821.42,2122.63,-0.7436,1406.7,-1821.32,Evaluates whether unseen vessel_id causes collapse or memorization
+Fold_2 (Test=Triton),CPS_Triton,"CONFIG-REAL-A (Hydrodynamic Only, No vessel_id)",1731.72,1819.56,-59.6368,1872.66,1731.72,"Trained on large cruise + OSV, tested on 11k GT small cruise ship"
+Fold_2 (Test=Triton),CPS_Triton,"CONFIG-REAL-B (Machinery-Aware, No vessel_id)",1606.18,1658.25,-49.3624,1786.41,1606.18,"Trained on large cruise + OSV, tested on 11k GT small cruise ship"
+Fold_2 (Test=Triton),CPS_Triton,CONFIG-REAL-B + vessel_id (Memorization Test),1534.82,1589.29,-45.2609,1730.59,1534.82,Evaluates whether unseen vessel_id causes collapse or memorization
+Fold_3 (Test=Ceto),OSS_Ceto,"CONFIG-REAL-A (Hydrodynamic Only, No vessel_id)",1210.55,1255.93,-10.1978,1242.91,1209.87,"Trained on cruise ships, tested on 24k GT offshore supply vessel"
+Fold_3 (Test=Ceto),OSS_Ceto,"CONFIG-REAL-B (Machinery-Aware, No vessel_id)",1681.93,1707.85,-19.7062,1586.87,1681.93,"Trained on cruise ships, tested on 24k GT offshore supply vessel"
+Fold_3 (Test=Ceto),OSS_Ceto,CONFIG-REAL-B + vessel_id (Memorization Test),1681.93,1707.85,-19.7062,1586.87,1681.93,Evaluates whether unseen vessel_id causes collapse or memorization

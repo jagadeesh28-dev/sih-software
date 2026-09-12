@@ -1,0 +1,95 @@
+{
+  "description": "Chronological (60/20/20) and 3-Fold Leave-Vessel-Out split definitions for FuelCast",
+  "protocol": "Strict chronological ordering within vessels. No random row shuffling. Zero future leakage.",
+  "chronological_splits": {
+    "CPS_Poseidon": {
+      "total_rows": 105422,
+      "train": {
+        "start_idx": 0,
+        "end_idx": 63253,
+        "count": 63253,
+        "pct": 60.0
+      },
+      "validation": {
+        "start_idx": 63253,
+        "end_idx": 84337,
+        "count": 21084,
+        "pct": 20.0
+      },
+      "test": {
+        "start_idx": 84337,
+        "end_idx": 105422,
+        "count": 21085,
+        "pct": 20.0
+      }
+    },
+    "CPS_Triton": {
+      "total_rows": 25347,
+      "train": {
+        "start_idx": 0,
+        "end_idx": 15208,
+        "count": 15208,
+        "pct": 60.0
+      },
+      "validation": {
+        "start_idx": 15208,
+        "end_idx": 20277,
+        "count": 5069,
+        "pct": 20.0
+      },
+      "test": {
+        "start_idx": 20277,
+        "end_idx": 25347,
+        "count": 5070,
+        "pct": 20.0
+      }
+    },
+    "OSS_Ceto": {
+      "total_rows": 43205,
+      "train": {
+        "start_idx": 0,
+        "end_idx": 25923,
+        "count": 25923,
+        "pct": 60.0
+      },
+      "validation": {
+        "start_idx": 25923,
+        "end_idx": 34564,
+        "count": 8641,
+        "pct": 20.0
+      },
+      "test": {
+        "start_idx": 34564,
+        "end_idx": 43205,
+        "count": 8641,
+        "pct": 20.0
+      }
+    }
+  },
+  "leave_vessel_out_folds": {
+    "Fold_1": {
+      "train_vessels": [
+        "CPS_Triton",
+        "OSS_Ceto"
+      ],
+      "test_vessel": "CPS_Poseidon",
+      "purpose": "Evaluate generalization to 70k GT large cruise ship trained on small cruise + OSV"
+    },
+    "Fold_2": {
+      "train_vessels": [
+        "CPS_Poseidon",
+        "OSS_Ceto"
+      ],
+      "test_vessel": "CPS_Triton",
+      "purpose": "Evaluate generalization to 11k GT small cruise ship trained on large cruise + OSV"
+    },
+    "Fold_3": {
+      "train_vessels": [
+        "CPS_Poseidon",
+        "CPS_Triton"
+      ],
+      "test_vessel": "OSS_Ceto",
+      "purpose": "Evaluate generalization to 24k GT offshore supply vessel trained on cruise ships"
+    }
+  }
+}

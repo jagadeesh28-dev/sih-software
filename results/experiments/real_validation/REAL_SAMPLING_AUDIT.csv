@@ -1,0 +1,4 @@
+vessel_id,total_records,median_dt_s,mean_dt_s,std_dt_s,p01_dt_s,p50_dt_s,p99_dt_s,max_dt_s,pct_matching_5min,gaps_gt_10min,gaps_gt_30min,gaps_gt_1hour,sampling_regularity
+CPS_Poseidon,105422,300.0,300.0,0.0,300.0,300.0,300.0,300.0,100.0,0,0,0,UNIFORMLY_SAMPLED
+CPS_Triton,25347,300.0,300.0,0.0,300.0,300.0,300.0,300.0,100.0,0,0,0,UNIFORMLY_SAMPLED
+OSS_Ceto,43205,300.0,300.0,0.0,300.0,300.0,300.0,300.0,100.0,0,0,0,UNIFORMLY_SAMPLED

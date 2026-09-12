@@ -1,0 +1,12 @@
+Ablation_Setting,Excluded_Features,MAE,RMSE,R2,Delta_MAE,Delta_RMSE,Delta_R2,Interpretation
+FULL_CONFIG_REAL_B,None (Full baseline),352.72,983.46,0.7543,0.0,0.0,0.0,Reference machinery-aware baseline
+NO_SHAFT_POWER,shaft_power_kw,357.75,975.06,0.7585,5.02,-8.39,0.0042,Excludes propeller shaft power
+NO_RPM,rpm,352.26,996.38,0.7478,-0.46,12.92,-0.0065,Excludes shaft rotational speed
+NO_TORQUE,shaft_torque_nm,322.05,924.3,0.783,-30.67,-59.16,0.0287,Excludes shaft torque
+NO_MACHINERY_CONFIG_A,"shaft_power_kw, rpm, shaft_torque_nm, engine_load_pct",263.91,486.05,0.94,-88.81,-497.41,0.1857,Pure hydrodynamic CONFIG-REAL-A
+NO_WIND,"wind_speed_ms, wind_direction_deg",357.42,995.11,0.7485,4.69,11.65,-0.0059,Excludes atmospheric wind channels
+NO_WAVES,"wave_height_m, wave_period_s, wave_direction_deg",362.07,1013.02,0.7393,9.34,29.57,-0.015,Excludes sea surface wave channels
+NO_CURRENT,"current_speed_ms, current_direction_deg",355.15,996.16,0.748,2.43,12.7,-0.0064,Excludes ocean current velocity & direction
+NO_DRAFT,draft_m,355.33,997.42,0.7473,2.61,13.96,-0.007,Excludes vessel draft
+NO_DISPLACEMENT,displacement_t,356.52,1003.7,0.7441,3.8,20.24,-0.0102,Excludes hydrostatic displacement
+PLUS_VESSEL_ID,None (Added vessel_id),354.0,987.71,0.7522,1.28,4.26,-0.0021,Tests memorization gain within same fleet vs LVO generalization

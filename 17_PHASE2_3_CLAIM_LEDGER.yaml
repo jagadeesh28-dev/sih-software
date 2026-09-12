@@ -1,0 +1,97 @@
+# SIH26138 Claim Ledger - Phase 2.3 Real Maritime Data Validation & Scientific Gate
+# Document ID: CLAIM-LEDGER-PHASE2-3-001
+# Last Updated: 2026-09-12
+# Platform Version: 0.2.3
+
+metadata:
+  phase: "2.3 Real Maritime Data Validation & Model Transfer"
+  status: "CONDITIONAL_PASS_FOR_PHASE_3"
+  dataset_primary: "krohnedigital/FuelCast"
+  records_evaluated: 173974
+  vessels:
+    - id: "CPS_Poseidon"
+      class: "Large Passenger Cruise Ship"
+      gross_tonnage: 70000
+      records: 105422
+      duration_days: 366.0
+    - id: "CPS_Triton"
+      class: "Small Passenger Cruise Ship"
+      gross_tonnage: 11000
+      records: 25347
+      duration_days: 88.0
+    - id: "OSS_Ceto"
+      class: "Offshore Supply Vessel"
+      gross_tonnage: 24000
+      records: 43205
+      duration_days: 150.0
+
+verified_metrics:
+  hybrid_residual_model:
+    architecture: "MODEL-REAL-04 (Physics + ML Residual, alpha=1.0)"
+    test_split: "Chronological 20% (n=34,796)"
+    mae_kg_h: 246.97
+    rmse_kg_h: 443.21
+    mape_pct: 14.63
+    r2_score: 0.9501
+    median_ae_kg_h: 129.31
+  ml_hydrodynamic_only:
+    architecture: "MODEL-REAL-02 (CONFIG-REAL-A, No Power)"
+    test_split: "Chronological 20% (n=34,796)"
+    mae_kg_h: 263.91
+    rmse_kg_h: 486.05
+    mape_pct: 15.69
+    r2_score: 0.9400
+    median_ae_kg_h: 138.08
+  synthetic_to_real_transfer:
+    architecture: "MODEL-REAL-05 (Frozen Synthetic LightGBM, Zero Retraining)"
+    test_split: "Combined Fleet Test (n=34,796)"
+    mae_kg_h: 2028.51
+    rmse_kg_h: 2767.01
+    mape_pct: 71.00
+    r2_score: -0.9447
+    bias_kg_h: -2027.19
+    verdict: "FAIL (Severe Domain Shift & Scale Divergence)"
+  leave_vessel_out:
+    fold_1_poseidon_r2: -1.1102
+    fold_2_triton_r2: -59.6368
+    fold_3_ceto_r2: -10.1978
+    verdict: "FAIL (Cross-Class Generalization Collapse)"
+  uncertainty_calibration:
+    nominal_interval: "90% [q05, q95]"
+    empirical_picp: 0.7851
+    wilson_95_ci: [0.7808, 0.7894]
+    mpiw_kg_h: 1490.71
+    quantile_crossings: 0
+    verdict: "MISCALIBRATED (Under-covers by 11.49%)"
+
+claim_discipline:
+  forbidden_claims:
+    - "industry ready"
+    - "deployment ready"
+    - "generalizes to all ships"
+    - "quantum advantage"
+    - "real-world optimization proven"
+    - "universally accurate"
+    - "physics validated universally"
+    - "zero-shot synthetic transfer validated"
+
+  allowed_claims:
+    - "Validated on FuelCast industrial telemetry across 173,974 records."
+    - "Validated on three physical commercial vessels: CPS_Poseidon, CPS_Triton, OSS_Ceto."
+    - "Demonstrated under evaluated operating domain (P01-P99 empirical envelope)."
+    - "Hydrodynamic CONFIG-REAL-A achieves R2=0.9400 without engine power telemetry."
+    - "Machinery-aware CONFIG-REAL-B improves instantaneous estimation on DP vessels (R2=0.9481)."
+    - "Synthetic-to-real transfer failure demonstrated (R2=-0.9447 without retraining)."
+    - "Leave-Vessel-Out performance reveals vessel-class domain shift (R2 < 0 across disparate ship types)."
+    - "Hybrid Physics + ML Residual achieves 14.63% MAPE and R2=0.9501 on fleet test data."
+    - "Adversarial optimization exploits mitigated via SafeFuelObjective defensive barrier."
+    - "Conditional optimization readiness under strict in-domain operational constraints."
+
+phase_3_permissions:
+  status: "CONDITIONALLY_PERMITTED"
+  mandatory_rules:
+    - "All optimization interfaces must use SafeFuelObjective."
+    - "Candidate search space must remain within fitted DomainChecker empirical envelope."
+    - "Optimization must include risk-adjusted uncertainty term: J(lambda) = q50 + lambda*(q95-q05)."
+    - "Optimization results must carry provenance label: REAL_TELEMETRY_VALIDATED_IN_DOMAIN_OPTIMIZATION."
+    - "Cross-class fleet optimization without individual vessel calibration is strictly forbidden."

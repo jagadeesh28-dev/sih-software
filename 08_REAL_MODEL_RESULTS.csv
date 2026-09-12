@@ -1,0 +1,14 @@
+Model,Configuration,Dataset,Split,MAE,RMSE,MAPE,R2,Median_AE,Bias,PICP_90,MPIW_90,In_Domain_Pct,Runtime_s
+MODEL-REAL-01 (Physics-Only),Holtrop-Mennen First-Principles,FuelCast Combined Fleet,Chronological Test (20%),1885.45,2468.05,72.56,-0.5471,1228.38,-1883.19,N/A,N/A,N/A,1.61
+MODEL-REAL-01 (Physics-Only) [CPS_Poseidon],Holtrop-Mennen First-Principles,CPS_Poseidon,Chronological Test (20%),2820.75,3138.6,81.23,-1.9713,2667.63,-2820.36,N/A,N/A,N/A,0.0
+MODEL-REAL-01 (Physics-Only) [CPS_Triton],Holtrop-Mennen First-Principles,CPS_Triton,Chronological Test (20%),149.83,179.41,31.78,0.2635,131.2,-136.12,N/A,N/A,N/A,0.0
+MODEL-REAL-01 (Physics-Only) [OSS_Ceto],Holtrop-Mennen First-Principles,OSS_Ceto,Chronological Test (20%),621.55,687.48,75.3,-2.4941,533.24,-621.47,N/A,N/A,N/A,0.0
+MODEL-REAL-02 (ML CONFIG-REAL-A),Hydrodynamic & Environmental Only (No Power),FuelCast Combined Fleet,Chronological Test (20%),263.91,486.05,15.69,0.94,138.08,-146.19,0.7851,1490.71,N/A,0.63
+MODEL-REAL-02 (ML CONFIG-REAL-A) [CPS_Poseidon],Hydrodynamic & Environmental Only,CPS_Poseidon,Chronological Test (20%),331.26,593.06,10.68,0.8939,171.03,-166.06,N/A,N/A,N/A,0.0
+MODEL-REAL-02 (ML CONFIG-REAL-A) [CPS_Triton],Hydrodynamic & Environmental Only,CPS_Triton,Chronological Test (20%),74.4,98.45,23.57,0.7782,57.15,40.34,N/A,N/A,N/A,0.0
+MODEL-REAL-02 (ML CONFIG-REAL-A) [OSS_Ceto],Hydrodynamic & Environmental Only,OSS_Ceto,Chronological Test (20%),210.77,295.6,23.29,0.354,140.06,-207.14,N/A,N/A,N/A,0.0
+MODEL-REAL-03 (ML CONFIG-REAL-B),"Machinery-Aware (Power, RPM, Torque, Load)",FuelCast Combined Fleet,Chronological Test (20%),352.72,983.46,13.93,0.7543,90.49,-301.95,N/A,N/A,N/A,0.6
+MODEL-REAL-03 (ML CONFIG-REAL-B) [CPS_Poseidon],"Machinery-Aware (Power, RPM, Torque, Load)",CPS_Poseidon,Chronological Test (20%),540.95,1261.92,15.28,0.5197,146.0,-476.99,N/A,N/A,N/A,0.0
+MODEL-REAL-03 (ML CONFIG-REAL-B) [CPS_Triton],"Machinery-Aware (Power, RPM, Torque, Load)",CPS_Triton,Chronological Test (20%),45.56,57.43,15.79,0.9245,38.83,33.55,N/A,N/A,N/A,0.0
+MODEL-REAL-03 (ML CONFIG-REAL-B) [OSS_Ceto],"Machinery-Aware (Power, RPM, Torque, Load)",OSS_Ceto,Chronological Test (20%),73.66,83.79,9.55,0.9481,74.18,-71.66,N/A,N/A,N/A,0.0
+MODEL-REAL-04 (Hybrid Residual),Physics + ML Residual (alpha=1.0),FuelCast Combined Fleet,Chronological Test (20%),246.97,443.21,14.63,0.9501,129.31,-141.82,N/A,N/A,N/A,10.87

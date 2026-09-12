@@ -1,0 +1,4 @@
+vessel_id,raw_rows,clean_rows,tail_nan_padding_rows,columns,duplicate_rows,constant_columns,cols_with_nulls_count,target_min_kg_s,target_median_kg_s,target_max_kg_s,target_mean_kg_h,target_max_kg_h
+CPS_Poseidon,105422,105422,0,65,0,None,54,0.0,0.675905,2.391596,2815.4,8609.75
+CPS_Triton,25351,25347,4,62,0,Consumer_Boiler_FuelType; Consumer_GeneratorEngine1_FuelType; Consumer_GeneratorEngine2_FuelType; Consumer_MainEnginePort_FuelType; Consumer_MainEngineStarboard_FuelType,53,0.0,0.200453,0.351613,635.14,1265.81
+OSS_Ceto,43213,43205,8,46,0,Consumer_DeckSupply_FuelType; Consumer_EngineRoom1_FuelType; Consumer_EngineRoom2_FuelType; Consumer_Incinerator_FuelType; Weather_SwellWavePeakPeriod; Weather_WindWavePeakPeriod,39,0.0,0.175302,0.749981,675.57,2699.93

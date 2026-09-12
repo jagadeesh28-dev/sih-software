@@ -1,0 +1,4 @@
+vessel_id,stw_channel_name,stw_sensor_type,sensor_status,mean_stw_kn,max_stw_kn,frozen_detected,vector_closure_corr,vector_closure_rmse_ms,vector_closure_mae_ms,vector_closure_bias_ms,sog_correlation
+CPS_Poseidon,Ship_SpeedThroughWater,Doppler Speed Log (Acoustic),DIRECT_VALID,9.85,24.1,False,,,,,
+CPS_Triton,Ship_SpeedThroughWater,Doppler Speed Log (Corrupted/Frozen at 1.0 kn),CORRUPTED_FROZEN,,,False,0.998,0.3524,0.2609,-0.0617,
+OSS_Ceto,None (Ship_Bearing + CMEMS Current),Missing -> Derived Bearing Vector STW,DERIVED_BEARING_VECTOR,,,False,0.998,0.3524,0.2609,-0.0617,

@@ -1,0 +1,6 @@
+Comparison,Sample_Count,Mean_Error_Difference,Median_Error_Difference,95%_CI_Lower,95%_CI_Upper,Wilcoxon_Statistic,P_Value,Effect_Size_r,Significant_at_p001
+Config-B (Machinery) vs Config-A (Hydrodynamic),2000,88.81,-32.15,-555.77,2707.76,718958.0,1.1527321985149816e-27,0.2437,True
+Config-A (ML Hydro) vs Physics (Holtrop-Mennen),2000,-1621.54,-1082.9,-3931.72,46.02,22905.0,0.0,0.2236,True
+Hybrid (Physics+ML) vs Config-A (ML Only),2000,-16.94,-9.65,-275.13,155.47,778167.0,7.454601423006985e-18,0.1925,True
+10-Seed Variation: CONFIG-REAL-A (MAE),10,263.11,263.63,258.78,267.1,2.787341302762861,0.0,0.0106,True
+10-Seed Variation: CONFIG-REAL-B (MAE),10,330.37,331.17,326.07,333.76,2.8144198965382525,0.0,0.0085,True
