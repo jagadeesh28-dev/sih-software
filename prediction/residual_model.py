@@ -86,9 +86,11 @@ class HybridResidualPredictor:
         target_col: str = "fuel_mass_flow_kg_h",
         tune_alpha: bool = False,
         candidate_alphas: Optional[List[float]] = None,
+        f_phys_train: Optional[np.ndarray] = None,
+        f_phys_val: Optional[np.ndarray] = None,
     ) -> "HybridResidualPredictor":
         """
-        1. Compute physics baseline on train_df.
+        1. Compute physics baseline on train_df (or use precomputed f_phys_train).
         2. Compute residual r = y_train - f_physics strictly on TRAIN.
         3. Fit LightGBM regressor on residual.
         4. Optionally sweep candidate alphas in {0.0, 0.25, 0.50, 0.75, 1.00} on val_df.
@@ -99,7 +101,8 @@ class HybridResidualPredictor:
         self.feature_cols = avail_features
 
         # 1. Physics baseline on TRAIN (using STW)
-        f_phys_train = self.physics.predict(train_df)
+        if f_phys_train is None:
+            f_phys_train = self.physics.predict(train_df)
         y_train = train_df[target_col].values
         # Strictly on TRAIN: r_i = F_observed_i - F_physics_i
         r_train = y_train - f_phys_train
@@ -108,10 +111,10 @@ class HybridResidualPredictor:
 
         # 2. Validation set evaluation
         eval_set = None
-        f_phys_val = None
         y_val = None
         if val_df is not None and target_col in val_df.columns:
-            f_phys_val = self.physics.predict(val_df)
+            if f_phys_val is None:
+                f_phys_val = self.physics.predict(val_df)
             y_val = val_df[target_col].values
             r_val = y_val - f_phys_val
             X_val = self._prepare_features(val_df, is_train=False)
@@ -160,13 +163,15 @@ class HybridResidualPredictor:
         }
         return self
 
-    def predict(self, df: pd.DataFrame) -> np.ndarray:
+    def predict(self, df: pd.DataFrame, f_phys: Optional[np.ndarray] = None) -> np.ndarray:
         """
         Predict fuel mass flow (kg/h):
         F_hat = max(0, F_physics + alpha * r_hat)
         """
-        f_phys = self.physics.predict(df)
+        if f_phys is None:
+            f_phys = self.physics.predict(df)
         X = self._prepare_features(df, is_train=False)
         r_hat = self.residual_model.predict(X)
         f_pred = f_phys + self.alpha * r_hat
         return np.maximum(0.0, f_pred)
+

@@ -5,7 +5,7 @@ Section 14:
 - Quantile metrics: PICP, MPIW, coverage error, Pinball loss.
 """
 
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 import numpy as np
 from sklearn.metrics import (
     mean_absolute_error,
@@ -84,6 +84,35 @@ def compute_pinball_loss(
 pinball_loss = compute_pinball_loss
 
 
+def compute_coverage_confidence_interval(
+    k_covered: int,
+    n_total: int,
+    confidence_level: float = 0.95,
+) -> Tuple[float, float]:
+    """
+    Compute Wilson score confidence interval for empirical coverage proportion.
+
+    Args:
+        k_covered: Number of observations falling inside the prediction interval.
+        n_total: Total number of evaluated observations.
+        confidence_level: Confidence level for the interval (default 0.95 for 95% CI).
+
+    Returns:
+        Tuple of (ci_lower_pct, ci_upper_pct) in percent [0, 100].
+    """
+    if n_total == 0:
+        return 0.0, 0.0
+    from scipy.stats import norm
+    z = float(norm.ppf(1.0 - (1.0 - confidence_level) / 2.0))
+    p_hat = float(k_covered) / float(n_total)
+    denom = 1.0 + (z ** 2) / n_total
+    center = (p_hat + (z ** 2) / (2.0 * n_total)) / denom
+    half_width = (z * np.sqrt((p_hat * (1.0 - p_hat) / n_total) + ((z ** 2) / (4.0 * (n_total ** 2))))) / denom
+    ci_low = max(0.0, min(1.0, center - half_width)) * 100.0
+    ci_high = max(0.0, min(1.0, center + half_width)) * 100.0
+    return float(ci_low), float(ci_high)
+
+
 def evaluate_quantiles(
     y_true: np.ndarray,
     q05: np.ndarray,
@@ -91,7 +120,8 @@ def evaluate_quantiles(
     q95: np.ndarray,
 ) -> Dict[str, float]:
     """
-    Evaluate 90% prediction interval metrics (q05 to q95) and quantile loss.
+    Evaluate 90% prediction interval nominal coverage (q05 to q95) and quantile loss.
+    Calculates Wilson score confidence intervals for the empirical coverage probability.
     """
     y_true = np.asarray(y_true, dtype=float)
     q05 = np.asarray(q05, dtype=float)
@@ -100,7 +130,9 @@ def evaluate_quantiles(
 
     # 1. Prediction Interval Coverage Probability (PICP)
     in_interval = (y_true >= q05) & (y_true <= q95)
-    picp = float(np.mean(in_interval))
+    k_covered = int(np.sum(in_interval))
+    n_total = len(y_true)
+    picp = float(k_covered / n_total) if n_total > 0 else 0.0
 
     # 2. Mean Prediction Interval Width (MPIW)
     interval_widths = q95 - q05
@@ -113,7 +145,10 @@ def evaluate_quantiles(
     # 4. Coverage error relative to nominal 90% target
     coverage_error = picp - 0.90
 
-    # 5. Pinball loss per quantile
+    # 5. Confidence interval for empirical coverage
+    ci_low_pct, ci_high_pct = compute_coverage_confidence_interval(k_covered, n_total, confidence_level=0.95)
+
+    # 6. Pinball loss per quantile
     loss_q05 = compute_pinball_loss(y_true, q05, 0.05)
     loss_q50 = compute_pinball_loss(y_true, q50, 0.50)
     loss_q95 = compute_pinball_loss(y_true, q95, 0.95)
@@ -124,6 +159,8 @@ def evaluate_quantiles(
         "picp_pct": picp * 100.0,
         "target_coverage": 0.90,
         "coverage_error": coverage_error,
+        "picp_ci_lower_pct": ci_low_pct,
+        "picp_ci_upper_pct": ci_high_pct,
         "mpiw_interval_width": mpiw,
         "mpiw": mpiw,
         "nmpiw_normalized_width": nmpiw,
@@ -132,3 +169,4 @@ def evaluate_quantiles(
         "pinball_loss_q95": loss_q95,
         "mean_pinball_loss": mean_pinball,
     }
+

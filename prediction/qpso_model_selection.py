@@ -16,6 +16,7 @@ import pandas as pd
 from sklearn.metrics import mean_absolute_error
 
 from .residual_model import HybridResidualPredictor
+from .physics_predictor import PhysicsFuelPredictor
 
 
 class HyperparameterSearchSpace:
@@ -84,6 +85,8 @@ class QPSOModelSelector:
         val_df: pd.DataFrame,
         target_col: str = "fuel_mass_flow_kg_h",
         feature_cols: Optional[List[str]] = None,
+        f_phys_train: Optional[np.ndarray] = None,
+        f_phys_val: Optional[np.ndarray] = None,
     ) -> Dict[str, Any]:
         """
         Execute QPSO search over validation performance.
@@ -95,32 +98,41 @@ class QPSOModelSelector:
         eval_count = 0
         y_val = val_df[target_col].values
 
+        # Precompute static physics predictions on train and validation sets once
+        if f_phys_train is None:
+            phys = PhysicsFuelPredictor()
+            f_phys_train = phys.predict(train_df)
+        if f_phys_val is None:
+            phys = PhysicsFuelPredictor()
+            f_phys_val = phys.predict(val_df)
+
+        import lightgbm as lgb
+        template = HybridResidualPredictor(feature_cols=feature_cols, seed=self.seed)
+        X_train_prep = template._prepare_features(train_df, is_train=True)
+        X_val_prep = template._prepare_features(val_df, is_train=False)
+        r_train = train_df[target_col].values - f_phys_train
+
         def evaluate_vector(vec: np.ndarray) -> float:
             nonlocal eval_count
             eval_count += 1
             p = HyperparameterSearchSpace.vector_to_params(vec)
-            lgb_params = {
-                "n_estimators": 100,
-                "learning_rate": p["learning_rate"],
-                "num_leaves": p["num_leaves"],
-                "max_depth": p["max_depth"],
-                "min_child_samples": p["min_child_samples"],
-                "colsample_bytree": p["feature_fraction"],
-                "reg_alpha": p["reg_alpha"],
-                "reg_lambda": p["reg_lambda"],
-                "random_state": self.seed,
-                "n_jobs": -1,
-                "verbose": -1,
-            }
             try:
-                model = HybridResidualPredictor(
-                    feature_cols=feature_cols,
-                    hyperparameters=lgb_params,
-                    alpha=p["alpha_residual"],
-                    seed=self.seed,
+                clf = lgb.LGBMRegressor(
+                    n_estimators=100,
+                    learning_rate=p["learning_rate"],
+                    num_leaves=p["num_leaves"],
+                    max_depth=p["max_depth"],
+                    min_child_samples=p["min_child_samples"],
+                    colsample_bytree=p["feature_fraction"],
+                    reg_alpha=p["reg_alpha"],
+                    reg_lambda=p["reg_lambda"],
+                    random_state=self.seed,
+                    n_jobs=1,
+                    verbose=-1,
                 )
-                model.fit(train_df, target_col=target_col)
-                preds = model.predict(val_df)
+                clf.fit(X_train_prep, r_train)
+                r_hat = clf.predict(X_val_prep)
+                preds = np.maximum(0.0, f_phys_val + p["alpha_residual"] * r_hat)
                 score = float(mean_absolute_error(y_val, preds))
             except Exception:
                 score = 1e6
@@ -194,10 +206,25 @@ class RandomSearchModelSelector:
         val_df: pd.DataFrame,
         target_col: str = "fuel_mass_flow_kg_h",
         feature_cols: Optional[List[str]] = None,
+        f_phys_train: Optional[np.ndarray] = None,
+        f_phys_val: Optional[np.ndarray] = None,
     ) -> Dict[str, Any]:
         t0 = time.perf_counter()
         rng = np.random.default_rng(self.seed)
         y_val = val_df[target_col].values
+
+        if f_phys_train is None:
+            phys = PhysicsFuelPredictor()
+            f_phys_train = phys.predict(train_df)
+        if f_phys_val is None:
+            phys = PhysicsFuelPredictor()
+            f_phys_val = phys.predict(val_df)
+
+        import lightgbm as lgb
+        template = HybridResidualPredictor(feature_cols=feature_cols, seed=self.seed)
+        X_train_prep = template._prepare_features(train_df, is_train=True)
+        X_val_prep = template._prepare_features(val_df, is_train=False)
+        r_train = train_df[target_col].values - f_phys_train
 
         best_score = float("inf")
         best_vec = None
@@ -206,28 +233,23 @@ class RandomSearchModelSelector:
         for i in range(self.total_budget):
             vec = rng.uniform(0.0, 1.0, size=self.dim)
             p = HyperparameterSearchSpace.vector_to_params(vec)
-            lgb_params = {
-                "n_estimators": 100,
-                "learning_rate": p["learning_rate"],
-                "num_leaves": p["num_leaves"],
-                "max_depth": p["max_depth"],
-                "min_child_samples": p["min_child_samples"],
-                "colsample_bytree": p["feature_fraction"],
-                "reg_alpha": p["reg_alpha"],
-                "reg_lambda": p["reg_lambda"],
-                "random_state": self.seed,
-                "n_jobs": -1,
-                "verbose": -1,
-            }
             try:
-                model = HybridResidualPredictor(
-                    feature_cols=feature_cols,
-                    hyperparameters=lgb_params,
-                    alpha=p["alpha_residual"],
-                    seed=self.seed,
+                clf = lgb.LGBMRegressor(
+                    n_estimators=100,
+                    learning_rate=p["learning_rate"],
+                    num_leaves=p["num_leaves"],
+                    max_depth=p["max_depth"],
+                    min_child_samples=p["min_child_samples"],
+                    colsample_bytree=p["feature_fraction"],
+                    reg_alpha=p["reg_alpha"],
+                    reg_lambda=p["reg_lambda"],
+                    random_state=self.seed,
+                    n_jobs=1,
+                    verbose=-1,
                 )
-                model.fit(train_df, target_col=target_col)
-                preds = model.predict(val_df)
+                clf.fit(X_train_prep, r_train)
+                r_hat = clf.predict(X_val_prep)
+                preds = np.maximum(0.0, f_phys_val + p["alpha_residual"] * r_hat)
                 score = float(mean_absolute_error(y_val, preds))
             except Exception:
                 score = 1e6
@@ -248,5 +270,6 @@ class RandomSearchModelSelector:
             "best_validation_mae": best_score,
             "best_params": best_params,
             "convergence_history": convergence,
+
             "best_vector": best_vec.tolist() if best_vec is not None else [],
         }

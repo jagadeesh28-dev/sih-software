@@ -189,51 +189,57 @@ claims:
       - "Real-world maritime prediction accuracy"
 
   - claim_id: "CLM-016"
-    claim: "QPSO offline metaheuristic achieved validation MAE 20.54 kg/h vs 22.10 kg/h for Random Search under identical 225-evaluation budgets on the residual model."
+    claim: "Under seed 42 and an equal 225-evaluation budget, QPSO achieved 7.1% lower validation MAE than Random Search (20.54 kg/h vs 22.10 kg/h); multi-seed evaluation quantifies aggregate statistical performance without claiming quantum supremacy."
     type: "MEASURED_RESULT"
-    source: "Phase 2 Experiment EXP-PRED-04 (QPSO vs Random Search)"
+    source: "Phase 2 & 2.1 Multi-Seed QPSO vs Random Search Benchmark"
     status: "EMPIRICALLY_VERIFIED"
     allowed_wording:
-      - "Offline metaheuristic parameter optimization"
-      - "Controlled comparison with equal validation evaluation budget"
+      - "Classical offline metaheuristic parameter optimization"
+      - "Under seed 42 and equal 225-evaluation budget, QPSO achieved 7.1% lower validation MAE than Random Search"
+      - "Controlled comparison under matched evaluation budget"
     forbidden_wording:
       - "Quantum supremacy"
       - "Quantum computing advantage"
-      - "Guaranteed global optimality"
+      - "Statistically reproducible 7.1% advantage"
 
   - claim_id: "CLM-017"
-    claim: "Leave-vessel-out evaluation under CONFIG-A reveals significant transfer degradation when predicting across vessel classes (VESSEL_HM_03 Handymax Bulk holdout MAE: 121.35 kg/h ML, 478.72 kg/h Hybrid, 755.52 kg/h Physics) compared to sister feeder vessels (MAE 7.67 to 8.83 kg/h)."
+    claim: "Leave-vessel-out evaluation under CONFIG-A demonstrates strong transfer between sister feeder vessels (MAE 7.67 to 8.83 kg/h) and severe domain-shift degradation when transferring to an unseen vessel class (Handymax Bulk Carrier holdout MAE: 121.35 kg/h ML, 478.72 kg/h Hybrid) within the synthetic benchmark."
     type: "MEASURED_RESULT"
-    source: "Phase 2 Experiment EXP-PRED-06 (Leave-Vessel-Out)"
+    source: "Phase 2 & 2.1 Experiment EXP-PRED-06 (Leave-Vessel-Out)"
     status: "EMPIRICALLY_VERIFIED"
     allowed_wording:
+      - "Synthetic cross-vessel/domain-shift benchmark"
       - "Quantified out-of-distribution vessel class transfer error"
       - "High sister-vessel transfer accuracy with degradation on unseen hull geometry"
     forbidden_wording:
+      - "Real-world cross-vessel generalization failure"
       - "Flawless universal cross-vessel generalization"
       - "Vessel-agnostic foundation model"
 
   - claim_id: "CLM-018"
-    claim: "Physics-informed residual learning improves cross-vessel generalization over pure ML on maritime telemetry."
+    claim: "The physics-informed residual hypothesis was not supported by this synthetic benchmark; uncalibrated theoretical drag tables introduced systematic offset bias."
     type: "HYPOTHESIS"
     source: "Phase 2 Research Question 1"
     status: "REFUTED_ON_SYNTHETIC"
     allowed_wording:
+      - "The physics-informed residual hypothesis was not supported by this synthetic benchmark"
       - "Hypothesis refuted on synthetic benchmark data where pure ML outperformed hybrid"
-      - "Pending real-world telemetry validation where physics bias may provide better domain bounds"
+      - "Pending real-world telemetry validation where calibrated physics bias may provide better domain bounds"
     forbidden_wording:
       - "Confirmed superiority of hybrid residual learning"
       - "Proven inductive bias benefit"
 
   - claim_id: "CLM-019"
-    claim: "LightGBM direct quantile regression achieved 87.15% empirical coverage (PICP) for nominal 90% prediction interval (q05-q95) with MPIW of 56.35 kg/h."
+    claim: "LightGBM direct quantile regression achieved 87.15% empirical coverage (PICP; 95% Wilson score CI: [81.4%, 91.3%]) for nominal 90% prediction interval nominal coverage (q05-q95) with MPIW of 56.35 kg/h."
     type: "MEASURED_RESULT"
-    source: "Phase 2 Quantile Uncertainty Evaluation"
+    source: "Phase 2 & 2.1 Quantile Uncertainty Evaluation"
     status: "EMPIRICALLY_VERIFIED"
     allowed_wording:
-      - "Empirical prediction interval coverage probability near nominal 90%"
+      - "90% prediction interval nominal coverage"
+      - "Empirical prediction interval coverage probability"
       - "Quantile-derived dispersion proxy"
     forbidden_wording:
+      - "90% confidence target"
       - "Parametric Gaussian variance"
       - "Exact aleatoric and epistemic uncertainty decomposition"
 
@@ -261,20 +267,21 @@ claims:
       - "Silent substitution of SOG for STW"
 
   - claim_id: "CLM-022"
-    claim: "Systematic ablation study (EXP-PRED-07) establishes that shaft power is the single most critical predictor (omitting it increases MAE from 5.61 to 7.92 kg/h), followed by wave height and wind speed."
+    claim: "Under the evaluated synthetic benchmark, shaft power was the most performance-sensitive feature among the tested ablations (omitting it increased MAE from 5.61 to 7.92 kg/h), while removing wind/wave variables produced small changes in predictive error."
     type: "MEASURED_RESULT"
     source: "Phase 2 Experiment EXP-PRED-07 (Ablation Study)"
     status: "EMPIRICALLY_VERIFIED"
     allowed_wording:
-      - "Quantified information source contributions via feature ablation"
-      - "Empirically measured feature drop impacts"
+      - "Under the evaluated synthetic benchmark, shaft power was the most performance-sensitive feature among the tested ablations"
+      - "Removing wind/wave variables produced small changes in predictive error under the evaluated benchmark"
     forbidden_wording:
-      - "Arbitrary feature importance"
+      - "Shaft power is scientifically the most important feature"
+      - "Wind and wave variables are statistically significant"
 
   - claim_id: "CLM-023"
     claim: "The Scientific Real-Data Gate is locked as NOT PASSED because all Phase 2 evaluations were conducted on controlled synthetic test data; no real-world maritime operational claims are made."
     type: "FACT"
-    source: "SIH26138 Phase 2 Scientific Gate Governance (Section 29)"
+    source: "SIH26138 Phase 2 Scientific Gate Governance"
     status: "CONFIRMED"
     allowed_wording:
       - "Real-data scientific gate not passed"
@@ -282,3 +289,15 @@ claims:
     forbidden_wording:
       - "Real-world maritime deployment accuracy"
       - "Commercial fuel savings"
+
+  - claim_id: "CLM-024"
+    claim: "Synthetic target dependency audit confirms shaft_power_kw is mathematically upstream of fuel_mass_flow_kg_h in the synthetic generator, demonstrating instantaneous operational estimation rather than future forecasting."
+    type: "FACT"
+    source: "Phase 2.1 Synthetic Target Dependency Audit (AUDIT-SYNTH-TARGET-001)"
+    status: "CONFIRMED"
+    allowed_wording:
+      - "Mathematically upstream powertrain dependency"
+      - "Instantaneous state estimation characteristic"
+    forbidden_wording:
+      - "Data leakage between features and target"
+

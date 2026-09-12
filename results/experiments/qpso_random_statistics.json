@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "num_seeds": 10,
+    "evaluation_budget_per_seed": 225,
+    "git_commit": "3a6d4e2b50e59740c933d86cfda7ba0779b2d485",
+    "timestamp": "2026-09-12T14:27:21Z"
+  },
+  "qpso": {
+    "validation_mae": {
+      "mean": 20.860500913332448,
+      "median": 20.628931166880026,
+      "std": 0.7550718239834321,
+      "ci_95_low": 20.320355069542032,
+      "ci_95_high": 21.400646757122864
+    },
+    "test_mae": {
+      "mean": 22.416594102526904,
+      "median": 22.1670097690863,
+      "std": 1.3990633857798833,
+      "ci_95_low": 21.415764447618564,
+      "ci_95_high": 23.417423757435245
+    },
+    "runtime_s": {
+      "mean": 21.563,
+      "median": 21.009999999999998,
+      "std": 10.919921703016007,
+      "ci_95_low": 13.751358597088558,
+      "ci_95_high": 29.37464140291144
+    }
+  },
+  "random_search": {
+    "validation_mae": {
+      "mean": 24.740823071984476,
+      "median": 24.391640691365403,
+      "std": 1.5653102594518575,
+      "ci_95_low": 23.621067567898855,
+      "ci_95_high": 25.860578576070097
+    },
+    "test_mae": {
+      "mean": 23.47514191740536,
+      "median": 23.64299134032499,
+      "std": 1.801427340899939,
+      "ci_95_low": 22.18647842848822,
+      "ci_95_high": 24.7638054063225
+    },
+    "runtime_s": {
+      "mean": 17.552,
+      "median": 15.455000000000002,
+      "std": 8.79917016289352,
+      "ci_95_low": 11.257452857163102,
+      "ci_95_high": 23.846547142836897
+    }
+  },
+  "paired_differences": {
+    "validation_mae_diff_qpso_minus_rs": {
+      "mean": -3.880322158652033,
+      "median": -3.6442923562808183,
+      "std": 1.87930233501143,
+      "ci_95_low": -5.224694062409255,
+      "ci_95_high": -2.5359502548948107
+    },
+    "test_mae_diff_qpso_minus_rs": {
+      "mean": -1.0585478148784557,
+      "median": -0.8739572459873575,
+      "std": 2.3588342376453237,
+      "ci_95_low": -2.745956176818086,
+      "ci_95_high": 0.6288605470611746
+    }
+  },
+  "hypothesis_tests": {
+    "wilcoxon_signed_rank_validation_mae": {
+      "statistic": 0.0,
+      "p_value": 0.001953125,
+      "effect_size_cohens_d": -2.0647673800865216,
+      "null_hypothesis": "Median paired difference (QPSO - RS) is zero",
+      "is_statistically_significant_0_05": true
+    },
+    "wilcoxon_signed_rank_test_mae": {
+      "statistic": 14.0,
+      "p_value": 0.193359375,
+      "effect_size_cohens_d": -0.4487588818174598,
+      "null_hypothesis": "Median paired difference (QPSO - RS) is zero",
+      "is_statistically_significant_0_05": false
+    }
+  }
+}
