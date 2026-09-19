@@ -1,0 +1,138 @@
+# Phase 6 Master Benchmark & Validation Protocol Configuration
+version: "6.0"
+timestamp: "2026-09-19"
+
+protocol:
+  name: "SIH26138-PHASE6-BENCHMARK"
+  immutability: "FROZEN"
+  target_hardware: "Classical CPU (AMD64 / x86_64)"
+  claim_constraints:
+    quantum_hardware: false
+    quantum_advantage: false
+    exponential_speedup: false
+    quantum_supremacy: false
+
+seeds:
+  count: 30
+  primary_seed: 42
+  matched_seeds:
+    - 42
+    - 1001
+    - 1002
+    - 1003
+    - 1004
+    - 1005
+    - 1006
+    - 1007
+    - 1008
+    - 1009
+    - 1010
+    - 1011
+    - 1012
+    - 1013
+    - 1014
+    - 1015
+    - 1016
+    - 1017
+    - 1018
+    - 1019
+    - 1020
+    - 1021
+    - 1022
+    - 1023
+    - 1024
+    - 1025
+    - 1026
+    - 1027
+    - 1028
+    - 1029
+
+experiments:
+  p0_physics:
+    code: "P0"
+    name: "Physics-Only Baseline"
+    description: "First-principles Holtrop-Mennen hydrodynamic model"
+  p1_pure_ml:
+    code: "P1"
+    name: "Pure ML Regressor"
+    description: "LightGBM regressor on CONFIG_REAL_A without physics"
+  p2_hybrid_baseline:
+    code: "P2"
+    name: "Physics + ML Residual Baseline (MODEL-REAL-04)"
+    description: "Holtrop-Mennen + LightGBM residual learning (alpha=1.0)"
+  p3_classical_ga_fs:
+    code: "P3"
+    name: "Physics + Classical GA Feature Selection + ML"
+    description: "Binary Genetic Algorithm feature selection matched to QIEA budget"
+  p4_qiea_fs:
+    code: "P4"
+    name: "Physics + QIEA Feature Selection + ML (QI-C1)"
+    description: "Q-bit rotation gate feature selection"
+  p5_qiea_qpso:
+    code: "P5"
+    name: "Physics + QIEA-FS + QPSO-HPO + ML (QI-C2)"
+    description: "Q-bit feature selection and delta-potential QPSO hyperparameter tuning"
+  p6_qi_mps:
+    code: "P6"
+    name: "Physics + Direct QI/MPS Residual (QI-C3)"
+    description: "Matrix Product State tensor-network regressor on trigonometric feature map"
+  p7_qi_ensemble:
+    code: "P7"
+    name: "Physics + QI Ensemble (QI-C4)"
+    description: "Ensemble combining QIEA diverse models and hybrid predictor"
+
+validation_splits:
+  forward_temporal:
+    train_pct: 60.0
+    val_pct: 20.0
+    test_pct: 20.0
+  rolling_origin:
+    windows: 3
+    window_definitions:
+      window_1: "Train 50%, Test 15%"
+      window_2: "Train 65%, Test 15%"
+      window_3: "Train 80%, Test 20%"
+  leave_one_vessel_out:
+    folds:
+      fold_1:
+        train: ["CPS_Triton", "OSS_Ceto"]
+        test: "CPS_Poseidon"
+      fold_2:
+        train: ["CPS_Poseidon", "OSS_Ceto"]
+        test: "CPS_Triton"
+      fold_3:
+        train: ["CPS_Poseidon", "CPS_Triton"]
+        test: "OSS_Ceto"
+  operating_regimes:
+    - "STOPPED_HARBOR"
+    - "MANEUVERING"
+    - "NORMAL_CRUISING"
+    - "ROUGH_SEA"
+  ood_detection:
+    method: "Mahalanobis Distance on standardized training features"
+    threshold_percentile: 95.0
+
+metrics:
+  accuracy:
+    - "R2"
+    - "MAE"
+    - "RMSE"
+    - "MAPE"
+    - "sMAPE"
+    - "Median_AE"
+    - "P95_AE"
+    - "Max_AE"
+  computational:
+    - "training_time_s"
+    - "inference_latency_ms"
+    - "memory_mb"
+    - "model_evaluations"
+  physical:
+    - "physical_violations_count"
+    - "negative_predictions_pct"
+  statistical:
+    - "paired_wilcoxon_p"
+    - "holm_adjusted_p"
+    - "rank_biserial_r"
+    - "hodges_lehmann_median_diff"
+    - "bootstrap_ci_95"

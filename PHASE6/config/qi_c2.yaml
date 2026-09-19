@@ -1,0 +1,42 @@
+# Phase 6 Candidate QI-C2: Tensor Network Matrix Product State (MPS) Predictor
+candidate_id: "QI-C2-MPS"
+formal_name: "Quantum-Inspired Tensor-Network Residual Regressor"
+compliance_level: "Level 2 (Strong)"
+description: "Direct quantum-inspired model architecture using trigonometric feature mapping and Matrix Product State tensor train contraction"
+
+quantum_feature_map:
+  formula: "phi(x_i) = [cos(pi * x_i / 2), sin(pi * x_i / 2)]^T"
+  properties:
+    norm_preservation: "||phi(x_i)||^2 = cos^2(pi*x/2) + sin^2(pi*x/2) = 1.0 (Q-bit state vector)"
+    domain: "Normalized continuous telemetry features x_i in [0, 1]"
+    local_hilbert_dimension: 2
+
+tensor_network_architecture:
+  topology: "1D Matrix Product State / Tensor Train (MPS/TT)"
+  core_tensors:
+    first_core_shape: [1, 2, 4]      # (1, d_local, chi)
+    intermediate_core_shape: [4, 2, 4] # (chi, d_local, chi)
+    last_core_shape: [4, 2, 1]       # (chi, d_local, 1)
+  bond_dimension_chi: 4
+  rank: 4
+  num_features: 6
+  feature_subset:
+    - "stw_kn"
+    - "sog_kn"
+    - "draft_m"
+    - "displacement_t"
+    - "wind_speed_ms"
+    - "wave_height_m"
+  parameter_count: 88  # 1*2*4 + 4*(4*2*4) + 4*2*1 = 8 + 128 + 8 = 144 weights + bias
+
+training_and_regularization:
+  optimization_method: "Mini-batch Stochastic Gradient Descent with Tensor Contraction"
+  epochs: 15
+  batch_size: 256
+  learning_rate: 0.01
+  l2_regularization: 0.001
+  normalization_scaler: "MinMaxScaler fit on training data only"
+
+hybrid_coupling:
+  formula: "y_hat = max(0, y_physics + r_hat_MPS)"
+  alpha: 1.00

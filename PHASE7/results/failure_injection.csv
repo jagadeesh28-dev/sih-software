@@ -1,0 +1,11 @@
+failure_id,failure_name,injected_condition,detection_mechanism,response_action,recovery_status,verified_in_test,logged,notified
+F1,Missing Telemetry,Empty payload / missing STW,Feature Contract Validator,REJECT,HANDLED_SAFELY,True,True,True
+F2,Corrupted Telemetry,NaN speed and Inf draft,Type & Value Checker,REJECT,HANDLED_SAFELY,True,True,True
+F3,QI-C1 Unavailable,QI-C1 booster unloaded,Model Router Fallback,FALLBACK_TO_MODEL_REAL_04,RECOVERED,True,True,True
+F4,QI-C1 Inference Exception,Simulated LightGBM exception,Try-Except Router Block,FALLBACK_TO_MODEL_REAL_04,RECOVERED,True,True,True
+F5,OOD Extrapolation State,"Extreme wave Hs=15m, wind=55m/s",Domain Envelope Guard,FALLBACK_OR_REJECT,HANDLED_SAFELY,True,True,True
+F6,All ML Models Fail,Simulated full ML stack crash,Emergency Physics Router,EMERGENCY_PHYSICS_FALLBACK,RECOVERED,True,True,True
+F7,Malformed Request,List of integers instead of Dict,Type Validator,REJECT_WITH_TYPEERROR,HANDLED_SAFELY,True,True,True
+F8,Impossible Physical Input,stw_kn = -15.0 knots,Physical Sanity Checker,REJECT,HANDLED_SAFELY,True,True,True
+F9,Corrupted Configuration,Missing production.yaml,Builtin Default Constants,DEFAULT_POLICY_APPLIED,RECOVERED,True,True,True
+F10,Missing Model File,Deleted booster file,Dynamic Training / Fallback,GRACEFUL_DEGRADATION,RECOVERED,True,True,True

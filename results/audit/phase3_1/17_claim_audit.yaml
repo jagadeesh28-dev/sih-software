@@ -1,0 +1,39 @@
+# SIH26138 - Phase 3.1 Forensic Claim Audit Ledger
+audit_date: "2026-09-13"
+auditor: "Antigravity Forensic Optimization Reviewer"
+
+claims:
+  - claim_id: "CLAIM_A"
+    statement: "QPSO significantly outperforms PSO, GA and Random Search."
+    verdict: "FALSIFIED"
+    rationale: "All optimizers converged to an identical infeasible penalty floor (115,003.28). The statistically significant p-values are an artifact of floating-point noise (< 1e-5) within an ungrounded penalty plateau."
+
+  - claim_id: "CLAIM_B"
+    statement: "DE outperforms QPSO."
+    verdict: "FALSIFIED"
+    rationale: "The Wilcoxon test p=0.0012 was computed on an absolute median difference of 0.000000 (approx 2.8e-7). Both algorithms were trapped on the exact same penalty wall. DE did not find a superior maritime operating strategy."
+
+  - claim_id: "CLAIM_C"
+    statement: "QPSO is practically superior."
+    verdict: "NOT SUPPORTED"
+    rationale: "No practical operational advantage exists between QPSO and competitors on the executed benchmark."
+
+  - claim_id: "CLAIM_D"
+    statement: "DE is mathematically superior."
+    verdict: "NOT SUPPORTED"
+    rationale: "Floating-point precision artifacts on an infeasible surface do not constitute mathematical superiority."
+
+  - claim_id: "CLAIM_E"
+    statement: "SafeFuelObjective eliminates surrogate exploitation."
+    verdict: "SUPPORTED"
+    rationale: "Adversarial audit confirmed that negative speed, negative power, 40 kn unphysical velocities, and zero power at 22 kn were successfully intercepted and penalized with 100% precision."
+
+  - claim_id: "CLAIM_F"
+    statement: "The optimizer produces fuel savings."
+    verdict: "CONDITIONAL"
+    rationale: "Potential savings cannot be scientifically claimed from an infeasible solution set. Savings must be re-verified once feasibility is restored."
+
+  - claim_id: "CLAIM_G"
+    statement: "The system is scalable to 100 vessels."
+    verdict: "CONDITIONAL"
+    rationale: "Sub-second multi-vessel assignment scaling is computationally validated, but operational recommendations require feasible leg evaluation."

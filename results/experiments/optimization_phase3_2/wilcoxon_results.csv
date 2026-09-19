@@ -1,0 +1,5 @@
+comparison,reference_optimizer,competitor_optimizer,n_matched_seeds,qpso_wins,competitor_wins,ties,wilcoxon_statistic,p_value,statistically_significant,hodges_lehmann_median_diff,hl_ci_95_low,hl_ci_95_high,rank_biserial_effect_size,practical_magnitude
+QPSO_vs_PSO,QPSO,PSO,30,5,0,25,14.0,2.0489096641540527e-07,True,-0.0,-0.00853,0.0,0.9999,NEGLIGIBLE
+QPSO_vs_GA,QPSO,GA,30,24,0,6,0.0,1.862645149230957e-09,True,-0.00021,-0.00873,-0.0,1.0,NEGLIGIBLE
+QPSO_vs_DE,QPSO,DE,30,0,0,30,81.0,0.0012321043759584427,True,0.0,-0.0,0.0,-0.8338,NEGLIGIBLE
+QPSO_vs_Random_Search,QPSO,Random_Search,30,30,0,0,0.0,1.862645149230957e-09,True,-0.00495,-0.01889,-0.00153,1.0,NEGLIGIBLE

@@ -1,0 +1,10 @@
+algorithm,experiment_id,dimension,population,evaluations,hardware,software_environment,runtime_seconds,source_file,status
+Fair_MODE,EXP-FAIR-MODE-30S,18,50,2500,Intel64 Family 6 Model 183 / AMD64,Python 3.14.0 Windows-11 numpy 2.2.6 scipy 1.17.0,6.1904,scripts/run_fair_multiobjective_comparison.py,VERIFIED
+Fair_NSGA3,EXP-FAIR-NSGA3-30S,18,50,2500,Intel64 Family 6 Model 183 / AMD64,Python 3.14.0 Windows-11 numpy 2.2.6 scipy 1.17.0,4.2341,scripts/run_fair_multiobjective_comparison.py,VERIFIED
+A5_Complete_Hybrid_QI,EXP-A5-BENCHMARK-30S,18,50,2500,Intel64 Family 6 Model 183 / AMD64,Python 3.14.0 Windows-11 numpy 2.2.6 scipy 1.17.0,7.5120,results/raw/A5.csv,VERIFIED
+C1_Classical_DE,EXP-REP-ISOLATION-C1,18,50,2500,Intel64 Family 6 Model 183 / AMD64,Python 3.14.0 Windows-11 numpy 2.2.6 scipy 1.17.0,6.2150,results/raw/final_representation_benchmark.csv,VERIFIED
+C2_QBit_DE,EXP-REP-ISOLATION-C2,18,50,2500,Intel64 Family 6 Model 183 / AMD64,Python 3.14.0 Windows-11 numpy 2.2.6 scipy 1.17.0,6.6820,results/raw/final_representation_benchmark.csv,VERIFIED
+Standard_DE_Scalar,EXP-PHASE4-BASELINE-DE,18,50,2500,AMD64 Windows-11,Python 3.14.0 Windows-11 (Scalar no-archive),1.7100,scripts/phase4_fleet_benchmark.py,HISTORICAL
+Standard_NSGA3_Unrepaired,EXP-PHASE4-BASELINE-NSGA3,18,50,2500,AMD64 Windows-11,Python 3.14.0 Windows-11 (Unrepaired static penalty),0.8800,scripts/phase4_fleet_benchmark.py,HISTORICAL
+Historical_QI_Speedup_Claim,EXP-HISTORICAL-PROTOTYPE,18,50,2500,Unknown Legacy Laptop,Python 3.11 Unvectorized Prototype,0.6400,Legacy Prototype Claim (2.67x speedup),INVALID
+Historical_MODE_A5_Discrepancy,EXP-MIXED-ENV-DISCREPANCY,18,50,2500,Mixed Hardware,Mixed Threads and Surrogate Caches,1.7100,Legacy Summary Slide,INVALID

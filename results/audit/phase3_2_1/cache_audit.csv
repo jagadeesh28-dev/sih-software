@@ -1,0 +1,3 @@
+component,has_lru_cache,cache_attributes_found,is_stateless_deterministic,notes
+FleetEvaluationEngine,False,[],True,Evaluation engine recomputes physics and ML prediction freshly without hidden state retention.
+SafeFuelObjective,False,[],True,Safe objective routes all candidate states through DomainChecker and models without caching.

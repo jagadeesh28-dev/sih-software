@@ -1,0 +1,252 @@
+{
+  "MODEL-REAL-04": {
+    "0.9": {
+      "nominal_coverage_pct": 90.0,
+      "q_val_kg_h": 1136.85,
+      "PICP_pct": 95.05,
+      "MPIW_kg_h": 2273.7,
+      "median_interval_width_kg_h": 2273.7,
+      "normalized_interval_width_by_span": 0.3166,
+      "normalized_interval_width_by_std": 1.1459,
+      "coverage_error_pct": 5.05,
+      "interval_width_over_mean_fuel": 0.9302,
+      "by_vessel": {
+        "CPS_Poseidon": {
+          "count": 21085,
+          "PICP_pct": 91.83,
+          "coverage_error_pct": 1.83,
+          "MPIW_kg_h": 2273.7,
+          "vessel_mean_fuel_kg_h": 3551.2
+        },
+        "CPS_Triton": {
+          "count": 5070,
+          "PICP_pct": 100.0,
+          "coverage_error_pct": 10.0,
+          "MPIW_kg_h": 2273.7,
+          "vessel_mean_fuel_kg_h": 609.84
+        },
+        "OSS_Ceto": {
+          "count": 8641,
+          "PICP_pct": 100.0,
+          "coverage_error_pct": 10.0,
+          "MPIW_kg_h": 2273.7,
+          "vessel_mean_fuel_kg_h": 819.7
+        }
+      },
+      "by_regime": {
+        "Low Speed (<= 12 kn)": {
+          "count": 17439,
+          "PICP_pct": 98.96,
+          "coverage_error_pct": 8.96,
+          "MPIW_kg_h": 2273.7,
+          "regime_mean_fuel_kg_h": 1057.5
+        },
+        "Cruise (12-16 kn)": {
+          "count": 6050,
+          "PICP_pct": 99.6,
+          "coverage_error_pct": 9.6,
+          "MPIW_kg_h": 2273.7,
+          "regime_mean_fuel_kg_h": 1551.06
+        },
+        "High Speed (> 16 kn)": {
+          "count": 11307,
+          "PICP_pct": 86.57,
+          "coverage_error_pct": -3.43,
+          "MPIW_kg_h": 2273.7,
+          "regime_mean_fuel_kg_h": 5061.15
+        }
+      }
+    },
+    "0.95": {
+      "nominal_coverage_pct": 95.0,
+      "q_val_kg_h": 1444.43,
+      "PICP_pct": 97.29,
+      "MPIW_kg_h": 2888.85,
+      "median_interval_width_kg_h": 2888.85,
+      "normalized_interval_width_by_span": 0.4022,
+      "normalized_interval_width_by_std": 1.4559,
+      "coverage_error_pct": 2.29,
+      "interval_width_over_mean_fuel": 1.1819,
+      "by_vessel": {
+        "CPS_Poseidon": {
+          "count": 21085,
+          "PICP_pct": 95.53,
+          "coverage_error_pct": 0.53,
+          "MPIW_kg_h": 2888.85,
+          "vessel_mean_fuel_kg_h": 3551.2
+        },
+        "CPS_Triton": {
+          "count": 5070,
+          "PICP_pct": 100.0,
+          "coverage_error_pct": 5.0,
+          "MPIW_kg_h": 2888.85,
+          "vessel_mean_fuel_kg_h": 609.84
+        },
+        "OSS_Ceto": {
+          "count": 8641,
+          "PICP_pct": 100.0,
+          "coverage_error_pct": 5.0,
+          "MPIW_kg_h": 2888.85,
+          "vessel_mean_fuel_kg_h": 819.7
+        }
+      },
+      "by_regime": {
+        "Low Speed (<= 12 kn)": {
+          "count": 17439,
+          "PICP_pct": 99.35,
+          "coverage_error_pct": 4.35,
+          "MPIW_kg_h": 2888.85,
+          "regime_mean_fuel_kg_h": 1057.5
+        },
+        "Cruise (12-16 kn)": {
+          "count": 6050,
+          "PICP_pct": 99.72,
+          "coverage_error_pct": 4.72,
+          "MPIW_kg_h": 2888.85,
+          "regime_mean_fuel_kg_h": 1551.06
+        },
+        "High Speed (> 16 kn)": {
+          "count": 11307,
+          "PICP_pct": 92.83,
+          "coverage_error_pct": -2.17,
+          "MPIW_kg_h": 2888.85,
+          "regime_mean_fuel_kg_h": 5061.15
+        }
+      }
+    }
+  },
+  "QI-C1": {
+    "0.9": {
+      "nominal_coverage_pct": 90.0,
+      "q_val_kg_h": 782.47,
+      "PICP_pct": 93.56,
+      "MPIW_kg_h": 1564.93,
+      "median_interval_width_kg_h": 1564.93,
+      "normalized_interval_width_by_span": 0.2179,
+      "normalized_interval_width_by_std": 0.7887,
+      "coverage_error_pct": 3.56,
+      "interval_width_over_mean_fuel": 0.6402,
+      "by_vessel": {
+        "CPS_Poseidon": {
+          "count": 21085,
+          "PICP_pct": 89.69,
+          "coverage_error_pct": -0.31,
+          "MPIW_kg_h": 1564.93,
+          "vessel_mean_fuel_kg_h": 3551.2
+        },
+        "CPS_Triton": {
+          "count": 5070,
+          "PICP_pct": 100.0,
+          "coverage_error_pct": 10.0,
+          "MPIW_kg_h": 1564.93,
+          "vessel_mean_fuel_kg_h": 609.84
+        },
+        "OSS_Ceto": {
+          "count": 8641,
+          "PICP_pct": 99.21,
+          "coverage_error_pct": 9.21,
+          "MPIW_kg_h": 1564.93,
+          "vessel_mean_fuel_kg_h": 819.7
+        }
+      },
+      "by_regime": {
+        "Low Speed (<= 12 kn)": {
+          "count": 17439,
+          "PICP_pct": 98.27,
+          "coverage_error_pct": 8.27,
+          "MPIW_kg_h": 1564.93,
+          "regime_mean_fuel_kg_h": 1057.5
+        },
+        "Cruise (12-16 kn)": {
+          "count": 6050,
+          "PICP_pct": 97.93,
+          "coverage_error_pct": 7.93,
+          "MPIW_kg_h": 1564.93,
+          "regime_mean_fuel_kg_h": 1551.06
+        },
+        "High Speed (> 16 kn)": {
+          "count": 11307,
+          "PICP_pct": 83.95,
+          "coverage_error_pct": -6.05,
+          "MPIW_kg_h": 1564.93,
+          "regime_mean_fuel_kg_h": 5061.15
+        }
+      }
+    },
+    "0.95": {
+      "nominal_coverage_pct": 95.0,
+      "q_val_kg_h": 1384.47,
+      "PICP_pct": 96.49,
+      "MPIW_kg_h": 2768.94,
+      "median_interval_width_kg_h": 2768.94,
+      "normalized_interval_width_by_span": 0.3855,
+      "normalized_interval_width_by_std": 1.3955,
+      "coverage_error_pct": 1.49,
+      "interval_width_over_mean_fuel": 1.1328,
+      "by_vessel": {
+        "CPS_Poseidon": {
+          "count": 21085,
+          "PICP_pct": 94.21,
+          "coverage_error_pct": -0.79,
+          "MPIW_kg_h": 2768.94,
+          "vessel_mean_fuel_kg_h": 3551.2
+        },
+        "CPS_Triton": {
+          "count": 5070,
+          "PICP_pct": 100.0,
+          "coverage_error_pct": 5.0,
+          "MPIW_kg_h": 2768.94,
+          "vessel_mean_fuel_kg_h": 609.84
+        },
+        "OSS_Ceto": {
+          "count": 8641,
+          "PICP_pct": 100.0,
+          "coverage_error_pct": 5.0,
+          "MPIW_kg_h": 2768.94,
+          "vessel_mean_fuel_kg_h": 819.7
+        }
+      },
+      "by_regime": {
+        "Low Speed (<= 12 kn)": {
+          "count": 17439,
+          "PICP_pct": 99.29,
+          "coverage_error_pct": 4.29,
+          "MPIW_kg_h": 2768.94,
+          "regime_mean_fuel_kg_h": 1057.5
+        },
+        "Cruise (12-16 kn)": {
+          "count": 6050,
+          "PICP_pct": 99.72,
+          "coverage_error_pct": 4.72,
+          "MPIW_kg_h": 2768.94,
+          "regime_mean_fuel_kg_h": 1551.06
+        },
+        "High Speed (> 16 kn)": {
+          "count": 11307,
+          "PICP_pct": 90.45,
+          "coverage_error_pct": -4.55,
+          "MPIW_kg_h": 2768.94,
+          "regime_mean_fuel_kg_h": 5061.15
+        }
+      }
+    }
+  },
+  "tradeoff_comparison": {
+    "0.9": {
+      "m04_mpiw": 2273.7,
+      "qi_mpiw": 1564.93,
+      "sharpness_gain_pct": 31.17,
+      "m04_coverage_pct": 95.05,
+      "qi_coverage_pct": 93.56,
+      "scientific_assessment": "QI-C1 achieves 31.17% sharper intervals while maintaining 93.56% empirical coverage, well above the 90.0% nominal floor."
+    },
+    "0.95": {
+      "m04_mpiw": 2888.85,
+      "qi_mpiw": 2768.94,
+      "sharpness_gain_pct": 4.15,
+      "m04_coverage_pct": 97.29,
+      "qi_coverage_pct": 96.49,
+      "scientific_assessment": "At 95% nominal level, QI-C1 provides 4.15% sharper intervals with 96.49% empirical coverage."
+    }
+  }
+}

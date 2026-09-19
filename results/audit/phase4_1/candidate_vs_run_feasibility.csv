@@ -1,0 +1,6 @@
+optimizer,total_runs,successful_feasible_runs,run_level_success_rate_pct,candidate_level_feasibility_rate_pct,theoretical_independent_run_prob_pct,distinction_note
+QPSO,30,26,86.67,10.83,86.6667,Candidate feasibility is per evaluation; Run success rate is P(optimizer returns a feasible solution after full budget).
+DE,30,30,100.0,12.5,100.0,Candidate feasibility is per evaluation; Run success rate is P(optimizer returns a feasible solution after full budget).
+PSO,30,18,60.0,7.5,60.0,Candidate feasibility is per evaluation; Run success rate is P(optimizer returns a feasible solution after full budget).
+GA,30,24,80.0,10.0,80.0,Candidate feasibility is per evaluation; Run success rate is P(optimizer returns a feasible solution after full budget).
+Random,30,28,93.33,0.3,99.9453,Candidate feasibility is per evaluation; Run success rate is P(optimizer returns a feasible solution after full budget).

@@ -1,0 +1,89 @@
+# Phase 6 Quantum-Inspired Algorithms Configuration
+version: "6.0"
+timestamp: "2026-09-19"
+
+algorithms:
+  qi_c1_qiea_fs:
+    name: "Quantum-Inspired Evolutionary Algorithm Feature Selection"
+    short_code: "QIEA-FS"
+    mechanism: "True Q-bit chromosome representation with rotation gate updates"
+    qbit_state:
+      representation: "[alpha_i, beta_i]"
+      normalization_constraint: "alpha^2 + beta^2 = 1.0"
+      initialization: "alpha = 1/sqrt(2), beta = 1/sqrt(2) (equal superposition)"
+      measurement_probability: "P(select) = beta^2"
+    search_parameters:
+      population_size: 10
+      max_generations: 15
+      total_evaluations: 150
+      rotation_step_rad: 0.15707963  # 0.05 * pi
+      lookup_table: "Han & Kim (2002) sign-direction matrix"
+      elite_preservation_count: 1
+    classical_control:
+      name: "Classical Genetic Algorithm Feature Selection"
+      short_code: "CGA-FS"
+      population_size: 10
+      max_generations: 15
+      total_evaluations: 150
+      tournament_size: 2
+      crossover_rate: 0.8
+      mutation_rate: 0.1
+
+  qi_c2_qpso_hpo:
+    name: "Quantum-Behaved Particle Swarm Optimization"
+    short_code: "QPSO-HPO"
+    mechanism: "Delta-potential well bound-state dynamics (Sun et al. 2004)"
+    equations:
+      mean_best: "mbest = (1/N) * sum(P_i)"
+      local_attractor: "p_ij = phi * P_ij + (1 - phi) * gbest_j"
+      position_update: "X_ij = p_ij +- beta * |mbest_j - X_ij| * ln(1/u)"
+    search_parameters:
+      n_particles: 15
+      max_iterations: 10
+      total_evaluations: 150
+      beta_start: 1.0
+      beta_end: 0.5
+      schedule: "linear_decay"
+    search_space:
+      learning_rate: [0.01, 0.25, "float"]
+      num_leaves: [15, 127, "int"]
+      max_depth: [3, 10, "int"]
+      min_child_samples: [5, 50, "int"]
+      feature_fraction: [0.6, 1.0, "float"]
+      reg_alpha: [0.001, 10.0, "log_float"]
+      reg_lambda: [0.001, 10.0, "log_float"]
+      alpha_residual: [0.0, 1.0, "float"]
+    classical_controls:
+      pso:
+        name: "Classical Particle Swarm Optimization"
+        short_code: "CPSO-HPO"
+        n_particles: 15
+        max_iterations: 10
+        total_evaluations: 150
+        inertia_w: 0.7
+        cognitive_c1: 1.5
+        social_c2: 1.5
+      random_search:
+        name: "Classical Uniform Random Search"
+        short_code: "RS-HPO"
+        total_evaluations: 150
+
+  qi_c3_mps_predictor:
+    name: "Direct Quantum-Inspired Matrix Product State Residual Regressor"
+    short_code: "QI-MPS"
+    mechanism: "Tensor-train factorized weights over trigonometric quantum feature map"
+    feature_map:
+      formula: "phi(x) = [cos(pi*x/2), sin(pi*x/2)]^T"
+      input_domain: "[0, 1] normalized continuous features"
+      local_dim: 2
+    tensor_network:
+      structure: "1D Matrix Product State / Tensor Train"
+      bond_dimension: 4
+      sweeps: 10
+      learning_rate: 0.01
+      l2_regularization: 0.001
+    classical_control:
+      name: "Classical Polynomial Feature Expansion Regressor"
+      short_code: "CLASSICAL-POLY"
+      degree: 2
+      ridge_alpha: 1.0

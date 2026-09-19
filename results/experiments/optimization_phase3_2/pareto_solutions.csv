@@ -1,0 +1,5 @@
+pair,weight_w1,speed_knots,fuel_type,fuel_tonnes,opex_usd,ghg_tonnes,is_feasible,domain_status,is_non_dominated
+Cost_vs_GHG,0.112,18.59,bio_methanol,195.95,210402.32,330.6,True,VALID,True
+Fuel_vs_Cost,0.795,18.59,bio_methanol,195.95,210402.32,330.6,True,VALID,True
+Fuel_vs_GHG,0.05,18.59,bio_methanol,195.95,210402.34,330.6,True,VALID,True
+Fuel_vs_GHG,0.112,18.59,bio_methanol,195.95,213242.33,330.6,True,VALID,True

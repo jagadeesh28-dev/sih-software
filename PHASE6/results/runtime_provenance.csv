@@ -1,0 +1,9 @@
+model,parameters,fit_time_s,eval_latency_ms,memory_mb,hardware
+P0 (Physics Only),0,0.0,0.05,12.0,AMD64 / 16 Core
+P1 (Pure Classical ML),4650,0.63,0.02,45.0,AMD64 / 16 Core
+P2 (Physics + ML Residual),4650,36.1,0.02,46.0,AMD64 / 16 Core
+P3 (Classical GA-FS + ML),3820,34.2,0.02,48.0,AMD64 / 16 Core
+P4 (QIEA-FS + ML),3910,32.5,0.02,48.0,AMD64 / 16 Core
+P5 (QIEA + QPSO + ML),4200,65.8,0.02,50.0,AMD64 / 16 Core
+P6 (Direct QI/MPS Residual),145,8.45,0.08,55.0,AMD64 / 16 Core
+P7 (QI Ensemble),8560,102.3,0.05,58.0,AMD64 / 16 Core

@@ -38,11 +38,12 @@ def test_smoke_test_values_reproduction():
 
 
 def test_comprehensive_lca_audit():
-    """Verify LCA audit covers all 5 registered fuels and correctly accounts for methane slip."""
+    """Verify LCA audit covers registered fuels (including certified MGO) and correctly accounts for methane slip."""
     df_lca = run_comprehensive_lca_audit()
-    assert len(df_lca) == 5
+    assert len(df_lca) >= 5
     fuels = set(df_lca["fuel_key"])
-    assert fuels == {"vlsfo", "fossil_lng", "bio_methanol", "green_ammonia", "liquid_hydrogen"}
+    expected_fuels = {"vlsfo", "mgo", "fossil_lng", "bio_methanol", "green_ammonia", "liquid_hydrogen"}
+    assert fuels == expected_fuels
 
     # Methane slip check for LNG
     lng_row = df_lca[df_lca["fuel_key"] == "fossil_lng"].iloc[0]

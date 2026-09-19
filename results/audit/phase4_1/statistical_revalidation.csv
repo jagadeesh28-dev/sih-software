@@ -1,0 +1,5 @@
+comparison,n_seeds,qpso_wins,qpso_losses,ties,wilcoxon_stat,wilcoxon_p_value,hodges_lehmann_diff,mean_qpso,mean_baseline,relative_improvement_pct,ci_95_lower,ci_95_upper,ci_spans_zero,sign_consistency,audit_verdict
+QPSO_vs_DE,30,18,12,0,206.0,0.5978077705949545,-0.3087,9469.5,4255.23,-122.54,-1970.79,13145.41,True,CONSISTENT,TIED
+QPSO_vs_PSO,30,22,5,3,51.0,0.0009149575215593386,-11924.4719,9469.5,23863.57,60.32,-22765.2,-6386.8,False,CONSISTENT,QPSO_WINS
+QPSO_vs_GA,30,20,9,1,119.0,0.03318108280504148,-0.7463,9469.5,14869.46,36.32,-14932.66,4432.81,True,CONSISTENT,TIED
+QPSO_vs_Random,30,25,4,1,24.0,2.863113962230184e-05,-26380.1049,9469.5,33926.68,72.09,-31214.72,-17201.6,False,CONSISTENT,QPSO_WINS

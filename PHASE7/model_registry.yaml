@@ -1,0 +1,87 @@
+# Production Model Registry: SIH26138 - Egreen Quanta
+version: "1.0.0"
+updated_at: "2026-09-19T14:48:00+05:30"
+
+models:
+  MODEL-REAL-04:
+    model_id: "MODEL-REAL-04"
+    name: "Classical Hybrid Physics + ML Residual Predictor"
+    role: "Reference Anchor / High-Reliability Fallback Engine"
+    architecture:
+      physics_backbone: "Holtrop-Mennen Calm Water + IMO STAwave-2 + Blendermann Wind Drag"
+      residual_regressor: "LightGBM Regressor"
+      coupling_equation: "y_hat = max(0, F_physics(STW) + 1.0 * r_hat(X))"
+    version: "1.0.0-frozen"
+    hyperparameters:
+      n_estimators: 150
+      learning_rate: 0.05
+      num_leaves: 31
+      max_depth: 6
+      min_child_samples: 20
+      subsample: 0.8
+      colsample_bytree: 0.8
+      reg_alpha: 0.1
+      reg_lambda: 1.0
+      alpha: 1.0
+    input_features:
+      count: 14
+      feature_contract: "CONFIG_REAL_A"
+      order:
+        - "stw_kn"
+        - "sog_kn"
+        - "draft_m"
+        - "displacement_t"
+        - "wind_speed_ms"
+        - "wind_direction_deg"
+        - "wave_height_m"
+        - "wave_period_s"
+        - "wave_direction_deg"
+        - "current_speed_ms"
+        - "current_direction_deg"
+        - "water_depth_m"
+        - "vessel_type"
+        - "fuel_type"
+    performance_metrics:
+      r2: 0.9501
+      mae_kg_h: 246.97
+      rmse_kg_h: 443.21
+      mape_pct: 14.63
+    checksum_sha256: "ec977675c77614b61839ab8cac7fd9bdb29cb655948618100f3c4e8302f83553"
+
+  QI-C1:
+    model_id: "QI-C1"
+    name: "Quantum-Inspired Optimized Fuel Predictor"
+    role: "Primary Production Digital Twin Engine"
+    architecture:
+      feature_selection: "QIEA (Q-bit Amplitudes with Han & Kim Rotation Gates)"
+      residual_regressor: "LightGBM Regressor on Selected Subset"
+      coupling_equation: "y_hat = max(0, F_physics(STW) + 1.0 * r_hat(X_qi))"
+    version: "1.0.0-production"
+    selected_feature_subset:
+      count: 8
+      features:
+        - "stw_kn"
+        - "sog_kn"
+        - "draft_m"
+        - "displacement_t"
+        - "wind_speed_ms"
+        - "wave_height_m"
+        - "current_speed_ms"
+        - "water_depth_m"
+    hyperparameters:
+      n_estimators: 150
+      learning_rate: 0.05
+      num_leaves: 31
+      max_depth: 6
+      min_child_samples: 20
+      colsample_bytree: 0.8
+      reg_alpha: 0.1
+      reg_lambda: 1.0
+      alpha: 1.0
+    performance_metrics:
+      r2: 0.9530
+      mae_kg_h: 237.96
+      rmse_kg_h: 431.50
+      mape_pct: 14.18
+      uncertainty_mpiw_90_kg_h: 598.40
+    checksum_sha256: "4c82f5c746ed209dffb5a00870b9ac8641839496a6e6388eca918521683559ba"

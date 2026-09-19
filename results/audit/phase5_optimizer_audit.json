@@ -1,0 +1,17 @@
+{
+  "status": "VERIFIED_FROZEN",
+  "total_evaluations_executed": 825000,
+  "penalized_objective_optimum": 873.2265,
+  "pure_physical_component": 3.7861,
+  "schedule_penalty_component": 869.4404,
+  "pure_physical_grid_minimum": 3.2369,
+  "optimality_distinction": "Penalized objective optimum J*_pen \u2248 873.23 is NOT equal to pure physical grid minimum \u2248 3.24. Schedule penalty dominates by design to enforce zero cargo deadline violations.",
+  "algorithms_benchmarked": [
+    "Differential Evolution (DE)",
+    "QPSO",
+    "Classical PSO",
+    "Genetic Algorithm (GA)",
+    "Random Search"
+  ],
+  "benchmark_conclusion": "DE provides strong conventional scalar-fuel baseline; QPSO is competitive but exhibits representation/penalty failure modes; no universal QI superiority."
+}

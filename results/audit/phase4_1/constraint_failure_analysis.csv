@@ -1,0 +1,5 @@
+seed,primary_failure_class,domain_check,cargo_check,assignment_check,fuel_compatibility_check,speed_check,weather_check,regulatory_check,schedule_check,risk_check,violation_details,mechanism_summary
+1005,OTHER,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,NONE,Unfulfilled mandatory cargo demand resulting from swarm attractor rounding to duplicate or unassigned states.
+1021,ASSIGNMENT,PASS,PASS,FAIL,PASS,PASS,PASS,PASS,PASS,PASS,Mandatory demand DEMAND-A is unfulfilled.,Unfulfilled mandatory cargo demand resulting from swarm attractor rounding to duplicate or unassigned states.
+1025,ASSIGNMENT,PASS,PASS,FAIL,PASS,PASS,PASS,PASS,PASS,PASS,Mandatory demand DEMAND-C is unfulfilled.,Unfulfilled mandatory cargo demand resulting from swarm attractor rounding to duplicate or unassigned states.
+1029,ASSIGNMENT,PASS,PASS,FAIL,PASS,PASS,PASS,PASS,PASS,PASS,Mandatory demand DEMAND-A is unfulfilled.,Unfulfilled mandatory cargo demand resulting from swarm attractor rounding to duplicate or unassigned states.

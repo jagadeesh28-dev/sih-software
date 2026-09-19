@@ -1,0 +1,5 @@
+experiment_id,data_source,fleet_size_vessels,decision_dimension,total_evaluations,runtime_seconds,evaluations_per_second,best_fleet_fuel_tonnes,convergence_achieved,feasible_solution_rate
+EXP-OPT-16,SYNTHETIC_SCALABILITY_BENCHMARK,5,10,1440,0.056,25692.2,273.12,True,1.0
+EXP-OPT-16,SYNTHETIC_SCALABILITY_BENCHMARK,20,40,1440,0.057,25167.1,1094.03,True,1.0
+EXP-OPT-16,SYNTHETIC_SCALABILITY_BENCHMARK,50,100,1440,0.065,22301.9,2814.93,True,1.0
+EXP-OPT-16,SYNTHETIC_SCALABILITY_BENCHMARK,100,200,1440,0.103,14036.1,5866.17,True,1.0

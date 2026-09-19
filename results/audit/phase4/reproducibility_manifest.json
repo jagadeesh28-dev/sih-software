@@ -1,0 +1,106 @@
+{
+  "project": "SIH26138 - Egreen Quanta Phase 4",
+  "timestamp_utc": "2026-09-14T16:27:54.237424+00:00",
+  "git_commit": "20309b214b9540a7363b7365e442a222cd9c49a1",
+  "python_version": "3.14.0",
+  "platform_system": "Windows",
+  "platform_release": "11",
+  "cpu_count": 20,
+  "dataset_provenance": "REAL_TELEMETRY_CALIBRATED",
+  "dataset_sha256": {
+    "CPS_Poseidon": "da85f2e21b6e8724c8350f9aadbda4e457593d77412b8cefaa077da9e1e260c2",
+    "CPS_Triton": "fa8cc7f9f6a92d330088e41e3f275b8d8428d3604cfb35dfa46eaa753d545f89",
+    "OSS_Ceto": "ac3f8d5e865f11cd40f147d6153de9915b543f675684719245a2d5d6d8e752cd"
+  },
+  "configuration_sha256": {
+    "fleet_heterogeneous": "ead55bc591a19ebb235711d681566e6817eb6a9a51c5c72277863cc6e753612c",
+    "fleet_evaluator_phase4": "23035bfeb4f900b18252272b1705e5fed902e1f053a093759f65bf95a53a6c6c",
+    "pyproject": "d2b183462c6730623db2520a572e2896d6516281b197ca09c2098b806a55e49c"
+  },
+  "benchmark_parameters": {
+    "fleet_size": 3,
+    "decision_dimension": 18,
+    "seeds": [
+      1001,
+      1002,
+      1003,
+      1004,
+      1005,
+      1006,
+      1007,
+      1008,
+      1009,
+      1010,
+      1011,
+      1012,
+      1013,
+      1014,
+      1015,
+      1016,
+      1017,
+      1018,
+      1019,
+      1020,
+      1021,
+      1022,
+      1023,
+      1024,
+      1025,
+      1026,
+      1027,
+      1028,
+      1029,
+      1030
+    ],
+    "primary_evaluation_budget": 2500,
+    "cvar_alpha": 0.8,
+    "risk_lambdas": [
+      0.0,
+      0.25,
+      0.5,
+      1.0
+    ],
+    "weather_scenarios": [
+      "SCEN-W1",
+      "SCEN-W2",
+      "SCEN-W3",
+      "SCEN-W4"
+    ],
+    "operational_demands": [
+      "DEMAND-A",
+      "DEMAND-B",
+      "DEMAND-C"
+    ],
+    "optimizers": [
+      "QPSO",
+      "DE",
+      "PSO",
+      "GA",
+      "Random"
+    ]
+  },
+  "experiments": [
+    "EXP-P4-01",
+    "EXP-P4-02",
+    "EXP-P4-03",
+    "EXP-P4-04",
+    "EXP-P4-05",
+    "EXP-P4-06",
+    "EXP-P4-07",
+    "EXP-P4-08",
+    "EXP-P4-09",
+    "EXP-P4-10",
+    "EXP-P4-11",
+    "EXP-P4-12",
+    "EXP-P4-13",
+    "EXP-P4-14",
+    "EXP-P4-15"
+  ],
+  "zero_difference_protocol": {
+    "threshold": 1e-05,
+    "wilcoxon_all_ties_rule": "NOT_APPLICABLE",
+    "permutation_resamples": 100000,
+    "bootstrap_resamples": 10000,
+    "fwer_correction": "Holm-Bonferroni"
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "normal_cruise_14_5_kn": {
+    "input": {
+      "stw_kn": 14.5,
+      "sog_kn": 14.5,
+      "draft_m": 7.5,
+      "displacement_t": 35000.0,
+      "wind_speed_ms": 5.0,
+      "wave_height_m": 1.0,
+      "water_depth_m": 60.0,
+      "vessel_type": "passenger_cruise",
+      "fuel_type": "vlsfo"
+    },
+    "prediction_source": "QI_C1",
+    "fuel_kg_h": 2740.86,
+    "uncertainty_90pct": {
+      "coverage": 0.9,
+      "interval_width_kg_h": 1564.93,
+      "lower_bound_kg_h": 1958.39,
+      "upper_bound_kg_h": 3523.33,
+      "is_high_uncertainty": true
+    },
+    "confidence": "MEDIUM"
+  },
+  "high_demand_19_5_kn": {
+    "input": {
+      "stw_kn": 19.5,
+      "sog_kn": 19.5,
+      "draft_m": 7.5,
+      "displacement_t": 35000.0,
+      "wind_speed_ms": 10.0,
+      "wave_height_m": 2.0,
+      "water_depth_m": 60.0,
+      "vessel_type": "passenger_cruise",
+      "fuel_type": "vlsfo"
+    },
+    "prediction_source": "QI_C1",
+    "fuel_kg_h": 5133.94,
+    "uncertainty_90pct": {
+      "coverage": 0.9,
+      "interval_width_kg_h": 1564.93,
+      "lower_bound_kg_h": 4351.47,
+      "upper_bound_kg_h": 5916.41,
+      "is_high_uncertainty": true
+    },
+    "confidence": "MEDIUM"
+  },
+  "slow_steaming_scenario": {
+    "baseline_speed_kn": 18.0,
+    "baseline_fuel_kg_h": 3726.72,
+    "slow_speed_kn": 15.0,
+    "slow_fuel_kg_h": 2801.59,
+    "simulated_fuel_reduction_pct": 24.82,
+    "qualification": "scenario-specific simulated result under the stated operating assumptions"
+  },
+  "alternative_fuels_invariant_work_scenarios": {
+    "VLSFO": {
+      "fuel_mass_flow_kg_h": 2740.86,
+      "lhv_mj_kg": 42.7,
+      "assumed_thermal_efficiency": 0.48,
+      "emissions_kg_co2e_per_h": {
+        "WtT": 1332.06,
+        "TtW": 8535.04,
+        "WtW": 9867.1
+      }
+    },
+    "MGO": {
+      "fuel_mass_flow_kg_h": 2734.46,
+      "lhv_mj_kg": 42.8,
+      "assumed_thermal_efficiency": 0.48,
+      "emissions_kg_co2e_per_h": {
+        "WtT": 1487.54,
+        "TtW": 8766.67,
+        "WtW": 10254.21
+      }
+    },
+    "Bio-Methanol": {
+      "fuel_mass_flow_kg_h": 6136.84,
+      "lhv_mj_kg": 19.9,
+      "assumed_thermal_efficiency": 0.46,
+      "emissions_kg_co2e_per_h": {
+        "WtT": 0.0,
+        "TtW": 8438.16,
+        "WtW": 2147.9
+      }
+    },
+    "Green Ammonia": {
+      "fuel_mass_flow_kg_h": 6864.21,
+      "lhv_mj_kg": 18.6,
+      "assumed_thermal_efficiency": 0.44,
+      "emissions_kg_co2e_per_h": {
+        "WtT": 1029.63,
+        "TtW": 0.0,
+        "WtW": 1029.63
+      }
+    },
+    "Liquid Hydrogen": {
+      "fuel_mass_flow_kg_h": 936.28,
+      "lhv_mj_kg": 120.0,
+      "assumed_thermal_efficiency": 0.5,
+      "emissions_kg_co2e_per_h": {
+        "WtT": 187.26,
+        "TtW": 0.0,
+        "WtW": 187.26
+      }
+    }
+  }
+}

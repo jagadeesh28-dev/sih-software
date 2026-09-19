@@ -1,0 +1,27 @@
+# ==============================================================================
+# SIH26138 — Egreen Quanta: Production Frozen Dependency Lockfile
+# Release Version: v1.0.0
+# Generated on: 2026-09-19
+# Target Environment: CPython 3.14.0 (x86_64 / AMD64)
+# ==============================================================================
+
+# Core Numerical & Scientific Computing
+numpy==2.2.6
+scipy==1.17.0
+pandas==2.3.3
+pyarrow==23.0.0
+
+# Machine Learning & Gradient Boosting
+scikit-learn==1.8.0
+lightgbm==4.7.0
+
+# Visualization & Reporting
+matplotlib==3.10.8
+
+# Configuration & Utilities
+pyyaml==6.0.3
+
+# Testing & Quality Assurance
+pytest==9.1.1
+pluggy==1.6.0
+anyio==4.12.1

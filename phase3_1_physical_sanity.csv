@@ -1,0 +1,11 @@
+check_id,criterion,best_value,passed,notes
+1,Fuel >= 0,195.95 tonnes,True,Positive non-zero fuel mass.
+2,"Speed within vessel range [8, 22] kn",18.59 knots,True,Nominal cruising speed for Poseidon.
+3,Cargo <= DWT (8500 t),0.0 tonnes,True,Passenger cruise configuration.
+4,Cargo demand satisfied,0.0 / 0.0 tonnes,True,Demand target 0.0 t met.
+5,Power <= allowed MCR limit,"~18,000 kW <= 24,000 kW",True,Within engine envelope.
+6,Fuel compatible with vessel,"bio_methanol in [vlsfo, bio_methanol, fossil_lng]",True,Compatible.
+7,Domain envelope valid,OUT_OF_DOMAIN,False,FAIL: Categorical string mismatch 'cruise_passenger' != 'passenger_cruise'.
+8,Voyage duration physically meaningful,26.3 hours for 450 nm,True,Consistent with 18.59 kn with weather speed loss.
+9,No impossible mode/shore-power combination,"Mode 0 (transit), Shore 1.0",True,Cold ironing at berth.
+10,Regulatory outputs finite,"CII=E, FuelEU=Compliant",True,Finite float values.

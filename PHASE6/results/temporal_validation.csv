@@ -1,0 +1,4 @@
+model,validation_type,mean_mae,std_mae,mean_rmse,mean_r2,temporal_drift_penalty_pct
+P2 (Physics + ML Residual),Forward Temporal Split (60/20/20),248.12,4.78,442.63,0.9502,0.47
+P4 (Physics + QIEA-FS + ML),Forward Temporal Split (60/20/20),237.96,6.11,436.68,0.9516,-3.65
+P5 (Physics + QIEA + QPSO + ML),Forward Temporal Split (60/20/20),242.95,6.83,441.11,0.9506,-1.63

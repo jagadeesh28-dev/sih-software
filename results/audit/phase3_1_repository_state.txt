@@ -1,0 +1,56 @@
+SIH26138 - PHASE 3.1 REPOSITORY INTEGRITY AUDIT
+Generated: 2026-09-13T17:28:24.349262+00:00
+Commit Hash: 20309b214b9540a7363b7365e442a222cd9c49a1
+
+1. GIT STATUS:
+M  optimization/__init__.py
+M  optimization/qpso.py
+M  optimization/variables.py
+?? PHASE3_ARCHITECTURE.md
+?? PHASE3_ASSUMPTIONS.md
+?? PHASE3_BENCHMARK_PROTOCOL.md
+?? PHASE3_CLAIM_LEDGER.yaml
+?? PHASE3_FAILURE_MODES.md
+?? PHASE3_MATHEMATICAL_MODEL.md
+?? PHASE3_OPTIMIZATION_SPECIFICATION.md
+?? PHASE3_PRE_IMPLEMENTATION_AUDIT.md
+?? PHASE3_REGULATORY_MODEL.md
+?? PHASE3_SCIENTIFIC_GATE_REPORT.md
+?? configs/fleet_profiles.yaml
+?? configs/regulations.yaml
+?? experiments/exp_phase3_master_runner.py
+?? optimization/constraints.py
+?? optimization/cost_model.py
+?? optimization/differential_evolution.py
+?? optimization/emissions_model.py
+?? optimization/evaluator.py
+?? optimization/genetic_algorithm.py
+?? optimization/pareto.py
+?? optimization/pso.py
+?? optimization/random_search.py
+?? optimization/regulatory.py
+?? optimization/scenarios.py
+?? optimization/voyage_model.py
+?? results/experiments/optimization/
+?? results/figures/optimization/
+?? tests/test_adversarial_optimization.py
+?? tests/test_benchmark_fairness.py
+?? tests/test_constraints.py
+?? tests/test_emissions.py
+?? tests/test_optimization.py
+?? tests/test_qpso.py
+?? tests/test_regulatory.py
+
+2. GIT DIFF STAT:
+ optimization/__init__.py  |  65 +++++++++++++++++++++++++---
+ optimization/qpso.py      | 102 ++++++++++++++++++++++++++++---------------
+ optimization/variables.py | 107 +++++++++++++++++++++++++++++++++++++++++++---
+ 3 files changed, 228 insertions(+), 46 deletions(-)
+
+3. PYTEST SUITE EXECUTION:
+================= 87 passed, 12 warnings in 62.84s (0:01:02) ==================
+Status: 100% Engineering tests passing.
+
+4. PHASE 3 ARTIFACT TRACKING STATUS:
+All Phase 3 code and experiment results are generated and untracked/staged.
+Frozen baselines (Phase 2, 2.1, 2.2, 2.3) remain intact and unmodified.

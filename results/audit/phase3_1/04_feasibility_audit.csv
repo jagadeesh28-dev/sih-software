@@ -1,0 +1,6 @@
+optimizer,total_runs,feasible_runs,feasibility_rate_pct,hard_violations,mean_violation_magnitude,unique_feasible_solutions,unique_chromosomes
+DE,30,0,0.0,"Domain violation: status=OUT_OF_DOMAIN, envelope_distance=0.00",115000.0,0,1
+GA,30,0,0.0,"Domain violation: status=OUT_OF_DOMAIN, envelope_distance=0.00",115000.0,0,2
+PSO,30,0,0.0,"Domain violation: status=OUT_OF_DOMAIN, envelope_distance=0.00",115000.0,0,1
+QPSO,30,0,0.0,"Domain violation: status=OUT_OF_DOMAIN, envelope_distance=0.00",115000.0,0,1
+Random_Search,30,0,0.0,"Domain violation: status=OUT_OF_DOMAIN, envelope_distance=0.00",115000.0,0,10

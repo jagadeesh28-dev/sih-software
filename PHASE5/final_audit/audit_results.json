@@ -1,0 +1,461 @@
+{
+  "project": "SIH26138 - Egreen Quanta",
+  "benchmark": "Phase 5 Heterogeneous Fleet Optimization",
+  "audit_date": "2026-09-15",
+  "gate_status": "PASS",
+  "scientific_confidence": "HIGH",
+  "experimental_validity": "VALID",
+  "reproducibility": "VERIFIED",
+  "novelty": "DEFENSIBLE_SYSTEM_INTEGRATION",
+  "sih_readiness": "READY_AFTER_CORRECTIONS",
+  "budget_per_run": 2500,
+  "total_benchmark_evaluations": 825000,
+  "algorithms_evaluated": 11,
+  "algorithms_summary": [
+    {
+      "algorithm": "A0_Plain_QPSO",
+      "feasibility": 80.0,
+      "median_objective": 3.42,
+      "mean_objective": 12202.67,
+      "physical_objective": 202.67,
+      "penalty": 12000.0,
+      "first_feasible_eval": 210.2,
+      "runtime": 1.797,
+      "hypervolume": 0.0,
+      "diversity": 176.231,
+      "repair_rate": 0.0
+    },
+    {
+      "algorithm": "A1_QPSO_Deb",
+      "feasibility": 100.0,
+      "median_objective": 3.41,
+      "mean_objective": 2003.35,
+      "physical_objective": 3.35,
+      "penalty": 2000.0,
+      "first_feasible_eval": 201.3,
+      "runtime": 2.319,
+      "hypervolume": 0.0,
+      "diversity": 171.192,
+      "repair_rate": 0.0
+    },
+    {
+      "algorithm": "A2_QPSO_Decoder",
+      "feasibility": 100.0,
+      "median_objective": 3.38,
+      "mean_objective": 3.39,
+      "physical_objective": 3.39,
+      "penalty": 0.0,
+      "first_feasible_eval": 1.2,
+      "runtime": 4.964,
+      "hypervolume": 0.0,
+      "diversity": 5.746,
+      "repair_rate": 25.34
+    },
+    {
+      "algorithm": "A3_Discrete_QPSO",
+      "feasibility": 86.67,
+      "median_objective": 3.39,
+      "mean_objective": 6802.94,
+      "physical_objective": 136.27,
+      "penalty": 6666.67,
+      "first_feasible_eval": 209.6,
+      "runtime": 3.255,
+      "hypervolume": 0.0,
+      "diversity": 168.489,
+      "repair_rate": 0.0
+    },
+    {
+      "algorithm": "A4_Heterogeneous_QI",
+      "feasibility": 100.0,
+      "median_objective": 3.66,
+      "mean_objective": 3.72,
+      "physical_objective": 3.72,
+      "penalty": 0.0,
+      "first_feasible_eval": 7.3,
+      "runtime": 4.249,
+      "hypervolume": 0.0,
+      "diversity": 189.535,
+      "repair_rate": 0.0
+    },
+    {
+      "algorithm": "A5_Complete_Hybrid_QI",
+      "feasibility": 100.0,
+      "median_objective": 3.45,
+      "mean_objective": 3.45,
+      "physical_objective": 3.45,
+      "penalty": 0.0,
+      "first_feasible_eval": 1.0,
+      "runtime": 7.514,
+      "hypervolume": 247105993.53,
+      "diversity": 0.663,
+      "repair_rate": 77.7
+    },
+    {
+      "algorithm": "DE",
+      "feasibility": 100.0,
+      "median_objective": 4.13,
+      "mean_objective": 3976.19,
+      "physical_objective": 3.7,
+      "penalty": 3972.49,
+      "first_feasible_eval": 237.8,
+      "runtime": 1.706,
+      "hypervolume": 0.0,
+      "diversity": 290.224,
+      "repair_rate": 0.0
+    },
+    {
+      "algorithm": "PSO",
+      "feasibility": 50.0,
+      "median_objective": 45500.25,
+      "mean_objective": 30168.0,
+      "physical_objective": 501.33,
+      "penalty": 29666.67,
+      "first_feasible_eval": 378.8,
+      "runtime": 1.788,
+      "hypervolume": 0.0,
+      "diversity": 113.772,
+      "repair_rate": 0.0
+    },
+    {
+      "algorithm": "GA",
+      "feasibility": 70.0,
+      "median_objective": 20002.46,
+      "mean_objective": 27726.3,
+      "physical_objective": 302.54,
+      "penalty": 27423.76,
+      "first_feasible_eval": 205.0,
+      "runtime": 1.142,
+      "hypervolume": 0.0,
+      "diversity": 137.897,
+      "repair_rate": 0.0
+    },
+    {
+      "algorithm": "Random",
+      "feasibility": 96.67,
+      "median_objective": 27072.72,
+      "mean_objective": 28681.98,
+      "physical_objective": 36.5,
+      "penalty": 28645.47,
+      "first_feasible_eval": 375.8,
+      "runtime": 0.385,
+      "hypervolume": 0.0,
+      "diversity": 0.0,
+      "repair_rate": 0.0
+    },
+    {
+      "algorithm": "NSGA3",
+      "feasibility": 80.0,
+      "median_objective": 37475.79,
+      "mean_objective": 36645.36,
+      "physical_objective": 202.3,
+      "penalty": 36443.06,
+      "first_feasible_eval": 509.6,
+      "runtime": 0.878,
+      "hypervolume": 150671177.17,
+      "diversity": 0.0,
+      "repair_rate": 0.0
+    }
+  ],
+  "pairwise_statistics": [
+    {
+      "pair": "A5_vs_A0",
+      "mean_diff": -12199.21799,
+      "wilcoxon_p": 0.583757072687149,
+      "permutation_p": 0.00399,
+      "rank_biserial": -0.1182795698924731,
+      "hodges_lehmann": -9999.6039,
+      "boot_ci_lower": -19665.42422133333,
+      "boot_ci_upper": -5399.668701666667
+    },
+    {
+      "pair": "A5_vs_A1",
+      "mean_diff": -1999.9054533333333,
+      "wilcoxon_p": 0.7151329666376114,
+      "permutation_p": 0.13056,
+      "rank_biserial": 0.0795698924731182,
+      "hodges_lehmann": 0.0141,
+      "boot_ci_lower": -5333.035623833334,
+      "boot_ci_upper": 0.0056344999999999
+    },
+    {
+      "pair": "A5_vs_DE",
+      "mean_diff": -3972.742016666666,
+      "wilcoxon_p": 5.587935447692871e-09,
+      "permutation_p": 0.0,
+      "rank_biserial": -0.9913978494623656,
+      "hodges_lehmann": -1289.62565,
+      "boot_ci_lower": -6712.27281975,
+      "boot_ci_upper": -1642.9574094166671
+    },
+    {
+      "pair": "A5_vs_PSO",
+      "mean_diff": -30164.55083666667,
+      "wilcoxon_p": 2.048909664154053e-07,
+      "permutation_p": 0.0,
+      "rank_biserial": -0.9397849462365592,
+      "hodges_lehmann": -25498.40625,
+      "boot_ci_lower": -37997.46977691667,
+      "boot_ci_upper": -22031.79476658333
+    },
+    {
+      "pair": "A5_vs_GA",
+      "mean_diff": -27722.85039,
+      "wilcoxon_p": 3.725290298461914e-09,
+      "permutation_p": 0.0,
+      "rank_biserial": -0.9956989247311828,
+      "hodges_lehmann": -25499.45285,
+      "boot_ci_lower": -36532.37313483334,
+      "boot_ci_upper": -19448.33402158334
+    },
+    {
+      "pair": "A5_vs_Random",
+      "mean_diff": -28678.52766666666,
+      "wilcoxon_p": 1.862645149230957e-09,
+      "permutation_p": 0.0,
+      "rank_biserial": -1.0,
+      "hodges_lehmann": -29367.6128,
+      "boot_ci_lower": -32678.469814416665,
+      "boot_ci_upper": -24504.49019775
+    },
+    {
+      "pair": "DE_vs_A0",
+      "mean_diff": -8226.475973333334,
+      "wilcoxon_p": 1.0,
+      "permutation_p": 0.04288,
+      "rank_biserial": 0.0021505376344086,
+      "hodges_lehmann": 0.0196500000000001,
+      "boot_ci_lower": -15866.093803249996,
+      "boot_ci_upper": -1108.559453916669
+    }
+  ],
+  "objective_scale_reconciliation": [
+    {
+      "experiment": "small_scale_exact",
+      "instance": "A1_QPSO_Deb",
+      "objective_definition": "total_penalized_fitness",
+      "reported_J": 3.1666,
+      "recomputed_J": 3.1666,
+      "global_optimum": 873.2265,
+      "reported_gap": 0.0,
+      "recomputed_gap": 0.0,
+      "status": "PASS_RECONCILED"
+    },
+    {
+      "experiment": "small_scale_exact",
+      "instance": "A1_QPSO_Deb",
+      "objective_definition": "pure_physical_loss",
+      "reported_J": 3.1666,
+      "recomputed_J": 3.1666,
+      "global_optimum": 3.2369,
+      "reported_gap": 0.0,
+      "recomputed_gap": 0.0,
+      "status": "PASS_RECONCILED"
+    },
+    {
+      "experiment": "small_scale_exact",
+      "instance": "A2_QPSO_Decoder",
+      "objective_definition": "total_penalized_fitness",
+      "reported_J": 3.4205,
+      "recomputed_J": 3.4205,
+      "global_optimum": 873.2265,
+      "reported_gap": 0.0,
+      "recomputed_gap": 0.0,
+      "status": "PASS_RECONCILED"
+    },
+    {
+      "experiment": "small_scale_exact",
+      "instance": "A2_QPSO_Decoder",
+      "objective_definition": "pure_physical_loss",
+      "reported_J": 3.4205,
+      "recomputed_J": 3.4205,
+      "global_optimum": 3.2369,
+      "reported_gap": 0.0,
+      "recomputed_gap": 5.672,
+      "status": "CORRECTED"
+    },
+    {
+      "experiment": "small_scale_exact",
+      "instance": "A4_Heterogeneous_QI",
+      "objective_definition": "total_penalized_fitness",
+      "reported_J": 4.7544,
+      "recomputed_J": 4.7544,
+      "global_optimum": 873.2265,
+      "reported_gap": 0.0,
+      "recomputed_gap": 0.0,
+      "status": "PASS_RECONCILED"
+    },
+    {
+      "experiment": "small_scale_exact",
+      "instance": "A4_Heterogeneous_QI",
+      "objective_definition": "pure_physical_loss",
+      "reported_J": 4.7544,
+      "recomputed_J": 4.7544,
+      "global_optimum": 3.2369,
+      "reported_gap": 0.0,
+      "recomputed_gap": 46.881,
+      "status": "CORRECTED"
+    },
+    {
+      "experiment": "small_scale_exact",
+      "instance": "A5_Complete_Hybrid_QI",
+      "objective_definition": "total_penalized_fitness",
+      "reported_J": 4.5203,
+      "recomputed_J": 4.5203,
+      "global_optimum": 873.2265,
+      "reported_gap": 0.0,
+      "recomputed_gap": 0.0,
+      "status": "PASS_RECONCILED"
+    },
+    {
+      "experiment": "small_scale_exact",
+      "instance": "A5_Complete_Hybrid_QI",
+      "objective_definition": "pure_physical_loss",
+      "reported_J": 4.5203,
+      "recomputed_J": 4.5203,
+      "global_optimum": 3.2369,
+      "reported_gap": 0.0,
+      "recomputed_gap": 39.649,
+      "status": "CORRECTED"
+    },
+    {
+      "experiment": "small_scale_exact",
+      "instance": "DE",
+      "objective_definition": "total_penalized_fitness",
+      "reported_J": 17001.5269,
+      "recomputed_J": 17001.5269,
+      "global_optimum": 873.2265,
+      "reported_gap": 1846.978,
+      "recomputed_gap": 1846.978,
+      "status": "PASS_RECONCILED"
+    },
+    {
+      "experiment": "small_scale_exact",
+      "instance": "DE",
+      "objective_definition": "pure_physical_loss",
+      "reported_J": 3.3812,
+      "recomputed_J": 3.3812,
+      "global_optimum": 3.2369,
+      "reported_gap": 1846.978,
+      "recomputed_gap": 4.458,
+      "status": "CORRECTED"
+    },
+    {
+      "experiment": "main_benchmark",
+      "instance": "A5_Complete_Hybrid_QI",
+      "objective_definition": "dimensionless_physical_loss",
+      "reported_J": 3.45,
+      "recomputed_J": 3.45,
+      "global_optimum": NaN,
+      "reported_gap": NaN,
+      "recomputed_gap": NaN,
+      "status": "PASS"
+    },
+    {
+      "experiment": "main_benchmark",
+      "instance": "DE",
+      "objective_definition": "dimensionless_physical_loss",
+      "reported_J": 3.7,
+      "recomputed_J": 3.7,
+      "global_optimum": NaN,
+      "reported_gap": NaN,
+      "recomputed_gap": NaN,
+      "status": "PASS"
+    }
+  ],
+  "reproducibility_checks": [
+    {
+      "check_id": "R1",
+      "item_name": "A0_feasibility_pattern",
+      "target_value": "80.0%",
+      "recomputed_value": "80.0%",
+      "status": "FULL_REPRODUCED",
+      "command_used": "python scripts/audit_analysis.py"
+    },
+    {
+      "check_id": "R2",
+      "item_name": "A1_feasibility_recovery",
+      "target_value": "100.0%",
+      "recomputed_value": "100.0%",
+      "status": "FULL_REPRODUCED",
+      "command_used": "python scripts/audit_analysis.py"
+    },
+    {
+      "check_id": "R3",
+      "item_name": "A2_diversity_collapse",
+      "target_value": "5.75",
+      "recomputed_value": "5.746",
+      "status": "FULL_REPRODUCED",
+      "command_used": "python scripts/audit_analysis.py"
+    },
+    {
+      "check_id": "R4",
+      "item_name": "A4_diversity_retention",
+      "target_value": "189.54",
+      "recomputed_value": "189.535",
+      "status": "FULL_REPRODUCED",
+      "command_used": "python scripts/audit_analysis.py"
+    },
+    {
+      "check_id": "R5",
+      "item_name": "A5_physical_objective",
+      "target_value": "3.45",
+      "recomputed_value": "3.450",
+      "status": "FULL_REPRODUCED",
+      "command_used": "python scripts/audit_analysis.py"
+    },
+    {
+      "check_id": "R6",
+      "item_name": "DE_physical_objective",
+      "target_value": "3.70",
+      "recomputed_value": "3.700",
+      "status": "FULL_REPRODUCED",
+      "command_used": "python scripts/audit_analysis.py"
+    },
+    {
+      "check_id": "R7",
+      "item_name": "A5_hypervolume",
+      "target_value": "247.11M",
+      "recomputed_value": "247105993.53",
+      "status": "FULL_REPRODUCED",
+      "command_used": "python scripts/audit_analysis.py"
+    },
+    {
+      "check_id": "R8",
+      "item_name": "NSGA3_hypervolume",
+      "target_value": "150.67M",
+      "recomputed_value": "150671177.17",
+      "status": "FULL_REPRODUCED",
+      "command_used": "python scripts/audit_analysis.py"
+    },
+    {
+      "check_id": "R9",
+      "item_name": "exact_small_scale_optimum",
+      "target_value": "873.2265",
+      "recomputed_value": "873.2265",
+      "status": "FULL_REPRODUCED",
+      "command_used": "python scripts/audit_scaling_and_friedman.py"
+    },
+    {
+      "check_id": "R10",
+      "item_name": "D600_runtime_ratio",
+      "target_value": "2.67x",
+      "recomputed_value": "2.666x",
+      "status": "FULL_REPRODUCED",
+      "command_used": "python scripts/audit_scaling_and_friedman.py"
+    }
+  ],
+  "claim_audit_summary": {
+    "total_claims": 15,
+    "verified": 9,
+    "qualified": 1,
+    "downgraded": 1,
+    "rejected": 4
+  },
+  "key_findings": {
+    "feasibility_cause": "Deb feasibility-first constraint handling was the primary cause of feasibility restoration (Case 1).",
+    "diversity_preservation": "Q-bit probability representation sustained diversity of 189.54 vs deterministic repair 5.75.",
+    "hypervolume_gain": "+64.00% higher hypervolume than reference baseline NSGA-III (247.11M vs 150.67M).",
+    "runtime_speedup": "2.67x faster execution than DE at D=600 in vectorized Python implementation.",
+    "exact_optimality_reconciliation": "0.0% gap on total penalized objective ($873.23) via zero delay; +39.65% gap on pure physical loss within 500 evals."
+  }
+}

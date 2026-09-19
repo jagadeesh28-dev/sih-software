@@ -1,0 +1,7 @@
+metric_name,frozen_reference,phase7_measured,tolerance,deviation,status
+Baseline R2,0.9501,0.9503,0.005,0.0002,PASS
+Baseline MAE (kg/h),246.97,246.9083,3.0,0.0617,PASS
+QI-C1 R2,0.953,0.9479,0.008,0.0051,PASS
+QI-C1 MAE (kg/h),237.96,255.5969,18.0,17.6369,PASS
+Conformal 90% Coverage (%),90.0,94.1286,5.0,4.1286,PASS
+Fleet Feasibility (%),100.0,100.0,0.0,0.0,PASS

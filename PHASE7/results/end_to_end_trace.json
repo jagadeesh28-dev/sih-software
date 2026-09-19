@@ -1,0 +1,98 @@
+{
+  "trace_version": "1.0.0",
+  "timestamp": "2026-09-19T09:23:55.420672+00:00",
+  "pipeline_stages": [
+    "1. Raw Telemetry Ingestion",
+    "2. Feature Contract Validation",
+    "3. Operating Domain & Envelope Guard",
+    "4. Holtrop-Mennen Hydrodynamic Physics",
+    "5. QI-C1 Fuel Consumption Prediction",
+    "6. Conformal Predictive Uncertainty",
+    "7. Shaft Energy & Green Fuel Scenarios",
+    "8. Regulatory Accounting (EU ETS & FuelEU)",
+    "9. Phase 5 Fleet Pareto Dispatch",
+    "10. Human-in-the-Loop Decision Support"
+  ],
+  "input_state": {
+    "vessel_id": "CPS_Poseidon",
+    "vessel_type": "ContainerShip",
+    "voyage_leg": "Rotterdam to Hamburg (North Sea)",
+    "distance_nm": 280.0,
+    "stw_kn": 15.2,
+    "sog_kn": 14.8,
+    "draft_m": 8.8,
+    "displacement_t": 28500.0,
+    "wind_speed_ms": 12.5,
+    "wind_direction_deg": 240.0,
+    "wave_height_m": 2.2,
+    "wave_period_s": 7.5,
+    "wave_direction_deg": 230.0,
+    "current_speed_ms": 0.8,
+    "current_direction_deg": 60.0,
+    "water_depth_m": 45.0
+  },
+  "prediction_stage": {
+    "fuel_prediction": 2927.77,
+    "uncertainty": {
+      "coverage": 0.9,
+      "interval_width_kg_h": 1755.82,
+      "lower_bound_kg_h": 2049.85,
+      "upper_bound_kg_h": 3805.68,
+      "is_high_uncertainty": true
+    },
+    "model": "QI-C1",
+    "model_version": "1.0.0-production",
+    "routing_status": "NORMAL",
+    "in_domain": true,
+    "envelope_distance": 0.054,
+    "warning": "High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).",
+    "timestamp": "2026-09-19T09:23:55.420672+00:00"
+  },
+  "voyage_metrics": {
+    "distance_nm": 280.0,
+    "duration_hours": 18.92,
+    "total_fuel_vlsfo_tonnes": 55.39,
+    "mechanical_shaft_energy_mwh": 315.36
+  },
+  "fuel_scenarios_and_regulatory": {
+    "VLSFO (Baseline Conventional)": {
+      "bunker_mass_tonnes": 55.39024324324325,
+      "shaft_energy_mwh": 315.36,
+      "ghg_ttw_tco2": 172.49,
+      "ghg_wtw_tco2eq": 216.65,
+      "eu_ets_cost_eur": 14661.24,
+      "fueleu_status": "PENALTY (+2.3 g/MJ)"
+    },
+    "Bio-Methanol (Green Scenario)": {
+      "bunker_mass_tonnes": 118.85,
+      "shaft_energy_mwh": 315.36,
+      "ghg_ttw_tco2": 163.42,
+      "ghg_wtw_tco2eq": 35.95,
+      "eu_ets_cost_eur": 13890.59,
+      "fueleu_status": "COMPLIANT"
+    },
+    "Green Ammonia (Zero-Carbon Scenario)": {
+      "bunker_mass_tonnes": 132.69,
+      "shaft_energy_mwh": 315.36,
+      "ghg_ttw_tco2": 0.0,
+      "ghg_wtw_tco2eq": 20.98,
+      "eu_ets_cost_eur": 0.0,
+      "fueleu_status": "COMPLIANT"
+    },
+    "Liquid Hydrogen (Green LH2 Scenario)": {
+      "bunker_mass_tonnes": 18.19,
+      "shaft_energy_mwh": 315.36,
+      "ghg_ttw_tco2": 0.0,
+      "ghg_wtw_tco2eq": 10.91,
+      "eu_ets_cost_eur": 0.0,
+      "fueleu_status": "COMPLIANT"
+    }
+  },
+  "pareto_decision_support": {
+    "recommended_operational_speed_kn": 14.8,
+    "speed_reduction_pct": 2.6,
+    "fuel_savings_pct": 7.4,
+    "annual_fleet_co2_savings_tonnes": 4820.0,
+    "human_in_the_loop_approval_required": true
+  }
+}

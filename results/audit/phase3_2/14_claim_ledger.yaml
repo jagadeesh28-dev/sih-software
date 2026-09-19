@@ -1,0 +1,26 @@
+established_facts_phase3_2:
+- Category normalization interface resolves 'cruise_passenger' vs 'passenger_cruise'
+  canonical mismatch.
+- IMO CII single-voyage indicator decoupled from statutory annual compliance; zero
+  artificial penalty for unrated legs.
+- 'Feasibility restoration proven: 100% of benchmark runs across all 5 optimizers
+  are physically feasible.'
+- SafeFuelObjective defensive interception verified intact (100% of adversarial unphysical
+  probes intercepted).
+- 'Physical objective variation restored: Fuel consumption scales monotonically with
+  speed, waves, and cargo.'
+- All 5 optimizers achieve near-identical physical optima on SCEN-01 (~3.2758 normalized
+  loss).
+- Wilcoxon signed-rank test confirms differences between QPSO, PSO, GA, and DE are
+  practically negligible.
+metadata:
+  audit_date: '2026-09-13T22:48:23.733275+00:00'
+  benchmark_status: VALID_POST_PATCH
+  git_commit: 20309b214b9540a7363b7365e442a222cd9c49a1
+  phase: '3.2'
+withdrawn_claims:
+- QPSO significantly beats PSO (Phase 3 claim based on invalid evaluator)
+- QPSO significantly beats GA (Phase 3 claim based on invalid evaluator)
+- DE beats QPSO by 15000 points (Phase 3 artifact of domain penalty mismatch)
+- HV = 473837.04 (Invalid penalty-dominated hypervolume)
+- Original Phase 3 optimizer ranking

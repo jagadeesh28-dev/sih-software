@@ -1,0 +1,77 @@
+# Phase 6 Frozen Baseline Specification: MODEL-REAL-04
+version: "6.0-frozen"
+timestamp: "2026-09-19"
+dataset:
+  name: "DTU FuelCast Real Telemetry"
+  vessels:
+    - name: "CPS_Poseidon"
+      class: "container_feeder"
+      records: 105422
+    - name: "CPS_Triton"
+      class: "container_feeder"
+      records: 25347
+    - name: "OSS_Ceto"
+      class: "bulk_handymax"
+      records: 43205
+  total_records: 173974
+  target_variable: "fuel_mass_flow_kg_h"
+  target_unit: "kg/h"
+
+feature_set:
+  name: "CONFIG_REAL_A"
+  count: 14
+  columns:
+    - "stw_kn"
+    - "sog_kn"
+    - "draft_m"
+    - "displacement_t"
+    - "wind_speed_ms"
+    - "wind_direction_deg"
+    - "wave_height_m"
+    - "wave_period_s"
+    - "wave_direction_deg"
+    - "current_speed_ms"
+    - "current_direction_deg"
+    - "water_depth_m"
+    - "vessel_type"
+    - "fuel_type"
+  excluded_variables:
+    - "shaft_power_kw"
+    - "rpm"
+    - "shaft_torque_nm"
+    - "engine_load_pct"
+
+splits:
+  type: "Forward Chronological Partitioning"
+  train_pct: 60.0
+  val_pct: 20.0
+  test_pct: 20.0
+
+physics_component:
+  calm_water: "Holtrop-Mennen (1982/1984)"
+  added_wave: "STAwave-2 (IMO / Kwon)"
+  wind_drag: "Blendermann aerodynamic drag"
+  speed_input: "stw_kn"
+  sog_substitution: false
+
+residual_component:
+  learner: "LightGBM Regressor"
+  objective: "regression_l1"
+  n_estimators: 150
+  learning_rate: 0.05
+  num_leaves: 31
+  max_depth: 6
+  min_child_samples: 20
+  subsample: 0.8
+  colsample_bytree: 0.8
+  reg_alpha: 0.1
+  reg_lambda: 1.0
+  alpha_residual: 1.00
+
+frozen_performance:
+  r2: 0.9501
+  mae_kg_h: 246.97
+  rmse_kg_h: 443.21
+  mape_pct: 14.63
+  median_ae_kg_h: 129.31
+  bias_kg_h: -141.82

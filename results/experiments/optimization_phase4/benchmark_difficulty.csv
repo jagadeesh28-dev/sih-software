@@ -1,0 +1,2 @@
+benchmark_level,dimension,n_vessels,random_feasibility_rate_pct,random_p10_fitness,random_p50_fitness,random_p90_fitness,difficulty_classification,source_provenance
+LEVEL_4_HETEROGENEOUS_FLEET_UNCERTAINTY,18,3,0.3,201000.0,351000.0,451000.0,HARD_COMBINATORIAL,REAL_TELEMETRY_CALIBRATED

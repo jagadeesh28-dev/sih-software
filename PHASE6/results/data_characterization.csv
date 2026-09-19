@@ -1,0 +1,5 @@
+Vessel,Observations,Duration_Days,Sampling_Rate_s,Missingness_pct,Target_Mean_kg_h,Target_Std_kg_h,Target_Median_kg_h,Target_IQR_kg_h,Target_P95_kg_h,Target_Skew,STW_Mean_kn,STW_P95_kn,SOG_Mean_kn,Engine_Load_Mean_pct,Wind_Speed_Mean_ms,Wave_Height_Mean_m,Target_Outliers_Count,Cruising_Obs,Maneuvering_Obs,Stopped_Obs,Rough_Sea_Obs
+Combined Fleet,173974,366.0,300.0,0.0007,1966.34,1648.51,1351.34,2100.75,5201.13,1.207,7.96,20.2,7.66,21.43,4.1,0.78,4402,0,0,0,0
+CPS_Poseidon,105422,366.0,300.0,0.0,2815.4,1607.5,2433.26,2168.88,5348.79,0.819,9.81,20.64,9.53,18.65,3.73,0.72,1249,0,0,0,0
+CPS_Triton,25347,88.0,300.0,0.0025,635.14,233.67,721.63,290.93,902.31,-0.901,10.2,15.2,10.14,38.9,6.16,0.95,210,0,0,0,0
+OSS_Ceto,43205,150.0,300.0,0.0013,675.57,375.32,631.09,244.56,1377.58,2.327,2.14,10.54,1.64,17.98,3.77,0.84,3671,0,0,0,0

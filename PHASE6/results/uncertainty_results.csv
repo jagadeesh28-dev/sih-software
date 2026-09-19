@@ -1,0 +1,7 @@
+model,nominal_coverage_pct,empirical_picp_pct,mpiw_kg_h,calibration_error_pct
+P2 Baseline (Quantile Residual),80.0,81.45,412.3,1.45
+P2 Baseline (Quantile Residual),90.0,90.82,618.5,0.82
+P2 Baseline (Quantile Residual),95.0,95.21,842.15,0.21
+QI-C1 QIEA (Quantile Residual),80.0,81.62,401.15,1.62
+QI-C1 QIEA (Quantile Residual),90.0,91.1,598.4,1.1
+QI-C1 QIEA (Quantile Residual),95.0,95.4,820.5,0.4

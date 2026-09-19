@@ -1,0 +1,1001 @@
+test_id,test_category,input_summary,expected_action,actual_action,is_safe,rejection_reason,latency_ms
+1,Normal Sample,"stw=20.1, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,29.55
+2,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,18.806
+3,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,24.374
+4,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,27.708
+5,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,21.089
+6,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,11.281
+7,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,10.571
+8,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,12.803
+9,Normal Sample,"stw=20.2, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,9.377
+10,Normal Sample,"stw=20.2, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,4.797
+11,Normal Sample,"stw=20.1, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,10.276
+12,Normal Sample,"stw=20.3, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,23.222
+13,Normal Sample,"stw=20.2, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,11.213
+14,Normal Sample,"stw=20.3, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,41.933
+15,Normal Sample,"stw=20.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,17.344
+16,Normal Sample,"stw=20.3, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,13.383
+17,Normal Sample,"stw=20.3, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,10.156
+18,Normal Sample,"stw=20.1, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,8.338
+19,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,16.22
+20,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,9.899
+21,Normal Sample,"stw=20.1, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.933
+22,Normal Sample,"stw=20.2, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,7.714
+23,Normal Sample,"stw=20.3, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,5.076
+24,Normal Sample,"stw=20.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,4.095
+25,Normal Sample,"stw=20.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,4.685
+26,Normal Sample,"stw=20.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,6.324
+27,Normal Sample,"stw=20.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,16.16
+28,Normal Sample,"stw=20.3, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,9.987
+29,Normal Sample,"stw=20.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,9.123
+30,Normal Sample,"stw=20.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,10.04
+31,Normal Sample,"stw=20.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,5.137
+32,Normal Sample,"stw=20.3, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,5.584
+33,Normal Sample,"stw=20.2, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.706
+34,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.439
+35,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.757
+36,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.42
+37,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,5.388
+38,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,4.066
+39,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.048
+40,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.038
+41,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.005
+42,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.948
+43,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.085
+44,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.659
+45,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.572
+46,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.453
+47,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.46
+48,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.925
+49,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.343
+50,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.875
+51,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.335
+52,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.883
+53,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.617
+54,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.374
+55,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.661
+56,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.679
+57,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.636
+58,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.674
+59,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.499
+60,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.533
+61,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.418
+62,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.399
+63,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.32
+64,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.495
+65,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.32
+66,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.233
+67,Normal Sample,"stw=20.1, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.436
+68,Normal Sample,"stw=20.1, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.368
+69,Normal Sample,"stw=20.1, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.808
+70,Normal Sample,"stw=20.1, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.647
+71,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.109
+72,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.1
+73,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.205
+74,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.482
+75,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.974
+76,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.689
+77,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.043
+78,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.697
+79,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.084
+80,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.175
+81,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.613
+82,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.08
+83,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.051
+84,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.423
+85,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.643
+86,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.759
+87,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.865
+88,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.04
+89,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,4.464
+90,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.717
+91,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.985
+92,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.744
+93,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.716
+94,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.649
+95,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.577
+96,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.41
+97,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.429
+98,Normal Sample,"stw=20.0, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.346
+99,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.218
+100,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.318
+101,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.236
+102,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.248
+103,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.158
+104,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.148
+105,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.198
+106,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.064
+107,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.054
+108,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.284
+109,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.224
+110,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.376
+111,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.264
+112,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.29
+113,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.295
+114,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.334
+115,Normal Sample,"stw=19.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.789
+116,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.491
+117,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.867
+118,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.488
+119,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,5.048
+120,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.624
+121,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.071
+122,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.4
+123,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.936
+124,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.301
+125,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.894
+126,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.212
+127,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.502
+128,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.78
+129,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.848
+130,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.339
+131,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.054
+132,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.266
+133,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.443
+134,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.906
+135,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.581
+136,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.826
+137,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.318
+138,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.981
+139,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.824
+140,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.869
+141,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.77
+142,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.715
+143,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.5
+144,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.565
+145,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.427
+146,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.332
+147,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.414
+148,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.276
+149,Normal Sample,"stw=19.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.408
+150,Normal Sample,"stw=19.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.414
+151,Normal Sample,"stw=19.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.389
+152,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.416
+153,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.301
+154,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.58
+155,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,10.975
+156,Normal Sample,"stw=19.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,24.749
+157,Normal Sample,"stw=19.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,23.015
+158,Normal Sample,"stw=19.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,41.949
+159,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,37.227
+160,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,57.068
+161,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,68.303
+162,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,19.878
+163,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,7.755
+164,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,11.49
+165,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.655
+166,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.388
+167,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.08
+168,Normal Sample,"stw=19.9, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.785
+169,Normal Sample,"stw=19.8, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.807
+170,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.698
+171,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.631
+172,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.515
+173,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.571
+174,Normal Sample,"stw=19.3, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.461
+175,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.951
+176,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.035
+177,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.648
+178,Normal Sample,"stw=19.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.494
+179,Normal Sample,"stw=19.3, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,5.095
+180,Normal Sample,"stw=19.3, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.91
+181,Normal Sample,"stw=19.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.125
+182,Normal Sample,"stw=19.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.918
+183,Normal Sample,"stw=19.2, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,4.343
+184,Normal Sample,"stw=19.3, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,6.652
+185,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,7.992
+186,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,18.021
+187,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,20.224
+188,Normal Sample,"stw=19.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,24.71
+189,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,55.862
+190,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,23.473
+191,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,10.757
+192,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,6.021
+193,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,9.745
+194,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,7.604
+195,Normal Sample,"stw=19.5, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,12.169
+196,Normal Sample,"stw=19.7, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,9.123
+197,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,12.014
+198,Normal Sample,"stw=19.6, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,6.57
+199,Normal Sample,"stw=19.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.401
+200,Normal Sample,"stw=19.4, draft=7.5",PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.97
+201,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.397
+202,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.027
+203,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.921
+204,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.881
+205,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.829
+206,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.757
+207,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.708
+208,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.729
+209,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.724
+210,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.716
+211,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.681
+212,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.714
+213,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.689
+214,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.661
+215,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.649
+216,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.643
+217,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.683
+218,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.699
+219,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.692
+220,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.682
+221,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.722
+222,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.694
+223,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.679
+224,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.672
+225,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.812
+226,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.976
+227,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.804
+228,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.733
+229,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.803
+230,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.868
+231,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.907
+232,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.961
+233,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.063
+234,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.432
+235,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.682
+236,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,9.09
+237,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,12.015
+238,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,11.959
+239,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,12.058
+240,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,12.184
+241,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,9.957
+242,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.637
+243,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.395
+244,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.946
+245,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.85
+246,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.133
+247,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.027
+248,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.801
+249,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.359
+250,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.909
+251,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,9.091
+252,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,15.776
+253,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,5.756
+254,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,6.445
+255,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,7.544
+256,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,7.374
+257,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,4.753
+258,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.791
+259,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.131
+260,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.189
+261,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.946
+262,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.971
+263,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.956
+264,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.997
+265,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.259
+266,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.952
+267,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.907
+268,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.901
+269,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.888
+270,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.922
+271,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.975
+272,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.073
+273,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.016
+274,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.977
+275,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.935
+276,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.935
+277,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.156
+278,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.963
+279,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.925
+280,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.873
+281,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.926
+282,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.944
+283,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.24
+284,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.953
+285,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.897
+286,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.919
+287,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.876
+288,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.827
+289,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.848
+290,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.959
+291,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.858
+292,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.982
+293,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.909
+294,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.841
+295,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.817
+296,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.26
+297,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.95
+298,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.851
+299,Boundary Sample,Boundary stw=2.5,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.84
+300,Boundary Sample,Boundary stw=21.0,PREDICT_OR_FALLBACK,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.852
+301,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.02
+302,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.013
+303,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.01
+304,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.009
+305,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.008
+306,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.008
+307,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+308,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+309,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+310,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+311,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+312,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+313,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+314,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+315,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+316,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+317,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+318,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+319,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+320,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+321,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+322,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+323,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+324,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+325,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+326,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+327,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+328,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+329,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+330,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+331,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+332,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+333,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+334,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+335,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+336,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.006
+337,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+338,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+339,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+340,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+341,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+342,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+343,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+344,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+345,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+346,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+347,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+348,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+349,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+350,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+351,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+352,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+353,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+354,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+355,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+356,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+357,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.006
+358,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.006
+359,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+360,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+361,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+362,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+363,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+364,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+365,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+366,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+367,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+368,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.006
+369,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+370,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+371,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+372,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+373,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+374,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+375,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.006
+376,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+377,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.006
+378,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+379,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+380,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+381,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+382,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.006
+383,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+384,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+385,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+386,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+387,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+388,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+389,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+390,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+391,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+392,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.006
+393,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+394,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+395,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.014
+396,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+397,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+398,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+399,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+400,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+401,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+402,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+403,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+404,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+405,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+406,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+407,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+408,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+409,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+410,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+411,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.031
+412,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.008
+413,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+414,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+415,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+416,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+417,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+418,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+419,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+420,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+421,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.006
+422,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.006
+423,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+424,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+425,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+426,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+427,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+428,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+429,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+430,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+431,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.006
+432,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+433,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+434,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+435,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.006
+436,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+437,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.006
+438,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+439,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+440,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+441,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+442,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+443,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+444,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+445,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.007
+446,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.007
+447,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+448,Missing Value,Missing required 'stw_kn',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'stw_kn',0.01
+449,Missing Value,Missing required 'draft_m',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'draft_m',0.01
+450,Missing Value,Missing required 'displacement_t',REJECT,REJECT,True,Input validation failure: Missing mandatory required feature: 'displacement_t',0.007
+451,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.01
+452,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.009
+453,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.022
+454,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.019
+455,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.008
+456,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.017
+457,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.008
+458,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.016
+459,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+460,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+461,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.017
+462,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.017
+463,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.008
+464,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.127
+465,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.027
+466,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.053
+467,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.013
+468,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.009
+469,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.018
+470,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.017
+471,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.008
+472,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.017
+473,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.008
+474,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.014
+475,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+476,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+477,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.016
+478,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.016
+479,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.008
+480,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.017
+481,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.008
+482,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.015
+483,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+484,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+485,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.016
+486,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.021
+487,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.008
+488,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.016
+489,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.008
+490,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.014
+491,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+492,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+493,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.016
+494,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.016
+495,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.009
+496,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.016
+497,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.008
+498,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.014
+499,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+500,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+501,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.015
+502,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.015
+503,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.01
+504,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.016
+505,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.009
+506,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.017
+507,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.009
+508,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+509,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.016
+510,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.016
+511,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.009
+512,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.016
+513,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.008
+514,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.014
+515,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+516,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+517,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.016
+518,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.016
+519,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.008
+520,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.016
+521,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.008
+522,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.018
+523,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.009
+524,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+525,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.02
+526,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.02
+527,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.009
+528,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.016
+529,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.008
+530,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.014
+531,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+532,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+533,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.016
+534,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.016
+535,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.007
+536,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.015
+537,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.008
+538,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.014
+539,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.007
+540,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.007
+541,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.015
+542,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.015
+543,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.01
+544,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.018
+545,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.008
+546,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.013
+547,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.007
+548,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.007
+549,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.015
+550,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.015
+551,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.007
+552,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.015
+553,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.008
+554,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.014
+555,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.007
+556,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.007
+557,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.015
+558,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.015
+559,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.007
+560,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.018
+561,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.008
+562,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.014
+563,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.007
+564,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.007
+565,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.017
+566,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.015
+567,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.008
+568,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.015
+569,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.008
+570,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.013
+571,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.007
+572,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.007
+573,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.015
+574,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.015
+575,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.007
+576,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.015
+577,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.007
+578,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.013
+579,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.007
+580,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.007
+581,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.015
+582,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.015
+583,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.007
+584,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.017
+585,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.008
+586,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.013
+587,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+588,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.013
+589,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.015
+590,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.015
+591,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.007
+592,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.015
+593,Corrupted Value,Corrupt displacement_t=inf,REJECT,REJECT,True,Input validation failure: Feature 'displacement_t' contains NaN or Inf value,0.007
+594,Corrupted Value,Corrupt sog_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'sog_kn' contains NaN or Inf value,0.014
+595,Corrupted Value,Corrupt stw_kn=nan,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.01
+596,Corrupted Value,Corrupt stw_kn=inf,REJECT,REJECT,True,Input validation failure: Feature 'stw_kn' contains NaN or Inf value,0.008
+597,Corrupted Value,Corrupt stw_kn=-5.0,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]",0.015
+598,Corrupted Value,Corrupt draft_m=0.0,REJECT,REJECT,True,"Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",0.015
+599,Corrupted Value,Corrupt draft_m=nan,REJECT,REJECT,True,Input validation failure: Feature 'draft_m' contains NaN or Inf value,0.007
+600,Corrupted Value,Corrupt displacement_t=-1000.0,REJECT,REJECT,True,"Input validation failure: Feature 'displacement_t'=-1000.0 out of physical bounds [500.0, 400000.0]",0.015
+601,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.022
+602,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.021
+603,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.021
+604,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.019
+605,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.019
+606,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.02
+607,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+608,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+609,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.02
+610,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.019
+611,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+612,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+613,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+614,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+615,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+616,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+617,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+618,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+619,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+620,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+621,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.02
+622,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.02
+623,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+624,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+625,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+626,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+627,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+628,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+629,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+630,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.019
+631,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+632,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+633,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+634,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.02
+635,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.019
+636,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+637,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+638,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.019
+639,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.019
+640,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.019
+641,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.019
+642,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.022
+643,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+644,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+645,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+646,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+647,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.019
+648,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+649,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+650,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+651,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+652,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+653,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.02
+654,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+655,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+656,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+657,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+658,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+659,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+660,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.02
+661,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.019
+662,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+663,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+664,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+665,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+666,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+667,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+668,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+669,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+670,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.019
+671,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+672,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.019
+673,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+674,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+675,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+676,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+677,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+678,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+679,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+680,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+681,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.02
+682,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+683,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+684,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+685,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.019
+686,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+687,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.018
+688,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+689,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+690,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+691,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+692,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+693,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+694,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.016
+695,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+696,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+697,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+698,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.02
+699,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.017
+700,Severe OOD,"Extrapolated stw=45 kn, draft=35 m",REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",0.019
+701,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.021
+702,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.019
+703,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+704,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+705,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+706,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+707,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+708,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+709,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+710,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+711,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+712,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.021
+713,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+714,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+715,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+716,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+717,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+718,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.021
+719,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+720,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.018
+721,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+722,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+723,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+724,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+725,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+726,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+727,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+728,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.019
+729,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+730,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+731,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+732,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+733,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+734,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.019
+735,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+736,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+737,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+738,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+739,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.018
+740,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+741,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+742,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+743,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.018
+744,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+745,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+746,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+747,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+748,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+749,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+750,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+751,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+752,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+753,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+754,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+755,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+756,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+757,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+758,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+759,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.021
+760,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+761,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+762,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.018
+763,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+764,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+765,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+766,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+767,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+768,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+769,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+770,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+771,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+772,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+773,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+774,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+775,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.02
+776,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+777,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+778,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.019
+779,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+780,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.016
+781,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.019
+782,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+783,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.559
+784,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.068
+785,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.041
+786,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.026
+787,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.022
+788,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.02
+789,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.019
+790,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.019
+791,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.026
+792,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.025
+793,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.019
+794,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+795,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.017
+796,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.054
+797,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.033
+798,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.04
+799,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.035
+800,Impossible Physics,Negative speed and zero displacement,REJECT,REJECT,True,"Input validation failure: Feature 'stw_kn'=-1.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=0.5 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=100.0 out of physical bounds [500.0, 400000.0]",0.037
+801,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.65
+802,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,6.482
+803,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,5.25
+804,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,4.117
+805,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,4.226
+806,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,22.034
+807,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,4.516
+808,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,9.934
+809,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.917
+810,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.696
+811,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.208
+812,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.99
+813,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.855
+814,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.787
+815,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.567
+816,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.883
+817,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.727
+818,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.719
+819,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.72
+820,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.814
+821,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.69
+822,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.151
+823,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,2.111
+824,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.02
+825,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.93
+826,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.865
+827,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.843
+828,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.859
+829,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.738
+830,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.724
+831,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.69
+832,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.68
+833,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.632
+834,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.672
+835,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.81
+836,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.921
+837,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.798
+838,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.747
+839,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.873
+840,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,4.948
+841,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.743
+842,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.942
+843,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,3.049
+844,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,9.727
+845,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,12.758
+846,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,12.682
+847,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,4.486
+848,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.575
+849,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.225
+850,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.193
+851,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.985
+852,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.976
+853,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.847
+854,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.849
+855,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.9
+856,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.83
+857,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.794
+858,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.779
+859,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.799
+860,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.773
+861,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.768
+862,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.914
+863,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.96
+864,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.857
+865,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.852
+866,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.867
+867,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.807
+868,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.795
+869,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.003
+870,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.884
+871,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.853
+872,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.883
+873,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.834
+874,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.876
+875,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,1.044
+876,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.881
+877,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.83
+878,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.818
+879,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.828
+880,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.825
+881,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.918
+882,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.649
+883,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.651
+884,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.633
+885,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.604
+886,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.591
+887,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.588
+888,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.649
+889,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.621
+890,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.651
+891,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.698
+892,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.793
+893,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.849
+894,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.758
+895,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.72
+896,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.747
+897,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.728
+898,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.735
+899,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.728
+900,Shuffled Feature Order,Permuted dictionary keys,PREDICT,NORMAL,True,High prediction uncertainty: 90% interval width (1755.8 kg/h) exceeds threshold (1200.0 kg/h).,0.767
+901,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.782
+902,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.751
+903,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.74
+904,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.778
+905,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.733
+906,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.737
+907,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.753
+908,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.74
+909,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.718
+910,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.689
+911,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.702
+912,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.727
+913,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.725
+914,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.753
+915,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.701
+916,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.742
+917,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.825
+918,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.743
+919,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.718
+920,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.709
+921,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.685
+922,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.676
+923,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.663
+924,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.645
+925,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.733
+926,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.72
+927,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.647
+928,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.645
+929,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.624
+930,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.665
+931,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.661
+932,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.633
+933,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.618
+934,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.68
+935,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.822
+936,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.734
+937,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.725
+938,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.689
+939,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.656
+940,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.624
+941,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.64
+942,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.63
+943,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.699
+944,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.736
+945,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.695
+946,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.658
+947,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.704
+948,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.649
+949,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.625
+950,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.612
+951,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.606
+952,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.71
+953,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.691
+954,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.693
+955,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.661
+956,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.737
+957,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.704
+958,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.673
+959,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.673
+960,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.664
+961,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.68
+962,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.699
+963,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.678
+964,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.746
+965,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.715
+966,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.681
+967,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.67
+968,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.647
+969,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.702
+970,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.774
+971,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.66
+972,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.631
+973,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.648
+974,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.661
+975,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.658
+976,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.651
+977,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.663
+978,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.748
+979,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,1.002
+980,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.746
+981,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.659
+982,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.64
+983,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.646
+984,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.65
+985,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.632
+986,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.606
+987,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.742
+988,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.807
+989,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.689
+990,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.686
+991,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.657
+992,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.676
+993,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.644
+994,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.619
+995,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.636
+996,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.678
+997,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.681
+998,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.635
+999,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.633
+1000,Duplicate Sample,Identical operational state,PREDICT_IDENTICAL,NORMAL,True,None,0.691

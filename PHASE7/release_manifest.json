@@ -1,0 +1,73 @@
+{
+  "release_version": "v1.0.0-rc1",
+  "phase": "PHASE 7 PRODUCTION RELEASE",
+  "project": "SIH26138 — Egreen Quanta",
+  "timestamp": "2026-09-19T14:47:00+05:30",
+  "git_environment": {
+    "commit_sha": "20309b214b9540a7363b7365e442a222cd9c49a1",
+    "branch": "master",
+    "clean_state": false,
+    "phase5_status": "FROZEN (PASS)",
+    "phase6_status": "FROZEN (PASS)"
+  },
+  "hardware_and_runtime": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "ram_gb": 15.63,
+    "python_version": "3.14.0",
+    "core_packages": {
+      "numpy": "2.2.6",
+      "scipy": "1.17.0",
+      "pandas": "2.3.3",
+      "pyarrow": "23.0.0",
+      "scikit-learn": "1.8.0",
+      "lightgbm": "4.7.0",
+      "matplotlib": "3.10.8"
+    }
+  },
+  "datasets": {
+    "CPS_Poseidon": {
+      "path": "data/processed/real/fuelcast/CPS_Poseidon.parquet",
+      "records": 105422,
+      "sha256": "da85f2e21b6e8724c8350f9aadbda4e457593d77412b8cefaa077da9e1e260c2"
+    },
+    "CPS_Triton": {
+      "path": "data/processed/real/fuelcast/CPS_Triton.parquet",
+      "records": 25347,
+      "sha256": "fa8cc7f9f6a92d330088e41e3f275b8d8428d3604cfb35dfa46eaa753d545f89"
+    },
+    "OSS_Ceto": {
+      "path": "data/processed/real/fuelcast/OSS_Ceto.parquet",
+      "records": 43205,
+      "sha256": "ac3f8d5e865f11cd40f147d6153de9915b543f675684719245a2d5d6d8e752cd"
+    },
+    "total_raw_records": 173986,
+    "total_validated_records": 173974,
+    "removed_padding_rows": 12
+  },
+  "configurations": {
+    "baseline_yaml": {
+      "path": "PHASE6/config/baseline.yaml",
+      "sha256": "ec977675c77614b61839ab8cac7fd9bdb29cb655948618100f3c4e8302f83553"
+    },
+    "qi_c1_yaml": {
+      "path": "PHASE6/config/qi_c1.yaml",
+      "sha256": "4c82f5c746ed209dffb5a00870b9ac8641839496a6e6388eca918521683559ba"
+    },
+    "normalization_json": {
+      "path": "PHASE6/config/normalization.json",
+      "sha256": "909d65f3d59caaf6c913db507b810d254579c9b0c90461443cb7663862b651e3"
+    }
+  },
+  "production_artifacts": {
+    "primary_prediction_engine": "QI-C1 (QIEA-FS Feature Subset + LightGBM Residual)",
+    "fallback_prediction_engine": "MODEL-REAL-04 (Holtrop-Mennen Physics + LightGBM Residual)",
+    "physics_backbone": "PhysicsFuelPredictor (physics/resistance_model.py, physics/propulsion.py)",
+    "domain_guardian": "SafeFuelObjective (prediction/safe_objective.py, prediction/domain_checker.py)",
+    "fleet_optimization_engine": "CommonFleetEvaluator + Differential Evolution / A5 QI-HFO"
+  },
+  "research_only_artifacts": {
+    "QI-C2-MPS": "src/qi_prediction/mps_predictor.py (Research negative result, excluded from production path)"
+  }
+}

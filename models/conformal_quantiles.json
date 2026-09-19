@@ -1,0 +1,42 @@
+{
+  "MODEL-REAL-04": {
+    "0.9": {
+      "q_val": 1136.8524270960645,
+      "mpiw_kg_h": 2273.704854192129,
+      "empirical_test_coverage_pct": 95.0482814116565
+    },
+    "0.95": {
+      "q_val": 1444.4259110242917,
+      "mpiw_kg_h": 2888.8518220485835,
+      "empirical_test_coverage_pct": 97.29279227497413
+    }
+  },
+  "QI-C1": {
+    "0.9": {
+      "q_val": 782.4663951506341,
+      "mpiw_kg_h": 1564.9327903012681,
+      "empirical_test_coverage_pct": 93.5567306586964
+    },
+    "0.95": {
+      "q_val": 1384.4683052415903,
+      "mpiw_kg_h": 2768.9366104831806,
+      "empirical_test_coverage_pct": 96.49097597424992
+    }
+  },
+  "coverage_sharpness_comparison": {
+    "0.9": {
+      "m04_mpiw_kg_h": 2273.704854192129,
+      "qi_mpiw_kg_h": 1564.9327903012681,
+      "sharpness_improvement_pct": 31.17,
+      "m04_coverage_pct": 95.0482814116565,
+      "qi_coverage_pct": 93.5567306586964
+    },
+    "0.95": {
+      "m04_mpiw_kg_h": 2888.8518220485835,
+      "qi_mpiw_kg_h": 2768.9366104831806,
+      "sharpness_improvement_pct": 4.15,
+      "m04_coverage_pct": 97.29279227497413,
+      "qi_coverage_pct": 96.49097597424992
+    }
+  }
+}

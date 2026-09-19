@@ -1,0 +1,9 @@
+subsystem,quantity,unit,verified
+Fuel Model,Fuel Mass Flow,kg/h,True
+Emissions Model,GHG Emissions,tonnes CO2e,True
+Cost Model,Total OPEX,USD,True
+Regulatory Engine,IMO CII Attained,gCO2 / (gt * nm),True
+Regulatory Engine,FuelEU GHG Intensity,gCO2e / MJ,True
+Voyage Model,Kinematic Speed Loss,knots,True
+Voyage Model,Voyage Transit Time,hours,True
+Objective Scalarizer,Penalty Multiplier,Dimensionless (scale 1e5),True

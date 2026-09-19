@@ -1,0 +1,188 @@
+# ==============================================================================
+# SIH26138 — Egreen Quanta: Production Feature Contract
+# Specification: CONFIG_REAL_A (14 Canonical Input Features)
+# Version: 1.0.0-frozen
+# Enforcement: Immutable schema, datatype, range, unit, and null policy contract.
+# ==============================================================================
+
+version: "1.0.0"
+schema_name: "CONFIG_REAL_A"
+target_variable:
+  name: "fuel_mass_flow_kg_h"
+  datatype: "float64"
+  units: "kg/h"
+  physical_meaning: "Instantaneous main engine fuel mass flow consumption rate"
+  allowed_range: [0.0, 15000.0]
+  measurement_source: "Direct Coriolis mass flow sensor telemetry (FuelCast DTU)"
+
+features:
+  - name: "stw_kn"
+    datatype: "float64"
+    units: "knots"
+    physical_meaning: "Speed Through Water; primary propulsion velocity relative to surrounding water"
+    allowed_range: [0.0, 35.0]
+    required: true
+    missing_policy: "REJECT"
+    normalization: "min_max"
+    clipping_policy: "REJECT_ON_VIOLATION"
+
+  - name: "sog_kn"
+    datatype: "float64"
+    units: "knots"
+    physical_meaning: "Speed Over Ground; navigation velocity relative to seabed"
+    allowed_range: [0.0, 35.0]
+    required: true
+    missing_policy: "FALLBACK_TO_STW"
+    normalization: "min_max"
+    clipping_policy: "REJECT_ON_VIOLATION"
+
+  - name: "draft_m"
+    datatype: "float64"
+    units: "meters"
+    physical_meaning: "Vessel mean hydrodynamic draft determining submerged wetted surface area"
+    allowed_range: [1.0, 25.0]
+    required: true
+    missing_policy: "REJECT"
+    normalization: "min_max"
+    clipping_policy: "REJECT_ON_VIOLATION"
+
+  - name: "displacement_t"
+    datatype: "float64"
+    units: "metric_tonnes"
+    physical_meaning: "Total displaced ship mass determining buoyant hull volume"
+    allowed_range: [500.0, 400000.0]
+    required: true
+    missing_policy: "REJECT"
+    normalization: "min_max"
+    clipping_policy: "REJECT_ON_VIOLATION"
+
+  - name: "wind_speed_ms"
+    datatype: "float64"
+    units: "m/s"
+    physical_meaning: "True atmospheric wind speed relative to sea surface"
+    allowed_range: [0.0, 60.0]
+    required: false
+    default_value: 0.0
+    missing_policy: "IMPUTE_DEFAULT"
+    normalization: "min_max"
+    clipping_policy: "CLIP_TO_RANGE"
+
+  - name: "wind_direction_deg"
+    datatype: "float64"
+    units: "degrees"
+    physical_meaning: "True meteorological wind direction angle (0-360 deg)"
+    allowed_range: [0.0, 360.0]
+    required: false
+    default_value: 0.0
+    missing_policy: "IMPUTE_DEFAULT"
+    normalization: "cyclic_sin_cos"
+    clipping_policy: "MODULO_360"
+
+  - name: "wave_height_m"
+    datatype: "float64"
+    units: "meters"
+    physical_meaning: "Significant wave height Hs (mean height of highest 1/3 waves)"
+    allowed_range: [0.0, 20.0]
+    required: false
+    default_value: 0.0
+    missing_policy: "IMPUTE_DEFAULT"
+    normalization: "min_max"
+    clipping_policy: "CLIP_TO_RANGE"
+
+  - name: "wave_period_s"
+    datatype: "float64"
+    units: "seconds"
+    physical_meaning: "Peak wave period Tp between dominant wave crests"
+    allowed_range: [1.0, 30.0]
+    required: false
+    default_value: 6.0
+    missing_policy: "IMPUTE_DEFAULT"
+    normalization: "min_max"
+    clipping_policy: "CLIP_TO_RANGE"
+
+  - name: "wave_direction_deg"
+    datatype: "float64"
+    units: "degrees"
+    physical_meaning: "Direction from which sea waves propagate (0-360 deg)"
+    allowed_range: [0.0, 360.0]
+    required: false
+    default_value: 0.0
+    missing_policy: "IMPUTE_DEFAULT"
+    normalization: "cyclic_sin_cos"
+    clipping_policy: "MODULO_360"
+
+  - name: "current_speed_ms"
+    datatype: "float64"
+    units: "m/s"
+    physical_meaning: "Ocean surface water current velocity"
+    allowed_range: [0.0, 6.0]
+    required: false
+    default_value: 0.0
+    missing_policy: "IMPUTE_DEFAULT"
+    normalization: "min_max"
+    clipping_policy: "CLIP_TO_RANGE"
+
+  - name: "current_direction_deg"
+    datatype: "float64"
+    units: "degrees"
+    physical_meaning: "Direction towards which ocean surface current flows (0-360 deg)"
+    allowed_range: [0.0, 360.0]
+    required: false
+    default_value: 0.0
+    missing_policy: "IMPUTE_DEFAULT"
+    normalization: "cyclic_sin_cos"
+    clipping_policy: "MODULO_360"
+
+  - name: "water_depth_m"
+    datatype: "float64"
+    units: "meters"
+    physical_meaning: "Bathymetric water depth (shallow water causes return flow drag)"
+    allowed_range: [2.0, 11000.0]
+    required: false
+    default_value: 100.0
+    missing_policy: "IMPUTE_DEFAULT"
+    normalization: "min_max"
+    clipping_policy: "CLIP_TO_RANGE"
+
+  - name: "vessel_type"
+    datatype: "string"
+    units: "categorical"
+    physical_meaning: "Naval hull classification category"
+    allowed_values:
+      - "ContainerShip"
+      - "OilServiceShip"
+      - "Bulker"
+      - "Tanker"
+      - "GeneralCargo"
+    required: true
+    missing_policy: "REJECT"
+    normalization: "canonical_mapper"
+
+  - name: "fuel_type"
+    datatype: "string"
+    units: "categorical"
+    physical_meaning: "Operational fuel category determining stoichiometric emissions and LHV"
+    allowed_values:
+      - "VLSFO"
+      - "HFO"
+      - "MDO"
+      - "LSFO"
+      - "LNG"
+      - "Methanol"
+      - "Ammonia"
+      - "Hydrogen"
+    required: false
+    default_value: "VLSFO"
+    missing_policy: "IMPUTE_DEFAULT"
+    normalization: "canonical_mapper"
+
+# Validation Enforcement Rules
+enforcement:
+  strict_type_checking: true
+  reject_nan_values: true
+  reject_inf_values: true
+  reject_missing_required: true
+  reject_impossible_physics: true
+  prohibit_negative_speed: true
+  prohibit_zero_displacement: true
+  max_allowed_envelope_distance: 1.50

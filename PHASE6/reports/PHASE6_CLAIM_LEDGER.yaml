@@ -1,0 +1,64 @@
+# PHASE 6 FORMAL CLAIM LEDGER: SIH26138 - EGREEN QUANTA
+# Comprehensive Legal, Scientific, and Evaluative Boundary Specification
+version: "6.0"
+audit_date: "2026-09-19"
+project_id: "SIH26138"
+project_title: "Egreen Quanta — Quantum-Inspired Fuel Prediction and Green Fleet Optimization"
+
+allowed_claims:
+  - claim: "Quantum-inspired feature selection using Q-bit probability amplitudes"
+    status: "VERIFIED"
+    evidence: "Implemented in src/qi_prediction/qiea.py; evaluated across 30 seeds; preserves +44.7% higher population diversity than classical GA."
+  - claim: "Quantum-inspired hyperparameter optimization using delta-potential well dynamics"
+    status: "VERIFIED"
+    evidence: "Implemented in src/qi_prediction/qpso.py; verified against classical PSO and Random Search under identical 150-evaluation budgets."
+  - claim: "Quantum-inspired fuel consumption prediction mechanism"
+    status: "VERIFIED"
+    evidence: "Candidate QI-C1 combines QIEA feature selection with LightGBM residual regression, achieving MAE = 237.96 kg/h and R2 = 0.9530."
+  - claim: "Classical quantum-inspired algorithm running on classical hardware"
+    status: "VERIFIED"
+    evidence: "Execution runs deterministically on standard x86_64 architecture with zero specialized quantum processors."
+  - claim: "Physics-guided hybrid residual fuel prediction"
+    status: "VERIFIED"
+    evidence: "Holtrop-Mennen calm water + wave + wind resistance baseline (P0) combined with ML residual (P2 / MODEL-REAL-04), reproducing R2 = 0.9501."
+  - claim: "Conformal prediction intervals for fuel consumption uncertainty"
+    status: "VERIFIED"
+    evidence: "Quantile regression calibrated on isolated validation split achieving empirical 91.10% coverage for nominal 90% confidence."
+  - claim: "Empirical validation on 173,974 commercial vessel telemetry records"
+    status: "VERIFIED"
+    evidence: "Direct Coriolis mass-flow measurements from DTU FuelCast across CPS_Poseidon, CPS_Triton, and OSS_Ceto."
+
+forbidden_claims:
+  - claim: "Quantum computing or quantum hardware execution"
+    status: "STRICTLY FORBIDDEN"
+    reason: "No quantum processors, cryogenic systems, or physical qubits are used. The platform is entirely classical."
+  - claim: "Quantum supremacy or quantum advantage"
+    status: "STRICTLY FORBIDDEN"
+    reason: "QI algorithms exhibit comparable accuracy to classical GA (p = 0.684); no quantum speedup exists."
+  - claim: "Exponential computational speedup"
+    status: "STRICTLY FORBIDDEN"
+    reason: "Empirical execution times are polynomial and comparable to classical metaheuristics."
+  - claim: "Novelty of QIEA, QPSO, or MPS algorithms"
+    status: "STRICTLY FORBIDDEN"
+    reason: "These are established algorithms published between 2002 and 2016. Novelty is restricted to domain integration and benchmarking."
+  - claim: "Superiority of Matrix Product State (MPS) tensor networks"
+    status: "STRICTLY FORBIDDEN"
+    reason: "MPS tensor network diverged on continuous telemetry across 20 of 30 seeds; empirical evidence disproved superiority."
+  - claim: "Zero-shot cross-vessel generalization"
+    status: "STRICTLY FORBIDDEN"
+    reason: "Leave-One-Vessel-Out (LOVO) testing showed 3.4x to 5.2x error increase across different vessel classes."
+  - claim: "Experimental sensor validation of alternative fuels"
+    status: "STRICTLY FORBIDDEN"
+    reason: "Real telemetry is conventional fuel. Green methanol, ammonia, and hydrogen are strictly physics-based thermodynamic scenarios."
+
+scientific_classification:
+  level_1_qi_optimization:
+    classification: "CASE B — QI COMPETITIVE"
+    rationale: "Statistically comparable to classical GA (p = 0.684) with proven secondary benefit in search diversity (+44.7% entropy)."
+  level_2_qi_representation:
+    classification: "CASE D — QI NOT SUPPORTED"
+    rationale: "MPS tensor network suffered numerical divergence and underperformed classical tree and polynomial models."
+
+production_architecture:
+  selected_option: "OPTION B — Classical Baseline (MODEL-REAL-04) + Candidate QI-C1 (QIEA/QPSO)"
+  status: "APPROVED FOR SIH 2026 DEPLOYMENT"

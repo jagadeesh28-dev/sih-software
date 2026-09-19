@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0-verified",
+  "timestamp_utc": "2026-09-19T12:07:03.581986+00:00",
+  "git_commit_head": "20309b214b9540a7363b7365e442a222cd9c49a1",
+  "dataset_hashes": {
+    "CPS_Poseidon.parquet": "da85f2e21b6e8724c8350f9aadbda4e457593d77412b8cefaa077da9e1e260c2",
+    "CPS_Triton.parquet": "fa8cc7f9f6a92d330088e41e3f275b8d8428d3604cfb35dfa46eaa753d545f89",
+    "OSS_Ceto.parquet": "ac3f8d5e865f11cd40f147d6153de9915b543f675684719245a2d5d6d8e752cd"
+  },
+  "model_hashes": {
+    "model_real_04.txt": "095dff87a1668676f169743e73ae1f0d32fe3d9aff261b9098bf3e8b44899c78",
+    "qi_c1.txt": "b2ff5709c8794273770a23a668e9d0de35e4945447bc557370e7389908bd887c",
+    "domain_checker.json": "ace019aa84b0a9905d3cf3c55ac4b42877e3c7392ec62c2876103b671299e9ad",
+    "conformal_quantiles.json": "2e0f502043b6fad1f902316747f62d5ef78e5d641d48267c4b797cd08c13b19a"
+  },
+  "script_hashes": {
+    "build_production_models.py": "9f1f4804fb66ddb82014c9fd7567e506d6204cb045c239f883147d3f63294c99",
+    "compute_detailed_metrics.py": "91ea274562586752e407c88d5be4b476f10fa6a33cb8ea793d0fefd297610dfc",
+    "reproduce_release.py": "f01ade527c0aa2af8841ce5afc8bc5a1648fe935f4624ee570373f4036f750e6"
+  }
+}

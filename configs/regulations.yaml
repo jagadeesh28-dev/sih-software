@@ -1,0 +1,60 @@
+# Maritime Environmental Regulations Configuration
+# Formally decoupled regulatory parameters for IMO LCA, IMO CII, FuelEU Maritime, and EU ETS.
+
+imo_lifecycle:
+  framework: "IMO Resolution MEPC.391(81)"
+  adopted_year: 2024
+  target_basis: "Well-to-Wake"
+  ch4_gwp100: 29.8  # IPCC AR6 100-year GWP
+  n2o_gwp100: 273.0 # IPCC AR6 100-year GWP
+
+imo_cii:
+  framework: "MARPOL Annex VI Regulation 28 / Resolution MEPC.338(76) & MEPC.354(78)"
+  annual_reduction_pct_2026: 11.0  # Z% reduction factor for 2026
+  annual_escalation_pct: 2.0       # Escalates by 2.0% per year post-2026
+  reference_lines:
+    container:
+      a: 1984.0
+      c: 0.489
+      capacity_basis: "DWT"
+    bulk_carrier:
+      a: 4745.0
+      c: 0.622
+      capacity_basis: "DWT"
+    cruise_passenger:
+      a: 930.0
+      c: 0.381
+      capacity_basis: "GT"
+    offshore_supply:
+      a: 0.0
+      c: 0.0
+      capacity_basis: "NOT_APPLICABLE" # Not mandatory under current Annex VI Reg 28
+  rating_thresholds:
+    superior_a: 0.83
+    minor_superior_b: 0.94
+    moderate_c: 1.06
+    inferior_d: 1.19
+    unacceptable_e: 999.0
+
+fueleu_maritime:
+  framework: "Regulation (EU) 2023/1805"
+  effective_date: "2025-01-01"
+  baseline_intensity_g_co2e_mj: 91.16  # 2020 EU fleet reference
+  targets:
+    "2025-2029": 89.3368  # -2% reduction
+    "2030-2034": 85.6904  # -6% reduction
+    "2035-2039": 77.9418  # -14.5% reduction
+    "2040-2044": 62.9004  # -31% reduction
+    "2045-2049": 34.6408  # -62% reduction
+    "2050": 18.2320       # -80% reduction
+  statutory_penalty_eur_per_t_vlsfo_equiv: 2400.0
+  vlsfo_reference_energy_mj_tonne: 41000.0
+  default_target_year: "2025-2029"
+  eur_to_usd: 1.08
+
+eu_ets:
+  framework: "Directive (EU) 2023/959"
+  surrender_percentage_2026: 1.00  # 100% phase-in achieved in 2026
+  default_allowance_price_usd_tonne: 90.0
+  intra_eu_scope: 1.00
+  extra_eu_scope: 0.50

@@ -1,0 +1,5 @@
+comparison,n_matched_seeds,wilcoxon_statistic,p_value,statistically_significant_05,hodges_lehmann_median_diff,effect_size,qpso_win_count,competitor_win_count,tie_count,outcome
+QPSO vs PSO,30,14.0,2.0489096641540527e-07,True,-0.0,0.0301,27,3,0,QPSO Superior
+QPSO vs GA,30,0.0,1.862645149230957e-09,True,-0.0001,0.0,30,0,0,QPSO Superior
+QPSO vs DE,30,81.0,0.0012321043759584427,True,0.0,0.1742,5,25,0,Competitor Superior
+QPSO vs Random_Search,30,0.0,1.862645149230957e-09,True,-0.0042,0.0,30,0,0,QPSO Superior

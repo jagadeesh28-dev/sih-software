@@ -1,0 +1,8 @@
+probe_id,expected_outcome,actual_domain_status,is_valid_candidate,domain_penalty,penalized_objective,intercepted_properly
+negative_speed,PHYSICALLY_INVALID,PHYSICALLY_INVALID,False,0.0,1000000.0,True
+extreme_speed_40kn,OUT_OF_DOMAIN,PHYSICALLY_INVALID,False,0.0,1000000.0,True
+impossible_draft_15m,OUT_OF_DOMAIN,OUT_OF_DOMAIN,False,0.0,216506453841.78998,True
+extreme_wave_15m,OUT_OF_DOMAIN,OUT_OF_DOMAIN,False,0.0,185504.36418737995,True
+bogus_vessel_type_submarine,OUT_OF_DOMAIN,OUT_OF_DOMAIN,False,0.0,102895.68032470797,True
+bogus_fuel_type_uranium,OUT_OF_DOMAIN,OUT_OF_DOMAIN,False,0.0,102895.68032470797,True
+valid_baseline_16kn,IN_DOMAIN,UNCERTAIN,True,0.0,3600.0404809630836,False

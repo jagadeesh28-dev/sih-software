@@ -1,0 +1,29 @@
+{
+  "model_id": "MODEL-REAL-04",
+  "name": "Classical Hybrid Physics + ML Residual Predictor",
+  "role": "Reference Anchor / High-Reliability Fallback",
+  "version": "1.0.0-frozen",
+  "features": [
+    "stw_kn",
+    "sog_kn",
+    "draft_m",
+    "displacement_t",
+    "wind_speed_ms",
+    "wind_direction_deg",
+    "wave_height_m",
+    "wave_period_s",
+    "wave_direction_deg",
+    "current_speed_ms",
+    "current_direction_deg",
+    "water_depth_m",
+    "vessel_type",
+    "fuel_type"
+  ],
+  "feature_count": 14,
+  "seed": 42,
+  "test_mae_kg_h": 246.90833830202428,
+  "test_r2": 0.9502526820050619,
+  "mean_30seed_mae_kg_h": 248.12,
+  "mean_30seed_r2": 0.9501,
+  "alpha": 1.0
+}

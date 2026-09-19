@@ -1,0 +1,3 @@
+branch,seed,budget,runtime_s,is_feasible,best_fitness,physical_fitness,fuel_tonnes,opex_usd,ghg_tonnes,pareto_solutions_count
+Branch A (Baseline MODEL-REAL-04),42,2500,1.67,True,4.2437,4.2437,233.68,236225.61,793.8,0
+Branch B (Selected QI Predictor),42,2500,1.6,True,4.366,4.366,239.78,242291.17,814.61,0

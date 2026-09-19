@@ -1,0 +1,104 @@
+# ==============================================================================
+# SIH26138 — Egreen Quanta: Production Configuration
+# Version: 1.0.0-production
+# Release Stage: Phase 7 Final Production Freeze
+# ==============================================================================
+
+version: "1.0.0"
+environment: "production"
+project: "SIH26138 - Egreen Quanta"
+release_tag: "v1.0.0"
+
+paths:
+  feature_contract: "PHASE7/config/feature_contract.yaml"
+  model_registry: "PHASE7/model_registry.yaml"
+  fuels_config: "configs/fuels.yaml"
+  physics_config: "configs/physics.yaml"
+  regulations_config: "configs/regulations.yaml"
+  processed_telemetry: "data/processed/real/fuelcast"
+
+serving:
+  primary_engine: "QI-C1"
+  reference_fallback_engine: "MODEL-REAL-04"
+  physics_emergency_fallback: "PhysicsFuelPredictor"
+  max_inference_latency_ms: 100.0
+  batch_size_limit: 10000
+
+models:
+  QI-C1:
+    enabled: true
+    feature_count: 8
+    features:
+      - "stw_kn"
+      - "sog_kn"
+      - "draft_m"
+      - "displacement_t"
+      - "wind_speed_ms"
+      - "wave_height_m"
+      - "current_speed_ms"
+      - "water_depth_m"
+    hyperparameters:
+      n_estimators: 150
+      learning_rate: 0.05
+      num_leaves: 31
+      max_depth: 6
+      min_child_samples: 20
+      colsample_bytree: 0.8
+      reg_alpha: 0.1
+      reg_lambda: 1.0
+
+  MODEL-REAL-04:
+    enabled: true
+    feature_count: 14
+    hyperparameters:
+      n_estimators: 150
+      learning_rate: 0.05
+      num_leaves: 31
+      max_depth: 6
+      min_child_samples: 20
+      subsample: 0.8
+      colsample_bytree: 0.8
+      reg_alpha: 0.1
+      reg_lambda: 1.0
+
+domain_guard:
+  enabled: true
+  envelope_distance_threshold_warning: 1.00   # NEAR_BOUNDARY
+  envelope_distance_threshold_ood: 1.50       # OUT_OF_DOMAIN
+  envelope_distance_threshold_critical: 3.00  # REJECT_SEVERE_OOD
+  check_physical_sanity: true
+  reject_negative_speed: true
+  reject_impossible_physics: true
+
+uncertainty_gate:
+  enabled: true
+  nominal_coverage: 0.90
+  supported_coverages: [0.80, 0.90, 0.95]
+  empirical_q_values:
+    "0.80": 245.30
+    "0.90": 299.20
+    "0.95": 385.50
+  flag_threshold_mpiw_kg_h: 1200.0   # If 90% interval > 1200 kg/h, flag as high uncertainty
+  reject_threshold_mpiw_kg_h: 2500.0 # If 90% interval > 2500 kg/h, reject inference
+
+routing_policy:
+  mode: "DUAL_ENGINE_WITH_FALLBACK"
+  normal_state:
+    condition: "in_domain AND NOT high_uncertainty AND qi_c1_healthy"
+    engine: "QI-C1"
+  fallback_state:
+    condition: "near_boundary OR high_uncertainty OR qi_c1_failed"
+    engine: "MODEL-REAL-04"
+  emergency_physics_state:
+    condition: "all_ml_failed OR telemetry_degraded"
+    engine: "PhysicsFuelPredictor"
+  rejection_state:
+    condition: "physically_invalid OR severe_ood OR missing_required_features"
+    action: "REJECT"
+
+optimizer_coupling:
+  safe_objective_enabled: true
+  robust_lambda_default: 0.50
+  base_ood_penalty_kg_h: 10000.0
+  max_allowable_fuel_kg_h: 15000.0
+  reject_nan_inf: true

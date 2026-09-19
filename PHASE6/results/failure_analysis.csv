@@ -1,0 +1,8 @@
+failure_id,failure_mode,frequency_pct,mitigation,impact
+F1_DATA_QUALITY,Missing STW or Doppler Dropout,0.003,Strict fallback rejection to safe domain objective,Prevents catastrophic velocity distortion
+F2_DISTRIBUTION_SHIFT,LOVO Cross-Vessel Generalization Failure,100.0,Require vessel-specific calibration before deployment,Error increases 3-6x when testing on unseen vessel classes
+F3_MODEL_CAPACITY,Pure Physics Under-Prediction,98.4,Hybrid physics + ML residual coupling (alpha=1.0),Eliminates -1883 kg/h structural negative bias
+F4_OPTIMIZATION_FAILURE,MPS Tensor Train Gradient Divergence,66.7,Enforce gauge canonicalization (QR/SVD) or retain tree learner,Unbounded prediction explosion without regularization
+F5_PHYSICS_MISMATCH,Zero-Speed Auxiliary Consumption,2.4,Auxiliary baseline floor model ($P_{aux} = 250	ext{ kW}$),Prevents zero-fuel prediction at harbor berth
+F6_QI_REPRESENTATION_FAIL,Superposition Saturation,0.0,"Han & Kim rotation bounds [0.001, 0.999]",Maintains exploratory diversity across generations
+F7_UNCERTAINTY_MISCALIBRATION,Extreme Sea Outlier Under-Coverage,4.8,Conformal quantile regression on validation set,Guarantees 90% empirical coverage across sea states

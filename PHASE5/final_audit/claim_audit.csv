@@ -1,0 +1,16 @@
+claim_id,statement,status,evidence_source,statistical_support,reproducibility,causal_strength,novelty_strength,allowed_language,forbidden_language
+C1,A0 reproduces Phase 4 failure,VERIFIED,PHASE5/results/A0.csv,Exact seed replication 1021 1025 1029,FULL,Decisive,NA,"A0 reproduced Phase 4 failure mode with 80% feasibility",QPSO is completely broken
+C2,Deb feasibility-first restores feasibility,VERIFIED,PHASE5/results/A1.csv,100% feasibility p=0.715 vs A5,FULL,Decisive,NA,"Deb's rule cured feasibility without representation change",Quantum mechanics cured feasibility
+C3,Deterministic repair reduces diversity,VERIFIED,PHASE5/results/A2.csv,Diversity collapsed to 5.75 vs A4 189.54,FULL,Decisive,NA,"Greedy repair guarantees feasibility but collapses diversity",Repair is superior to all methods
+C4,Q-bit preserves diversity beyond repair,VERIFIED,PHASE5/results/A4.csv,Diversity 189.54 with 100% feasibility,FULL,Strong,Incremental,"Q-bit amplitudes maintain population diversity",Q-bits provide quantum speedup
+C5,A5 improves hypervolume over NSGA-III,VERIFIED,PHASE5/results/A5.csv and NSGA3.csv,+64.0% relative improvement,FULL,Strong,System,"A5 achieved +64% higher hypervolume than NSGA-III",A5 universally beats all MOEAs
+C6,A5 exact optimum on small-scale instance,QUALIFIED,PHASE5/validation/small_exact.csv,Zero delay vs grid 873.23 (gap 0.0% penalized),FULL,Qualified,NA,"A5 achieved 0.0% gap on total penalized objective",A5 achieved 0.0% gap on pure physical loss
+C7,A5 faster than DE at D=600,VERIFIED,PHASE5/validation/scalability.csv,1.69s vs 4.49s (2.67x speedup),FULL,Strong,NA,"A5 was 2.67x faster in our vectorized implementation",A5 has lower asymptotic complexity
+C8,A5 superior to DE,DOWNGRADED,PHASE5/results/statistics.csv,Comparable physical fuel loss (3.45 vs 3.70),FULL,Weak,NA,"A5 and DE are comparable on scalar physical fuel loss",A5 completely outperforms DE
+C9,A5 provides integration-level novelty,VERIFIED,PHASE5/PHASE5_NOVELTY_AUDIT.md,Targeted literature and patent search,FULL,Moderate,System,"Defensible system integration novelty",We invented QPSO or QIEA
+C10,Egreen Quanta is first fleet optimizer,REJECTED,Prior commercial tools (ABB StormGeo DNV),Overruled by commercial tools,FULL,None,None,"No directly comparable assembled system identified",First fleet optimizer in existence
+C11,A5 demonstrates quantum advantage,REJECTED,Classical CPU benchmark,No quantum hardware,FULL,None,None,"Classical quantum-inspired metaheuristic",Demonstrates quantum speedup
+C12,System uses quantum computing,REJECTED,Python 3.14 on Intel CPU,Zero physical qubits,FULL,None,None,"Quantum-inspired algorithm simulated classically",Runs on quantum computer
+C13,QPSO is fundamentally defective,REJECTED,A1 achieved 100% feasibility,Failure caused by penalty design,FULL,None,None,"Failure caused by mixed variables and penalty design",QPSO is fundamentally broken
+C14,Failure caused by penalty inversion,VERIFIED,Trajectory traces in failure_analysis.csv,100% assignment collisions,FULL,Decisive,NA,"100% of failures caused by assignment collision",Failures were mysterious
+C15,A5 practical for green fleet dispatch,VERIFIED,Pareto archive covers fuel cost and CII,30 non-dominated fleet solutions,FULL,Decisive,System,"Provides multi-objective Pareto fleet dispatch",Solves all maritime problems

@@ -1,0 +1,77 @@
+# ==============================================================================
+# SIH26138 — Egreen Quanta: Final Presentation Claim Ledger
+# Classification: SAFE_TO_SAY, QUALIFIED, FORBIDDEN
+# Version: 1.0.0-frozen
+# Enforcement: Mandatory guidelines for SIH presentation, jury defense, and documentation.
+# ==============================================================================
+
+version: "1.0.0"
+project: "SIH26138 - Egreen Quanta"
+updated_at: "2026-09-19"
+
+SAFE_TO_SAY:
+  - claim: "We developed a classical quantum-inspired green fleet optimization system."
+    context: "The platform executes entirely on standard classical hardware using quantum-inspired mathematical heuristics."
+    backing_artifact: "PHASE7/00_RELEASE_BASELINE.md"
+
+  - claim: "QI-C1 uses Quantum-Inspired Evolutionary Algorithm (QIEA) for feature selection coupled with classical gradient boosting residual learning."
+    context: "Q-bit probability vectors and Han & Kim rotation gates determine optimal hydrodynamic feature subsets."
+    backing_artifact: "src/qi_prediction/qiea.py, PHASE6/results/qi_c1_results.csv"
+
+  - claim: "QI-C1 was statistically competitive with budget-matched classical Genetic Algorithm feature selection."
+    context: "Matched comparison across 30 seeds yielded MAE of 237.96 kg/h vs 237.24 kg/h (Wilcoxon p = 0.684)."
+    backing_artifact: "PHASE6/results/statistical_comparison.csv, PHASE6/09_STATISTICAL_PROTOCOL.md"
+
+  - claim: "The system was rigorously evaluated on 173,974 real-world maritime sensor observations across three commercial hulls."
+    context: "Sensor telemetry from DTU FuelCast over 604 vessel-days using direct Coriolis mass-flow meters."
+    backing_artifact: "PHASE7/results/data_count_reconciliation.csv, PHASE7/01_FINAL_CLAIM_AUDIT.md"
+
+  - claim: "The platform includes a real-time domain guardian and conformal uncertainty estimation."
+    context: "Mahalanobis distance checks operating domain; conformal quantiles guarantee nominal coverage on out-of-sample data."
+    backing_artifact: "prediction/domain_checker.py, PHASE7/results/ood_guard_validation.csv"
+
+  - claim: "The fleet optimizer integrates first-principles naval architecture, voluntary and involuntary weather speed loss, and IMO CII / FuelEU regulations."
+    context: "Full life-cycle GHG accounting separates TtW, WtT, and WtW without double counting."
+    backing_artifact: "optimization/regulatory.py, PHASE7/04_REGULATORY_AUDIT.md"
+
+QUALIFIED:
+  - claim: "QI-C1 improved prediction accuracy over the frozen baseline MODEL-REAL-04."
+    qualification: "Must state: 'On out-of-sample test telemetry, QI-C1 reduced MAE from 246.97 kg/h to 237.96 kg/h (-3.65%), though it remained statistically equivalent to matched classical GA (p = 0.684).'"
+    backing_artifact: "PHASE6/results/qi_c1_results.csv"
+
+  - claim: "The quantum-inspired representation maintained higher exploratory population diversity."
+    qualification: "Must state: 'Q-bit probability vectors preserved +44.7% higher Shannon population entropy (0.2814 vs 0.1945) compared to discrete bitstring GA over identical search budgets.'"
+    backing_artifact: "PHASE6/results/feature_stability.csv"
+
+  - claim: "Candidate QI-C2 (MPS Tensor Train) was not viable for continuous tabular telemetry."
+    qualification: "Must state: 'The tested unconstrained SGD Matrix Product State formulation experienced gradient divergence on continuous tabular maritime telemetry across 20/30 seeds (negative research finding).'"
+    backing_artifact: "PHASE6/results/failure_analysis.csv, PHASE6/10_FAILURE_ANALYSIS.md"
+
+  - claim: "Alternative fuels enable deep fleet decarbonization."
+    qualification: "Must state: 'Alternative fuels (LNG, bio-methanol, green ammonia, liquid hydrogen) are evaluated as physics-based thermodynamic scenarios via invariant mechanical shaft energy, not direct sensor telemetry.'"
+    backing_artifact: "PHASE6/13_ALTERNATIVE_FUEL_SCENARIOS.md, configs/fuels.yaml"
+
+FORBIDDEN:
+  - term: "Quantum computing"
+    reason: "We do not use physical quantum processors or qubits; all algorithms are classical heuristics running on x86_64 CPUs."
+
+  - term: "Quantum hardware / QPU"
+    reason: "No quantum hardware was accessed or simulated; the software is purely classical."
+
+  - term: "Quantum supremacy / Quantum advantage"
+    reason: "There is no theoretical or empirical quantum advantage over classical computation."
+
+  - term: "Quantum speedup"
+    reason: "QIEA and QPSO do not provide algorithmic asymptotic speedup over classical state-of-the-art methods."
+
+  - term: "First-ever maritime quantum optimizer"
+    reason: "Unsubstantiated hyperbole. Quantum-inspired algorithms for engineering optimization date back to Han & Kim (2000)."
+
+  - term: "QI prediction is universally superior to classical ML"
+    reason: "Empirical testing proved parity with classical GA (p = 0.684); claim is scientifically false."
+
+  - term: "MPS is fundamentally impossible for maritime prediction"
+    reason: "Only the evaluated continuous tabular SGD tensor-train formulation diverged; other encodings remain theoretically possible."
+
+  - term: "Alternative fuels were experimentally validated on the ships"
+    reason: "Telemetry was recorded exclusively on conventional diesel/gasoil; green fuels are thermodynamic simulations."

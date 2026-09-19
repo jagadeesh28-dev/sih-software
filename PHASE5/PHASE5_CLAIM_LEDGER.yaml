@@ -1,0 +1,166 @@
+# ==============================================================================
+# PHASE 5 SCIENTIFIC CLAIM LEDGER
+# Project: SIH26138 - Egreen Quanta
+# Standard: Strict Scientific Audit & Verification Ledger
+# Last Updated: 2026-09-15
+# ==============================================================================
+
+metadata:
+  benchmark: "Phase 5 Heterogeneous Fleet Optimization Benchmark"
+  evaluation_budget_per_run: 2500
+  matched_seeds: [1001, 1030]
+  total_evaluations: 825000
+  total_algorithms: 11
+  auditor_role: "Senior Scientific Validation Engineer"
+
+claims:
+  - id: "CLAIM-1"
+    statement: "Hybrid QI improves run-level feasibility over plain QPSO."
+    status: "VERIFIED"
+    confidence: 0.99
+    source: "PHASE5/results/A5_ABLATION_TABLE.csv"
+    experiment: "A0_Plain_QPSO vs A5_Complete_Hybrid_QI on 30 matched seeds (1001-1030)"
+    evidence:
+      a0_feasibility: 80.0
+      a0_failures: 6
+      a5_feasibility: 100.0
+      a5_failures: 0
+      delta_feasibility: "+20.0 percentage points"
+      p_value: 0.00419
+      effect_size_rank_biserial: 1.0
+    allowed_wording: >
+      "The complete hybrid QI framework (A5) achieved 100% run-level feasibility across all 30 benchmark seeds,
+      eliminating the 20% failure rate observed in plain continuous QPSO (A0)."
+    forbidden_wording: >
+      "QPSO is fundamentally defective, or quantum magic automatically guarantees feasibility."
+
+  - id: "CLAIM-2"
+    statement: "The improvement in feasibility comes primarily from feasibility-first constraint handling rather than quantum search dynamics."
+    status: "VERIFIED"
+    confidence: 0.98
+    source: "PHASE5/results/A5_COMPONENT_CONTRIBUTION.csv"
+    experiment: "A0 vs A1 (Deb's Feasibility-First Comparator) ablation test"
+    evidence:
+      a1_feasibility: 100.0
+      a1_delta_feasibility: "+20.0 percentage points"
+      a1_vs_a5_physical_objective_p_value: 0.71513
+      mechanism: "Deb's rule eliminates penalty inversion where infeasible assignments appeared cheaper than delay-penalized feasible routes."
+    allowed_wording: >
+      "Ablation testing unequivocally confirms that constraint handling (Deb's feasibility-first rule) was the dominant
+      factor in restoring 100% feasibility. The improvement is attributable primarily to constraint handling rather than
+      the quantum-inspired search mechanism."
+    forbidden_wording: >
+      "Quantum mechanics or Q-bit dynamics alone cured the Phase 4 feasibility failure."
+
+  - id: "CLAIM-3"
+    statement: "The feasibility improvement comes primarily from discrete-variable search operators alone."
+    status: "REFUTED"
+    confidence: 0.95
+    source: "PHASE5/results/A3.csv"
+    experiment: "A0 vs A3 (Discrete QPSO without Deb's rule or repair)"
+    evidence:
+      a3_feasibility: 86.67
+      a3_failed_runs: 4
+      failure_taxonomy: "All 4 failures were caused by categorical demand assignment collision."
+    allowed_wording: >
+      "Discrete QPSO operators alone yielded an 86.67% feasibility rate and were insufficient to completely prevent
+      assignment failures without Deb's comparator or repair decoders."
+    forbidden_wording: >
+      "Discrete QPSO completely solves maritime mixed-variable constraints by itself."
+
+  - id: "CLAIM-4"
+    statement: "Q-bit probability representation adds measurable value beyond deterministic repair."
+    status: "SUPPORTED"
+    confidence: 0.92
+    source: "PHASE5/results/A2.csv and PHASE5/results/A4.csv"
+    experiment: "A2 (Repair alone) vs A4 (Heterogeneous Q-Bit + Continuous QPSO)"
+    evidence:
+      a2_diversity: 5.746
+      a4_diversity: 189.535
+      a2_repair_rate_pct: 25.34
+      a4_repair_rate_pct: 0.0
+      mechanism: >
+        "Deterministic repair collapses population diversity (diversity = 5.75) causing rapid stagnation.
+        In contrast, Q-bit probability amplitudes maintain diversity (diversity = 189.54) while achieving 100% feasibility."
+    allowed_wording: >
+      "Q-bit probabilistic representation prevents the severe population diversity collapse caused by greedy deterministic
+      repair, maintaining rich exploration across categorical fleet combinations while preserving 100% feasibility."
+    forbidden_wording: >
+      "Q-bits provide exponential quantum speedup over classical repair."
+
+  - id: "CLAIM-5"
+    statement: "Hybrid QI improves objective quality over Differential Evolution (DE)."
+    status: "SUPPORTED"
+    confidence: 0.90
+    source: "PHASE5/results/statistics.csv"
+    experiment: "A5 vs DE on matched 30-seed 2500-evaluation benchmark"
+    evidence:
+      a5_mean_objective: 3.45
+      de_mean_objective: 3976.19
+      a5_physical_objective: 3.45
+      de_physical_objective: 3.70
+      de_penalty_objective: 3972.49
+      wilcoxon_p: 0.00000
+      holm_p: 0.00000
+      permutation_p: 0.00001
+      rank_biserial_effect: 1.0
+      hodges_lehmann_difference: -1289.63
+      bootstrap_95_ci: [-6610.96, -1591.32]
+    allowed_wording: >
+      "Under the frozen 2,500-evaluation benchmark, A5 achieved a lower mean total objective (3.45 vs 3,976.19) due to
+      zero penalty violations, and a slightly superior physical fuel objective (3.45 vs 3.70). However, DE remains a
+      highly competitive classical baseline that achieves 100% feasibility."
+    forbidden_wording: >
+      "DE is completely obsolete or massively defeated by quantum superiority."
+
+  - id: "CLAIM-6"
+    statement: "Hybrid QI provides superior multi-objective Pareto trade-off coverage compared to standard multi-objective baselines."
+    status: "VERIFIED"
+    confidence: 0.97
+    source: "PHASE5/figures/11_hypervolume_comparison.png and PHASE5/results/NSGA3.csv"
+    experiment: "A5 vs NSGA-III 2D/3D Hypervolume calculation (Fuel vs Operating Cost vs GHG)"
+    evidence:
+      a5_hypervolume: 247105993.53
+      nsga3_hypervolume: 150671177.17
+      delta_hypervolume_pct: "+64.0%"
+      nsga3_feasibility: 80.0
+      a5_feasibility: 100.0
+    allowed_wording: >
+      "A5 demonstrated a 64.0% higher hypervolume than NSGA-III ($247.11 \times 10^6$ vs $150.67 \times 10^6$) under identical
+      evaluation budgets, maintaining 100% feasibility and a broad non-dominated frontier."
+    forbidden_wording: >
+      "A5 achieves the mathematically optimal theoretical Pareto frontier."
+
+  - id: "CLAIM-7"
+    statement: "Hybrid QI scales effectively to high-dimensional fleets up to 100 vessels ($D=600$)."
+    status: "VERIFIED"
+    confidence: 0.94
+    source: "PHASE5/validation/scalability.csv"
+    experiment: "Fleet sizing from 5 to 100 vessels ($D=30$ to $D=600$) under fixed 1,000-eval budget"
+    evidence:
+      d30_runtime_sec: 0.316
+      d600_runtime_sec: 1.686
+      d600_de_runtime_sec: 4.495
+      d600_feasibility: 100.0
+      throughput_d600_evals_per_sec: 593.1
+    allowed_wording: >
+      "Scalability benchmarks confirm that A5 maintains 100% feasibility up to 100 vessels ($D=600$) with a sub-quadratic
+      runtime of 1.69 seconds, running 2.6x faster than DE at high dimensions."
+    forbidden_wording: >
+      "A5 is proven to scale to millions of vessels or solves NP-hard problems in polynomial time."
+
+  - id: "CLAIM-8"
+    statement: "Hybrid QI maintains constraint robustness under operational and environmental uncertainty."
+    status: "SUPPORTED"
+    confidence: 0.91
+    source: "PHASE5/results/A5.csv"
+    experiment: "Evaluated under stochastic sea-margins ($\pm 15\%$) and weather variations"
+    evidence:
+      schedule_violations_under_uncertainty: 0
+      cii_compliance_rate_pct: 100.0
+      first_feasible_eval_mean: 1.0
+    allowed_wording: >
+      "A5 solutions demonstrated zero schedule and regulatory violations under $\pm 15\%$ sea-margin stochastic variations,
+      confirming operational feasibility under realistic maritime operating conditions."
+    forbidden_wording: >
+      "The algorithm eliminates all commercial and meteorological risks."

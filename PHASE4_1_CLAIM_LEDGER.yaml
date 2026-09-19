@@ -1,0 +1,116 @@
+# =============================================================================
+# PHASE 4.1 CLAIM LEDGER — SCIENTIFIC AUDIT & REVALIDATION
+# =============================================================================
+# Project: SIH26138 — Egreen Quanta
+# Subsystem: Level-4 Heterogeneous Fleet Optimization
+# Audit Scope: QPSO Failure, Feasibility & Objective-Integrity Audit
+# Date: 2026-09-14
+# Git Commit: 20309b214b9540a7363b7365e442a222cd9c49a1
+# Environment: Python 3.14.0 (Windows 11, AMD64)
+# =============================================================================
+
+claims:
+  - claim_id: "CLAIM-A"
+    claim_text: "QPSO is statistically superior to Differential Evolution (DE)."
+    status: "REFUTED"
+    evidence:
+      wilcoxon_stat: 206.0
+      wilcoxon_p_value: 0.5978
+      holm_bonferroni_p_value: 0.5978
+      hodges_lehmann_difference: -0.3087
+      bootstrap_95_ci: [-1970.79, 13145.41]
+      zero_difference_threshold: 1.0e-5
+      conclusion: "Null hypothesis cannot be rejected. There is no statistically significant difference in objective quality between QPSO and DE."
+
+  - claim_id: "CLAIM-B"
+    claim_text: "QPSO is statistically equivalent to DE in objective quality on feasible runs."
+    status: "SUPPORTED"
+    evidence:
+      p_value: 0.5978
+      confidence_interval_spans_zero: true
+      feasible_mean_qpso: 3.425
+      feasible_mean_de: 3.654
+      conclusion: "When both converge to feasible space, solutions are statistically comparable in total objective value."
+
+  - claim_id: "CLAIM-C"
+    claim_text: "QPSO has lower feasibility reliability than DE on mixed-integer fleet scheduling."
+    status: "SUPPORTED"
+    evidence:
+      qpso_run_feasibility_rate: 86.67%
+      qpso_feasible_runs: 26/30
+      de_run_feasibility_rate: 100.0%
+      de_feasible_runs: 30/30
+      failed_seeds: [1005, 1021, 1025, 1029]
+      mechanism: "Penalty inversion combined with flat-gradient attractor trapping on categorical demand assignments."
+      conclusion: "DE exhibits higher algorithmic robustness than QPSO on combinatorial discrete constraints due to difference-vector crossover preserving coordinate validity."
+
+  - claim_id: "CLAIM-D"
+    claim_text: "QPSO significantly outperforms Canonical PSO."
+    status: "SUPPORTED"
+    evidence:
+      wilcoxon_stat: 51.0
+      wilcoxon_p_value: 0.000915
+      holm_bonferroni_p_value: 0.00274
+      hodges_lehmann_difference: -11924.47
+      bootstrap_95_ci: [-22765.20, -6386.80]
+      qpso_feasibility: 86.67%
+      pso_feasibility: 60.00%
+      conclusion: "QPSO achieves statistically superior objective quality and significantly higher feasibility reliability than canonical PSO."
+
+  - claim_id: "CLAIM-E"
+    claim_text: "QPSO significantly outperforms Genetic Algorithm (GA)."
+    status: "NOT_SUPPORTED_FWER"
+    evidence:
+      wilcoxon_stat: 119.0
+      wilcoxon_p_value_unadjusted: 0.0332
+      holm_bonferroni_p_value: 0.0664
+      hodges_lehmann_difference: -0.7463
+      bootstrap_95_ci: [-14932.66, 4432.81]
+      conclusion: "While nominally significant at alpha = 0.05 before correction, the hypothesis is not supported after Family-Wise Error Rate (FWER) control via Holm-Bonferroni."
+
+  - claim_id: "CLAIM-F"
+    claim_text: "QPSO significantly outperforms Random Search."
+    status: "SUPPORTED"
+    evidence:
+      wilcoxon_stat: 24.0
+      wilcoxon_p_value: 2.86e-05
+      holm_bonferroni_p_value: 0.000114
+      hodges_lehmann_difference: -26380.10
+      bootstrap_95_ci: [-31214.72, -17201.60]
+      conclusion: "QPSO achieves vastly superior solutions compared to random search."
+
+  - claim_id: "CLAIM-G"
+    claim_text: "The Level-4 heterogeneous fleet optimization benchmark is genuinely hard."
+    status: "SUPPORTED"
+    evidence:
+      candidate_feasibility_rate: 0.30%
+      combinatorial_assignment_cardinality: 64
+      continuous_decision_space_dimension: 18
+      constrained_dimensions: [assignment, cargo, speed, fuel, shore_power, cii, fueleu]
+      conclusion: "Uniform random sampling has only a 0.3% probability of hitting the feasible space on any given evaluation."
+
+  - claim_id: "CLAIM-H"
+    claim_text: "The benchmark demonstrates real-world fuel savings."
+    status: "NOT_DEMONSTRATED"
+    evidence:
+      provenance: "REAL_TELEMETRY_CALIBRATED surrogate models on synthetic operational demand scenarios."
+      conclusion: "The benchmark is a calibrated computational simulation. Real-world fuel savings can only be established through physical sea trials."
+
+  - claim_id: "CLAIM-I"
+    claim_text: "The benchmark demonstrates quantum advantage or quantum superiority."
+    status: "PROHIBITED_AND_REFUTED"
+    evidence:
+      execution_hardware: "Classical CPU (x86_64, Windows 11)"
+      algorithm_class: "Quantum-behaved Particle Swarm Optimization (classical stochastic metaheuristic)"
+      physical_qubits: 0
+      conclusion: "No quantum hardware was utilized. The term 'quantum advantage' is scientifically false in this context. Only 'quantum-inspired' is permissible."
+
+# =============================================================================
+# SUMMARY VERDICT
+# =============================================================================
+gate_status: "CONDITIONAL PASS"
+audit_summary: >
+  The Level-4 fleet benchmark, physical models, and objective formulations are verified 100% integral (reconstruction error = 0.0).
+  QPSO's 86.67% feasibility rate is proven to stem from Penalty Inversion (hard unfulfilled demand penalty of $50,000 is lower than
+  unoptimized feasible candidates with schedule delays of ~$109,000) interacting with continuous-space rounding on flat plateaus.
+  DE demonstrates superior combinatorial robustness (100% feasibility). All scientific claims have been strictly realigned.

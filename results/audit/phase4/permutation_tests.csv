@@ -1,0 +1,5 @@
+comparison,observed_mean_diff,n_permutations,permutation_p_value,significance_at_05
+QPSO_vs_DE,5214.268467530762,100000,0.20536,False
+QPSO_vs_PSO,-14394.071445369049,100000,0.00195,True
+QPSO_vs_GA,-5399.957953375581,100000,0.26692,False
+QPSO_vs_Random,-24457.178073251587,100000,1e-05,True

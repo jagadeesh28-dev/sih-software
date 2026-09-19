@@ -85,7 +85,13 @@ class DomainChecker:
 
         for col in self.categorical_cols:
             if col in train_df.columns:
-                cats = sorted(train_df[col].dropna().astype(str).unique().tolist())
+                from optimization.canonical_mapper import canonicalize_vessel_type, canonicalize_fuel_type
+                if col == "vessel_type":
+                    cats = sorted(list(set(canonicalize_vessel_type(c) for c in train_df[col].dropna().astype(str).unique())))
+                elif col == "fuel_type":
+                    cats = sorted(list(set(canonicalize_fuel_type(c) for c in train_df[col].dropna().astype(str).unique())))
+                else:
+                    cats = sorted(train_df[col].dropna().astype(str).unique().tolist())
                 self.valid_categories[col] = cats
 
         self.is_fitted = True
@@ -156,13 +162,20 @@ class DomainChecker:
                 "is_valid_candidate": False,
             }
 
-        # 2. Categorical Validity
+        # 2. Categorical Validity with Canonical Normalization
         cat_violations = []
+        from optimization.canonical_mapper import canonicalize_vessel_type, canonicalize_fuel_type
         for col, valid_cats in self.valid_categories.items():
             if col in point and point[col] is not None:
-                cat_val = str(point[col])
+                raw_val = str(point[col])
+                if col == "vessel_type":
+                    cat_val = canonicalize_vessel_type(raw_val)
+                elif col == "fuel_type":
+                    cat_val = canonicalize_fuel_type(raw_val)
+                else:
+                    cat_val = raw_val
                 if cat_val not in valid_cats:
-                    cat_violations.append(f"Unknown category {col}='{cat_val}' (valid: {valid_cats})")
+                    cat_violations.append(f"Unknown category {col}='{raw_val}' (canonical='{cat_val}', valid: {valid_cats})")
 
         if cat_violations:
             return {

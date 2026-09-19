@@ -1,0 +1,11 @@
+check_id,item_name,target_value,recomputed_value,status,command_used
+R1,A0_feasibility_pattern,80.0%,80.0%,FULL_REPRODUCED,python scripts/audit_analysis.py
+R2,A1_feasibility_recovery,100.0%,100.0%,FULL_REPRODUCED,python scripts/audit_analysis.py
+R3,A2_diversity_collapse,5.75,5.746,FULL_REPRODUCED,python scripts/audit_analysis.py
+R4,A4_diversity_retention,189.54,189.535,FULL_REPRODUCED,python scripts/audit_analysis.py
+R5,A5_physical_objective,3.45,3.450,FULL_REPRODUCED,python scripts/audit_analysis.py
+R6,DE_physical_objective,3.70,3.700,FULL_REPRODUCED,python scripts/audit_analysis.py
+R7,A5_hypervolume,247.11M,247105993.53,FULL_REPRODUCED,python scripts/audit_analysis.py
+R8,NSGA3_hypervolume,150.67M,150671177.17,FULL_REPRODUCED,python scripts/audit_analysis.py
+R9,exact_small_scale_optimum,873.2265,873.2265,FULL_REPRODUCED,python scripts/audit_scaling_and_friedman.py
+R10,D600_runtime_ratio,2.67x,2.666x,FULL_REPRODUCED,python scripts/audit_scaling_and_friedman.py

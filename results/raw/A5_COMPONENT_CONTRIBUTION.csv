@@ -1,0 +1,7 @@
+comparison,delta_feasibility,delta_objective,effect_size,p_value,holm_p,interpretation
+A0 vs A1 (Deb Feasibility-First),20.0,-10199.31,0.7183,0.17655,0.17655,Deb's rule eliminates penalty inversion and restores 100% feasibility.
+A0 vs A2 (Decoder / Repair),20.0,-12199.28,1.0,0.0,1e-05,Repair eliminates demand collisions but penalty landscape can still stall search.
+A2 vs A3 (Discrete Operators),-13.33,6799.55,-1.0,0.01479,0.04099,Discrete operators prevent continuous floating drift on categorical boundaries.
+A3 vs A4 (Q-Bit Representation),13.33,-6799.22,0.9999,0.01366,0.04099,Quantum Q-bit probability amplitudes guide categorical selection.
+A4 vs A5 (Full Hybrid Integration),0.0,-0.27,1.0,0.0,0.0,"Full integration combines Deb selection, repair, and Pareto multi-objective tracking."
+A5 vs DE (Primary SIH Competition),0.0,3972.74,-1.0,0.0,0.0,A5 and DE achieve comparable objectives; DE remains strong classical baseline.

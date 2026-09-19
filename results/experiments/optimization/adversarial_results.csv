@@ -1,0 +1,8 @@
+probe_name,commanded_stw_kn,commanded_shaft_power_kw,raw_ml_prediction_kg_h,domain_status,envelope_distance,safe_objective_prediction_kg_h,penalty_incurred,barrier_action,exploit_intercepted
+Negative Speed,-5.0,12000.0,1210.08,PHYSICALLY_INVALID,0.087,1000000.0,998724.43,REJECTED,True
+Excessive Speed (40 kn),40.0,18000.0,6740.52,PHYSICALLY_INVALID,0.284,1000000.0,993339.33,REJECTED,True
+Zero Power at 22 kn,22.0,0.0,6455.76,OUT_OF_DOMAIN,0.0,106455.76,99885.01,REJECTED,True
+Negative Power,14.0,-500.0,2579.45,OUT_OF_DOMAIN,0.0,102579.45,99782.91,REJECTED,True
+Severe Hurricane Sea (15m),12.0,10000.0,2420.74,OUT_OF_DOMAIN,0.887,191144.78,188774.95,REJECTED,True
+Unphysical Draft (18m),14.0,12000.0,2579.45,OUT_OF_DOMAIN,22516660702.411,2251666070343679.8,2251666070340883.2,REJECTED,True
+Stationary High Thruster (DP Exploitation on Cruise),0.5,15000.0,1682.26,OUT_OF_DOMAIN,0.0,101682.26,99990.89,REJECTED,True

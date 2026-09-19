@@ -1,0 +1,86 @@
+{
+  "manifest_version": "3.2.1-FINAL",
+  "phase": "Phase 3.2.1 Independent Statistical Integrity & Benchmark Audit",
+  "timestamp_utc": "2026-09-14T11:15:38.145787+00:00",
+  "git_commit": "20309b214b9540a7363b7365e442a222cd9c49a1",
+  "system_environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "python_version": "3.14.0 (tags/v3.14.0:ebf955d, Oct  7 2025, 10:15:03) [MSC v.1944 64 bit (AMD64)]",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "cpu_count_logical": 20
+  },
+  "dependency_versions": {
+    "numpy": "2.2.3",
+    "pandas": "2.2.3",
+    "scipy": "1.15.2",
+    "pytest": "9.1.1",
+    "matplotlib": "3.10.1",
+    "lightgbm": "4.6.0"
+  },
+  "experiment_configuration": {
+    "scenario_id": "SCEN-01",
+    "vessel_id": "CPS_Poseidon",
+    "evaluation_budget": 2500,
+    "matched_seeds_count": 30,
+    "seed_schedule_formula": "100 + 37 * i for i in range(30)",
+    "total_primary_runs": 150,
+    "total_objective_evaluations": 375000,
+    "objective_weights": [
+      0.35,
+      0.3,
+      0.25,
+      0.05,
+      0.05
+    ],
+    "normalization_scales": [
+      50.0,
+      50000.0,
+      150.0,
+      10.0,
+      15.0
+    ],
+    "robust_risk_lambda": 0.5
+  },
+  "configuration_hashes": {
+    "configs/fuels.yaml": "329f7d95d018b22ab5c17a37bf442a708f24c29613dd47874816c8e6b9a9bb2b",
+    "configs/vessels.yaml": "N/A",
+    "pyproject.toml": "d2b183462c6730623db2520a572e2896d6516281b197ca09c2098b806a55e49c"
+  },
+  "core_code_hashes": {
+    "optimization/canonical_mapper.py": "c67a50a42bcc11bba73b83cb2e6cec3d6be39ccb0019595c16518d4fbbb86389",
+    "optimization/evaluator.py": "a46d3b6cb9332950290fa7bc3f91397b2bb7396d5687124572ad7f8ff167240d",
+    "optimization/regulatory.py": "518b91cd7674e994e96a0066a4cc5849aaadf6b35e3d4e7928df1203ac17ffff",
+    "optimization/qpso.py": "cf51169bad1c012803dc77847262ec81bc1654fdf496f570e28e8f0c35fe63ff",
+    "optimization/differential_evolution.py": "dd891ba2ed4c568f18d6324aac65f62c00c9d5b42831fb760efb38a2a0881b97",
+    "optimization/pso.py": "3be2e35d222968d139e37b0999d93303d2226800df6004b84d0f1b9b39c64b7c",
+    "optimization/genetic_algorithm.py": "d1eb4c32abff660eea8711939148fde18858a1a3ca4c10103450ddca38431f27",
+    "optimization/random_search.py": "dcf8f5bc659c8b35d9f760636566988b19eff88271d2ecb9a02405307426aa75",
+    "prediction/domain_checker.py": "a3a63cf22c2ed7932a8c447b83dec1708710e58027e1f43e614df1d7b36ad5b3",
+    "prediction/safe_objective.py": "6f3cba2940a18bdaeea4fc2d27b992016a121098cdf3aee4e222e0245a8f1086"
+  },
+  "authoritative_audit_evidence": {
+    "raw_result_inventory": "5ab580ffb15063ade81a9dc470b3d49dd0dbbc753e105fae68df9864d70a5bcc",
+    "independent_pairwise_differences": "ebdb78b14ab27df37429a59074a88d29b18494ba46421edb8828c6b2bc0998c9",
+    "wilcoxon_independent_validation": "bafb9e42726ebdd0289cf4c31d5c13041b4155864825c14b883300add53d560f",
+    "permutation_test_results": "dd5ab1928f1d7cf2b8ffe1973100a03b58a331eb8bea59655c3817713c2047d2",
+    "multiple_comparison_correction": "9160809406b4ccc7a597a4cb6f6233fc055efb4fea6450d2f72f654258c61036",
+    "effect_size_validation": "ac4a593858dc3a2a55fe1b3367f6b64c284c5e1fe13d46302f18cbfa4548fd50",
+    "bootstrap_confidence_intervals": "7e34c7c6f87b207e50e5e8138cdfb5b29a7f12eb00adbc9477ccc3eac354bb98",
+    "optimizer_summary_independent": "516355aa83e6fbc7e497d90f3c0e19422108a87cc2b12c6a13caab42900d90b7",
+    "objective_decomposition_independent": "91b24302fb7da7d0544e2b52da38b025cf7cbcadd434596c0ea632617b385c18",
+    "decision_variable_diversity": "4460873d1720f41d749b5fe881db828af1b13120517a814002fddde5f7058e74",
+    "random_population_audit": "8ca55723fb84672bf96858cee33db5aa4a6dd6e1fb2fe61aa139647149890f8b",
+    "landscape_audit": "d73c624d15b1b2b0272e8e21b7b02d082c9a17af78b0e1c5ea77d19b124cf18b",
+    "zero_difference_audit": "58e521743510405c70d0f796b4a99567ffb57cffe56c94cc210dd881ea87edb8",
+    "de_qpso_tie_investigation": "b2c8eb33384bd2af7eae4de686cd0d33edf885885df20c1d4d064112173a55d4"
+  },
+  "scientific_verdict": {
+    "phase3_2_1_status": "CONDITIONAL_PASS",
+    "phase4_ready": "YES_WITH_CLAIM_RESTRICTIONS",
+    "qpso_status": "STATISTICALLY_EQUIVALENT",
+    "de_status": "STATISTICALLY_EQUIVALENT",
+    "wilcoxon_anomaly_resolved": true,
+    "zero_difference_handling_verified": true
+  }
+}

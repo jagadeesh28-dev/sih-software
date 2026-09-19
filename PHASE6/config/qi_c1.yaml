@@ -1,0 +1,48 @@
+# Phase 6 Candidate QI-C1: Quantum-Inspired Evolutionary Algorithm & QPSO
+candidate_id: "QI-C1"
+formal_name: "Quantum-Inspired Optimized Fuel Predictor"
+compliance_level: "Level 1 (Moderate)"
+description: "Classical residual learner optimized via QIEA feature selection and QPSO hyperparameter tuning"
+
+qiea_feature_selection:
+  representation: "Q-bit probability amplitude pair [alpha_i, beta_i]^T"
+  normalization_constraint: "|alpha_i|^2 + |beta_i|^2 = 1.0"
+  initialization: "alpha = 1/sqrt(2), beta = 1/sqrt(2) (equal superposition, P(select)=0.5)"
+  measurement_collapse: "Bernoulli trial: x_i in {0, 1} with P(x_i=1) = |beta_i|^2"
+  quantum_rotation_gate: "U(Delta theta) rotation matrix"
+  theta_step_rad: 0.15707963  # 0.05 * pi
+  rotation_lookup_table: "Han & Kim (2002) quadrant sign table"
+  population_size: 10
+  max_generations: 15
+  evaluation_budget: 150
+  entropy_tracking: "Shannon quantum entropy H(Q) across generations"
+
+qpso_hyperparameter_optimization:
+  mechanism: "Delta-potential well bound-state particle swarm (Sun et al., 2004)"
+  equations:
+    mean_best: "mbest_j = (1/N) * sum_{i=1}^N P_{ij}"
+    local_attractor: "p_{ij} = phi * P_{ij} + (1 - phi) * gbest_j, phi ~ U(0, 1)"
+    position_update: "X_{ij}(t+1) = p_{ij} +- beta * |mbest_j - X_{ij}| * ln(1 / u), u ~ U(0, 1)"
+  contraction_expansion_coefficient:
+    beta_start: 1.0
+    beta_end: 0.5
+    decay: "linear"
+  swarm_size: 15
+  iterations: 10
+  evaluation_budget: 150
+  search_bounds:
+    learning_rate: [0.01, 0.20, "float"]
+    num_leaves: [15, 63, "int"]
+    max_depth: [3, 8, "int"]
+    min_child_samples: [10, 50, "int"]
+    colsample_bytree: [0.6, 1.0, "float"]
+    reg_alpha: [0.001, 5.0, "log_float"]
+    reg_lambda: [0.001, 5.0, "log_float"]
+    alpha_residual: [0.5, 1.0, "float"]
+
+classical_residual_learner:
+  algorithm: "LightGBM Regressor"
+  objective: "regression_l1"
+  n_estimators: 150
+  input_features: "QIEA selected subset"
+  hyperparameters: "QPSO optimized parameters"

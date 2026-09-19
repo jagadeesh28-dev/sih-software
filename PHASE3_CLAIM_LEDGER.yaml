@@ -1,0 +1,131 @@
+# PHASE 3 SCIENTIFIC CLAIM LEDGER
+# Project: SIH26138 — Egreen Quanta: Quantum-Inspired Fuel Consumption Prediction and Green Fleet Optimization
+# Stage: Phase 3 Green Fleet Optimization Specification & Claim Boundaries
+# Date: 2026-09-12
+# Status: LOCKED FOR REVIEW
+
+metadata:
+  repository: "sih26138_platform"
+  git_commit: "20309b214b9540a7363b7365e442a222cd9c49a1"
+  phase_2_3_status: "CONDITIONAL PASS FOR PHASE 3"
+  phase_3_status: "PASS_VERIFIED"
+  phase_3_objective: "Scientifically Defensible Green Fleet Optimization & Multi-Objective Decision Support"
+
+frozen_baseline_evidence:
+  fuelcast_records: 173974
+  fuelcast_vessels: 3
+  config_real_a:
+    mae_kg_h: 263.91
+    mape_pct: 15.69
+    r2: 0.9400
+  model_real_04_hybrid:
+    mae_kg_h: 246.97
+    mape_pct: 14.63
+    r2: 0.9501
+    wilcoxon_p: 7.45e-18
+  synthetic_to_real_transfer:
+    status: "FAILED_FALSIFIED"
+    mae_kg_h: 2028.51
+    r2: -0.9447
+    bias_kg_h: -2027.19
+  leave_vessel_out:
+    status: "FAILED_COLLAPSED"
+    fold_1_r2: -1.1102
+    fold_2_r2: -59.6368
+    fold_3_r2: -10.1978
+  uncertainty_calibration:
+    nominal_coverage_pct: 90.00
+    empirical_picp_pct: 78.51
+    status: "MISCALIBRATED_UNDERCOVERING"
+  safefuelobjective_adversarial_audit:
+    status: "PASS_VERIFIED"
+    intercepted_exploits: "8/8"
+  automated_tests:
+    passed: 87
+    failed: 0
+
+phase_3_empirical_benchmark_evidence:
+  matched_30_seed_evaluations_per_run: 2500
+  qpso_vs_pso:
+    wilcoxon_w: 14.0
+    p_value: 2.05e-7
+    qpso_wins: 27
+    pso_wins: 3
+    conclusion: "QPSO Superior (Statistically Significant)"
+  qpso_vs_ga:
+    wilcoxon_w: 0.0
+    p_value: 1.86e-9
+    qpso_wins: 30
+    ga_wins: 0
+    conclusion: "QPSO Superior (Statistically Significant)"
+  qpso_vs_de:
+    wilcoxon_w: 81.0
+    p_value: 0.00123
+    qpso_wins: 5
+    de_wins: 25
+    conclusion: "DE Superior (QPSO Defeated by Differential Evolution)"
+  qpso_vs_random_search:
+    wilcoxon_w: 0.0
+    p_value: 1.86e-9
+    qpso_wins: 30
+    random_wins: 0
+    conclusion: "QPSO Superior (Statistically Significant)"
+  adversarial_safety_audit:
+    probes_tested: 7
+    intercepted_and_penalized: 7
+    interception_rate_pct: 100.0
+  pareto_tradeoff_analysis:
+    evaluated_solutions: 54
+    hypervolume_2d: 473837.04
+    spacing_metric: 0.0000
+
+phase_3_claims:
+  claim_opt_01:
+    statement: "QPSO is implemented as a classical quantum-inspired metaheuristic based on delta-potential well dynamics."
+    status: "MATHEMATICALLY_GROUNDED"
+    evidence_reference: "PHASE3_MATHEMATICAL_MODEL.md, Sun et al. (2004)"
+    verification_method: "Unit test of quantum delta-well position update equations and classical CPU determinism"
+
+  claim_opt_02:
+    statement: "Metaheuristic benchmarks enforce strict evaluation budget fairness (N_eval = 50,000 across identical seeds)."
+    status: "METHODOLOGICALLY_ENFORCED"
+    evidence_reference: "PHASE3_BENCHMARK_PROTOCOL.md"
+    verification_method: "test_benchmark_fairness.py asserting exact evaluation counts and seed pairing"
+
+  claim_opt_03:
+    statement: "Optimization evaluates fuel consumption strictly through SafeFuelObjective, intercepting unphysical boundary exploits."
+    status: "DEFENSIVELY_VERIFIED"
+    evidence_reference: "PHASE3_ARCHITECTURE.md, 14_REAL_ADVERSARIAL_AUDIT.csv"
+    verification_method: "test_adversarial_optimization.py verifying penalty repulsion of ungrounded candidate states"
+
+  claim_opt_04:
+    statement: "Maritime environmental regulations (IMO WtW, IMO CII, FuelEU Maritime, EU ETS) are mathematically decoupled."
+    status: "REGULATORILY_VERIFIED"
+    evidence_reference: "PHASE3_REGULATORY_MODEL.md"
+    verification_method: "test_regulatory.py and test_emissions.py validating independent compliance formulas"
+
+  claim_opt_05:
+    statement: "Optimization is isolated to certified vessel class families, preventing uncalibrated cross-class extrapolation."
+    status: "CLASS_ISOLATED"
+    evidence_reference: "PHASE3_OPTIMIZATION_SPECIFICATION.md Section D"
+    verification_method: "DomainChecker domain envelope validation on vessel class families"
+
+allowed_claims:
+  - "QPSO achieved lower/higher objective values than baseline X under benchmark Y."
+  - "Hybrid physics + ML reduced fuel prediction error on the evaluated real FuelCast test set."
+  - "Optimization was constrained strictly to the validated empirical operating domain of the evaluated vessels."
+  - "Multi-objective optimization revealed Pareto trade-offs between voyage fuel consumption, OPEX, and Well-to-Wake emissions."
+  - "Defensive SafeFuelObjective interface prevented numerical optimization solvers from exploiting out-of-domain surrogate minima."
+
+strictly_prohibited_claims:
+  - "Quantum computers or quantum processing units were utilized."
+  - "Quantum advantage or quantum speedup was demonstrated."
+  - "Universal maritime generalization across all ship types was achieved."
+  - "Real-world physical fuel savings on commercial voyages were proven."
+  - "Autonomous ship navigation or commercial autopilot deployment was demonstrated."
+  - "100-vessel real fleet optimization was validated with physical telemetry."
+
+provenance_labeling_rules:
+  real_data_benchmark: "REAL_TELEMETRY_CALIBRATED_BENCHMARK"
+  synthetic_scaling_benchmark: "SYNTHETIC_SCALABILITY_BENCHMARK"
+  unconstrained_ablation: "UNCONSTRAINED_ML_SAFETY_ABLATION"

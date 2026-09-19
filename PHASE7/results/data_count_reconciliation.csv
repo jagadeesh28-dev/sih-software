@@ -1,0 +1,5 @@
+raw_records,filtered_records,removed_records,removed_reason,vessel,stage
+105422,105422,0,None,CPS_Poseidon,Phase 2.3 Parquet Ingestion
+25351,25347,4,Trailing null padding rows without timestamp or valid sensor records,CPS_Triton,Phase 2.3 Data Quality Audit
+43213,43205,8,Trailing null padding rows without timestamp or valid sensor records,OSS_Ceto,Phase 2.3 Data Quality Audit
+173986,173974,12,Trailing null padding artifact rows across fleet,Combined Fleet,Phase 2.3 Canonical Alignment

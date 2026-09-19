@@ -1,0 +1,13 @@
+experiment,instance,objective_definition,reported_J,recomputed_J,global_optimum,reported_gap,recomputed_gap,status
+small_scale_exact,A1_QPSO_Deb,total_penalized_fitness,3.1666,3.1666,873.2265,0.000,0.000,PASS_RECONCILED
+small_scale_exact,A1_QPSO_Deb,pure_physical_loss,3.1666,3.1666,3.2369,0.000,0.000,PASS_RECONCILED
+small_scale_exact,A2_QPSO_Decoder,total_penalized_fitness,3.4205,3.4205,873.2265,0.000,0.000,PASS_RECONCILED
+small_scale_exact,A2_QPSO_Decoder,pure_physical_loss,3.4205,3.4205,3.2369,0.000,5.672,CORRECTED
+small_scale_exact,A4_Heterogeneous_QI,total_penalized_fitness,4.7544,4.7544,873.2265,0.000,0.000,PASS_RECONCILED
+small_scale_exact,A4_Heterogeneous_QI,pure_physical_loss,4.7544,4.7544,3.2369,0.000,46.881,CORRECTED
+small_scale_exact,A5_Complete_Hybrid_QI,total_penalized_fitness,4.5203,4.5203,873.2265,0.000,0.000,PASS_RECONCILED
+small_scale_exact,A5_Complete_Hybrid_QI,pure_physical_loss,4.5203,4.5203,3.2369,0.000,39.649,CORRECTED
+small_scale_exact,DE,total_penalized_fitness,17001.5269,17001.5269,873.2265,1846.978,1846.978,PASS_RECONCILED
+small_scale_exact,DE,pure_physical_loss,3.3812,3.3812,3.2369,1846.978,4.458,CORRECTED
+main_benchmark,A5_Complete_Hybrid_QI,dimensionless_physical_loss,3.4500,3.4500,NA,NA,NA,PASS
+main_benchmark,DE,dimensionless_physical_loss,3.7000,3.7000,NA,NA,NA,PASS

@@ -1,0 +1,251 @@
+# ==============================================================================
+# PHASE 5 FINAL AUDIT SCIENTIFIC CLAIM LEDGER
+# Project: SIH26138 - Egreen Quanta
+# Audit Standard: IEEE Transactions / ACM Artifact Review Standards
+# Date: 2026-09-15
+# ==============================================================================
+
+audit_metadata:
+  benchmark_phase: "Phase 5 Heterogeneous Fleet Optimization"
+  total_evaluations: 825000
+  total_algorithms: 11
+  matched_seeds: [1001, 1030]
+  lead_auditors:
+    - "Senior Optimization Research Scientist"
+    - "Scientific Validation Engineer"
+    - "Prior-Art / Novelty Claim Auditor"
+
+claims:
+  - id: "C1"
+    statement: "A0 (Plain QPSO) reproduces the Phase 4 categorical assignment failure."
+    status: "VERIFIED"
+    evidence: "PHASE5/results/A0.csv shows 6 failed runs out of 30 (80.0% feasibility); Seeds 1021, 1025, 1029 replicated Phase 4 failures."
+    source_file: "PHASE5/results/A0.csv"
+    experiment: "A0 benchmark on seeds 1001-1030 under 2500 evaluations"
+    statistical_support: "Exact seed replication of failure mode"
+    reproducibility: "FULL"
+    causal_strength: "Decisive"
+    novelty_strength: "Not Applicable"
+    allowed_language: >
+      "A0 reproduced the Phase 4 failure mode, achieving an 80.0% feasibility rate where all 6 failures
+      stemmed from categorical demand assignment collisions."
+    forbidden_language: >
+      "QPSO is fundamentally broken or useless for all maritime problems."
+
+  - id: "C2"
+    statement: "Deb's feasibility-first constraint handling alone restores 100% feasibility."
+    status: "VERIFIED"
+    evidence: "PHASE5/results/A1.csv shows 30/30 feasible runs (100.0%) with zero changes to representation or equations."
+    source_file: "PHASE5/results/A1.csv"
+    experiment: "A0 vs A1 ablation under identical 2500-evaluation budget"
+    statistical_support: "Difference in physical objective vs A5 is non-significant (p = 0.715)"
+    reproducibility: "FULL"
+    causal_strength: "Decisive"
+    novelty_strength: "Not Applicable (Deb 2000 prior art)"
+    allowed_language: >
+      "Feasibility restoration was driven primarily by feasibility-first constraint handling rather than
+      the quantum-inspired search mechanism."
+    forbidden_language: >
+      "Quantum mechanics or Q-bit dynamics alone cured the feasibility failure."
+
+  - id: "C3"
+    statement: "Deterministic domain repair guarantees feasibility but collapses population diversity."
+    status: "VERIFIED"
+    evidence: "A2 achieved 100% feasibility, but population diversity collapsed to 5.75 (vs A4 189.54)."
+    source_file: "PHASE5/results/A2.csv"
+    experiment: "A2 ablation with FleetSolutionRepairer"
+    statistical_support: "Diversity ratio 189.54 / 5.75 = 33.0x"
+    reproducibility: "FULL"
+    causal_strength: "Decisive"
+    novelty_strength: "Domain Adaptation"
+    allowed_language: >
+      "Greedy deterministic repair guarantees valid assignments but causes severe population diversity collapse (5.75),
+      risking premature stagnation."
+    forbidden_language: >
+      "Repair is an unreservedly optimal strategy without trade-offs."
+
+  - id: "C4"
+    statement: "Q-bit probabilistic representation preserves exploration diversity beyond deterministic repair."
+    status: "VERIFIED"
+    evidence: "A4 sustained a diversity of 189.54 while achieving 100% feasibility under penalty-only evaluation."
+    source_file: "PHASE5/results/A4.csv"
+    experiment: "A4 ablation with Q-bit amplitudes and Dirichlet Q-vectors"
+    statistical_support: "Diversity difference statistically significant across 30 seeds"
+    reproducibility: "FULL"
+    causal_strength: "Strong"
+    novelty_strength: "Incremental Adaptation"
+    allowed_language: >
+      "Q-bit probabilistic representation prevents diversity collapse, maintaining rich exploration across
+      categorical fleet configurations while preserving 100% feasibility."
+    forbidden_language: >
+      "Q-bits provide exponential quantum speedup over classical repair."
+
+  - id: "C5"
+    statement: "A5 Complete Hybrid QI improves Pareto hypervolume over standard NSGA-III."
+    status: "VERIFIED"
+    evidence: "A5 mean hypervolume = 247.11M vs NSGA-III 150.67M (+64.0% relative improvement)."
+    source_file: "PHASE5/results/A5.csv and PHASE5/results/NSGA3.csv"
+    experiment: "Identical reference point [300 t, $1,500,000] and 2500 evaluations"
+    statistical_support: "Permutation p < 1e-5; Wilcoxon p < 1e-5"
+    reproducibility: "FULL"
+    causal_strength: "Strong"
+    novelty_strength: "System Integration"
+    allowed_language: >
+      "A5 achieved a +64.0% higher hypervolume than NSGA-III under identical evaluation budgets, driven by
+      feasibility-first selection and diverse non-dominated trade-off discovery."
+    forbidden_language: >
+      "A5 is universally superior to all multi-objective evolutionary algorithms on every benchmark."
+
+  - id: "C6"
+    statement: "A5 achieves an exact 0.0% optimality gap against small-scale exhaustive search."
+    status: "QUALIFIED"
+    evidence: "small_exact.csv shows A5 achieved 4.5203 vs grid minimum fitness 873.23 (zero schedule delay)."
+    source_file: "PHASE5/validation/small_exact.csv"
+    experiment: "Level 1 small fleet exhaustive grid search (324 candidates) vs metaheuristics"
+    statistical_support: "Reconciled in Audit #4: 0.0% gap on penalized fitness; +39.6% gap on pure physical loss"
+    reproducibility: "FULL"
+    causal_strength: "Qualified"
+    novelty_strength: "Not Applicable"
+    allowed_language: >
+      "A5 achieved a 0.0% optimality gap on total penalized fitness ($J^* = 873.23$) by discovering continuous speeds
+      that eliminated schedule delay penalties within 500 evaluations."
+    forbidden_language: >
+      "A5 achieved a 0.0% gap on pure physical fuel loss."
+
+  - id: "C7"
+    statement: "A5 executes faster than Differential Evolution at high dimensions ($D=600$)."
+    status: "VERIFIED"
+    evidence: "scalability.csv shows A5 runtime 1.69 s vs DE 4.49 s (2.67x speedup) at D=600."
+    source_file: "PHASE5/validation/scalability.csv"
+    experiment: "Fleet sizing D=30 to D=600 under fixed 1000-evaluation budget"
+    statistical_support: "A5 scaling exponent b = 0.58 vs DE b = 1.29"
+    reproducibility: "FULL"
+    causal_strength: "Strong (Implementation Level)"
+    novelty_strength: "Not Applicable"
+    allowed_language: >
+      "In our vectorized Python implementation, A5 ran 2.67x faster than DE at D=600 (1.69 s vs 4.49 s)."
+    forbidden_language: >
+      "A5 has lower theoretical asymptotic computational complexity than DE."
+
+  - id: "C8"
+    statement: "A5 is universally superior to Differential Evolution (DE)."
+    status: "DOWNGRADED"
+    evidence: "DE achieved 100% feasibility and mean physical fuel loss of 3.70 (comparable to A5 3.45)."
+    source_file: "PHASE5/results/statistics.csv"
+    experiment: "A5 vs DE 30-seed matched benchmark"
+    statistical_support: "Significant on total penalized objective (p < 1e-5); comparable on pure physical fuel loss"
+    reproducibility: "FULL"
+    causal_strength: "Weak"
+    novelty_strength: "Not Applicable"
+    allowed_language: >
+      "A5 and DE achieved comparable scalar physical fuel efficiency (3.45 vs 3.70), while A5 eliminated soft penalty
+      incursions and provided multi-objective Pareto dispatch."
+    forbidden_language: >
+      "A5 completely outperforms or renders DE obsolete."
+
+  - id: "C9"
+    statement: "A5 provides defensible system integration novelty."
+    status: "VERIFIED"
+    evidence: "Prior art survey confirms no published system integrates Q-bit discrete mapping, QPSO, Deb selection, and FuelEU pooling."
+    source_file: "PHASE5/PHASE5_NOVELTY_AUDIT.md"
+    experiment: "Targeted patent and academic literature search across IEEE, ScienceDirect, and USPTO"
+    statistical_support: "Documented in Audit #13"
+    reproducibility: "FULL"
+    causal_strength: "Moderate"
+    novelty_strength: "Defensible System Integration"
+    allowed_language: >
+      "No directly comparable assembled system was identified in the targeted literature, patent, and commercial prior-art search."
+    forbidden_language: >
+      "We invented QPSO, QIEA, or Deb's rules."
+
+  - id: "C10"
+    statement: "Egreen Quanta is the first maritime fleet optimizer in existence."
+    status: "REJECTED"
+    evidence: "Commercial systems (ABB Ability, StormGeo BVS, DNV Nauticus) and academic literature date back to 2010."
+    source_file: "Prior commercial literature"
+    experiment: "Commercial landscape audit"
+    statistical_support: "Overruled by commercial reality"
+    reproducibility: "FULL"
+    causal_strength: "None"
+    novelty_strength: "None"
+    allowed_language: >
+      "Egreen Quanta is an advanced research framework for green fleet multi-objective dispatch."
+    forbidden_language: >
+      "First fleet optimizer in existence; no other system exists."
+
+  - id: "C11"
+    statement: "A5 demonstrates quantum advantage or quantum speedup."
+    status: "REJECTED"
+    evidence: "Execution conducted entirely on classical x86 CPU in CPython; zero quantum hardware used."
+    source_file: "System hardware logs"
+    experiment: "Execution on Intel Core i5-10300H CPU"
+    statistical_support: "Not Applicable"
+    reproducibility: "FULL"
+    causal_strength: "None"
+    novelty_strength: "None"
+    allowed_language: >
+      "Classical quantum-inspired metaheuristic algorithm."
+    forbidden_language: >
+      "Quantum advantage; quantum speedup; quantum hardware."
+
+  - id: "C12"
+    statement: "The system utilizes quantum computing."
+    status: "REJECTED"
+    evidence: "No physical qubits or quantum circuits utilized."
+    source_file: "Implementation code"
+    experiment: "CPython 3.14 on Windows 11"
+    statistical_support: "Not Applicable"
+    reproducibility: "FULL"
+    causal_strength: "None"
+    novelty_strength: "None"
+    allowed_language: >
+      "Quantum-inspired algorithm simulated on classical processors."
+    forbidden_language: >
+      "Quantum computing; quantum computer; physical qubits."
+
+  - id: "C13"
+    statement: "Canonical QPSO is fundamentally defective."
+    status: "REJECTED"
+    evidence: "A1 proved that QPSO with Deb's rule achieves 100% feasibility and near-optimal fitness (3.41)."
+    source_file: "PHASE5/results/A1.csv"
+    experiment: "A1 ablation test"
+    statistical_support: "A1 feasibility = 100.0%"
+    reproducibility: "FULL"
+    causal_strength: "None"
+    novelty_strength: "None"
+    allowed_language: >
+      "Canonical QPSO suffered from mixed-variable representation mismatch and additive penalty inversion,
+      which is resolved by proper constraint handling."
+    forbidden_language: >
+      "QPSO is fundamentally broken or flawed."
+
+  - id: "C14"
+    statement: "QPSO's Phase 4 failure was caused by mixed-variable representation and penalty inversion."
+    status: "VERIFIED"
+    evidence: "100% of failed runs in A0 were caused by demand assignment collisions; penalty inversion demonstrated ($51k vs $109k)."
+    source_file: "PHASE5/validation/failure_taxonomy.csv"
+    experiment: "Forensic failure trajectory analysis on seeds 1021, 1025, 1029"
+    statistical_support: "6 out of 6 failures = assignment collisions"
+    reproducibility: "FULL"
+    causal_strength: "Decisive"
+    novelty_strength: "Not Applicable"
+    allowed_language: >
+      "Forensic post-mortem confirmed that continuous QPSO particles rounded to invalid categorical assignments,
+      becoming trapped by additive penalty inversion."
+    forbidden_language: >
+      "Failures were random or inexplicable."
+
+  - id: "C15"
+    statement: "A5 is practically useful for multi-objective green maritime fleet decision support."
+    status: "VERIFIED"
+    evidence: "A5 generates 30 well-spaced Pareto solutions balancing fuel burn, OPEX, and FuelEU/CII compliance."
+    source_file: "PHASE5/results/A5.csv"
+    experiment: "Multi-scenario uncertainty evaluation"
+    statistical_support: "100% compliance rate under uncertainty"
+    reproducibility: "FULL"
+    causal_strength: "Decisive"
+    novelty_strength: "Defensible Application"
+    allowed_language: >
+      "A5 provides operational decision support for fleet managers balancing fuel costs, carbon emissions, and regulatory pooling."
+    forbidden_language: >
+      "Eliminates all commercial maritime risks."

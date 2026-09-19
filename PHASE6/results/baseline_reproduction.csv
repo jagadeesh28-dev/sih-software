@@ -1,0 +1,3 @@
+Model,Configuration,Dataset,Split,R2,MAE_kg_h,RMSE_kg_h,MAPE_pct,sMAPE_pct,Median_AE_kg_h,P95_AE_kg_h,Max_AE_kg_h,Bias_kg_h,Alpha,Training_Time_s,Inference_Latency_ms,Memory_MB,Parameter_Count,Feature_Count,Status
+MODEL-REAL-01,Holtrop-Mennen First-Principles,FuelCast Combined Fleet,Chronological Test (20%),-0.5471,1885.45,2468.05,72.56,68.42,1228.38,4210.15,9842.10,-1883.19,0.0,0.0,0.05,12.0,0,14,PASS
+MODEL-REAL-04,Physics + ML Residual (LightGBM),FuelCast Combined Fleet,Chronological Test (20%),0.9501,246.97,443.21,14.63,14.88,129.31,842.15,4682.40,-141.82,1.0,36.10,0.02,46.0,4650,14,PASS

@@ -1,0 +1,81 @@
+# Phase 6 Frozen Baseline Configuration: MODEL-REAL-04
+version: "6.0-frozen"
+timestamp: "2026-09-19"
+dataset:
+  name: "FuelCast Real Telemetry"
+  vessels:
+    - name: "CPS_Poseidon"
+      type: "container_feeder"
+      total_rows: 105422
+    - name: "CPS_Triton"
+      type: "container_feeder"
+      total_rows: 25347
+    - name: "OSS_Ceto"
+      type: "bulk_handymax"
+      total_rows: 43205
+  total_records: 173974
+  target: "fuel_mass_flow_kg_h"
+  unit: "kg/h"
+
+features:
+  config: "CONFIG_REAL_A"
+  description: "Hydrodynamic, kinematic, and metocean features excluding machinery power/torque/RPM"
+  count: 14
+  columns:
+    - "stw_kn"
+    - "sog_kn"
+    - "draft_m"
+    - "displacement_t"
+    - "wind_speed_ms"
+    - "wind_direction_deg"
+    - "wave_height_m"
+    - "wave_period_s"
+    - "wave_direction_deg"
+    - "current_speed_ms"
+    - "current_direction_deg"
+    - "water_depth_m"
+    - "vessel_type"
+    - "fuel_type"
+
+split:
+  type: "Chronological Forward Temporal"
+  ratios:
+    train: 0.60
+    val: 0.20
+    test: 0.20
+  leakage_prevention:
+    future_leakage: false
+    temporal_shuffle: false
+    scaler_fit: "train_only"
+
+models:
+  physics:
+    architecture: "Holtrop-Mennen First-Principles + Added Resistance"
+    speed_basis: "stw_kn"
+    sog_substitution: false
+    calm_water: "Holtrop-Mennen (1982/1984)"
+    wave_resistance: "Kwon / STAwave-2 semi-empirical"
+    wind_resistance: "Isherwood / Blendermann aerodynamic drag"
+  residual_ml:
+    algorithm: "LightGBM Regressor"
+    objective: "regression_l1"
+    hyperparameters:
+      n_estimators: 150
+      learning_rate: 0.05
+      num_leaves: 31
+      max_depth: 6
+      min_child_samples: 20
+      subsample: 0.8
+      colsample_bytree: 0.8
+      reg_alpha: 0.1
+      reg_lambda: 1.0
+    alpha: 1.0
+    alpha_tuning_split: "val_only"
+
+frozen_baseline_metrics:
+  r2: 0.9501
+  mae_kg_h: 246.97
+  mape_pct: 14.63
+  rmse_kg_h: 443.21
+  median_ae_kg_h: 129.31
+  bias_kg_h: -141.82

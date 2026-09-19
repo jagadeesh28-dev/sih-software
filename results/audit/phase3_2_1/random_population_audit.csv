@@ -1,0 +1,2 @@
+n_candidates_evaluated,evaluation_time_seconds,feasible_count,feasible_rate_pct,all_loss_min,all_loss_p01,all_loss_p05,all_loss_p10,all_loss_median,all_loss_p90,all_loss_p99,all_loss_max,feasible_loss_min,feasible_loss_median,feasible_loss_p05,known_global_optimum,gap_random_best_to_optimum,benchmark_difficulty_verdict
+10000,89.64,10000,100.0,3.2767,3.3693,4.0096,2501.7095,11044.0951,111421.5173,173022.4725,181698.4419,3.2767,11044.0951,4.0096,3.2758,0.0009,"EASY_TO_FIND_NEAR_OPTIMUM: Random search finds candidate within 0.01 of optimum in 10,000 samples."

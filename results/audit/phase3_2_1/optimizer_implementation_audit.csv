@@ -1,0 +1,6 @@
+optimizer,search_mechanism,population_size,evaluations_per_iter,boundary_handling,discrete_handling,repair_operator,rng_handling,shared_state,special_privileges
+QPSO,Quantum delta-potential well attractor (mean best mbest),50,50,"np.clip(X, xl, xu) box projection",np.round() inside evaluator callback,None (standard box projection),np.random.seed(self.seed),None (isolated instance),None
+PSO,Clerc constricted velocity-position swarm update,50,50,"np.clip(X, xl, xu) box projection",np.round() inside evaluator callback,None (standard box projection),np.random.seed(self.seed),None (isolated instance),None
+GA,"Tournament selection, simulated binary crossover (SBX), polynomial mutation",50,50,"np.clip(X, xl, xu) box projection",np.round() inside evaluator callback,None (standard box projection),np.random.seed(self.seed),None (isolated instance),None
+DE,DE/rand/1/bin with greedy selection,50,50,"np.clip(v, xl, xu) donor box projection",np.round() inside evaluator callback,None (standard box projection),np.random.seed(self.seed),None (isolated instance),None
+Random_Search,Uniform independent sampling over bounded hypercube,N/A (individual samples),1,"Uniform sampling strictly within [xl, xu]",np.round() inside evaluator callback,None,np.random.seed(self.seed),None (isolated instance),None

@@ -1,0 +1,22 @@
+{
+  "model_id": "QI-C1",
+  "name": "Quantum-Inspired Feature-Selected Residual Predictor",
+  "role": "Quantum-Inspired Candidate Prediction Path",
+  "version": "1.0.0-verified",
+  "features": [
+    "stw_kn",
+    "sog_kn",
+    "draft_m",
+    "wave_height_m",
+    "water_depth_m",
+    "fuel_type"
+  ],
+  "feature_count": 6,
+  "seed": 42,
+  "test_mae_kg_h": 244.86076612417975,
+  "test_r2": 0.9500389850332477,
+  "mean_30seed_mae_kg_h": 237.96,
+  "mean_30seed_r2": 0.953,
+  "statistical_verdict": "Statistically competitive with classical GA (p=0.684); +44.7% higher diversity",
+  "alpha": 1.0
+}

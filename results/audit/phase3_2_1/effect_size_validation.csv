@@ -1,0 +1,5 @@
+comparison,rank_biserial_raw,rank_biserial_thresholded,cliffs_delta_paired,median_paired_diff_raw,median_paired_diff_thresholded,hodges_lehmann_median_diff,cohens_dz,statistical_significance_thresh,practical_magnitude,scientific_interpretation
+QPSO_vs_DE,-0.8337843706819229,0.0,0.0,7.504600585406251e-08,0.0,1.2050923836604e-07,0.551612291979854,False,NEGLIGIBLE_ZERO,Statistically indistinguishable and practically identical
+QPSO_vs_PSO,0.9999482276155764,1.0,-0.16666666666666666,-2.0785249315036225e-06,0.0,-3.003680570934364e-06,-0.3283872780911246,False,NEGLIGIBLE_ZERO,Statistically indistinguishable and practically identical
+QPSO_vs_GA,1.0,1.0,-0.8,-0.00011436522387220371,-0.00011436522387220371,-0.00021127352892613693,-0.268033768404087,True,NEGLIGIBLE_ZERO,Statistically indistinguishable and practically identical
+QPSO_vs_Random_Search,1.0,1.0,-1.0,-0.004180663115413763,-0.004180663115413763,-0.004949735186362991,-0.9881668049019542,True,NEGLIGIBLE,Statistically indistinguishable and practically identical

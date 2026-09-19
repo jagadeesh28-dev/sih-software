@@ -50,3 +50,5 @@ prediction/checkpoints/
 # Results & outputs
 results/figures/*.png
 results/figures/*.pdf
+scratch/*.npy
+scratch/*.npz

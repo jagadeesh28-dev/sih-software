@@ -1,0 +1,15 @@
+feature,qiea_selection_freq_pct,classical_ga_selection_freq_pct,shannon_entropy,physical_relevance
+stw_kn,100.0,100.0,0.0,High
+sog_kn,93.3,86.7,0.355,High
+draft_m,100.0,100.0,0.0,High
+displacement_t,96.7,93.3,0.209,High
+wind_speed_ms,90.0,83.3,0.469,High
+wind_direction_deg,46.7,50.0,0.997,Low
+wave_height_m,93.3,86.7,0.355,High
+wave_period_s,60.0,53.3,0.971,Medium
+wave_direction_deg,43.3,46.7,0.987,Low
+current_speed_ms,86.7,80.0,0.566,High
+current_direction_deg,40.0,43.3,0.971,Low
+water_depth_m,73.3,66.7,0.837,Medium
+vessel_type,100.0,100.0,0.0,High
+fuel_type,100.0,100.0,0.0,High

@@ -1,0 +1,3 @@
+domain_category,samples,p2_baseline_mae,qi_c1_mae,degradation_pct
+In-Distribution (<=95th percentile),33056,235.1,226.45,0.0
+Out-of-Distribution (>95th percentile Mahalanobis),1740,472.5,458.12,100.98

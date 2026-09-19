@@ -1,0 +1,2 @@
+experiment_id,scenario_id,total_evaluated_solutions,non_dominated_front_size,hypervolume_2d,spacing_metric,fuel_priority_sol,cost_priority_sol,green_priority_sol,balanced_knee_sol
+EXP-OPT-09_11,SCEN-01,54,1,473837.04,0.0,SOL_000,SOL_024,SOL_000,SOL_024

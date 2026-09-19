@@ -1,0 +1,6 @@
+scenario,sample_count,mean_envelope_distance,detected_ood_count,false_positive_rate,false_negative_rate,detection_latency_ms,threshold_stability
+Normal In-Domain,200,0.0,0,0.0,0.0,0.014,STABLE_DETERMINISTIC
+Mild Extrapolation (+15% STW),100,0.036,0,0.0,0.0,0.015,STABLE_DETERMINISTIC
+Severe Extrapolation (STW=32 kn),100,0.147,0,0.0,1.0,0.015,STABLE_DETERMINISTIC
+Corrupted Draught (draft=22 m),100,0.793,0,0.0,0.0,0.013,STABLE_DETERMINISTIC
+"Combined Abnormal (STW=30, Hs=12, Wind=45)",100,0.456,0,0.0,0.0,0.018,STABLE_DETERMINISTIC

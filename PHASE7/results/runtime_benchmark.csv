@@ -1,0 +1,7 @@
+component,trials,mean_ms,median_ms,p95_ms,p99_ms,std_ms,min_ms,max_ms
+Feature Validation & Sanitization,40,0.0073,0.0072,0.008,0.009,0.0005,0.0068,0.0093
+Domain Envelope Distance,40,0.005,0.0049,0.0065,0.0073,0.0006,0.0042,0.0077
+First-Principles Physics Inference,40,0.299,0.2786,0.488,0.5308,0.0725,0.2204,0.5451
+QI-C1 Model Inference,40,0.0958,0.0777,0.2028,0.2741,0.0507,0.0584,0.2863
+MODEL-REAL-04 Model Inference,40,3.2823,3.1224,4.0879,5.3121,0.5216,2.8575,5.4766
+Total End-to-End Prediction With Uncertainty,40,11.0551,4.9116,34.5745,93.0869,19.9667,0.6528,113.4413

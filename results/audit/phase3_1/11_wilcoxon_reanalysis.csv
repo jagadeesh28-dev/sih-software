@@ -1,0 +1,5 @@
+comparison,p_value_raw,bonferroni_threshold,bonferroni_significant,numerical_precision_level,interpretation
+QPSO vs PSO,2.0489096641540527e-07,0.0125,True,Floating-point noise (~1e-7 to 1e-6),"Mathematically calculated correctly by scipy, but scientifically vacuous because underlying data is trapped on +115,000 penalty floor."
+QPSO vs GA,1.862645149230957e-09,0.0125,True,Floating-point noise (~1e-7 to 1e-6),"Mathematically calculated correctly by scipy, but scientifically vacuous because underlying data is trapped on +115,000 penalty floor."
+QPSO vs DE,0.0012321043759584427,0.0125,True,Floating-point noise (~1e-7 to 1e-6),"Mathematically calculated correctly by scipy, but scientifically vacuous because underlying data is trapped on +115,000 penalty floor."
+QPSO vs Random_Search,1.862645149230957e-09,0.0125,True,Floating-point noise (~1e-7 to 1e-6),"Mathematically calculated correctly by scipy, but scientifically vacuous because underlying data is trapped on +115,000 penalty floor."

@@ -1,0 +1,19 @@
+{
+  "n_seeds": 30,
+  "speed_max_abs_diff": 0.0,
+  "speed_mean_abs_diff": 0.0,
+  "speed_identical_rate_pct": 100.0,
+  "cargo_max_abs_diff": 924.8,
+  "cargo_mean_abs_diff": 455.8933333333333,
+  "fuel_identical_rate_pct": 100.0,
+  "mode_identical_rate_pct": 43.333333333333336,
+  "shore_power_identical_rate_pct": 100.0,
+  "loss_diff_mean": 2.2846529243262618e-07,
+  "loss_diff_std": 4.1417730488313744e-07,
+  "loss_diff_max_abs": 1.5486339308701247e-06,
+  "loss_diff_min_abs": 1.4293544126076085e-10,
+  "exact_equal_rate_pct": 0.0,
+  "within_1e5_tolerance_rate_pct": 100.0,
+  "within_1e6_tolerance_rate_pct": 93.33333333333333,
+  "root_cause_diagnosis": "DE and QPSO both converged to the exact same physical optimum: speed = 18.59 kn (minimum speed meeting 28h deadline with wave resistance), fuel = bio_methanol (dominant decarbonization pathway), shore_power = True, mode = normal. The ~1e-7 differences arise strictly from slight differences in cargo tonnes, which has negligible influence on passenger cruise displacement, and minute floating-point variation in commanded speed (18.59123 vs 18.59124 kn). The algorithms are in fact mathematically tied at the global attractor."
+}

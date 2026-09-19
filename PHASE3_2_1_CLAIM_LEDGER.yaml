@@ -1,0 +1,131 @@
+# SIH26138 — Egreen Quanta
+# PHASE 3.2.1 CLAIM LEDGER: STATISTICAL INTEGRITY & INDEPENDENT BENCHMARK AUDIT
+# Version: 3.2.1-FINAL
+# Date: 2026-09-14
+# Status: FROZEN SCIENTIFIC EVIDENCE GATE
+
+metadata:
+  project: "SIH26138 - Egreen Quanta"
+  phase: "Phase 3.2.1"
+  audit_date: "2026-09-14"
+  git_commit: "20309b214b9540a7363b7365e442a222cd9c49a1"
+  authoritative_status: "FROZEN_GATE"
+
+claims:
+  - id: CLAIM-OPT-01
+    claim: "QPSO is statistically and practically superior to Differential Evolution (DE) on single-vessel voyage optimization (SCEN-01)."
+    classification: WITHDRAWN
+    evidence_status: "INVALIDATED_BY_STATISTICAL_AUDIT"
+    rationale: |
+      Independent re-analysis proved that DE and QPSO are statistically tied on SCEN-01 (mean loss: DE 3.2758 vs QPSO 3.2758;
+      median difference = 0.0000; relative difference = +0.000007%; 30 out of 30 matched seeds tied within 1e-5 numerical tolerance).
+      The previously reported Wilcoxon p = 0.00123 was an artifact of testing 1e-7 floating-point discretization micro-noise.
+      When correctly thresholded, Wilcoxon p = 1.0 (status: NOT_APPLICABLE_ALL_TIES) and Permutation p = 1.0.
+
+  - id: CLAIM-OPT-02
+    claim: "QPSO and DE achieve identical optimal solutions and are statistically equivalent on single-vessel benchmark SCEN-01."
+    classification: SUPPORTED
+    evidence_status: "PROVEN_EMPIRICALLY_AND_NUMERICALLY"
+    rationale: |
+      Across 30 matched random seeds, both QPSO and DE converge to the identical global attractor:
+      speed = 18.59 kn (exact deadline-feasible speed), fuel = bio_methanol, shore_power = True, operating_mode = normal.
+      Both achieve 100.0% feasibility and zero constraint violation. Mean difference is within 2.8e-7.
+
+  - id: CLAIM-OPT-03
+    claim: "QPSO exhibits superior search efficiency over DE in high-dimensional fleet optimization (D=500, 100 vessels) under tight evaluation budgets (N=200)."
+    classification: PROVISIONAL
+    evidence_status: "CONDITIONALLY_VERIFIED_ON_SYNTHETIC_BENCHMARK"
+    rationale: |
+      Under an extremely restricted budget (200 evaluations on D=500), QPSO's quantum delta-potential attractor updates all
+      dimensions simultaneously, achieving ~2.36x lower mean loss (1.08e6 vs DE 2.55e6). However, both algorithms remain
+      penalty-dominated (incurring soft deadline penalties) because 200 evaluations is insufficient to locate the fully feasible
+      polytope in 500 dimensions. This claim is synthetic only and restricted from being generalized to real fleet deployments.
+
+  - id: CLAIM-OPT-04
+    claim: "Differential Evolution (DE) is superior to QPSO."
+    classification: NOT_SUPPORTED
+    evidence_status: "DISPROVEN"
+    rationale: |
+      On single-vessel benchmarks, DE does not outperform QPSO (30/30 ties, p = 1.0).
+      On high-dimensional synthetic benchmarks under restricted budgets, DE underperforms QPSO due to slow genetic exploration.
+
+  - id: CLAIM-OPT-05
+    claim: "Random Search is competitive with metaheuristics on single-vessel optimization."
+    classification: NOT_SUPPORTED
+    evidence_status: "DISPROVEN_BY_HYPOTHESIS_TESTING"
+    rationale: |
+      Paired Wilcoxon test against Random Search yields p = 1.86e-9, Holm-adjusted p = 7.45e-9, with rank-biserial effect
+      size = 1.0 (QPSO won 30/30 matched seeds). Random search fails to pinpoint the precise 18.59 kn deadline optimum.
+
+  - id: CLAIM-OPT-06
+    claim: "An evaluation budget of 2,500 evaluations is sufficient for single-vessel voyage optimization."
+    classification: SUPPORTED
+    evidence_status: "PROVEN_BY_PLATEAU_ANALYSIS"
+    rationale: |
+      Convergence profiles prove that QPSO, DE, PSO, and GA achieve 99.9% of their final solution quality within 1,200 to 1,500
+      evaluations. Continuing to 5,000 or 50,000 evaluations yields < 0.001% objective improvement and is computationally unjustified.
+
+  - id: CLAIM-OPT-07
+    claim: "Feasible, non-dominated Pareto trade-off fronts exist between Fuel, Cost, and GHG emissions."
+    classification: SUPPORTED
+    evidence_status: "VERIFIED_ON_FEASIBLE_SUBSET"
+    rationale: |
+      Independent non-dominated sorting across certified feasible candidates establishes clear trade-offs between
+      lower speed/fuel consumption and increased voyage duration/operating costs.
+
+  - id: CLAIM-OPT-08
+    claim: "Single-vessel voyage decisions exhibit active parametric sensitivity to operational constraints."
+    classification: SUPPORTED
+    evidence_status: "VERIFIED_ACROSS_DEADLINE_AND_WEATHER"
+    rationale: |
+      Schedule deadline actively shifts commanded speed (24h -> 20.8 kn; 28h -> 18.59 kn; 36h -> 13.9 kn).
+      Weather severity (wave height > 3.5m) induces significant involuntary speed loss and safety boundary triggers.
+      Notice: Decisions are insensitive to fuel price variations between 400-1000 USD/t because bio-methanol remains dominant.
+
+  - id: CLAIM-OPT-09
+    claim: "Optimization surrogate models are calibrated against real FuelCast operational data."
+    classification: SUPPORTED
+    evidence_status: "FROZEN_FROM_PHASE_2_3"
+    rationale: |
+      Surrogate models are trained and validated against authentic, audited real-world AIS and telemetry data
+      from CPS_Poseidon, CPS_Triton, and OSS_Ceto with R2 >= 0.88 and strictly bounded MAE.
+
+  - id: CLAIM-OPT-10
+    claim: "Predicted fuel consumption adheres to maritime physics and resistance laws."
+    classification: SUPPORTED
+    evidence_status: "PROVEN_BY_MONOTONICITY_AND_DECOMPOSITION"
+    rationale: |
+      Physical response probes demonstrate strict monotonic cubic scaling of fuel with respect to speed-through-water (STW),
+      and total objective decomposes into physical components with < 5e-5 numerical error.
+
+  - id: CLAIM-OPT-11
+    claim: "Defensive architecture intercepts 100% of out-of-domain and adversarial inputs."
+    classification: SUPPORTED
+    evidence_status: "PROVEN_BY_ADVERSARIAL_SUITE"
+    rationale: |
+      All 6 adversarial stress cases (negative speed, 40 kn sprint, negative draft, extreme displacement, invalid fuel, NaN/Inf)
+      are intercepted with hard rejection and >= 10^5 barrier penalties. Zero safety bypasses detected.
+
+  - id: CLAIM-OPT-12
+    claim: "Fleet-level multi-vessel dispatch optimization is fully validated."
+    classification: PROVISIONAL
+    evidence_status: "VALIDATED_ON_SYNTHETIC_FLEET_BENCHMARK"
+    rationale: |
+      Fleet-level mathematical formulation and mixed-variable chromosome are validated. Scalability is proven up to
+      100 vessels (D=500). Full operational deployment requires integration with real port berth scheduling (Phase 4).
+
+  - id: CLAIM-OPT-13
+    claim: "Uncertainty-aware optimization protects against adverse weather risks."
+    classification: SUPPORTED
+    evidence_status: "VERIFIED_BY_QUANTILE_RISK_PENALTY"
+    rationale: |
+      The objective function incorporates epistemic/aleatoric dispersion via quantile uncertainty models, penalizing
+      high-variance operating regimes with risk parameter lambda.
+
+  - id: CLAIM-OPT-14
+    claim: "Regulatory compliance modelling (IMO CII and FuelEU Maritime) is mathematically sound."
+    classification: SUPPORTED
+    evidence_status: "VERIFIED_WITH_VOYAGE_DECOUPLING"
+    rationale: |
+      Single-voyage operational indicators are decoupled from statutory annual CII ratings, eliminating the artificial
+      Rating E penalty cliff while strictly enforcing FuelEU Maritime carbon intensity thresholds.

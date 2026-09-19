@@ -36,6 +36,23 @@ pathways:
     source: "IMO MEPC.391(81) / Clarksons Shipping Intelligence 2024"
     confidence: "HIGH"
 
+  mgo:
+    name: "Marine Gas Oil (0.1% S DMA/DMB)"
+    category: "fossil_distillate"
+    density_kg_m3: 890.0
+    lhv_mj_kg: 42.7
+    wtt_ghg_g_co2e_mj: 14.4     # IMO MEPC.391(81) default fossil MGO refinery pathway
+    ttw_co2_g_per_g_fuel: 3.206 # IMO default Cf for MGO
+    ttw_ch4_g_per_g_fuel: 0.00005
+    ttw_n2o_g_per_g_fuel: 0.00018
+    methane_slip_fraction: 0.0
+    engine_compatibility: ["two_stroke_low_speed", "four_stroke_medium_speed", "high_speed_diesel"]
+    price_usd_per_tonne: 780.0
+    tank_volume_multiplier: 1.0
+    cargo_capacity_penalty_pct: 0.0
+    source: "IMO MEPC.391(81) / FuelEU Maritime 2023/1805"
+    confidence: "HIGH"
+
   fossil_lng:
     name: "Liquefied Natural Gas (Fossil)"
     category: "fossil_gas"

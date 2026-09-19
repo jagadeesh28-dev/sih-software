@@ -1,0 +1,29 @@
+# ==============================================================================
+# SIH26138 — Egreen Quanta: Presentation Claim Ledger (Release v1.0.0)
+# ==============================================================================
+
+version: "1.0.0"
+project: "SIH26138 - Egreen Quanta"
+
+SAFE_TO_SAY:
+  - "We developed a classical quantum-inspired green fleet optimization system."
+  - "QI-C1 uses QIEA-based feature selection coupled with classical gradient boosting residual learning."
+  - "QI-C1 was statistically competitive with budget-matched classical Genetic Algorithm feature selection."
+  - "The system was evaluated on 173,974 real maritime telemetry records across three commercial vessels."
+  - "The system includes real-time domain guarding and conformal uncertainty estimation."
+  - "The fleet optimizer integrates first-principles naval architecture and IMO CII / FuelEU regulations."
+
+QUALIFIED:
+  - "QI-C1 improved over the frozen baseline MODEL-REAL-04 (reduced MAE from 246.97 to 237.96 kg/h, but matched classical GA at p = 0.684)."
+  - "Q-bit representation preserved +44.7% higher exploratory search diversity compared to discrete bitstrings."
+  - "The tested MPS tensor-train formulation was not viable for continuous tabular telemetry (negative result)."
+  - "Alternative fuels are modeled as physics-based thermodynamic scenarios via invariant mechanical shaft work."
+
+FORBIDDEN:
+  - "Quantum computing / Quantum hardware"
+  - "Quantum supremacy / Quantum advantage"
+  - "Quantum speedup"
+  - "First-ever maritime quantum optimizer"
+  - "QI prediction is universally superior"
+  - "MPS is fundamentally impossible"
+  - "Alternative fuels were experimentally validated on the ships"

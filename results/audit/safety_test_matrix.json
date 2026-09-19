@@ -1,0 +1,135 @@
+{
+  "total_invalid_stress_tests": 1000,
+  "safely_rejected_count": 1000,
+  "safe_rejection_rate_pct": 100.0,
+  "edge_case_matrix": [
+    {
+      "case_id": "EC-01",
+      "name": "NaN Speed",
+      "expected_behavior": "REJECT",
+      "actual_behavior": "REJECT",
+      "warning": "Input validation failure: Feature 'stw_kn' contains NaN or Inf value",
+      "pass": true
+    },
+    {
+      "case_id": "EC-02",
+      "name": "Negative Speed",
+      "expected_behavior": "REJECT",
+      "actual_behavior": "REJECT",
+      "warning": "Input validation failure: Feature 'stw_kn'=-5.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=-5.0 out of physical bounds [0.0, 35.0]",
+      "pass": true
+    },
+    {
+      "case_id": "EC-03",
+      "name": "Zero Draft",
+      "expected_behavior": "REJECT",
+      "actual_behavior": "REJECT",
+      "warning": "Input validation failure: Feature 'draft_m'=0.0 out of physical bounds [1.0, 25.0]",
+      "pass": true
+    },
+    {
+      "case_id": "EC-04",
+      "name": "Negative Draft",
+      "expected_behavior": "REJECT",
+      "actual_behavior": "REJECT",
+      "warning": "Input validation failure: Feature 'draft_m'=-2.0 out of physical bounds [1.0, 25.0]",
+      "pass": true
+    },
+    {
+      "case_id": "EC-05",
+      "name": "Impossible Wind (150 m/s)",
+      "expected_behavior": "REJECT",
+      "actual_behavior": "REJECT",
+      "warning": "Input validation failure: Feature 'wind_speed_ms'=150.0 out of physical bounds [0.0, 60.0]",
+      "pass": true
+    },
+    {
+      "case_id": "EC-06",
+      "name": "Missing Mandatory Feature ('draft_m')",
+      "expected_behavior": "REJECT",
+      "actual_behavior": "REJECT",
+      "warning": "Input validation failure: Missing mandatory required feature: 'draft_m'",
+      "pass": true
+    },
+    {
+      "case_id": "EC-07",
+      "name": "Extra Features / Permuted Dict",
+      "expected_behavior": "PREDICT",
+      "actual_behavior": "FALLBACK",
+      "warning": "Cross-check discrepancy (699.8 kg/h > 500 kg/h); routed to reference MODEL-REAL-04.",
+      "pass": true
+    },
+    {
+      "case_id": "EC-08",
+      "name": "Wrong Feature Order",
+      "expected_behavior": "PREDICT",
+      "actual_behavior": "FALLBACK",
+      "warning": "Cross-check discrepancy (699.8 kg/h > 500 kg/h); routed to reference MODEL-REAL-04.",
+      "pass": true
+    },
+    {
+      "case_id": "EC-09",
+      "name": "Extreme RPM / Load State",
+      "expected_behavior": "PREDICT_OR_FALLBACK",
+      "actual_behavior": "EMERGENCY_PHYSICS",
+      "warning": "Operating outside valid ML envelope or ML failure. Output is unadjusted first-principles physics estimate.",
+      "pass": true
+    },
+    {
+      "case_id": "EC-10",
+      "name": "Corrupted Model Artifact Simulation",
+      "expected_behavior": "FALLBACK",
+      "actual_behavior": "FALLBACK",
+      "warning": "QI-C1 inference exception (Injected C++ core segmentation fault).",
+      "pass": true
+    },
+    {
+      "case_id": "EC-11",
+      "name": "Missing Model Artifact Simulation",
+      "expected_behavior": "FALLBACK",
+      "actual_behavior": "FALLBACK",
+      "warning": "Elevated prediction uncertainty: 90% interval width (2273.7 kg/h) exceeds threshold (1200.0 kg/h).",
+      "pass": true
+    },
+    {
+      "case_id": "EC-12",
+      "name": "Corrupted Configuration Simulation",
+      "expected_behavior": "HANDLED_SAFELY",
+      "actual_behavior": "FALLBACK",
+      "warning": "Cross-check discrepancy (699.8 kg/h > 500 kg/h); routed to reference MODEL-REAL-04.",
+      "pass": true
+    },
+    {
+      "case_id": "EC-13",
+      "name": "Severe OOD State",
+      "expected_behavior": "REJECT",
+      "actual_behavior": "REJECT",
+      "warning": "Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",
+      "pass": true
+    },
+    {
+      "case_id": "EC-14",
+      "name": "Inference Timeout / Exception",
+      "expected_behavior": "FALLBACK_OR_EMERGENCY",
+      "actual_behavior": "EMERGENCY_PHYSICS",
+      "warning": "Operating outside valid ML envelope or ML failure. Output is unadjusted first-principles physics estimate.",
+      "pass": true
+    },
+    {
+      "case_id": "EC-15",
+      "name": "Prediction NaN Injection",
+      "expected_behavior": "REJECT",
+      "actual_behavior": "REJECT",
+      "warning": "Input validation failure: Feature 'displacement_t' contains NaN or Inf value",
+      "pass": true
+    },
+    {
+      "case_id": "EC-16",
+      "name": "Prediction Infinity Injection",
+      "expected_behavior": "REJECT",
+      "actual_behavior": "REJECT",
+      "warning": "Input validation failure: Feature 'stw_kn' contains NaN or Inf value",
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+# Vessel Class Family Profiles & Hydrostatic Specifications
+# Derived from FuelCast real telemetry and naval architecture design baselines.
+
+vessel_classes:
+  cruise_passenger:
+    description: "Large Cruise Passenger Vessel (Azipod electric drives, high hotel load)"
+    vessels:
+      CPS_Poseidon:
+        gross_tonnage: 70000.0
+        deadweight_tonnes: 8500.0
+        length_overall_m: 260.0
+        beam_m: 32.2
+        design_draft_m: 7.5
+        displacement_t: 42000.0
+        max_draft_m: 8.5
+        design_speed_knots: 19.5
+        min_speed_knots: 8.0
+        max_speed_knots: 22.0
+        mcr_propulsion_kw: 24000.0
+        hotel_load_baseline_kw: 6500.0  # ~1400 kg/h base electrical load
+        compatible_fuels: ["vlsfo", "bio_methanol", "fossil_lng"]
+      CPS_Triton:
+        gross_tonnage: 11000.0
+        deadweight_tonnes: 1800.0
+        length_overall_m: 135.0
+        beam_m: 20.0
+        design_draft_m: 5.0
+        displacement_t: 8500.0
+        max_draft_m: 6.0
+        design_speed_knots: 15.0
+        min_speed_knots: 6.0
+        max_speed_knots: 18.0
+        mcr_propulsion_kw: 8000.0
+        hotel_load_baseline_kw: 1800.0  # ~400 kg/h base electrical load
+        compatible_fuels: ["vlsfo", "bio_methanol"]
+
+  offshore_supply:
+    description: "Offshore Supply Vessel (Dynamic Positioning station-keeping, azimuth thrusters)"
+    vessels:
+      OSS_Ceto:
+        gross_tonnage: 24000.0
+        deadweight_tonnes: 5200.0
+        length_overall_m: 92.0
+        beam_m: 21.0
+        design_draft_m: 6.0
+        displacement_t: 6000.0
+        max_draft_m: 7.5
+        design_speed_knots: 12.0
+        min_speed_knots: 4.0
+        max_speed_knots: 15.0
+        mcr_propulsion_kw: 12000.0
+        dp_mode_thruster_load_kw: 4500.0 # Operating stationary at high power
+        hotel_load_baseline_kw: 800.0
+        compatible_fuels: ["vlsfo", "bio_methanol", "green_ammonia"]
+
+  cargo_feeder:
+    description: "Feeder Container Ship (Direct drive two-stroke, transport work dominant)"
+    vessels:
+      Feeder_Alpha:
+        gross_tonnage: 12000.0
+        deadweight_tonnes: 14000.0
+        length_overall_m: 150.0
+        beam_m: 23.5
+        design_draft_m: 8.5
+        max_draft_m: 9.5
+        design_speed_knots: 16.0
+        min_speed_knots: 10.0
+        max_speed_knots: 19.0
+        mcr_propulsion_kw: 10500.0
+        hotel_load_baseline_kw: 600.0
+        max_teu_capacity: 1000.0
+        compatible_fuels: ["vlsfo", "fossil_lng", "bio_methanol", "green_ammonia", "liquid_hydrogen"]
