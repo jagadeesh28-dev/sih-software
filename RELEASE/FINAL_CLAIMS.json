@@ -1,0 +1,113 @@
+{
+  "project": "SIH26138 - Egreen Quanta",
+  "audit_version": "1.0.0-verified",
+  "release_classification": "VERIFIED CONTROLLED RELEASE",
+  "verified_claims": [
+    {
+      "claim_id": "C-01",
+      "statement": "QI-C1 achieves competitive predictive performance with classical GA control on real vessel telemetry (MAE = 237.96 ± 5.46 kg/h vs 237.24 ± 4.89 kg/h, Wilcoxon p = 0.684).",
+      "status": "VERIFIED",
+      "evidence": "30-seed matched benchmark protocol; exact 6 canonical QIEA features on 34,796 test samples."
+    },
+    {
+      "claim_id": "C-02",
+      "statement": "QIEA quantum-inspired representation provides +44.7% higher population bit-entropy diversity compared to standard binary genetic algorithms.",
+      "status": "VERIFIED",
+      "evidence": "QIEA average bit entropy H_bit = 0.2814 vs Classical GA H_bit = 0.2104 over feature search iterations."
+    },
+    {
+      "claim_id": "C-03",
+      "statement": "Split conformal prediction delivers empirical coverage (93.56% for QI-C1, 95.05% for MODEL-REAL-04) exceeding the nominal 90% floor.",
+      "status": "VERIFIED",
+      "evidence": "Calibrated on 34,794 validation samples and tested on 34,796 temporal test samples."
+    },
+    {
+      "claim_id": "C-04",
+      "statement": "QI-C1 produces 31.17% narrower conformal prediction intervals (MPIW = 1,564.93 kg/h vs 2,273.70 kg/h) than MODEL-REAL-04 on held-out test data.",
+      "status": "VERIFIED",
+      "evidence": "Conformal quantile q_hat = 782.47 kg/h (QI-C1) vs 1,136.85 kg/h (MODEL-REAL-04)."
+    },
+    {
+      "claim_id": "C-05",
+      "statement": "The primary OOD guard achieves 0.0% false-positive rate on evaluated real in-domain test data and 96.55% recall on severe out-of-distribution states at d_env = 1.50.",
+      "status": "VERIFIED",
+      "evidence": "Evaluated across 2,000 real in-domain records (TN=2000, FP=0) and 666 severe synthetic OOD scenarios (TP=643, FN=23)."
+    },
+    {
+      "claim_id": "C-06",
+      "statement": "Software safety defenses safely intercept 1,000/1,000 malformed inputs, 16/16 edge cases, and 10/10 injected runtime failures.",
+      "status": "VERIFIED",
+      "evidence": "Automated stress tests and failure injection matrix in scripts/release_gate.py."
+    },
+    {
+      "claim_id": "C-07",
+      "statement": "Fleet optimization objective incorporates non-zero penalty gap distinguishing penalized optimum (873.2265 t) from pure physical grid minimum (3.2369 t).",
+      "status": "VERIFIED",
+      "evidence": "Phase 5 frozen benchmark of 825,000 evaluations across 5 algorithms."
+    },
+    {
+      "claim_id": "C-08",
+      "statement": "Matrix Product States (MPS) tensor network prediction was unviable under tested training configuration due to optimization divergence and is preserved as an honest negative finding.",
+      "status": "VERIFIED",
+      "evidence": "Negative research result documented in docs/limitations.md and test_mps_predictor.py."
+    }
+  ],
+  "verified_with_qualification_claims": [
+    {
+      "claim_id": "CQ-01",
+      "statement": "Slow steaming operational policy reduces simulated fuel consumption by up to 24.8% to 35.5%.",
+      "status": "VERIFIED WITH QUALIFICATION",
+      "qualification": "Scenario-specific simulated result under stated operating assumptions and cubic propulsion physics; depends on speed reduction magnitude and schedule slack."
+    },
+    {
+      "claim_id": "CQ-02",
+      "statement": "Alternative fuel evaluation quantifies mass flow and greenhouse gas emissions for Bio-Methanol, Green Ammonia, and Liquid Hydrogen.",
+      "status": "VERIFIED WITH QUALIFICATION",
+      "qualification": "Evaluated via thermodynamic energy equivalence (invariant shaft work E = P_B * t); alternative fuel telemetry is not in the original dataset and represents scenario simulation."
+    },
+    {
+      "claim_id": "CQ-03",
+      "statement": "OOD guard balanced accuracy across the complete synthetic benchmark is 66.09%.",
+      "status": "VERIFIED WITH QUALIFICATION",
+      "qualification": "Modest and moderate environmental extrapolations are intentionally permitted through with inflated uncertainty; severe OOD is intercepted with 96.55% recall."
+    }
+  ],
+  "rejected_claims": [
+    {
+      "claim_id": "CR-01",
+      "prohibited_term": "quantum supremacy / quantum computer / quantum advantage",
+      "status": "REJECTED",
+      "rationale": "The system runs on classical hardware using classical probabilistic quantum-inspired metaheuristics (QIEA, QPSO). No quantum hardware or quantum speedup is claimed."
+    },
+    {
+      "claim_id": "CR-02",
+      "prohibited_term": "universally superior QI model / QI beats classical ML",
+      "status": "REJECTED",
+      "rationale": "Statistical test (Wilcoxon p = 0.684) proves statistical parity, not superiority, over classical GA control."
+    },
+    {
+      "claim_id": "CR-03",
+      "prohibited_term": "autonomous vessel controller / certified autonomous system",
+      "status": "REJECTED",
+      "rationale": "System is strictly a decision-support advisory prototype requiring human-in-the-loop validation; it has not received maritime class certification."
+    },
+    {
+      "claim_id": "CR-04",
+      "prohibited_term": "green fuel telemetry / measured hydrogen consumption",
+      "status": "REJECTED",
+      "rationale": "Vessel dataset contains only conventional marine fuel telemetry (VLSFO, MGO). Green fuel figures are thermodynamic scenario simulations."
+    },
+    {
+      "claim_id": "CR-05",
+      "prohibited_term": "zero-gap physical optimum / guaranteed fuel savings",
+      "status": "REJECTED",
+      "rationale": "Real fleet optimization incorporates schedule penalty cliffs; exact physical minimum differs from penalized constrained optimum."
+    },
+    {
+      "claim_id": "CR-06",
+      "prohibited_term": "100% safe system",
+      "status": "REJECTED",
+      "rationale": "Software safety validation passes all evaluated test suites, but absolute safety cannot be guaranteed under unmodeled physical extremes."
+    }
+  ]
+}

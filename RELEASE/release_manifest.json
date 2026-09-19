@@ -1,7 +1,7 @@
 {
   "version": "1.0.0-verified",
-  "timestamp_utc": "2026-09-19T12:12:58.227681+00:00",
-  "git_commit_head": "0270f3499825160b0c31ad98fff92f77bd7207ff",
+  "timestamp_utc": "2026-09-19T14:31:26.951437+00:00",
+  "git_commit_head": "14dfa703ebc6a50325d00468314788015318d6c9",
   "dataset_hashes": {
     "CPS_Poseidon.parquet": "da85f2e21b6e8724c8350f9aadbda4e457593d77412b8cefaa077da9e1e260c2",
     "CPS_Triton.parquet": "fa8cc7f9f6a92d330088e41e3f275b8d8428d3604cfb35dfa46eaa753d545f89",
@@ -16,6 +16,7 @@
   "script_hashes": {
     "build_production_models.py": "9f1f4804fb66ddb82014c9fd7567e506d6204cb045c239f883147d3f63294c99",
     "compute_detailed_metrics.py": "91ea274562586752e407c88d5be4b476f10fa6a33cb8ea793d0fefd297610dfc",
-    "reproduce_release.py": "9cc097f35ca5f4f13fe8bc75ce5bf0918ddffa2fda89ca0278b4985ead139b99"
+    "reproduce_release.py": "9cc097f35ca5f4f13fe8bc75ce5bf0918ddffa2fda89ca0278b4985ead139b99",
+    "release_gate.py": "bf93f0e614b61210f1f48b7aa4b276be15e2e55187f8213ada376aee62e4a001"
   }
 }

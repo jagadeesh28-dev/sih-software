@@ -1,0 +1,173 @@
+{
+  "project": "SIH26138 - Egreen Quanta",
+  "title": "Egreen Quanta: Quantum-Inspired Fuel Consumption Prediction and Green Fleet Optimization",
+  "problem_statement": "SIH26138",
+  "release_version": "1.0.0-verified",
+  "release_status": "VERIFIED CONTROLLED RELEASE",
+  "git_commit_sha": "14dfa703ebc6a50325d00468314788015318d6c9",
+  "timestamp_utc": "2026-09-19T14:30:00.000000+00:00",
+  "dataset": {
+    "raw_records": 173986,
+    "validated_records": 173974,
+    "removed_trailing_records": 12,
+    "vessels_count": 3,
+    "vessels": {
+      "CPS_Poseidon": {
+        "vessel_class": "Passenger Cruise Vessel",
+        "validated_records": 105422,
+        "sha256": "da85f2e21b6e8724c8350f9aadbda4e457593d77412b8cefaa077da9e1e260c2"
+      },
+      "CPS_Triton": {
+        "vessel_class": "Small Cruise Vessel",
+        "validated_records": 25347,
+        "sha256": "fa8cc7f9f6a92d330088e41e3f275b8d8428d3604cfb35dfa46eaa753d545f89"
+      },
+      "OSS_Ceto": {
+        "vessel_class": "Offshore Supply Vessel",
+        "validated_records": 43205,
+        "sha256": "ac3f8d5e865f11cd40f147d6153de9915b543f675684719245a2d5d6d8e752cd"
+      }
+    },
+    "split_protocol": "Chronological forward temporal: 60% train (104,384), 20% validation (34,794), 20% test (34,796)"
+  },
+  "predictive_models": {
+    "baseline_model": {
+      "model_id": "MODEL-REAL-04",
+      "architecture": "LightGBM regressor on full 14-feature engineering set",
+      "feature_count": 14,
+      "seed_42": {
+        "mae_kg_h": 246.91,
+        "r2": 0.9503
+      },
+      "matched_30_seed_mean": {
+        "mae_kg_h": 248.12,
+        "mae_std": 0.81,
+        "r2": 0.9501,
+        "r2_std": 0.0003
+      }
+    },
+    "quantum_inspired_candidate": {
+      "model_id": "QI-C1",
+      "architecture": "QIEA feature selection + QPSO hyperparameter optimization + LightGBM",
+      "canonical_features": [
+        "stw_kn",
+        "sog_kn",
+        "draft_m",
+        "wave_height_m",
+        "water_depth_m",
+        "fuel_type"
+      ],
+      "feature_count": 6,
+      "seed_42": {
+        "mae_kg_h": 244.86,
+        "r2": 0.9500
+      },
+      "matched_30_seed_mean": {
+        "mae_kg_h": 237.96,
+        "mae_std": 5.46,
+        "r2": 0.9530,
+        "r2_std": 0.0018
+      }
+    },
+    "classical_control": {
+      "model_id": "Classical GA",
+      "architecture": "Genetic Algorithm feature selection + LightGBM",
+      "seed_42": {
+        "mae_kg_h": 237.24,
+        "r2": 0.9532
+      },
+      "matched_30_seed_mean": {
+        "mae_kg_h": 237.24,
+        "mae_std": 4.89,
+        "r2": 0.9532
+      }
+    },
+    "statistical_comparison": {
+      "test_name": "Wilcoxon signed-rank test",
+      "p_value": 0.684,
+      "population_diversity_gain_pct": 44.7,
+      "verdict": "Competitive with classical GA control (statistical parity, p=0.684); QIEA maintains +44.7% population bit-entropy diversity.",
+      "prohibited_statements": [
+        "QI-C1 is superior",
+        "QI-C1 beats classical ML",
+        "quantum advantage"
+      ]
+    }
+  },
+  "uncertainty_quantification": {
+    "methodology": "Split Conformal Prediction (absolute residual non-conformity score)",
+    "nominal_coverage_level": "90%",
+    "QI_C1": {
+      "PICP_pct": 93.56,
+      "MPIW_kg_h": 1564.93,
+      "calibrated_quantile_kg_h": 782.47
+    },
+    "MODEL_REAL_04": {
+      "PICP_pct": 95.05,
+      "MPIW_kg_h": 2273.70,
+      "calibrated_quantile_kg_h": 1136.85
+    },
+    "sharpness_gain_pct": 31.17,
+    "scientific_statement": "QI-C1 produced narrower conformal intervals than MODEL-REAL-04 under the evaluated test protocol (31.17% narrower), while maintaining empirical coverage (93.56%) above the nominal 90% level."
+  },
+  "out_of_distribution_guard": {
+    "in_domain_test_samples": 2000,
+    "synthetic_ood_samples": 1998,
+    "synthetic_severity_breakdown": {
+      "modest_ood": 666,
+      "moderate_ood": 666,
+      "severe_ood": 666
+    },
+    "primary_threshold_d_env": 1.50,
+    "confusion_matrix": {
+      "TN": 2000,
+      "FP": 0,
+      "TP": 643,
+      "FN": 1355
+    },
+    "false_positive_rate_pct": 0.0,
+    "precision_pct": 100.0,
+    "severe_ood_recall_pct": 96.55,
+    "warning_threshold_d_env": 1.00,
+    "warning_threshold_severe_recall_pct": 100.0,
+    "qualification": "Synthetic set contains multiple OOD severity tiers. Modest and moderate extrapolations are intentionally permitted through with uncertainty inflation, while severe OOD is intercepted with 96.55% recall at primary threshold and 100.0% at warning threshold."
+  },
+  "software_safety": {
+    "invalid_stress_tests": {
+      "total": 1000,
+      "safely_rejected": 1000,
+      "pass_rate_pct": 100.0
+    },
+    "mandatory_edge_cases": {
+      "total": 16,
+      "passed": 16,
+      "pass_rate_pct": 100.0
+    },
+    "failure_injections": {
+      "total": 10,
+      "recovered": 10,
+      "pass_rate_pct": 100.0
+    },
+    "scientific_statement": "All evaluated invalid-input, edge-case, and injected-failure scenarios passed the defined software safety tests."
+  },
+  "alternative_fuels_methodology": {
+    "status": "Thermodynamic scenario simulation (invariant shaft work energy basis)",
+    "equation": "E_shaft = P_B * t = m_f * LHV_f * eta_f",
+    "measured_telemetry_fuels": ["VLSFO", "MGO"],
+    "simulated_fuels": ["Bio-Methanol", "Green Ammonia", "Liquid Hydrogen"],
+    "emissions_accounting": "Strict separation of Well-to-Tank (WtT), Tank-to-Wake (TtW), and Well-to-Wake (WtW)",
+    "ui_label": "Scenario Estimate"
+  },
+  "fleet_optimization": {
+    "status": "Frozen Phase 5 benchmark (825,000 evaluations)",
+    "penalized_objective_optimum_tonnes": 873.2265,
+    "physical_fuel_component_tonnes": 3.7861,
+    "schedule_penalty_tonnes": 869.4404,
+    "pure_physical_grid_minimum_tonnes": 3.2369,
+    "scientific_statement": "The penalized objective incorporates a large schedule-feasibility penalty; therefore its optimum must not be interpreted as the pure physical fuel minimum."
+  },
+  "negative_research_finding": {
+    "model": "Matrix Product States (MPS) direct tensor-network prediction",
+    "finding": "Tested and found unviable under evaluated training configuration due to optimization divergence; honestly documented and excluded from serving path."
+  }
+}

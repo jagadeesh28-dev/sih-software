@@ -1,0 +1,86 @@
+{
+  "project": "SIH26138 - Egreen Quanta",
+  "demo_version": "1.0.0-verified",
+  "demo_script": "scripts/demo_scenarios.py",
+  "overall_demo_status": "ALL_SCENES_PASS",
+  "total_scenes": 7,
+  "scenes_passed": 7,
+  "scenes": [
+    {
+      "scene_id": 1,
+      "name": "Normal vessel cruise operation",
+      "vessel": "CPS_Poseidon",
+      "conditions": "STW=14.5 kn, Draft=7.5 m, Wind=5.0 m/s, Wave Hs=1.0 m",
+      "prediction_kg_h": 2740.86,
+      "serving_source": "QI-C1",
+      "confidence": "MEDIUM",
+      "ood_status": "IN-DOMAIN",
+      "uncertainty_range_kg_h": [1958.39, 3523.33],
+      "status": "PASS"
+    },
+    {
+      "scene_id": 2,
+      "name": "High operating demand (acceleration)",
+      "vessel": "CPS_Poseidon",
+      "conditions": "STW=19.5 kn (+5.0 kn), Wind=10.0 m/s, Wave Hs=2.0 m",
+      "prediction_kg_h": 5133.94,
+      "serving_source": "QI-C1",
+      "confidence": "MEDIUM",
+      "ood_status": "IN-DOMAIN",
+      "uncertainty_range_kg_h": [4351.47, 5916.41],
+      "status": "PASS"
+    },
+    {
+      "scene_id": 3,
+      "name": "Slow-steaming operational scenario",
+      "vessel": "CPS_Poseidon",
+      "conditions": "18.0 kn baseline cruise vs 15.0 kn slow steaming",
+      "prediction_kg_h": 2844.47,
+      "baseline_kg_h": 4412.85,
+      "simulated_fuel_reduction_pct": 35.54,
+      "serving_source": "QI-C1",
+      "status": "PASS"
+    },
+    {
+      "scene_id": 4,
+      "name": "Alternative fuel scenarios (invariant shaft work)",
+      "physics_basis": "E_shaft = P_B * t = m_fuel * LHV_f * eta_f",
+      "reference_energy_mj_h": 56176.7,
+      "fuels_evaluated": [
+        {"fuel": "VLSFO", "rate_kg_h": 2740.86, "basis": "Measured Telemetry Baseline"},
+        {"fuel": "MGO", "rate_kg_h": 2734.46, "basis": "Measured Telemetry Baseline"},
+        {"fuel": "Bio-Methanol", "rate_kg_h": 6136.84, "basis": "Scenario Estimate"},
+        {"fuel": "Green Ammonia", "rate_kg_h": 6864.21, "basis": "Scenario Estimate"},
+        {"fuel": "Liquid Hydrogen", "rate_kg_h": 936.28, "basis": "Scenario Estimate"}
+      ],
+      "status": "PASS"
+    },
+    {
+      "scene_id": 5,
+      "name": "Injected out-of-distribution condition (severe storm)",
+      "injected_state": "STW=33.0 kn, Wind=48.0 m/s, Wave Hs=14.0 m",
+      "envelope_distance": 1.366,
+      "ood_guard_action": "Rerouted to MODEL-REAL-04 reference with warning",
+      "status": "PASS"
+    },
+    {
+      "scene_id": 6,
+      "name": "Injected model failure and automatic fallback",
+      "injected_event": "Simulated memory exception in QI-C1 booster",
+      "router_action": "Automatic fallback to MODEL-REAL-04",
+      "fallback_prediction_kg_h": 2811.62,
+      "status": "PASS"
+    },
+    {
+      "scene_id": 7,
+      "name": "Fleet multi-objective optimization",
+      "fleet_scope": "3 Vessels (Poseidon, Triton, Ceto) across multi-leg itineraries",
+      "evaluations_verified": 825000,
+      "penalized_optimum_j_pen": 873.2265,
+      "pure_physical_min_tonnes": 3.2369,
+      "decision_output": "Speed schedule advisory [13.8 kn, 14.2 kn, 12.5 kn] with zero deadline breaches",
+      "operator_role": "Human-in-the-loop decision support",
+      "status": "PASS"
+    }
+  ]
+}

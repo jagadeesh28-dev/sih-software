@@ -77,6 +77,12 @@ Comprehensive documentation is organized across `docs/`, `release/`, and `report
 - [Final Scientific Validation Report](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/reports/final_validation_report.md): 20-section complete technical and scientific audit.
 - [Final SIH Executive Report](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/reports/final_sih_report.md): Hackathon summary and jury demonstration narrative.
 
+### SIH Presentation & Jury Defense (`presentation/`)
+- [3-Minute Demo Script](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/presentation/demo_script_3min.md): Exact 180-second timed narration.
+- [Jury Defense Handbook](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/presentation/jury_questions.md): 45 categorized technical defense Q&As with grounded evidence.
+- [Final Verified Metrics JSON](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/presentation/final_metrics.json): Single source of truth for all verified numbers.
+- [14 Slide Presentations](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/presentation/): Slide decks `01_problem.md` through `14_jury_questions.md`.
+
 ---
 
 ## 5. Quickstart Installation

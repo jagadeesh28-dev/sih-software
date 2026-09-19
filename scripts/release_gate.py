@@ -288,6 +288,7 @@ def run_gate_g9_traceability() -> Tuple[bool, Dict[str, Any]]:
             "build_production_models.py": get_file_sha256(REPO_ROOT / "scripts" / "build_production_models.py"),
             "compute_detailed_metrics.py": get_file_sha256(REPO_ROOT / "scripts" / "compute_detailed_metrics.py"),
             "reproduce_release.py": get_file_sha256(REPO_ROOT / "scripts" / "reproduce_release.py"),
+            "release_gate.py": get_file_sha256(REPO_ROOT / "scripts" / "release_gate.py"),
         },
     }
 
