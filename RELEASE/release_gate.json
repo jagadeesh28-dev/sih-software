@@ -3,7 +3,7 @@
   "release_version": "1.0.0-verified",
   "release_classification": "VERIFIED CONTROLLED RELEASE",
   "system_type": "Controlled Decision-Support Prototype",
-  "timestamp_utc": "2026-09-19T14:31:26.982294+00:00",
+  "timestamp_utc": "2026-09-19T14:32:03.272607+00:00",
   "gates_evaluated": 10,
   "gates_passed": 10,
   "gates": {
@@ -169,8 +169,8 @@
       "passed": true,
       "details": {
         "version": "1.0.0-verified",
-        "timestamp_utc": "2026-09-19T14:31:26.951437+00:00",
-        "git_commit_head": "14dfa703ebc6a50325d00468314788015318d6c9",
+        "timestamp_utc": "2026-09-19T14:32:03.241716+00:00",
+        "git_commit_head": "095e01a756d811c4d4f6e2ad1ca82f6031505fc5",
         "dataset_hashes": {
           "CPS_Poseidon.parquet": "da85f2e21b6e8724c8350f9aadbda4e457593d77412b8cefaa077da9e1e260c2",
           "CPS_Triton.parquet": "fa8cc7f9f6a92d330088e41e3f275b8d8428d3604cfb35dfa46eaa753d545f89",
