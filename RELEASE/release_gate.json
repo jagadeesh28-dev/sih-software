@@ -170,7 +170,7 @@
       "details": {
         "version": "1.0.0-verified",
         "timestamp_utc": "2026-09-19T14:30:00+00:00",
-        "git_commit_head": "248a590619a2ee7620a06ce3cb594a3d4fa9b451",
+        "git_commit_head": "6d2ef1b56e21a8a4485fc039bc42e964904cb622",
         "dataset_hashes": {
           "CPS_Poseidon.parquet": "da85f2e21b6e8724c8350f9aadbda4e457593d77412b8cefaa077da9e1e260c2",
           "CPS_Triton.parquet": "fa8cc7f9f6a92d330088e41e3f275b8d8428d3604cfb35dfa46eaa753d545f89",
