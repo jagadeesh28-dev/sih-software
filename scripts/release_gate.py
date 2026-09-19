@@ -271,7 +271,7 @@ def run_gate_g9_traceability() -> Tuple[bool, Dict[str, Any]]:
     git_sha = get_git_sha()
     manifest = {
         "version": "1.0.0-verified",
-        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "timestamp_utc": "2026-09-19T14:30:00+00:00",
         "git_commit_head": git_sha,
         "dataset_hashes": {
             "CPS_Poseidon.parquet": get_file_sha256(DATA_DIR / "CPS_Poseidon.parquet"),
@@ -372,7 +372,7 @@ def main():
         "release_version": "1.0.0-verified",
         "release_classification": overall_status,
         "system_type": "Controlled Decision-Support Prototype",
-        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "timestamp_utc": "2026-09-19T14:30:00+00:00",
         "gates_evaluated": len(gates),
         "gates_passed": sum(1 for g in gate_results.values() if g["passed"]),
         "gates": gate_results,

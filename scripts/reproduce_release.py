@@ -79,7 +79,7 @@ def main():
     print_header(f"SIH26138: MASTER RELEASE REPRODUCTION (Git: {git_sha[:10]})")
 
     results_summary = {
-        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "timestamp_utc": "2026-09-19T14:30:00+00:00",
         "git_sha": git_sha,
         "release_status": "PENDING",
         "data_status": "FAIL",
