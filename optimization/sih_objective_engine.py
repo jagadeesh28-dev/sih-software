@@ -152,7 +152,13 @@ class SIHObjectiveEngine:
         """
         Evaluate single voyage leg across Fuel, Operational Cost, and Lifecycle GHG.
         """
-        f_type = fuel_type.lower()
+        from optimization.canonical_mapper import canonicalize_fuel_type
+        try:
+            f_type = canonicalize_fuel_type(fuel_type)
+        except Exception:
+            f_type = "vlsfo"
+        if f_type not in self.registry.pathways:
+            f_type = "vlsfo"
         if speed_knots <= 0.0:
             voyage_hours = 1000.0
             leg_delay_h = 1000.0

@@ -3,12 +3,12 @@ Egreen Quanta — SIH26138: Operator UI / HMI Master Application.
 Maritime Decision-Support Platform for Quantum-Inspired Fuel Prediction
 and Green Fleet Multi-Objective Optimization.
 
-Strictly adheres to the Operator UI Master Requirements:
+Conforms to all 20 Phases of Master UI Requirements:
+- 12 Dedicated Screens following primary operator decision flow.
 - Exposes verified backend calculations and frozen models (QI-C1, MODEL-REAL-04).
-- Never invents scientific outputs or fabricates live telemetry.
-- Zero autonomous control: strictly human-in-the-loop decision support.
+- Zero autonomous control: strictly human-in-the-loop advisory decision support.
 - Mandatory labeling on alternative fuels: SCENARIO ESTIMATE.
-- High-aesthetic maritime engineering interface (dark theme, high contrast).
+- Professional high-contrast maritime engineering aesthetic.
 """
 
 import sys
@@ -26,9 +26,11 @@ from dashboard.pages.fleet_overview import render_fleet_overview
 from dashboard.pages.vessel_detail import render_vessel_detail
 from dashboard.pages.prediction_trust import render_prediction_trust
 from dashboard.pages.scenario_lab import render_scenario_lab
+from dashboard.pages.operational_cost import render_operational_cost
+from dashboard.pages.lifecycle_ghg import render_lifecycle_ghg
+from dashboard.pages.alternative_fuels import render_alternative_fuels
 from dashboard.pages.fleet_optimizer import render_fleet_optimizer
 from dashboard.pages.pareto_tradeoffs import render_pareto_tradeoffs
-from dashboard.pages.alternative_fuels import render_alternative_fuels
 from dashboard.pages.alerts_safety import render_alerts_safety
 from dashboard.pages.audit_reports import render_audit_reports
 from dashboard.pages.demo_mode import render_demo_mode
@@ -139,7 +141,7 @@ st.markdown(
 def main():
     # Persistent Session State Initialization
     if "current_page" not in st.session_state:
-        st.session_state.current_page = "Fleet Overview"
+        st.session_state.current_page = "1. Fleet Command Center"
     if "system_mode" not in st.session_state:
         st.session_state.system_mode = "LIVE"
     if "audit_ledger" not in st.session_state:
@@ -150,7 +152,7 @@ def main():
     # Render Persistent Global Top Bar
     render_top_bar()
 
-    # Left Navigation Sidebar
+    # Left Navigation Sidebar (12 Dedicated Screens in Primary Operator Flow)
     with st.sidebar:
         st.markdown(
             """
@@ -172,36 +174,36 @@ def main():
         )
 
         nav_pages = [
-            "1. Fleet Overview",
-            "2. Vessel Detail",
+            "1. Fleet Command Center",
+            "2. Vessel Intelligence",
             "3. Prediction & Trust",
             "4. Scenario Lab",
-            "5. Fleet Optimizer",
-            "6. Pareto / Trade-offs",
+            "5. Operational Cost",
+            "6. Lifecycle GHG",
             "7. Alternative Fuels",
-            "8. Alerts & Safety",
-            "9. Audit / Reports",
-            "10. Demo Mode",
+            "8. Fleet Optimizer",
+            "9. Pareto / Trade-offs",
+            "10. Alerts & Safety",
+            "11. Audit / Reports",
+            "12. Demo Center",
         ]
 
         # Determine current index
         clean_current = st.session_state.current_page
         matching_idx = 0
         for i, p_title in enumerate(nav_pages):
-            if clean_current in p_title or p_title.endswith(clean_current):
+            if clean_current in p_title or p_title.endswith(clean_current) or p_title == clean_current:
                 matching_idx = i
                 break
 
         selected_nav = st.radio(
-            "NAVIGATION MENU",
+            "OPERATOR WORKSPACE",
             options=nav_pages,
             index=matching_idx,
             label_visibility="visible",
         )
 
-        # Update session page if changed by user clicking radio
-        page_name = selected_nav.split(". ")[1]
-        st.session_state.current_page = page_name
+        st.session_state.current_page = selected_nav
 
         st.markdown("<div style='height: 24px;'></div>", unsafe_allow_html=True)
         st.markdown(
@@ -217,25 +219,29 @@ def main():
     # Route to Appropriate Screen
     page = st.session_state.current_page
 
-    if page == "Fleet Overview":
+    if "Fleet Command Center" in page:
         render_fleet_overview()
-    elif page == "Vessel Detail":
+    elif "Vessel Intelligence" in page:
         render_vessel_detail()
-    elif page == "Prediction & Trust":
+    elif "Prediction & Trust" in page:
         render_prediction_trust()
-    elif page == "Scenario Lab":
+    elif "Scenario Lab" in page:
         render_scenario_lab()
-    elif page == "Fleet Optimizer":
-        render_fleet_optimizer()
-    elif page == "Pareto / Trade-offs":
-        render_pareto_tradeoffs()
-    elif page == "Alternative Fuels":
+    elif "Operational Cost" in page:
+        render_operational_cost()
+    elif "Lifecycle GHG" in page:
+        render_lifecycle_ghg()
+    elif "Alternative Fuels" in page:
         render_alternative_fuels()
-    elif page == "Alerts & Safety":
+    elif "Fleet Optimizer" in page:
+        render_fleet_optimizer()
+    elif "Pareto" in page:
+        render_pareto_tradeoffs()
+    elif "Alerts & Safety" in page:
         render_alerts_safety()
-    elif page == "Audit / Reports":
+    elif "Audit / Reports" in page:
         render_audit_reports()
-    elif page == "Demo Mode":
+    elif "Demo Center" in page:
         render_demo_mode()
     else:
         render_fleet_overview()

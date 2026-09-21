@@ -1,9 +1,9 @@
 """
-Egreen Quanta - SIH26138: Screen 10 — Demo Mode.
+Egreen Quanta - SIH26138: Screen 12 — Demo Center.
 Official interactive SIH 2026 jury demonstration walkthrough.
-Reproduces all verified scenes with verbatim jury cards, timing benchmarks,
+Reproduces all 11 verified scenes with verbatim jury cards, timing benchmarks,
 and explicit DEMO/SIMULATION watermarks.
-Conforms to Section 14 of Operator UI Master Requirements.
+Conforms to Phase 15 of Master UI Requirements.
 """
 
 import copy
@@ -15,10 +15,10 @@ from dashboard.backend_bridge import get_cached_predictor, get_cached_sih_engine
 
 
 def render_demo_mode():
-    """Renders Screen 10 Demo Mode."""
+    """Renders Screen 12 Demo Center."""
     st.session_state.system_mode = "DEMO / JURY AUDIT"
 
-    # Mandatory Demonstration Watermark
+    # Mandatory Demonstration Watermark (Phase 15)
     st.markdown(
         """
         <div style="
@@ -35,10 +35,10 @@ def render_demo_mode():
                 <span style="font-size: 22px;">🎬</span>
                 <div>
                     <span style="font-size: 14px; font-weight: 800; color: #c084fc; letter-spacing: 0.5px;">
-                        DEMO / SIMULATION MODE — DETERMINISTIC SIH 2026 JURY VERIFICATION
+                        DEMO CENTER: DEMO / SIMULATION MODE — DETERMINISTIC SIH JURY VERIFICATION
                     </span>
                     <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">
-                        Execute certified benchmark scenes in under 2 minutes. Verifies predictions, trust checks, alternative fuels, and fleet optimization.
+                        Execute all 11 certified benchmark scenes in under 2 minutes. Verifies predictions, trust checks, alternative fuels, and fleet optimization.
                     </div>
                 </div>
             </div>
@@ -53,36 +53,35 @@ def render_demo_mode():
     predictor = get_cached_predictor()
     sih_engine = get_cached_sih_engine()
 
-    # Scene Selector
+    # 11 Verified Scene Titles (Phase 15)
     scene_titles = [
-        "Scene 1: Normal Vessel Operation (Poseidon 14.5 kn -> 2,740.86 kg/h)",
-        "Scene 2: High Operating Demand (Speed Acceleration to 19.5 kn)",
-        "Scene 3: Slow Steaming Scenario (18.0 kn vs 15.0 kn Fuel Saving)",
-        "Scene 4: Alternative Fuel Scenario (Invariant Shaft Work Comparison)",
-        "Scene 5: Injected Out-of-Distribution (Severe Storm -> OOD Fallback)",
-        "Scene 6: Injected Booster Fault (Instant Fail-Safe to MODEL-REAL-04)",
-        "Scene 7: Heterogeneous Fleet Optimization ([13.8, 14.2, 12.5] kn Speeds)",
-        "Scene 8: Explicit Vessel-Type Prediction (Poseidon, Triton, Ceto)",
-        "Scene 9: Operational Cost Minimization (Fuel + Electricity + OPS + Carbon)",
-        "Scene 10: Lifecycle WtW GHG Minimization (IMO MEPC.391(81) WtW=WtT+TtW+Slip)",
-        "Scene 11: Multi-Objective Pareto Decision Support (Non-Dominated Trade-offs)",
+        "1 Normal Vessel Operation (Poseidon 14.5 kn -> 2,740.86 kg/h)",
+        "2 High Operating Demand (Speed Acceleration to 19.5 kn)",
+        "3 Slow Steaming (18.0 kn vs 15.0 kn Fuel Saving)",
+        "4 Alternative Fuel Scenarios (Invariant Shaft Work Comparison)",
+        "5 Extreme Storm / OOD (Hs=8.5m -> OOD Fallback)",
+        "6 Model Failure / Safety Routing (Booster Fault -> MODEL-REAL-04)",
+        "7 Heterogeneous Fleet Optimization ([13.8, 14.2, 12.5] kn Speeds)",
+        "8 Vessel Type + Conformal Intervals (Poseidon, Triton, Ceto)",
+        "9 Operational Cost Minimization (C_total = 6 Isolated Components)",
+        "10 Lifecycle GHG Minimization (IMO MEPC.391(81) WtW=WtT+TtW+Slip)",
+        "11 Multi-Objective Pareto Decision Support (Non-Dominated Trade-offs)",
     ]
 
     selected_scene = st.selectbox(
-        "Select Verification Scene to Execute:",
+        "Select Certified Demonstration Scene to Execute:",
         options=scene_titles,
         index=0,
     )
 
-    scene_idx = scene_titles.index(selected_scene) + 1
+    scene_idx = int(selected_scene.split()[0])
 
     st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
 
     # Execution Button
-    if st.button(f"▶ Execute {selected_scene.split(':')[0]}", type="primary", use_container_width=True):
+    if st.button(f"▶ Run {selected_scene.split('(')[0]}", type="primary", use_container_width=True):
         st.session_state.active_scene_executed = scene_idx
 
-    # Render Active Scene
     active_scene = st.session_state.get("active_scene_executed", scene_idx)
 
     # -------------------------------------------------------------------------
@@ -139,16 +138,14 @@ def render_demo_mode():
     # SCENE 3 — SLOW STEAMING
     # -------------------------------------------------------------------------
     elif active_scene == 3:
-        st.markdown("<h3 style='color: #00E5FF;'>Scene 3: Slow Steaming Comparison</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color: #00E5FF;'>Scene 3: Slow Steaming</h3>", unsafe_allow_html=True)
         st.markdown("<p style='color: #94a3b8;'>Scenario: 18.0 kn vs 15.0 kn over a 300 nm voyage.</p>", unsafe_allow_html=True)
 
-        # Baseline 18 kn
         res_18 = predictor.predict_fuel_with_uncertainty({
             "vessel_id": "CPS_Poseidon", "vessel_type": "passenger_cruise", "fuel_type": "vlsfo",
             "stw_kn": 18.0, "sog_kn": 18.0, "draft_m": 7.5, "displacement_t": 35000.0,
             "wind_speed_ms": 5.0, "wave_height_m": 1.0, "water_depth_m": 60.0
         })
-        # Slow steaming 15 kn
         res_15 = predictor.predict_fuel_with_uncertainty({
             "vessel_id": "CPS_Poseidon", "vessel_type": "passenger_cruise", "fuel_type": "vlsfo",
             "stw_kn": 15.0, "sog_kn": 15.0, "draft_m": 7.5, "displacement_t": 35000.0,
@@ -198,7 +195,7 @@ def render_demo_mode():
     # SCENE 5 — OOD STORM
     # -------------------------------------------------------------------------
     elif active_scene == 5:
-        st.markdown("<h3 style='color: #00E5FF;'>Scene 5: Injected Out-of-Distribution Condition</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color: #00E5FF;'>Scene 5: Extreme Storm / OOD</h3>", unsafe_allow_html=True)
         st.markdown("<p style='color: #94a3b8;'>Injected extreme storm: Hs = 8.5 m, Wind = 25 m/s, Speed = 19.0 kn.</p>", unsafe_allow_html=True)
 
         inp5 = {
@@ -222,10 +219,9 @@ def render_demo_mode():
     # SCENE 6 — RUNTIME FAILURE
     # -------------------------------------------------------------------------
     elif active_scene == 6:
-        st.markdown("<h3 style='color: #00E5FF;'>Scene 6: Injected Booster Runtime Fault</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color: #00E5FF;'>Scene 6: Model Failure / Safety Routing</h3>", unsafe_allow_html=True)
         st.markdown("<p style='color: #94a3b8;'>Simulates Booster pointer corruption or NaN output. Safe fail-safe interception.</p>", unsafe_allow_html=True)
 
-        # Force fallback evaluation
         st.metric("Interception Latency", "1.12 ms", "< 2.0 ms safety requirement")
         st.success("✔ **FAIL-SAFE SUCCESSFUL**: Corrupted inference intercepted. MODEL-REAL-04 reference anchor deployed with 100% operational continuity.")
         st.info("🎯 **Jury Verification**: 10/10 runtime fault simulations successfully caught with zero system crashes.")
@@ -251,7 +247,7 @@ def render_demo_mode():
     # SCENE 8 — EXPLICIT VESSEL TYPE
     # -------------------------------------------------------------------------
     elif active_scene == 8:
-        st.markdown("<h3 style='color: #00E5FF;'>Scene 8: Explicit Vessel-Type Prediction</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color: #00E5FF;'>Scene 8: Vessel Type + Conformal Intervals</h3>", unsafe_allow_html=True)
         v_list = [
             ("CPS_Poseidon", "passenger_cruise", 35000.0, 7.5),
             ("CPS_Triton", "passenger_cruise_small", 12000.0, 5.2),
@@ -302,7 +298,7 @@ def render_demo_mode():
     # SCENE 10 — LIFECYCLE GHG MINIMIZATION
     # -------------------------------------------------------------------------
     elif active_scene == 10:
-        st.markdown("<h3 style='color: #00E5FF;'>Scene 10: Lifecycle Well-to-Wake GHG</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color: #00E5FF;'>Scene 10: Lifecycle GHG Minimization</h3>", unsafe_allow_html=True)
         ghg_eval = sih_engine.evaluate_voyage(
             vessel_id="CPS_Poseidon", vessel_type="passenger_cruise",
             speed_knots=14.0, voyage_distance_nm=250.0, schedule_deadline_hours=20.0,
@@ -325,7 +321,7 @@ def render_demo_mode():
     # SCENE 11 — MULTI-OBJECTIVE PARETO
     # -------------------------------------------------------------------------
     elif active_scene == 11:
-        st.markdown("<h3 style='color: #00E5FF;'>Scene 11: Multi-Objective Pareto Decisions</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color: #00E5FF;'>Scene 11: Multi-Objective Pareto Decision Support</h3>", unsafe_allow_html=True)
         df_p = get_verified_pareto_front()
         st.write(f"Loaded **{len(df_p)} non-dominated Pareto solutions** from `results/pareto_front.csv`:")
         st.dataframe(df_p.head(6), use_container_width=True)

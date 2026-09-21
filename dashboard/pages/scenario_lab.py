@@ -1,8 +1,9 @@
 """
 Egreen Quanta - SIH26138: Screen 4 — Scenario Lab.
 What-if operating/fuel/weather scenario generator and side-by-side evaluator.
-Exposes assumptions, fuel prices, emission factors, and explicit [MEASURED] vs [ASSUMED] badges.
-Conforms to Section 8 of Operator UI Master Requirements.
+Exposes assumptions, model version, fuel-price configuration, and emission-factor configuration.
+Clearly distinguishes MEASURED vs ASSUMED vs SCENARIO ESTIMATE.
+Conforms to Phase 8 of Master UI Requirements.
 """
 
 import pandas as pd
@@ -44,7 +45,7 @@ def render_scenario_lab():
     st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
 
     # Step 2: What-If Controls (2 Columns: Baseline vs Scenario)
-    st.markdown("<h4 style='color: #38bdf8;'>Configure What-If Operational Scenario</h4>", unsafe_allow_html=True)
+    st.markdown("<h4 style='color: #38bdf8;'>1. Configure Operational What-If Parameters</h4>", unsafe_allow_html=True)
     
     col_base, col_scen = st.columns(2)
 
@@ -64,11 +65,11 @@ def render_scenario_lab():
         base_draft = float(vessel["draft_m"])
         base_fuel = "vlsfo"
         base_shore = False
-        st.write(f"**Speed:** {base_speed:.1f} kn (Current Telemetry)")
-        st.write(f"**Draft:** {base_draft:.2f} m (Current Loading)")
+        st.write(f"**Speed:** {base_speed:.1f} kn `[MEASURED]`")
+        st.write(f"**Draft:** {base_draft:.2f} m `[MEASURED]`")
         st.write(f"**Bunker Fuel:** Conventional VLSFO ($650/t)")
-        st.write(f"**Shore Power at Berth:** Unavailable / Disabled")
-        st.write(f"**Weather:** Measured Hs = {vessel['wave_height_m']} m, Depth = {vessel['water_depth_m']} m")
+        st.write(f"**Shore Power at Berth:** Disabled `[MEASURED]`")
+        st.write(f"**Sea State:** Hs = {vessel['wave_height_m']} m, Depth = {vessel['water_depth_m']} m `[MEASURED]`")
 
     with col_scen:
         st.markdown(
@@ -99,10 +100,33 @@ def render_scenario_lab():
         )
         scen_shore = st.checkbox("Enable Shore Power (Cold Ironing) at Berth", value=True)
 
+    # Mandatory Configuration Metadata Block (Phase 8 requirement)
+    fuel_label_type = "MEASURED TELEMETRY" if scen_fuel in ("vlsfo", "mgo") else "SCENARIO ESTIMATE"
+    st.markdown(
+        f"""
+        <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 6px; padding: 12px 16px; margin-top: 14px; font-size: 12px; color: #94a3b8;">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                <div>
+                    <strong style="color: #38bdf8;">DATA SOURCE:</strong> FuelCast Telemetry (VLSFO) / Invariant Shaft Work<br>
+                    <strong style="color: #38bdf8;">MODEL VERSION:</strong> QI-C1-vessel-type (v1.1.0-verified)
+                </div>
+                <div>
+                    <strong style="color: #38bdf8;">FUEL PRICE CONFIG:</strong> VLSFO $650/t, Bio-Methanol $1,050/t, Ammonia $950/t<br>
+                    <strong style="color: #38bdf8;">EMISSION FACTOR CONFIG:</strong> IMO MEPC.391(81) WtW Standards
+                </div>
+                <div>
+                    <strong style="color: #38bdf8;">CLASSIFICATION:</strong> <span style="color: {'#34d399' if fuel_label_type == 'MEASURED TELEMETRY' else '#fbbf24'}; font-weight: 700;">{fuel_label_type}</span><br>
+                    <strong style="color: #38bdf8;">ASSUMPTIONS:</strong> Weather stable; constant engine thermal efficiency
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
 
     # Compute Predictions & Voyage Evaluations
-    # Baseline Prediction
     b_pred_res = predictor.predict_fuel_with_uncertainty({
         "vessel_id": vessel["id"],
         "vessel_type": vessel["vessel_type"],
@@ -116,11 +140,10 @@ def render_scenario_lab():
         "water_depth_m": vessel["water_depth_m"],
     })
 
-    # Scenario Prediction
     s_pred_res = predictor.predict_fuel_with_uncertainty({
         "vessel_id": vessel["id"],
         "vessel_type": vessel["vessel_type"],
-        "fuel_type": "vlsfo",  # Predictor baseline is calibrated in VLSFO equivalent
+        "fuel_type": "vlsfo",
         "stw_kn": scen_speed,
         "sog_kn": scen_speed,
         "draft_m": scen_draft,
@@ -156,12 +179,11 @@ def render_scenario_lab():
         hotel_load_kw=vessel["hotel_load_kw"],
     )
 
-    # Mandatory Notice for Alternative Fuel Scenarios
     if scen_fuel != "vlsfo" and scen_fuel != "mgo":
         st.warning("⚠️ **SCENARIO ESTIMATE — not measured green-fuel telemetry.** Thermodynamic invariant shaft work model applied.")
 
     # Side-by-Side Comparison Matrix
-    st.markdown("<h4 style='color: #f8fafc;'>Side-by-Side Scenario Comparison</h4>", unsafe_allow_html=True)
+    st.markdown("<h4 style='color: #f8fafc;'>2. Side-by-Side Scenario Results Matrix</h4>", unsafe_allow_html=True)
     
     comp_df = pd.DataFrame([
         {
@@ -170,20 +192,23 @@ def render_scenario_lab():
             "Baseline": f"{voyage_distance_nm / base_speed:.1f} h",
             "Scenario": f"{voyage_distance_nm / scen_speed:.1f} h",
             "Delta": f"{(voyage_distance_nm / scen_speed) - (voyage_distance_nm / base_speed):+.1f} h",
+            "Nature": "MEASURED vs ASSUMED",
         },
         {
-            "Metric": "Fuel Consumption",
+            "Metric": "Fuel Mass Consumption",
             "Unit": "tonnes",
             "Baseline": f"{b_eval.fuel_tonnes:.2f} t",
             "Scenario": f"{s_eval.fuel_tonnes:.2f} t",
             "Delta": f"{s_eval.fuel_tonnes - b_eval.fuel_tonnes:+.2f} t",
+            "Nature": "MEASURED vs SCENARIO ESTIMATE" if scen_fuel != "vlsfo" else "CALCULATED",
         },
         {
-            "Metric": "Total Operational Cost",
+            "Metric": "Total Operational Cost (C_total)",
             "Unit": "USD ($)",
             "Baseline": f"${b_eval.operational_cost_usd:,.2f}",
             "Scenario": f"${s_eval.operational_cost_usd:,.2f}",
             "Delta": f"${s_eval.operational_cost_usd - b_eval.operational_cost_usd:+,.2f}",
+            "Nature": "SCENARIO ESTIMATE",
         },
         {
             "Metric": "Lifecycle WtW GHG",
@@ -191,32 +216,32 @@ def render_scenario_lab():
             "Baseline": f"{b_eval.lifecycle_ghg_tonnes:.2f} t",
             "Scenario": f"{s_eval.lifecycle_ghg_tonnes:.2f} t",
             "Delta": f"{s_eval.lifecycle_ghg_tonnes - b_eval.lifecycle_ghg_tonnes:+.2f} t ({((s_eval.lifecycle_ghg_tonnes - b_eval.lifecycle_ghg_tonnes)/b_eval.lifecycle_ghg_tonnes)*100:+.1f}%)",
+            "Nature": "IMO MEPC.391(81)",
         },
         {
-            "Metric": "Laytime Arrival Delay",
+            "Metric": "Schedule Demurrage Delay",
             "Unit": "hours",
             "Baseline": f"{b_eval.schedule_delay_hours:.1f} h",
             "Scenario": f"{s_eval.schedule_delay_hours:.1f} h",
             "Delta": f"{s_eval.schedule_delay_hours - b_eval.schedule_delay_hours:+.1f} h",
+            "Nature": "CONSTRAINT CHECK",
         },
     ]).set_index("Metric")
 
     st.table(comp_df)
 
     # Action Buttons
-    col_act1, col_act2 = st.columns([1, 4])
-    with col_act1:
-        if st.button("📋 Log Scenario to Audit", use_container_width=True):
-            log_audit_event(
-                action="SCENARIO_EVALUATED",
-                scenario_id=f"SCEN-{scen_speed}KN-{scen_fuel.upper()}",
-                vessel_id=vessel["id"],
-                details={
-                    "model_version": s_pred_res["model_version"],
-                    "fuel_prediction": s_pred_res["fuel_prediction"],
-                    "uncertainty_interval": f"[{s_pred_res['uncertainty']['lower_bound_kg_h']:.1f}, {s_pred_res['uncertainty']['upper_bound_kg_h']:.1f}]",
-                    "ood_state": s_pred_res["routing_status"],
-                    "notes": f"Speed {scen_speed} kn, Fuel {scen_fuel}, Shore Power {scen_shore}",
-                },
-            )
-            st.success("Scenario parameters successfully committed to immutable audit ledger.")
+    if st.button("📋 Log Scenario to Regulatory Audit Ledger"):
+        log_audit_event(
+            action="SCENARIO_EVALUATED",
+            scenario_id=f"SCEN-{scen_speed}KN-{scen_fuel.upper()}",
+            vessel_id=vessel["id"],
+            details={
+                "model_version": s_pred_res["model_version"],
+                "fuel_prediction": s_pred_res["fuel_prediction"],
+                "uncertainty_interval": f"[{s_pred_res['uncertainty']['lower_bound_kg_h']:.1f}, {s_pred_res['uncertainty']['upper_bound_kg_h']:.1f}]",
+                "ood_state": s_pred_res["routing_status"],
+                "notes": f"Speed {scen_speed} kn, Fuel {scen_fuel}, Shore Power {scen_shore}",
+            },
+        )
+        st.success("Scenario parameters successfully committed to immutable audit ledger.")

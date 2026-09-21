@@ -1,11 +1,12 @@
 """
 Egreen Quanta - SIH26138: Vessel Card Component.
-Standardized visual card for vessels in the fleet overview.
-Conforms to Section 6 of Operator UI Master Requirements:
-Example: POSEIDON | passenger_cruise | 14.5 kn | 2,740.86 kg/h | 90% interval [1,958.39, 3,523.33] kg/h | IN-DOMAIN | Schedule OK
+Standardized visual card for vessels in Fleet Command Center.
+Conforms to Phase 4 requirements:
+Shows: vessel name, vessel_type, speed, fuel type, predicted fuel consumption,
+uncertainty, OOD state, model state, schedule state, and alert state.
 """
 
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 import streamlit as st
 
 
@@ -16,12 +17,15 @@ def render_vessel_card(vessel_data: Dict[str, Any], key_prefix: str = "card"):
     name = vessel_data.get("name", "Unknown Vessel")
     vessel_type = vessel_data.get("vessel_type", "commercial_vessel")
     speed_kn = vessel_data.get("speed_kn", 14.0)
+    fuel_type = vessel_data.get("fuel_type", "vlsfo").upper()
     fuel_actual = vessel_data.get("fuel_actual_kg_h")
     fuel_pred = vessel_data.get("fuel_pred_kg_h", 2500.0)
     interval_lower = vessel_data.get("interval_lower_kg_h", 1800.0)
     interval_upper = vessel_data.get("interval_upper_kg_h", 3200.0)
     ood_status = vessel_data.get("ood_status", "IN-DOMAIN")
+    model_state = vessel_data.get("model_state", "QI-C1-vessel-type")
     schedule_status = vessel_data.get("schedule_status", "Schedule OK")
+    alert_state = vessel_data.get("alert_state", "NOMINAL")
     route = vessel_data.get("route", "North Sea Transit")
     draft_m = vessel_data.get("draft_m", 7.0)
     displacement_t = vessel_data.get("displacement_t", 30000.0)
@@ -39,6 +43,8 @@ def render_vessel_card(vessel_data: Dict[str, Any], key_prefix: str = "card"):
 
     sched_badge = "✔ ON TIME" if "OK" in schedule_status or "TIME" in schedule_status else "⏱ DELAY RISK"
     sched_fg = "#10b981" if "ON TIME" in sched_badge else "#f59e0b"
+
+    alert_color = "#10b981" if alert_state == "NOMINAL" else "#f59e0b"
 
     st.markdown(
         f"""
@@ -59,11 +65,14 @@ def render_vessel_card(vessel_data: Dict[str, Any], key_prefix: str = "card"):
                             {name}
                         </span>
                         <span style="font-size: 11px; background: #1e293b; color: #94a3b8; padding: 2px 6px; border-radius: 4px; font-family: monospace;">
-                            {vessel_type}
+                            vessel_type: {vessel_type}
+                        </span>
+                        <span style="font-size: 11px; background: #0f172a; color: #38bdf8; padding: 2px 6px; border-radius: 4px; font-family: monospace; border: 1px solid #1e3a5f;">
+                            fuel: {fuel_type}
                         </span>
                     </div>
                     <div style="font-size: 11px; color: #64748b; margin-top: 2px;">
-                        Route: {route} | Draft: {draft_m:.1f} m | Disp: {displacement_t:,.0f} t
+                        Route: {route} | Draft: {draft_m:.1f} m | Disp: {displacement_t:,.0f} t | Model: {model_state}
                     </div>
                 </div>
                 <div style="display: flex; gap: 6px;">
@@ -88,6 +97,17 @@ def render_vessel_card(vessel_data: Dict[str, Any], key_prefix: str = "card"):
                         border: 1px solid #374151;
                     ">
                         {sched_badge}
+                    </span>
+                    <span style="
+                        font-size: 11px;
+                        font-weight: 600;
+                        padding: 3px 8px;
+                        border-radius: 4px;
+                        background: rgba(255, 255, 255, 0.05);
+                        color: {alert_color};
+                        border: 1px solid #374151;
+                    ">
+                        ● {alert_state}
                     </span>
                 </div>
             </div>
