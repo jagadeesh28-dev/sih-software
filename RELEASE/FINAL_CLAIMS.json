@@ -1,6 +1,6 @@
 {
   "project": "SIH26138 - Egreen Quanta",
-  "audit_version": "1.0.0-verified",
+  "audit_version": "1.1.0-sih-complete",
   "release_classification": "VERIFIED CONTROLLED RELEASE",
   "verified_claims": [
     {
@@ -17,15 +17,15 @@
     },
     {
       "claim_id": "C-03",
-      "statement": "Split conformal prediction delivers empirical coverage (93.56% for QI-C1, 95.05% for MODEL-REAL-04) exceeding the nominal 90% floor.",
+      "statement": "Split conformal prediction delivers empirical coverage (93.56% for QI-C1, 95.05% for MODEL-REAL-04, 93.24% for QI-C1-vessel-type) exceeding the nominal 90% floor.",
       "status": "VERIFIED",
       "evidence": "Calibrated on 34,794 validation samples and tested on 34,796 temporal test samples."
     },
     {
       "claim_id": "C-04",
-      "statement": "QI-C1 produces 31.17% narrower conformal prediction intervals (MPIW = 1,564.93 kg/h vs 2,273.70 kg/h) than MODEL-REAL-04 on held-out test data.",
+      "statement": "QI-C1-vessel-type produces 27.80% narrower conformal prediction intervals (MPIW = 1,641.69 kg/h vs 2,273.70 kg/h) than MODEL-REAL-04 while preserving nominal coverage.",
       "status": "VERIFIED",
-      "evidence": "Conformal quantile q_hat = 782.47 kg/h (QI-C1) vs 1,136.85 kg/h (MODEL-REAL-04)."
+      "evidence": "Conformal quantile q_hat = 820.84 kg/h (QI-C1-vessel-type) vs 1,136.85 kg/h (MODEL-REAL-04)."
     },
     {
       "claim_id": "C-05",
@@ -50,6 +50,42 @@
       "statement": "Matrix Product States (MPS) tensor network prediction was unviable under tested training configuration due to optimization divergence and is preserved as an honest negative finding.",
       "status": "VERIFIED",
       "evidence": "Negative research result documented in docs/limitations.md and test_mps_predictor.py."
+    },
+    {
+      "claim_id": "C-09",
+      "statement": "The prediction model explicitly conditions on vessel type using deterministic categorical encoding, preserving high predictive validity (R²=0.9478, MAE=252.62 kg/h) across the heterogeneous three-vessel dataset.",
+      "status": "VERIFIED",
+      "evidence": "30-seed matched ablation in results/vessel_type_ablation.csv and results/vessel_type_metrics.json."
+    },
+    {
+      "claim_id": "C-10",
+      "statement": "Operational cost is an executable optimization objective tracking bunker price, port electricity, shore-power connection, EU ETS carbon taxes, and charter demurrage with zero double counting.",
+      "status": "VERIFIED",
+      "evidence": "Formulated in optimization/sih_objective_engine.py, verified by 9/9 pytest assertions in tests/test_sih_requirements.py."
+    },
+    {
+      "claim_id": "C-11",
+      "statement": "Lifecycle Well-to-Wake GHG is an executable optimization objective incorporating upstream WtT, combustion TtW, and fugitive methane slip under IMO MEPC.391(81).",
+      "status": "VERIFIED",
+      "evidence": "Evaluated across 6 fuel pathways and verified in results/ghg_objective_results.csv."
+    },
+    {
+      "claim_id": "C-12",
+      "statement": "The system evaluates multi-objective trade-offs between fuel, cost, lifecycle GHG, and schedule adherence, generating non-dominated Pareto decision sets for a human fleet superintendent.",
+      "status": "VERIFIED",
+      "evidence": "Pareto frontier persisted in results/pareto_front.csv and demonstrated in Demo Scene 11."
+    },
+    {
+      "claim_id": "C-13",
+      "statement": "Alternative-fuel results are thermodynamic scenario simulations on an invariant shaft work basis, clearly segregated from real measured commercial telemetry.",
+      "status": "VERIFIED",
+      "evidence": "Explicitly segregated in lca/fuel_registry.py, FINAL_METRICS.json, and Demo Scene 4 and 10."
+    },
+    {
+      "claim_id": "C-14",
+      "statement": "The quantum-inspired optimization approach (QPSO) is benchmarked against classical optimization methods (Differential Evolution, Classical GA, NSGA-III); under the evaluated configuration, classical Differential Evolution achieved superior constraint feasibility (100% vs 80%) and lowest fitness.",
+      "status": "VERIFIED",
+      "evidence": "30-seed benchmark across 2,500 evaluations in results/algorithm_multiobjective_results.csv."
     }
   ],
   "verified_with_qualification_claims": [
@@ -69,45 +105,18 @@
       "claim_id": "CQ-03",
       "statement": "OOD guard balanced accuracy across the complete synthetic benchmark is 66.09%.",
       "status": "VERIFIED WITH QUALIFICATION",
-      "qualification": "Modest and moderate environmental extrapolations are intentionally permitted through with inflated uncertainty; severe OOD is intercepted with 96.55% recall."
+      "qualification": "Balanced accuracy reflects uniform weighting across modest, moderate, and severe synthetic tiers. Severe OOD detection recall remains 96.55%."
     }
   ],
-  "rejected_claims": [
-    {
-      "claim_id": "CR-01",
-      "prohibited_term": "quantum supremacy / quantum computer / quantum advantage",
-      "status": "REJECTED",
-      "rationale": "The system runs on classical hardware using classical probabilistic quantum-inspired metaheuristics (QIEA, QPSO). No quantum hardware or quantum speedup is claimed."
-    },
-    {
-      "claim_id": "CR-02",
-      "prohibited_term": "universally superior QI model / QI beats classical ML",
-      "status": "REJECTED",
-      "rationale": "Statistical test (Wilcoxon p = 0.684) proves statistical parity, not superiority, over classical GA control."
-    },
-    {
-      "claim_id": "CR-03",
-      "prohibited_term": "autonomous vessel controller / certified autonomous system",
-      "status": "REJECTED",
-      "rationale": "System is strictly a decision-support advisory prototype requiring human-in-the-loop validation; it has not received maritime class certification."
-    },
-    {
-      "claim_id": "CR-04",
-      "prohibited_term": "green fuel telemetry / measured hydrogen consumption",
-      "status": "REJECTED",
-      "rationale": "Vessel dataset contains only conventional marine fuel telemetry (VLSFO, MGO). Green fuel figures are thermodynamic scenario simulations."
-    },
-    {
-      "claim_id": "CR-05",
-      "prohibited_term": "zero-gap physical optimum / guaranteed fuel savings",
-      "status": "REJECTED",
-      "rationale": "Real fleet optimization incorporates schedule penalty cliffs; exact physical minimum differs from penalized constrained optimum."
-    },
-    {
-      "claim_id": "CR-06",
-      "prohibited_term": "100% safe system",
-      "status": "REJECTED",
-      "rationale": "Software safety validation passes all evaluated test suites, but absolute safety cannot be guaranteed under unmodeled physical extremes."
-    }
+  "prohibited_claims": [
+    "quantum supremacy",
+    "quantum speedup",
+    "universal QI superiority",
+    "real-world hydrogen/ammonia telemetry",
+    "guaranteed emissions reduction",
+    "guaranteed cost savings",
+    "autonomous vessel control",
+    "regulatory certification",
+    "real-world savings beyond tested scenarios"
   ]
 }

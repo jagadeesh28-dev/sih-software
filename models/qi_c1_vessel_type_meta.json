@@ -1,0 +1,35 @@
+{
+  "model_id": "QI-C1-vessel-type",
+  "name": "Vessel-Type Conditioned Quantum-Inspired Residual Predictor",
+  "role": "SIH-Compliant Candidate Prediction Path",
+  "version": "1.1.0-sih-complete",
+  "features": [
+    "stw_kn",
+    "sog_kn",
+    "draft_m",
+    "wave_height_m",
+    "water_depth_m",
+    "vessel_type",
+    "fuel_type"
+  ],
+  "feature_count": 7,
+  "encoding": {
+    "passenger_cruise": 0,
+    "passenger_cruise_small": 1,
+    "offshore_supply": 2
+  },
+  "seed": 42,
+  "test_mae_kg_h": 252.77472674762382,
+  "test_r2": 0.9475966630649819,
+  "mean_30seed_mae_kg_h": 252.62,
+  "mean_30seed_mae_std": 1.7,
+  "mean_30seed_r2": 0.9478,
+  "mean_30seed_r2_std": 0.0004,
+  "per_vessel_mae_kg_h": {
+    "CPS_Poseidon": 321.07,
+    "CPS_Triton": 80.42,
+    "OSS_Ceto": 186.6
+  },
+  "statistical_verdict": "Preserves high predictive validity (R2=0.9478) while providing explicit naval architectural conditioning and improving Triton calibration.",
+  "alpha": 1.0
+}

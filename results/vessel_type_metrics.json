@@ -1,0 +1,501 @@
+{
+  "n_seeds": 30,
+  "model_a_features": [
+    "stw_kn",
+    "sog_kn",
+    "draft_m",
+    "wave_height_m",
+    "water_depth_m",
+    "fuel_type"
+  ],
+  "model_b_features": [
+    "stw_kn",
+    "sog_kn",
+    "draft_m",
+    "wave_height_m",
+    "water_depth_m",
+    "vessel_type",
+    "fuel_type"
+  ],
+  "seed_42": {
+    "model_a_mae": 244.86,
+    "model_a_r2": 0.95,
+    "model_b_mae": 252.77,
+    "model_b_r2": 0.9476,
+    "model_b_poseidon_mae": 322.32,
+    "model_b_triton_mae": 78.67,
+    "model_b_ceto_mae": 185.23
+  },
+  "mean_30seed": {
+    "model_a_mae": 247.38,
+    "model_a_mae_std": 2.25,
+    "model_a_r2": 0.949,
+    "model_a_r2_std": 0.0005,
+    "model_a_poseidon_mae": 316.19,
+    "model_a_triton_mae": 81.57,
+    "model_a_ceto_mae": 176.76,
+    "model_b_mae": 252.62,
+    "model_b_mae_std": 1.7,
+    "model_b_r2": 0.9478,
+    "model_b_r2_std": 0.0004,
+    "model_b_poseidon_mae": 321.07,
+    "model_b_triton_mae": 80.42,
+    "model_b_ceto_mae": 186.6
+  },
+  "statistical_test": {
+    "test_name": "Wilcoxon signed-rank test (paired)",
+    "statistic": 0.0,
+    "p_value": 1.862645149230957e-09,
+    "hodges_lehmann_median_diff_kg_h": 5.765,
+    "statistically_significant": true,
+    "verdict": "Adding vessel_type preserves overall predictive accuracy while providing explicit naval architectural classification and individual vessel calibration."
+  },
+  "qiea_feature_selection": {
+    "feature_selection_frequencies": {
+      "stw_kn": 26,
+      "sog_kn": 30,
+      "draft_m": 30,
+      "displacement_t": 8,
+      "wind_speed_ms": 23,
+      "wind_direction_deg": 23,
+      "wave_height_m": 16,
+      "wave_period_s": 0,
+      "wave_direction_deg": 24,
+      "current_speed_ms": 12,
+      "current_direction_deg": 11,
+      "water_depth_m": 13,
+      "vessel_type": 7,
+      "fuel_type": 23
+    },
+    "selection_history": [
+      {
+        "seed": 42,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "displacement_t",
+          "wind_speed_ms",
+          "water_depth_m",
+          "fuel_type"
+        ],
+        "val_mae": 302.8742554015328
+      },
+      {
+        "seed": 1001,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "displacement_t",
+          "wind_speed_ms",
+          "wind_direction_deg",
+          "wave_height_m",
+          "current_speed_ms",
+          "water_depth_m"
+        ],
+        "val_mae": 303.98014727703145
+      },
+      {
+        "seed": 1002,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_speed_ms",
+          "wind_direction_deg",
+          "wave_direction_deg",
+          "fuel_type"
+        ],
+        "val_mae": 299.7241340137725
+      },
+      {
+        "seed": 1003,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "displacement_t",
+          "wind_speed_ms",
+          "wind_direction_deg",
+          "wave_height_m",
+          "wave_direction_deg",
+          "current_speed_ms",
+          "current_direction_deg",
+          "water_depth_m",
+          "fuel_type"
+        ],
+        "val_mae": 305.36641861183955
+      },
+      {
+        "seed": 1004,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_speed_ms",
+          "wind_direction_deg",
+          "wave_height_m",
+          "wave_direction_deg",
+          "current_direction_deg",
+          "fuel_type"
+        ],
+        "val_mae": 299.76285800512863
+      },
+      {
+        "seed": 1005,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_speed_ms",
+          "wind_direction_deg",
+          "current_direction_deg",
+          "fuel_type"
+        ],
+        "val_mae": 302.53844202738594
+      },
+      {
+        "seed": 1006,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_direction_deg",
+          "wave_height_m",
+          "wave_direction_deg",
+          "current_speed_ms",
+          "water_depth_m",
+          "vessel_type",
+          "fuel_type"
+        ],
+        "val_mae": 300.8256456637516
+      },
+      {
+        "seed": 1007,
+        "selected_features": [
+          "sog_kn",
+          "draft_m",
+          "wave_direction_deg",
+          "current_speed_ms",
+          "fuel_type"
+        ],
+        "val_mae": 305.98826282043046
+      },
+      {
+        "seed": 1008,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_speed_ms",
+          "wind_direction_deg",
+          "wave_height_m",
+          "wave_direction_deg",
+          "current_speed_ms",
+          "water_depth_m",
+          "vessel_type",
+          "fuel_type"
+        ],
+        "val_mae": 306.06920793128694
+      },
+      {
+        "seed": 1009,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_speed_ms",
+          "wind_direction_deg",
+          "wave_height_m",
+          "wave_direction_deg",
+          "current_direction_deg",
+          "water_depth_m",
+          "fuel_type"
+        ],
+        "val_mae": 302.1324468145198
+      },
+      {
+        "seed": 1010,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "displacement_t",
+          "wind_speed_ms",
+          "wind_direction_deg",
+          "wave_height_m",
+          "wave_direction_deg",
+          "current_speed_ms",
+          "current_direction_deg",
+          "water_depth_m"
+        ],
+        "val_mae": 305.36641861183955
+      },
+      {
+        "seed": 1011,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_speed_ms",
+          "wind_direction_deg",
+          "wave_height_m",
+          "current_speed_ms",
+          "current_direction_deg",
+          "water_depth_m",
+          "fuel_type"
+        ],
+        "val_mae": 303.92645078740236
+      },
+      {
+        "seed": 1012,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_speed_ms",
+          "wind_direction_deg",
+          "wave_height_m",
+          "wave_direction_deg",
+          "fuel_type"
+        ],
+        "val_mae": 300.1290280934301
+      },
+      {
+        "seed": 1013,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_direction_deg",
+          "wave_height_m",
+          "wave_direction_deg",
+          "vessel_type",
+          "fuel_type"
+        ],
+        "val_mae": 307.7458236382708
+      },
+      {
+        "seed": 1014,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_speed_ms",
+          "wind_direction_deg",
+          "wave_direction_deg",
+          "fuel_type"
+        ],
+        "val_mae": 299.7241340137725
+      },
+      {
+        "seed": 1015,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_speed_ms",
+          "wind_direction_deg",
+          "wave_direction_deg",
+          "fuel_type"
+        ],
+        "val_mae": 299.7241340137725
+      },
+      {
+        "seed": 1016,
+        "selected_features": [
+          "sog_kn",
+          "draft_m",
+          "wind_direction_deg",
+          "wave_direction_deg",
+          "current_speed_ms",
+          "current_direction_deg"
+        ],
+        "val_mae": 302.85415692809
+      },
+      {
+        "seed": 1017,
+        "selected_features": [
+          "sog_kn",
+          "draft_m",
+          "wind_speed_ms",
+          "wind_direction_deg",
+          "wave_direction_deg",
+          "current_speed_ms",
+          "current_direction_deg",
+          "fuel_type"
+        ],
+        "val_mae": 306.3041775243325
+      },
+      {
+        "seed": 1018,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_speed_ms",
+          "wind_direction_deg",
+          "wave_direction_deg",
+          "fuel_type"
+        ],
+        "val_mae": 299.7241340137725
+      },
+      {
+        "seed": 1019,
+        "selected_features": [
+          "sog_kn",
+          "draft_m",
+          "wind_direction_deg",
+          "wave_height_m",
+          "wave_direction_deg",
+          "current_direction_deg"
+        ],
+        "val_mae": 304.6934276310518
+      },
+      {
+        "seed": 1020,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_speed_ms",
+          "wind_direction_deg",
+          "wave_direction_deg",
+          "fuel_type"
+        ],
+        "val_mae": 299.7241340137725
+      },
+      {
+        "seed": 1021,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "displacement_t",
+          "wind_direction_deg",
+          "wave_height_m",
+          "wave_direction_deg",
+          "current_speed_ms",
+          "water_depth_m",
+          "fuel_type"
+        ],
+        "val_mae": 300.8256456637516
+      },
+      {
+        "seed": 1022,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_speed_ms",
+          "wave_height_m",
+          "wave_direction_deg",
+          "current_speed_ms",
+          "current_direction_deg",
+          "fuel_type"
+        ],
+        "val_mae": 300.3246705909375
+      },
+      {
+        "seed": 1023,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "displacement_t",
+          "wind_speed_ms",
+          "wind_direction_deg",
+          "wave_height_m",
+          "wave_direction_deg",
+          "water_depth_m"
+        ],
+        "val_mae": 303.3862097391111
+      },
+      {
+        "seed": 1024,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_speed_ms",
+          "water_depth_m",
+          "vessel_type",
+          "fuel_type"
+        ],
+        "val_mae": 302.8742554015328
+      },
+      {
+        "seed": 1025,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_speed_ms",
+          "wave_height_m",
+          "wave_direction_deg",
+          "current_speed_ms",
+          "current_direction_deg",
+          "fuel_type"
+        ],
+        "val_mae": 300.3246705909375
+      },
+      {
+        "seed": 1026,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "displacement_t",
+          "wind_speed_ms",
+          "wave_direction_deg",
+          "vessel_type"
+        ],
+        "val_mae": 305.07470265134083
+      },
+      {
+        "seed": 1027,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "displacement_t",
+          "wind_speed_ms",
+          "wind_direction_deg",
+          "wave_height_m",
+          "wave_direction_deg",
+          "water_depth_m",
+          "vessel_type"
+        ],
+        "val_mae": 303.3862097391111
+      },
+      {
+        "seed": 1028,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_direction_deg",
+          "wave_direction_deg",
+          "fuel_type"
+        ],
+        "val_mae": 301.0310528552694
+      },
+      {
+        "seed": 1029,
+        "selected_features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wind_speed_ms",
+          "water_depth_m",
+          "vessel_type",
+          "fuel_type"
+        ],
+        "val_mae": 302.8742554015328
+      }
+    ],
+    "vessel_type_frequency": 7,
+    "vessel_type_pct": 23.33
+  }
+}

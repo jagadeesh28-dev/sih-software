@@ -128,6 +128,7 @@ class NSGA3Optimizer(BaseFleetOptimizer):
             gen += 1
 
         t1 = time.perf_counter()
+        self.pareto_archive = pareto_archive
 
         if len(pareto_archive) > 0:
             archive_costs = np.array([item[0] for item in pareto_archive])

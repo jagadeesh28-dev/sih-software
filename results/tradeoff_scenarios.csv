@@ -1,0 +1,5 @@
+Strategy,Fuel (t),Operational Cost ($),WtW GHG (t CO2e),Schedule Delay (h),Feasible,Fuel Decisions,Speed Decisions (kn)
+Fuel-Focused,254.04,"$257,805.96",754.33,0.0,YES,"{'CPS_Poseidon': 'fossil_lng', 'CPS_Triton': 'bio_methanol', 'OSS_Ceto': 'bio_methanol'}","{'CPS_Poseidon': 20.578910183521288, 'CPS_Triton': 18.0, 'OSS_Ceto': 15.0}"
+Cost-Focused,254.04,"$257,805.96",754.33,0.0,YES,"{'CPS_Poseidon': 'fossil_lng', 'CPS_Triton': 'bio_methanol', 'OSS_Ceto': 'bio_methanol'}","{'CPS_Poseidon': 20.578910183521288, 'CPS_Triton': 18.0, 'OSS_Ceto': 15.0}"
+GHG-Focused,254.04,"$257,805.96",754.33,0.0,YES,"{'CPS_Poseidon': 'fossil_lng', 'CPS_Triton': 'bio_methanol', 'OSS_Ceto': 'bio_methanol'}","{'CPS_Poseidon': 20.578910183521288, 'CPS_Triton': 18.0, 'OSS_Ceto': 15.0}"
+Balanced Pareto,254.04,"$257,805.96",754.33,0.0,YES,"{'CPS_Poseidon': 'fossil_lng', 'CPS_Triton': 'bio_methanol', 'OSS_Ceto': 'bio_methanol'}","{'CPS_Poseidon': 20.578910183521288, 'CPS_Triton': 18.0, 'OSS_Ceto': 15.0}"

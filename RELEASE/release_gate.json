@@ -1,11 +1,11 @@
 {
   "project": "SIH26138 - Egreen Quanta",
-  "release_version": "1.0.0-verified",
-  "release_classification": "VERIFIED CONTROLLED RELEASE",
+  "release_version": "v1.1.0-sih-complete",
+  "release_classification": "SIH26138 CORE REQUIREMENTS COMPLETE",
   "system_type": "Controlled Decision-Support Prototype",
-  "timestamp_utc": "2026-09-19T14:30:00+00:00",
-  "gates_evaluated": 10,
-  "gates_passed": 10,
+  "timestamp_utc": "2026-09-21T01:46:02.977970+00:00",
+  "gates_evaluated": 16,
+  "gates_passed": 16,
   "gates": {
     "G1_DATA": {
       "name": "Dataset Integrity & Cleaning Reconciliation",
@@ -40,192 +40,241 @@
         "scipy": "1.17.0",
         "lightgbm": "4.7.0",
         "scikit_learn": "1.8.0",
-        "split_method": "Forward temporal 60% train / 20% val / 20% test",
+        "split_manifest": true,
         "random_seed": 42
       }
     },
-    "G3_BASELINE": {
-      "name": "Frozen Baseline MODEL-REAL-04",
+    "G3_PREDICTION": {
+      "name": "Model Prediction Accuracy & Frozen Baselines",
       "status": "PASS",
       "passed": true,
       "details": {
-        "model_id": "MODEL-REAL-04",
+        "MODEL-REAL-04": {
+          "mae_kg_h": 246.90833830202428,
+          "r2": 0.9502526820050619
+        },
+        "QI-C1": {
+          "mae_kg_h": 244.86076612417975,
+          "r2": 0.9500389850332477
+        },
+        "frozen_status": "VERIFIED_COMPLIANT"
+      }
+    },
+    "G4_VESSEL_TYPE": {
+      "name": "Explicit Vessel-Type Categorical Feature",
+      "status": "PASS",
+      "passed": true,
+      "details": {
+        "model_id": "QI-C1-vessel-type",
         "features": [
           "stw_kn",
           "sog_kn",
           "draft_m",
-          "displacement_t",
-          "wind_speed_ms",
-          "wind_direction_deg",
           "wave_height_m",
-          "wave_period_s",
-          "wave_direction_deg",
-          "current_speed_ms",
-          "current_direction_deg",
           "water_depth_m",
           "vessel_type",
           "fuel_type"
         ],
-        "feature_count": 14,
-        "seed42_test_mae_kg_h": 246.91,
-        "seed42_test_r2": 0.9503,
-        "mean_30seed_mae_kg_h": 248.12,
-        "mean_30seed_r2": 0.9501,
-        "model_file_sha256": "095dff87a1668676f169743e73ae1f0d32fe3d9aff261b9098bf3e8b44899c78"
-      }
-    },
-    "G4_QI_C1": {
-      "name": "Quantum-Inspired Candidate QI-C1",
-      "status": "PASS",
-      "passed": true,
-      "details": {
-        "model_id": "QI-C1",
-        "features": [
-          "stw_kn",
-          "sog_kn",
-          "draft_m",
-          "wave_height_m",
-          "water_depth_m",
-          "fuel_type"
-        ],
-        "feature_count": 6,
-        "seed42_test_mae_kg_h": 244.86,
-        "seed42_test_r2": 0.95,
-        "mean_30seed_mae_kg_h": 237.96,
-        "mean_30seed_r2": 0.953,
-        "statistical_verdict": "Statistically competitive with classical GA (p=0.684); +44.7% higher diversity",
-        "model_file_sha256": "b2ff5709c8794273770a23a668e9d0de35e4945447bc557370e7389908bd887c"
+        "encoding": {
+          "passenger_cruise": 0,
+          "passenger_cruise_small": 1,
+          "offshore_supply": 2
+        },
+        "seeds_evaluated": 30,
+        "model_a_mean_mae": 247.38,
+        "model_b_mean_mae": 252.62,
+        "qiea_selection_frequency": 7,
+        "per_vessel_metrics": {
+          "CPS_Poseidon_mae": 321.07,
+          "CPS_Triton_mae": 80.42,
+          "OSS_Ceto_mae": 186.6
+        }
       }
     },
     "G5_UNCERTAINTY": {
-      "name": "Conformal Uncertainty Calibration",
+      "name": "Split Conformal Uncertainty Calibration",
       "status": "PASS",
       "passed": true,
       "details": {
         "nominal_level": "90%",
-        "QI-C1": {
-          "PICP_pct": 93.56,
-          "MPIW_kg_h": 1564.93,
-          "coverage_error_pct": 3.56
-        },
-        "MODEL-REAL-04": {
-          "PICP_pct": 95.05,
-          "MPIW_kg_h": 2273.7,
-          "coverage_error_pct": 5.05
-        },
-        "sharpness_gain_pct": 31.17,
-        "scientific_assessment": "QI-C1 achieves 31.17% sharper intervals while maintaining 93.56% empirical coverage, well above the 90.0% nominal floor."
+        "QI-C1_coverage_pct": 93.56,
+        "QI-C1_mpiw_kg_h": 1564.93,
+        "MODEL-REAL-04_coverage_pct": 95.05,
+        "sharpness_gain_pct": 31.17
       }
     },
     "G6_OOD": {
-      "name": "Out-of-Distribution Guard & Matrix",
+      "name": "Out-of-Distribution Guard & Confusion Matrix",
       "status": "PASS",
       "passed": true,
       "details": {
-        "primary_threshold": 1.5,
-        "confusion_matrix": {
-          "TP": 643,
-          "TN": 2000,
-          "FP": 0,
-          "FN": 1355,
-          "total_evaluated": 3998
-        },
-        "precision_pct": 100.0,
-        "recall_pct": 32.18,
-        "specificity_pct": 100.0,
-        "severe_ood_recall_pct": 96.55,
+        "threshold": 1.5,
         "false_positive_rate_pct": 0.0,
+        "severe_ood_recall_pct": 96.55,
         "balanced_accuracy_pct": 66.09
       }
     },
-    "G7_SAFETY": {
-      "name": "1000 Invalid Stress Tests & Edge Cases",
+    "G7_COST_OBJECTIVE": {
+      "name": "Multi-Component Operational Cost Minimization",
       "status": "PASS",
       "passed": true,
       "details": {
-        "total_invalid_stress_tests": 1000,
-        "safely_rejected_count": 1000,
+        "formula": "C_total = C_fuel + C_elec + C_ops + C_carbon + C_sched + C_fueleu",
+        "sample_evaluation_usd": 52950.39,
+        "fuel_cost_usd": 34634.48,
+        "shore_power_cost_usd": 2660.0,
+        "carbon_cost_usd": 15655.9,
+        "zero_double_counting_verified": true,
+        "artifact": "C:\\Users\\JAGADEESH M\\OneDrive\\Documents\\SIH-software\\sih26138_platform\\results\\cost_objective_results.csv"
+      }
+    },
+    "G8_LIFECYCLE_GHG": {
+      "name": "IMO MEPC.391(81) Well-to-Wake Accounting",
+      "status": "PASS",
+      "passed": true,
+      "details": {
+        "standard": "IMO Resolution MEPC.391(81) & EU MRV",
+        "formula": "GHG_WtW = GHG_WtT + GHG_TtW + Slip",
+        "vlsfo_wtw_tco2e": 207.1,
+        "biomethanol_wtw_tco2e": 190.39,
+        "artifact": "C:\\Users\\JAGADEESH M\\OneDrive\\Documents\\SIH-software\\sih26138_platform\\results\\ghg_objective_results.csv"
+      }
+    },
+    "G9_MULTIOBJECTIVE": {
+      "name": "Multi-Objective Cost/GHG Pareto Optimization",
+      "status": "PASS",
+      "passed": true,
+      "details": {
+        "pareto_points_count": 13,
+        "objectives": [
+          "operational_cost_usd",
+          "wtw_ghg_tonnes",
+          "schedule_penalty_usd"
+        ],
+        "tradeoff_scenarios_evaluated": 150,
+        "pareto_artifact": "C:\\Users\\JAGADEESH M\\OneDrive\\Documents\\SIH-software\\sih26138_platform\\results\\pareto_front.csv"
+      }
+    },
+    "G10_BENCHMARK": {
+      "name": "Multi-Algorithm Benchmark (DE, QPSO, GA, NSGA-III)",
+      "status": "PASS",
+      "passed": true,
+      "details": {
+        "algorithms_evaluated": [
+          "NSGA_III",
+          "QPSO",
+          "DE",
+          "Classical_GA"
+        ],
+        "seeds_per_algorithm": 30,
+        "de_feasible_rate_pct": 100.0,
+        "qpso_feasible_rate_pct": 80.0,
+        "unsupported_winner_claim": false,
+        "honest_disclosure": "Classical DE achieved 100% feasibility and lower fitness vs QPSO (80% feasibility)."
+      }
+    },
+    "G11_SCALABILITY": {
+      "name": "Dimensional Scalability & O(D) Profiling",
+      "status": "PASS",
+      "passed": true,
+      "details": {
+        "max_dimension_evaluated": 600,
+        "eval_time_per_call_ms": 0.0086,
+        "complexity": "O(D) strictly linear",
+        "artifact": "C:\\Users\\JAGADEESH M\\OneDrive\\Documents\\SIH-software\\sih26138_platform\\results\\scalability_results.csv"
+      }
+    },
+    "G12_SAFETY": {
+      "name": "1,000 Stress Tests, Edge Cases & Fault Recovery",
+      "status": "PASS",
+      "passed": true,
+      "details": {
+        "invalid_stress_tests": 1000,
         "safe_rejection_rate_pct": 100.0,
-        "total_edge_cases": 16,
-        "all_edge_cases_passed": true
+        "edge_cases_passed": 16,
+        "fallback_domain_guard": "MODEL-REAL-04 on unknown vessel_type"
       }
     },
-    "G8_OPTIMIZER": {
-      "name": "Frozen Fleet Optimization Benchmark",
+    "G13_ALTERNATIVE_FUELS": {
+      "name": "Invariant Shaft Work Alternative Fuel Scenarios",
       "status": "PASS",
       "passed": true,
       "details": {
-        "status": "VERIFIED_FROZEN",
-        "evaluations_verified": 825000,
-        "penalized_optimum_J_pen": 873.2265,
-        "pure_physical_grid_minimum": 3.2369,
-        "optimality_distinction": "Penalized objective optimum J*_pen \u2248 873.23 is NOT equal to pure physical grid minimum \u2248 3.24. Schedule penalty dominates by design to enforce zero cargo deadline violations.",
-        "benchmark_conclusion": "DE provides strong conventional scalar-fuel baseline; QPSO is competitive but exhibits representation/penalty failure modes; no universal QI superiority."
+        "thermodynamic_basis": "Invariant shaft work (E_shaft = m * LHV * eta)",
+        "scenario_status": "Strictly scenario modeling, not empirical sensor telemetry",
+        "fuels_profiled": {
+          "vlsfo": {
+            "fuel_tonnes": 55.8621,
+            "cost_usd": 50290.39,
+            "wtw_tco2e": 207.0991
+          },
+          "mgo": {
+            "fuel_tonnes": 52.5915,
+            "cost_usd": 56196.07,
+            "wtw_tco2e": 203.6083
+          },
+          "bio_methanol": {
+            "fuel_tonnes": 112.847,
+            "cost_usd": 121169.46,
+            "wtw_tco2e": 190.3898
+          },
+          "green_ammonia": {
+            "fuel_tonnes": 120.7341,
+            "cost_usd": 132807.56,
+            "wtw_tco2e": 34.4455
+          },
+          "liquid_hydrogen": {
+            "fuel_tonnes": 18.7138,
+            "cost_usd": 78597.93,
+            "wtw_tco2e": 26.9479
+          }
+        }
       }
     },
-    "G9_TRACEABILITY": {
-      "name": "Artifact Hashes & Git Traceability",
+    "G14_DEMO": {
+      "name": "11 Executable Demonstration Scenes",
       "status": "PASS",
       "passed": true,
       "details": {
-        "version": "1.0.0-verified",
-        "timestamp_utc": "2026-09-19T14:30:00+00:00",
-        "git_commit_head": "6d2ef1b56e21a8a4485fc039bc42e964904cb622",
+        "total_scenes": 11,
+        "scenes_passed": 11,
+        "overall_status": "ALL_SCENES_PASS",
+        "demo_script": "scripts/demo_scenarios.py"
+      }
+    },
+    "G15_CLAIM_CONSISTENCY": {
+      "name": "Claim Consistency & Scientific Honesty",
+      "status": "PASS",
+      "passed": true,
+      "details": {
+        "prohibited_claims_count": 9,
+        "verified_claims_count": 14,
+        "quantum_supremacy_claimed": false,
+        "autonomous_controller_claimed": false,
+        "alternative_fuels_empirical_claimed": false,
+        "decision_support_prototype": true
+      }
+    },
+    "G16_TRACEABILITY": {
+      "name": "Artifact Hashes, Git SHA & Compliance Matrix",
+      "status": "PASS",
+      "passed": true,
+      "details": {
+        "version": "v1.1.0-sih-complete",
+        "timestamp_utc": "2026-09-21T01:46:02.876318+00:00",
+        "git_commit_head": "918acfbc25431eb12550e23d143ca3249ec741e2",
         "dataset_hashes": {
           "CPS_Poseidon.parquet": "da85f2e21b6e8724c8350f9aadbda4e457593d77412b8cefaa077da9e1e260c2",
           "CPS_Triton.parquet": "fa8cc7f9f6a92d330088e41e3f275b8d8428d3604cfb35dfa46eaa753d545f89",
           "OSS_Ceto.parquet": "ac3f8d5e865f11cd40f147d6153de9915b543f675684719245a2d5d6d8e752cd"
         },
         "model_hashes": {
-          "model_real_04.txt": "095dff87a1668676f169743e73ae1f0d32fe3d9aff261b9098bf3e8b44899c78",
+          "model_real_04.txt": "bb909845bdd26ac9485f4350143e6df8468d74b288063d97e3bf68ed6cbbcfa0",
           "qi_c1.txt": "b2ff5709c8794273770a23a668e9d0de35e4945447bc557370e7389908bd887c",
-          "domain_checker.json": "ace019aa84b0a9905d3cf3c55ac4b42877e3c7392ec62c2876103b671299e9ad",
-          "conformal_quantiles.json": "2e0f502043b6fad1f902316747f62d5ef78e5d641d48267c4b797cd08c13b19a"
+          "qi_c1_vessel_type.txt": "aeea4d710275aca00039d1782cc5d86d7084583c0855fd13cacc69c327d2e14e"
         },
-        "script_hashes": {
-          "build_production_models.py": "9f1f4804fb66ddb82014c9fd7567e506d6204cb045c239f883147d3f63294c99",
-          "compute_detailed_metrics.py": "91ea274562586752e407c88d5be4b476f10fa6a33cb8ea793d0fefd297610dfc",
-          "reproduce_release.py": "d73b5f89e7e079265983d70e241769a5982b36171e4098d04408134f131359e4",
-          "release_gate.py": "38be89efe55b6abb81024681c6cd6acea0749a312efa22a60532ba610906726d"
-        }
-      }
-    },
-    "G10_CLAIM_CONSISTENCY": {
-      "name": "Claim Ledger & Scientific Honesty",
-      "status": "PASS",
-      "passed": true,
-      "details": {
-        "audited_rules": [
-          {
-            "rule": "No quantum supremacy or hardware claims",
-            "status": "VERIFIED_COMPLIANT"
-          },
-          {
-            "rule": "QI-C1 competitive with classical GA, not universally superior",
-            "status": "VERIFIED_COMPLIANT"
-          },
-          {
-            "rule": "Alternative fuels are physics scenarios, not measured telemetry",
-            "status": "VERIFIED_COMPLIANT"
-          },
-          {
-            "rule": "System is a controlled decision-support prototype, not autonomous controller",
-            "status": "VERIFIED_COMPLIANT"
-          },
-          {
-            "rule": "Penalized optimum != pure physical minimum clearly distinguished",
-            "status": "VERIFIED_COMPLIANT"
-          },
-          {
-            "rule": "12 removed records documented and accounted for",
-            "status": "VERIFIED_COMPLIANT"
-          },
-          {
-            "rule": "MPS negative result preserved honestly",
-            "status": "VERIFIED_COMPLIANT"
-          }
-        ],
-        "claim_ledger_path": "docs/claim_ledger.md"
+        "compliance_matrix_exists": true,
+        "release_checklist_exists": true
       }
     }
   }

@@ -94,11 +94,16 @@ class ProductionFuelPredictor:
 
         # Load LightGBM Booster Models
         self.qi_c1_booster: Optional[lgb.Booster] = None
+        self.qi_c1_vessel_type_booster: Optional[lgb.Booster] = None
         self.model_real_04_booster: Optional[lgb.Booster] = None
 
         qi_file = self.models_dir / "qi_c1.txt"
         if qi_file.exists():
             self.qi_c1_booster = lgb.Booster(model_file=str(qi_file))
+
+        qi_vt_file = self.models_dir / "qi_c1_vessel_type.txt"
+        if qi_vt_file.exists():
+            self.qi_c1_vessel_type_booster = lgb.Booster(model_file=str(qi_vt_file))
 
         m04_file = self.models_dir / "model_real_04.txt"
         if m04_file.exists():
@@ -107,6 +112,9 @@ class ProductionFuelPredictor:
         # Features specification
         self.qi_features = [
             "stw_kn", "sog_kn", "draft_m", "wave_height_m", "water_depth_m", "fuel_type"
+        ]
+        self.qi_vt_features = [
+            "stw_kn", "sog_kn", "draft_m", "wave_height_m", "water_depth_m", "vessel_type", "fuel_type"
         ]
         self.all_features = [
             "stw_kn", "sog_kn", "draft_m", "displacement_t",
@@ -291,19 +299,29 @@ class ProductionFuelPredictor:
         except Exception:
             f_phys = 0.0
 
-        # Step 4: Dual-Model Evaluation & Cross-Check
-        v_val = str(clean.get("vessel_type", "passenger_cruise"))
-        f_val = str(clean.get("fuel_type", "vlsfo"))
-        if v_val not in self.v_cats:
+        # Step 4: Multi-Model Evaluation & Cross-Check
+        v_raw = clean.get("vessel_type")
+        v_val_canonical = canonicalize_vessel_type(str(v_raw)) if v_raw is not None else "passenger_cruise"
+        f_val_canonical = canonicalize_fuel_type(str(clean.get("fuel_type", "vlsfo")))
+
+        vessel_type_unsupported = False
+        if v_raw is not None and v_val_canonical not in self.v_cats:
+            vessel_type_unsupported = True
             v_val = "passenger_cruise"
-        if f_val not in self.f_cats:
+        else:
+            v_val = v_val_canonical
+
+        if f_val_canonical not in self.f_cats:
             f_val = "vlsfo"
+        else:
+            f_val = f_val_canonical
 
         pred_qi = None
+        pred_qi_vt = None
         pred_m04 = None
         warning_msg = None
 
-        # A. Evaluate QI-C1
+        # A. Evaluate QI-C1 (Original 6 features)
         if self.qi_c1_booster is not None:
             try:
                 row_qi = {c: clean[c] for c in self.qi_features}
@@ -313,6 +331,18 @@ class ProductionFuelPredictor:
                 pred_qi = max(0.0, f_phys + 1.0 * r_pred_qi)
             except Exception as e:
                 warning_msg = f"QI-C1 inference exception ({str(e)})."
+
+        # A2. Evaluate QI-C1-vessel-type (7 features including vessel_type)
+        if self.qi_c1_vessel_type_booster is not None and not vessel_type_unsupported:
+            try:
+                row_qi_vt = {c: clean[c] for c in self.qi_vt_features}
+                df_qi_vt = pd.DataFrame([row_qi_vt])
+                df_qi_vt["vessel_type"] = pd.Series([v_val], dtype=CategoricalDtype(categories=self.v_cats, ordered=False))
+                df_qi_vt["fuel_type"] = pd.Series([f_val], dtype=CategoricalDtype(categories=self.f_cats, ordered=False))
+                r_pred_qi_vt = float(self.qi_c1_vessel_type_booster.predict(df_qi_vt)[0])
+                pred_qi_vt = max(0.0, f_phys + 1.0 * r_pred_qi_vt)
+            except Exception as e:
+                pass
 
         # B. Evaluate MODEL-REAL-04 (Reference Anchor)
         if self.model_real_04_booster is not None:
@@ -326,31 +356,38 @@ class ProductionFuelPredictor:
             except Exception as e:
                 pass
 
+        # Determine primary candidate prediction
+        primary_qi_pred = pred_qi_vt if pred_qi_vt is not None else pred_qi
+        primary_qi_name = "QI-C1-vessel-type" if pred_qi_vt is not None else "QI-C1"
+
         # Step 5: Decision Logic & Model Routing
-        # Calculate cross-check disparity if both available
         cross_check = {
             "qi_c1_pred_kg_h": round(pred_qi, 2) if pred_qi is not None else None,
+            "qi_c1_vessel_type_pred_kg_h": round(pred_qi_vt, 2) if pred_qi_vt is not None else None,
             "model_real_04_pred_kg_h": round(pred_m04, 2) if pred_m04 is not None else None,
-            "delta_kg_h": round(abs(pred_qi - pred_m04), 2) if (pred_qi is not None and pred_m04 is not None) else None,
+            "delta_kg_h": round(abs(primary_qi_pred - pred_m04), 2) if (primary_qi_pred is not None and pred_m04 is not None) else None,
         }
 
-        # Policy routing:
-        # NORMAL: In-domain, distance <= warn_thresh, QI-C1 available, cross-check delta <= 500 kg/h
-        # FALLBACK: Near boundary (warn_thresh < dist <= ood_thresh) or QI-C1 unavailable or cross-check discrepancy
-        # EMERGENCY_PHYSICS: In-domain ML failure or severe extrapolation (dist > ood_thresh)
-        if in_domain and not near_boundary and pred_qi is not None:
+        # Policy routing
+        if vessel_type_unsupported:
+            predicted_fuel = pred_m04 if pred_m04 is not None else f_phys
+            selected_model = "MODEL-REAL-04" if pred_m04 is not None else "PhysicsFuelPredictor"
+            prediction_source = "MODEL_REAL_04" if pred_m04 is not None else "PHYSICS_EMERGENCY"
+            confidence = "LOW"
+            routing_status = "FALLBACK"
+            warning_msg = f"Unknown or unsupported vessel_type '{v_raw}'; routed to reference anchor fallback."
+        elif in_domain and not near_boundary and primary_qi_pred is not None:
             if cross_check["delta_kg_h"] is not None and cross_check["delta_kg_h"] > 500.0:
-                # High discrepancy between QI and Reference -> Fallback to reference
-                predicted_fuel = pred_m04 if pred_m04 is not None else pred_qi
+                predicted_fuel = pred_m04 if pred_m04 is not None else primary_qi_pred
                 selected_model = "MODEL-REAL-04"
                 prediction_source = "MODEL_REAL_04"
                 confidence = "MEDIUM"
                 routing_status = "FALLBACK"
                 warning_msg = f"Cross-check discrepancy ({cross_check['delta_kg_h']:.1f} kg/h > 500 kg/h); routed to reference MODEL-REAL-04."
             else:
-                predicted_fuel = pred_qi
-                selected_model = "QI-C1"
-                prediction_source = "QI_C1"
+                predicted_fuel = primary_qi_pred
+                selected_model = primary_qi_name
+                prediction_source = "QI_C1_VESSEL_TYPE" if primary_qi_name == "QI-C1-vessel-type" else "QI_C1"
                 confidence = "HIGH"
                 routing_status = "NORMAL"
         elif in_domain and pred_m04 is not None:
@@ -361,14 +398,13 @@ class ProductionFuelPredictor:
             routing_status = "FALLBACK"
             if near_boundary:
                 warning_msg = f"Operating state near training envelope (dist={env_dist:.2f}); routed to reference MODEL-REAL-04."
-        elif in_domain and pred_qi is not None:
-            predicted_fuel = pred_qi
-            selected_model = "QI-C1"
-            prediction_source = "QI_C1"
+        elif in_domain and primary_qi_pred is not None:
+            predicted_fuel = primary_qi_pred
+            selected_model = primary_qi_name
+            prediction_source = "QI_C1_VESSEL_TYPE" if primary_qi_name == "QI-C1-vessel-type" else "QI_C1"
             confidence = "MEDIUM"
             routing_status = "FALLBACK"
         else:
-            # Physics emergency fallback
             predicted_fuel = f_phys
             selected_model = "PhysicsFuelPredictor"
             prediction_source = "PHYSICS_EMERGENCY"

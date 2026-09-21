@@ -23,20 +23,38 @@
       "empirical_test_coverage_pct": 96.49097597424992
     }
   },
+  "QI-C1-vessel-type": {
+    "0.9": {
+      "q_val": 820.8439746575199,
+      "mpiw_kg_h": 1641.6879493150398,
+      "empirical_test_coverage_pct": 93.24347626163927
+    },
+    "0.95": {
+      "q_val": 1387.3589789209495,
+      "mpiw_kg_h": 2774.717957841899,
+      "empirical_test_coverage_pct": 96.309920680538
+    }
+  },
   "coverage_sharpness_comparison": {
     "0.9": {
       "m04_mpiw_kg_h": 2273.704854192129,
       "qi_mpiw_kg_h": 1564.9327903012681,
+      "qi_vessel_type_mpiw_kg_h": 1641.6879493150398,
       "sharpness_improvement_pct": 31.17,
+      "sharpness_improvement_vessel_type_pct": 27.8,
       "m04_coverage_pct": 95.0482814116565,
-      "qi_coverage_pct": 93.5567306586964
+      "qi_coverage_pct": 93.5567306586964,
+      "qi_vessel_type_coverage_pct": 93.24347626163927
     },
     "0.95": {
       "m04_mpiw_kg_h": 2888.8518220485835,
       "qi_mpiw_kg_h": 2768.9366104831806,
+      "qi_vessel_type_mpiw_kg_h": 2774.717957841899,
       "sharpness_improvement_pct": 4.15,
+      "sharpness_improvement_vessel_type_pct": 3.95,
       "m04_coverage_pct": 97.29279227497413,
-      "qi_coverage_pct": 96.49097597424992
+      "qi_coverage_pct": 96.49097597424992,
+      "qi_vessel_type_coverage_pct": 96.309920680538
     }
   }
 }

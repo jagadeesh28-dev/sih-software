@@ -1,21 +1,21 @@
 {
   "project": "SIH26138 - Egreen Quanta",
-  "demo_version": "1.0.0-verified",
+  "demo_version": "1.1.0-sih-complete",
   "demo_script": "scripts/demo_scenarios.py",
   "overall_demo_status": "ALL_SCENES_PASS",
-  "total_scenes": 7,
-  "scenes_passed": 7,
+  "total_scenes": 11,
+  "scenes_passed": 11,
   "scenes": [
     {
       "scene_id": 1,
       "name": "Normal vessel cruise operation",
       "vessel": "CPS_Poseidon",
       "conditions": "STW=14.5 kn, Draft=7.5 m, Wind=5.0 m/s, Wave Hs=1.0 m",
-      "prediction_kg_h": 2740.86,
-      "serving_source": "QI-C1",
+      "prediction_kg_h": 2772.98,
+      "serving_source": "QI_C1_VESSEL_TYPE",
       "confidence": "MEDIUM",
       "ood_status": "IN-DOMAIN",
-      "uncertainty_range_kg_h": [1958.39, 3523.33],
+      "uncertainty_range_kg_h": [1952.14, 3593.82],
       "status": "PASS"
     },
     {
@@ -23,11 +23,11 @@
       "name": "High operating demand (acceleration)",
       "vessel": "CPS_Poseidon",
       "conditions": "STW=19.5 kn (+5.0 kn), Wind=10.0 m/s, Wave Hs=2.0 m",
-      "prediction_kg_h": 5133.94,
-      "serving_source": "QI-C1",
+      "prediction_kg_h": 5200.31,
+      "serving_source": "QI_C1_VESSEL_TYPE",
       "confidence": "MEDIUM",
       "ood_status": "IN-DOMAIN",
-      "uncertainty_range_kg_h": [4351.47, 5916.41],
+      "uncertainty_range_kg_h": [4379.46, 6021.15],
       "status": "PASS"
     },
     {
@@ -35,17 +35,17 @@
       "name": "Slow-steaming operational scenario",
       "vessel": "CPS_Poseidon",
       "conditions": "18.0 kn baseline cruise vs 15.0 kn slow steaming",
-      "prediction_kg_h": 2844.47,
-      "baseline_kg_h": 4412.85,
-      "simulated_fuel_reduction_pct": 35.54,
-      "serving_source": "QI-C1",
+      "prediction_kg_h": 2932.91,
+      "baseline_kg_h": 4411.62,
+      "simulated_fuel_reduction_pct": 33.52,
+      "serving_source": "QI_C1_VESSEL_TYPE",
       "status": "PASS"
     },
     {
       "scene_id": 4,
       "name": "Alternative fuel scenarios (invariant shaft work)",
       "physics_basis": "E_shaft = P_B * t = m_fuel * LHV_f * eta_f",
-      "reference_energy_mj_h": 56176.7,
+      "reference_energy_mj_h": 56835.0,
       "fuels_evaluated": [
         {"fuel": "VLSFO", "rate_kg_h": 2740.86, "basis": "Measured Telemetry Baseline"},
         {"fuel": "MGO", "rate_kg_h": 2734.46, "basis": "Measured Telemetry Baseline"},
@@ -58,28 +58,69 @@
     {
       "scene_id": 5,
       "name": "Injected out-of-distribution condition (severe storm)",
-      "injected_state": "STW=33.0 kn, Wind=48.0 m/s, Wave Hs=14.0 m",
+      "vessel": "CPS_Poseidon",
+      "conditions": "STW=33.0 kn, Wind=48.0 m/s, Wave Hs=14.0 m",
       "envelope_distance": 1.366,
-      "ood_guard_action": "Rerouted to MODEL-REAL-04 reference with warning",
+      "routing_decision": "FALLBACK",
+      "serving_source": "MODEL_REAL_04",
+      "warning": "Operating state near training envelope; routed to reference MODEL-REAL-04",
       "status": "PASS"
     },
     {
       "scene_id": 6,
-      "name": "Injected model failure and automatic fallback",
-      "injected_event": "Simulated memory exception in QI-C1 booster",
-      "router_action": "Automatic fallback to MODEL-REAL-04",
-      "fallback_prediction_kg_h": 2811.62,
+      "name": "Injected model failure and automatic safety fallback",
+      "injected_event": "Simulated C++ engine memory error in QI boosters",
+      "routing_decision": "FALLBACK",
+      "serving_source": "MODEL_REAL_04",
+      "prediction_kg_h": 2811.62,
       "status": "PASS"
     },
     {
       "scene_id": 7,
-      "name": "Fleet multi-objective optimization",
-      "fleet_scope": "3 Vessels (Poseidon, Triton, Ceto) across multi-leg itineraries",
-      "evaluations_verified": 825000,
+      "name": "Heterogeneous fleet multi-objective optimization",
+      "fleet_problem": "3 vessels across multi-leg cargo itineraries",
       "penalized_optimum_j_pen": 873.2265,
       "pure_physical_min_tonnes": 3.2369,
-      "decision_output": "Speed schedule advisory [13.8 kn, 14.2 kn, 12.5 kn] with zero deadline breaches",
-      "operator_role": "Human-in-the-loop decision support",
+      "recommended_speeds_kn": [13.8, 14.2, 12.5],
+      "status": "PASS"
+    },
+    {
+      "scene_id": 8,
+      "name": "Explicit vessel-type-aware prediction across fleet",
+      "vessels_evaluated": [
+        {"vessel": "CPS_Poseidon", "type": "passenger_cruise", "rate_kg_h": 2585.90, "model": "QI-C1-vessel-type"},
+        {"vessel": "CPS_Triton", "type": "passenger_cruise_small", "rate_kg_h": 797.00, "model": "QI-C1-vessel-type"},
+        {"vessel": "OSS_Ceto", "type": "offshore_supply", "rate_kg_h": 1034.72, "model": "QI-C1-vessel-type"}
+      ],
+      "status": "PASS"
+    },
+    {
+      "scene_id": 9,
+      "name": "Operational cost minimization and price sensitivity",
+      "focus_comparison": {
+        "fuel_focus": {"fuel_tonnes": 52.50, "total_opex": 48263.65},
+        "cost_focus_ops": {"fuel_tonnes": 56.90, "total_opex": 53017.69}
+      },
+      "formula": "C_total = C_fuel + C_OPS + C_carbon + C_schedule",
+      "status": "PASS"
+    },
+    {
+      "scene_id": 10,
+      "name": "Lifecycle Well-to-Wake GHG minimization",
+      "fuels_evaluated": [
+        {"fuel": "VLSFO", "wtw_ghg_tonnes": 165.51, "status": "Measured Telemetry"},
+        {"fuel": "Fossil LNG", "wtw_ghg_tonnes": 163.45, "status": "Scenario Simulation"},
+        {"fuel": "Bio-Methanol", "wtw_ghg_tonnes": 153.95, "status": "Scenario Simulation"},
+        {"fuel": "Green Ammonia", "wtw_ghg_tonnes": 29.33, "status": "Scenario Simulation"},
+        {"fuel": "Liquid Hydrogen", "wtw_ghg_tonnes": 23.34, "status": "Scenario Simulation"}
+      ],
+      "status": "PASS"
+    },
+    {
+      "scene_id": 11,
+      "name": "Multi-objective Pareto fleet decision support",
+      "principle": "No single magic optimum; exposes non-dominated trade-offs between fuel, OPEX, emissions, and delay",
+      "pareto_solutions_identified": 1,
       "status": "PASS"
     }
   ]
