@@ -32,7 +32,11 @@ REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
 from prediction.physics_predictor import PhysicsFuelPredictor
-from optimization.canonical_mapper import canonicalize_vessel_type, canonicalize_fuel_type
+from optimization.canonical_mapper import (
+    canonicalize_vessel_type,
+    canonicalize_fuel_type,
+    is_supported_fuel_type,
+)
 
 
 class ProductionFuelPredictor:
@@ -243,7 +247,19 @@ class ProductionFuelPredictor:
         from pandas.api.types import CategoricalDtype
         now_ts = datetime.now(timezone.utc).isoformat()
 
-        # Step 1: Input Validation
+        # Step 1: Input Validation & Fuel Type Contract Check
+        f_raw = point.get("fuel_type") if isinstance(point, dict) else None
+        fuel_warning = None
+        fuel_type_unsupported = False
+        if f_raw is not None and str(f_raw).strip() != "" and not is_supported_fuel_type(f_raw):
+            fuel_type_unsupported = True
+            fuel_warning = {
+                "code": "UNSUPPORTED_FUEL_TYPE",
+                "requested": str(f_raw),
+                "applied": "vlsfo",
+                "message": f"Unsupported fuel_type '{f_raw}'; defaulted to conventional VLSFO.",
+            }
+
         is_valid, errors, clean = self.validate_and_sanitize_point(point)
         if not is_valid:
             if raise_on_error:
@@ -260,6 +276,7 @@ class ProductionFuelPredictor:
                 "envelope_distance": 999.0,
                 "cross_check": None,
                 "warning": f"Input validation failure: {'; '.join(errors)}",
+                "fuel_warning": fuel_warning,
                 "timestamp": now_ts,
             }
 
@@ -285,6 +302,7 @@ class ProductionFuelPredictor:
                 "envelope_distance": round(env_dist, 3),
                 "cross_check": None,
                 "warning": reason,
+                "fuel_warning": fuel_warning,
                 "timestamp": now_ts,
             }
 
@@ -311,7 +329,9 @@ class ProductionFuelPredictor:
         else:
             v_val = v_val_canonical
 
-        if f_val_canonical not in self.f_cats:
+        if fuel_type_unsupported:
+            f_val = "vlsfo"
+        elif f_val_canonical not in self.f_cats:
             f_val = "vlsfo"
         else:
             f_val = f_val_canonical
@@ -369,13 +389,18 @@ class ProductionFuelPredictor:
         }
 
         # Policy routing
-        if vessel_type_unsupported:
+        if vessel_type_unsupported or fuel_type_unsupported:
             predicted_fuel = pred_m04 if pred_m04 is not None else f_phys
             selected_model = "MODEL-REAL-04" if pred_m04 is not None else "PhysicsFuelPredictor"
             prediction_source = "MODEL_REAL_04" if pred_m04 is not None else "PHYSICS_EMERGENCY"
             confidence = "LOW"
             routing_status = "FALLBACK"
-            warning_msg = f"Unknown or unsupported vessel_type '{v_raw}'; routed to reference anchor fallback."
+            reasons = []
+            if vessel_type_unsupported:
+                reasons.append(f"Unknown or unsupported vessel_type '{v_raw}'; routed to reference anchor fallback.")
+            if fuel_type_unsupported:
+                reasons.append(f"Unsupported fuel_type '{f_raw}'; defaulted to conventional VLSFO.")
+            warning_msg = " ".join(reasons)
         elif in_domain and not near_boundary and primary_qi_pred is not None:
             if cross_check["delta_kg_h"] is not None and cross_check["delta_kg_h"] > 500.0:
                 predicted_fuel = pred_m04 if pred_m04 is not None else primary_qi_pred
@@ -450,6 +475,7 @@ class ProductionFuelPredictor:
             "envelope_distance": round(float(env_dist), 3),
             "cross_check": cross_check,
             "warning": warning_msg,
+            "fuel_warning": fuel_warning,
             "timestamp": now_ts,
         }
 

@@ -51,7 +51,12 @@ def render_prediction_trust():
     with col_env2:
         depth_input = st.slider("Water Depth (m)", min_value=10.0, max_value=300.0, value=float(vessel["water_depth_m"]), step=5.0)
     with col_env3:
-        fuel_choice = st.selectbox("Bunker Fuel", options=["vlsfo", "mgo"], index=0)
+        fuel_options = ["vlsfo", "mgo", "bio_methanol", "fossil_lng", "green_ammonia", "liquid_hydrogen", "Custom / Test"]
+        fuel_select = st.selectbox("Bunker Fuel", options=fuel_options, index=0)
+        if fuel_select == "Custom / Test":
+            fuel_choice = st.text_input("Custom Fuel Specifier", value="plutonium_239", help="Test system response to unsupported fuels").strip()
+        else:
+            fuel_choice = fuel_select
     with col_cov:
         cov_level = st.selectbox("Conformal Coverage", options=[0.90, 0.95], index=0, format_func=lambda x: f"{int(x*100)}% Nominal")
 
@@ -125,6 +130,17 @@ def render_prediction_trust():
         """,
         unsafe_allow_html=True,
     )
+
+    # Fuel Safety Warning (Phase 8 Release Hardening)
+    fuel_warn = res.get("fuel_warning")
+    if fuel_warn:
+        st.warning(
+            f"⚠️ **UNSUPPORTED FUEL TYPE WARNING [{fuel_warn.get('code')}]**\n\n"
+            f"• **Requested Fuel**: `{fuel_warn.get('requested')}`\n\n"
+            f"• **Applied Baseline**: `{fuel_warn.get('applied', 'vlsfo').upper()}`\n\n"
+            f"• **Notice**: {fuel_warn.get('message')}\n\n"
+            f"• **Safety Action**: Model confidence demoted to `LOW`. Serving routed to safe baseline reference anchor (`MODEL-REAL-04`)."
+        )
 
     # Severe OOD Prominence Check (Phase 6 requirement)
     if domain_state == "OOD":

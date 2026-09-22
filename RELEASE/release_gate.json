@@ -3,7 +3,7 @@
   "release_version": "v1.1.0-sih-complete",
   "release_classification": "SIH26138 CORE REQUIREMENTS COMPLETE",
   "system_type": "Controlled Decision-Support Prototype",
-  "timestamp_utc": "2026-09-21T18:15:20.251516+00:00",
+  "timestamp_utc": "2026-09-22T15:01:03.778219+00:00",
   "gates_evaluated": 16,
   "gates_passed": 16,
   "gates": {
@@ -162,9 +162,9 @@
       "details": {
         "algorithms_evaluated": [
           "DE",
+          "NSGA_III",
           "QPSO",
-          "Classical_GA",
-          "NSGA_III"
+          "Classical_GA"
         ],
         "seeds_per_algorithm": 30,
         "de_feasible_rate_pct": 100.0,
@@ -261,8 +261,8 @@
       "passed": true,
       "details": {
         "version": "v1.1.0-sih-complete",
-        "timestamp_utc": "2026-09-21T18:15:20.220946+00:00",
-        "git_commit_head": "ee62b023515cae871b0062b4e4bfda17034ec3d9",
+        "timestamp_utc": "2026-09-22T15:01:03.681821+00:00",
+        "git_commit_head": "25c0384cd2e06e1c62a5eaf57b3ab85875966c35",
         "dataset_hashes": {
           "CPS_Poseidon.parquet": "da85f2e21b6e8724c8350f9aadbda4e457593d77412b8cefaa077da9e1e260c2",
           "CPS_Triton.parquet": "fa8cc7f9f6a92d330088e41e3f275b8d8428d3604cfb35dfa46eaa753d545f89",

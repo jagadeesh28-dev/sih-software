@@ -111,6 +111,19 @@ def canonicalize_fuel_type(fuel_type: str) -> str:
     return FUEL_TYPE_ALIASES.get(clean, clean)
 
 
+def is_supported_fuel_type(fuel_type: Any) -> bool:
+    """
+    Determine whether a fuel type string is a recognized canonical fuel or certified alias.
+    Returns False for unsupported, unknown, or malformed fuel strings.
+    """
+    if fuel_type is None:
+        return False
+    clean = str(fuel_type).strip().lower()
+    if not clean:
+        return False
+    return clean in FUEL_TYPE_ALIASES or clean in CANONICAL_FUEL_TYPES
+
+
 def get_baseline_fuel_for_vessel(vessel_id_or_class: str) -> str:
     """
     Retrieve the baseline training fuel used for first-principles/ML surrogate calibration.
