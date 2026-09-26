@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description: "Maritime operator HMI for fuel prediction, trust and green fleet optimization (SIH26138).",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} dark`}>
       <body>
