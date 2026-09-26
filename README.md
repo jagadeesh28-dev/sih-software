@@ -56,32 +56,32 @@ Egreen Quanta adheres to non-negotiable scientific integrity rules:
 Comprehensive documentation is organized across `docs/`, `release/`, and `reports/`:
 
 ### Core Documentation (`docs/`)
-- [System Architecture](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/docs/architecture.md): 7-layer defense-in-depth pipeline and serving logic.
-- [Scientific Methodology](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/docs/methodology.md): Hybrid residual modeling, QIEA, QPSO, and thermodynamic equations.
-- [Data Card](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/docs/data_card.md): 173,974 records, 12 removed rows, sensor provenance, and splitting protocol.
-- [Model Card](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/docs/model_card.md): Model details, metric reconciliation, feature contracts, and limitations.
-- [Uncertainty Quantification](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/docs/uncertainty.md): Conformal coverage vs sharpness, vessel and regime calibrations.
-- [OOD Validation](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/docs/ood_validation.md): Confusion matrices across modest, moderate, and severe OOD.
-- [Safety Validation](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/docs/safety_validation.md): 1,000 invalid stress tests, 16 edge cases, 10 failure injections.
-- [Optimizer Validation](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/docs/optimizer_validation.md): Phase 5 frozen benchmark (825,000 evals) and exact-optimality language.
-- [Claim Ledger](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/docs/claim_ledger.md): 20 cataloged claims with audit trail and verification status.
-- [Limitations & Risk](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/docs/limitations.md): Operational boundaries and negative results.
-- [Reproducibility Guide](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/docs/reproducibility.md): Pinned environment setup and immutable SHA256 hashes.
-- [Final Master Results](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/docs/final_results.md): Unified tables across all experimental phases.
+- [System Architecture](./docs/architecture.md): 7-layer defense-in-depth pipeline and serving logic.
+- [Scientific Methodology](./docs/methodology.md): Hybrid residual modeling, QIEA, QPSO, and thermodynamic equations.
+- [Data Card](./docs/data_card.md): 173,974 records, 12 removed rows, sensor provenance, and splitting protocol.
+- [Model Card](./docs/model_card.md): Model details, metric reconciliation, feature contracts, and limitations.
+- [Uncertainty Quantification](./docs/uncertainty.md): Conformal coverage vs sharpness, vessel and regime calibrations.
+- [OOD Validation](./docs/ood_validation.md): Confusion matrices across modest, moderate, and severe OOD.
+- [Safety Validation](./docs/safety_validation.md): 1,000 invalid stress tests, 16 edge cases, 10 failure injections.
+- [Optimizer Validation](./docs/optimizer_validation.md): Phase 5 frozen benchmark (825,000 evals) and exact-optimality language.
+- [Claim Ledger](./docs/claim_ledger.md): 20 cataloged claims with audit trail and verification status.
+- [Limitations & Risk](./docs/limitations.md): Operational boundaries and negative results.
+- [Reproducibility Guide](./docs/reproducibility.md): Pinned environment setup and immutable SHA256 hashes.
+- [Final Master Results](./docs/final_results.md): Unified tables across all experimental phases.
 
 ### Release Gate & Audits (`release/`)
-- [Release Manifest JSON](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/release/release_manifest.json): Immutable hashes for data, models, and scripts.
-- [Release Gate Audit JSON](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/release/release_gate.json): Official audit output for Gates G1 to G10.
+- [Release Manifest JSON](./release/release_manifest.json): Immutable hashes for data, models, and scripts.
+- [Release Gate Audit JSON](./release/release_gate.json): Official audit output for Gates G1 to G10.
 
 ### Master Reports (`reports/`)
-- [Final Scientific Validation Report](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/reports/final_validation_report.md): 20-section complete technical and scientific audit.
-- [Final SIH Executive Report](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/reports/final_sih_report.md): Hackathon summary and jury demonstration narrative.
+- [Final Scientific Validation Report](./reports/final_validation_report.md): 20-section complete technical and scientific audit.
+- [Final SIH Executive Report](./reports/final_sih_report.md): Hackathon summary and jury demonstration narrative.
 
 ### SIH Presentation & Jury Defense (`presentation/`)
-- [3-Minute Demo Script](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/presentation/demo_script_3min.md): Exact 180-second timed narration.
-- [Jury Defense Handbook](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/presentation/jury_questions.md): 45 categorized technical defense Q&As with grounded evidence.
-- [Final Verified Metrics JSON](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/presentation/final_metrics.json): Single source of truth for all verified numbers.
-- [14 Slide Presentations](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/presentation/): Slide decks `01_problem.md` through `14_jury_questions.md`.
+- [3-Minute Demo Script](./presentation/demo_script_3min.md): Exact 180-second timed narration.
+- [Jury Defense Handbook](./presentation/jury_questions.md): 45 categorized technical defense Q&As with grounded evidence.
+- [Final Verified Metrics JSON](./presentation/final_metrics.json): Single source of truth for all verified numbers.
+- [14 Slide Presentations](./presentation/): Slide decks `01_problem.md` through `14_jury_questions.md`.
 
 ---
 
@@ -102,3 +102,45 @@ pip install -r requirements-lock.txt
 # 4. Verify release
 python reproduce_release.py
 ```
+
+---
+
+## 6. Operator HMI (Next.js) — primary user interface
+
+The maritime operator HMI lives in `web/` (Next.js 16, TypeScript, Tailwind CSS, shadcn/ui, Recharts).
+It talks only to the thin FastAPI adapter in `api/main.py`, which calls the existing Python
+modules (serving predictor, SIH objective engine, fleet evaluator and optimizers). The frontend
+performs no scientific calculation; every response is validated against typed zod contracts.
+
+```bash
+# Terminal 1 — API (from the repository root, inside the venv)
+python -m uvicorn api.main:app --port 8000
+
+# Terminal 2 — HMI
+cd web
+npm install
+npm run dev            # http://localhost:3000
+```
+
+Screens: Fleet Overview · Vessel Detail · Prediction & Trust · Scenario Lab · Fleet Optimizer ·
+Pareto / Trade-offs · Alternative Fuels · Alerts & Safety · Audit / Reports · Demo Mode.
+
+Data provenance shown in the UI:
+- **MODEL OUTPUT** — production predictor / optimizer, computed on request.
+- **MEASURED** — records from the recorded FuelCast dataset (historical, not a live feed).
+- **ASSUMED** — fleet default operating states (`common/fleet_defaults.py`).
+- **SCENARIO INPUT / SCENARIO ESTIMATE** — operator what-if inputs and their outputs; alternative fuels are never measured telemetry.
+- **HISTORICAL EVIDENCE / STORED ARTIFACT** — committed release artifacts and `results/pareto_front.csv`.
+
+No live telemetry feed is connected, so the HMI runs in SIMULATION mode (DEMO on the Demo screen).
+Optimizer recommendations are advisory and require an explicit, confirmed operator ACCEPT/REJECT;
+no vessel or engine commands are ever issued. The session audit ledger lives in the API process and is not persisted.
+
+Tests: `python -m pytest tests/test_api.py` (API integration) and `cd web && npm test` (frontend units).
+
+### Streamlit dashboard — removed
+
+The former Streamlit dashboard (`dashboard/`) was retired on 2026-09-24 after parity with the Next.js HMI
+was verified against the same backend. Its UI code and the `streamlit`/`plotly` dependencies were removed;
+all scientific and backend modules it called are preserved and served through `api/main.py`.
+Historical documents under `reports/` that mention `streamlit run` describe the retired UI.

@@ -3,7 +3,18 @@
     "threshold_parameter": "envelope_distance_threshold_ood",
     "primary_guard_threshold": 1.5,
     "warning_gate_threshold": 1.0,
-    "threshold_selection_procedure": "Calibrated strictly on Training Set envelope statistics; zero tuning on test data.",
+    "threshold_selection_procedure": "Thresholds are in units of training spans beyond the training min/max envelope (any in-envelope point scores 0); unchanged from the original release; zero tuning on test data.",
+    "distance_definition": "L-infinity: maximum over SUPPLIED features of exceedance beyond [train_min, train_max] divided by max(train_max - train_min, train_std). Serving-contract defaults are excluded.",
+    "scoring_path": "Sanitized input exactly as inside ProductionFuelPredictor._predict_point",
+    "evidence_status": "FRESHLY COMPUTED",
+    "superseded_reference": {
+      "label": "HISTORICAL REFERENCE \u2014 superseded, not current",
+      "definition": "RMS over all features incl. imputed defaults in serving; published metrics were scored on raw (non-imputed) samples",
+      "published_severe_recall_pct_at_1_5": 96.55,
+      "published_in_domain_fpr_pct": 0.0,
+      "actual_serving_path_severe_recall_pct_at_1_5": 3.15,
+      "note": "The published 96.55% did not describe deployed behaviour: serving counted imputed defaults as in-range dimensions, diluting the RMS."
+    },
     "in_domain_population_description": "2,000 randomly drawn records from the held-out forward temporal test split (34,796 total rows).",
     "ood_population_description": "2,000 synthetic operational scenarios categorized into Modest, Moderate, and Severe OOD based on multidimensional feature boundary exceedance.",
     "synthetic_ood_generation_method": "Documented parameter sweeps beyond empirical training min/max bounds in speed, draught, wave height, and wind velocity."
@@ -13,47 +24,47 @@
       "threshold": 1.0,
       "role": "Near-Boundary Warning Gate",
       "confusion_matrix": {
-        "TP": 682,
+        "TP": 1998,
         "TN": 2000,
         "FP": 0,
-        "FN": 1316,
+        "FN": 0,
         "total_evaluated": 3998
       },
       "performance_metrics": {
         "precision_pct": 100.0,
-        "recall_pct": 34.13,
+        "recall_pct": 100.0,
         "specificity_pct": 100.0,
-        "f1_score": 0.509,
+        "f1_score": 1.0,
         "false_positive_rate_pct": 0.0,
-        "false_negative_rate_pct": 65.87,
-        "balanced_accuracy_pct": 67.07
+        "false_negative_rate_pct": 0.0,
+        "balanced_accuracy_pct": 100.0
       },
       "by_ood_severity": {
         "Modest OOD": {
           "count": 666,
-          "mean_envelope_distance": 0.442,
-          "min_envelope_distance": 0.384,
-          "max_envelope_distance": 0.503,
-          "TP": 0,
-          "FN": 666,
-          "recall_pct": 0.0,
-          "FNR_pct": 100.0
+          "mean_envelope_distance": 1.146,
+          "min_envelope_distance": 1.003,
+          "max_envelope_distance": 1.293,
+          "TP": 666,
+          "FN": 0,
+          "recall_pct": 100.0,
+          "FNR_pct": 0.0
         },
         "Moderate OOD": {
           "count": 666,
-          "mean_envelope_distance": 0.876,
-          "min_envelope_distance": 0.714,
-          "max_envelope_distance": 1.03,
-          "TP": 16,
-          "FN": 650,
-          "recall_pct": 2.4,
-          "FNR_pct": 97.6
+          "mean_envelope_distance": 1.876,
+          "min_envelope_distance": 1.583,
+          "max_envelope_distance": 2.164,
+          "TP": 666,
+          "FN": 0,
+          "recall_pct": 100.0,
+          "FNR_pct": 0.0
         },
         "Severe OOD": {
           "count": 666,
-          "mean_envelope_distance": 1.725,
-          "min_envelope_distance": 1.39,
-          "max_envelope_distance": 2.024,
+          "mean_envelope_distance": 3.087,
+          "min_envelope_distance": 2.369,
+          "max_envelope_distance": 3.832,
           "TP": 666,
           "FN": 0,
           "recall_pct": 100.0,
@@ -65,27 +76,27 @@
       "threshold": 1.5,
       "role": "OOD Routing/Fallback Guard",
       "confusion_matrix": {
-        "TP": 643,
+        "TP": 1332,
         "TN": 2000,
         "FP": 0,
-        "FN": 1355,
+        "FN": 666,
         "total_evaluated": 3998
       },
       "performance_metrics": {
         "precision_pct": 100.0,
-        "recall_pct": 32.18,
+        "recall_pct": 66.67,
         "specificity_pct": 100.0,
-        "f1_score": 0.4869,
+        "f1_score": 0.8,
         "false_positive_rate_pct": 0.0,
-        "false_negative_rate_pct": 67.82,
-        "balanced_accuracy_pct": 66.09
+        "false_negative_rate_pct": 33.33,
+        "balanced_accuracy_pct": 83.33
       },
       "by_ood_severity": {
         "Modest OOD": {
           "count": 666,
-          "mean_envelope_distance": 0.442,
-          "min_envelope_distance": 0.384,
-          "max_envelope_distance": 0.503,
+          "mean_envelope_distance": 1.146,
+          "min_envelope_distance": 1.003,
+          "max_envelope_distance": 1.293,
           "TP": 0,
           "FN": 666,
           "recall_pct": 0.0,
@@ -93,9 +104,61 @@
         },
         "Moderate OOD": {
           "count": 666,
-          "mean_envelope_distance": 0.876,
-          "min_envelope_distance": 0.714,
-          "max_envelope_distance": 1.03,
+          "mean_envelope_distance": 1.876,
+          "min_envelope_distance": 1.583,
+          "max_envelope_distance": 2.164,
+          "TP": 666,
+          "FN": 0,
+          "recall_pct": 100.0,
+          "FNR_pct": 0.0
+        },
+        "Severe OOD": {
+          "count": 666,
+          "mean_envelope_distance": 3.087,
+          "min_envelope_distance": 2.369,
+          "max_envelope_distance": 3.832,
+          "TP": 666,
+          "FN": 0,
+          "recall_pct": 100.0,
+          "FNR_pct": 0.0
+        }
+      }
+    },
+    "3.0": {
+      "threshold": 3.0,
+      "role": "Severe OOD Rejection",
+      "confusion_matrix": {
+        "TP": 369,
+        "TN": 2000,
+        "FP": 0,
+        "FN": 1629,
+        "total_evaluated": 3998
+      },
+      "performance_metrics": {
+        "precision_pct": 100.0,
+        "recall_pct": 18.47,
+        "specificity_pct": 100.0,
+        "f1_score": 0.3118,
+        "false_positive_rate_pct": 0.0,
+        "false_negative_rate_pct": 81.53,
+        "balanced_accuracy_pct": 59.23
+      },
+      "by_ood_severity": {
+        "Modest OOD": {
+          "count": 666,
+          "mean_envelope_distance": 1.146,
+          "min_envelope_distance": 1.003,
+          "max_envelope_distance": 1.293,
+          "TP": 0,
+          "FN": 666,
+          "recall_pct": 0.0,
+          "FNR_pct": 100.0
+        },
+        "Moderate OOD": {
+          "count": 666,
+          "mean_envelope_distance": 1.876,
+          "min_envelope_distance": 1.583,
+          "max_envelope_distance": 2.164,
           "TP": 0,
           "FN": 666,
           "recall_pct": 0.0,
@@ -103,13 +166,13 @@
         },
         "Severe OOD": {
           "count": 666,
-          "mean_envelope_distance": 1.725,
-          "min_envelope_distance": 1.39,
-          "max_envelope_distance": 2.024,
-          "TP": 643,
-          "FN": 23,
-          "recall_pct": 96.55,
-          "FNR_pct": 3.45
+          "mean_envelope_distance": 3.087,
+          "min_envelope_distance": 2.369,
+          "max_envelope_distance": 3.832,
+          "TP": 369,
+          "FN": 297,
+          "recall_pct": 55.41,
+          "FNR_pct": 44.59
         }
       }
     }
@@ -118,27 +181,27 @@
     "threshold": 1.5,
     "role": "OOD Routing/Fallback Guard",
     "confusion_matrix": {
-      "TP": 643,
+      "TP": 1332,
       "TN": 2000,
       "FP": 0,
-      "FN": 1355,
+      "FN": 666,
       "total_evaluated": 3998
     },
     "performance_metrics": {
       "precision_pct": 100.0,
-      "recall_pct": 32.18,
+      "recall_pct": 66.67,
       "specificity_pct": 100.0,
-      "f1_score": 0.4869,
+      "f1_score": 0.8,
       "false_positive_rate_pct": 0.0,
-      "false_negative_rate_pct": 67.82,
-      "balanced_accuracy_pct": 66.09
+      "false_negative_rate_pct": 33.33,
+      "balanced_accuracy_pct": 83.33
     },
     "by_ood_severity": {
       "Modest OOD": {
         "count": 666,
-        "mean_envelope_distance": 0.442,
-        "min_envelope_distance": 0.384,
-        "max_envelope_distance": 0.503,
+        "mean_envelope_distance": 1.146,
+        "min_envelope_distance": 1.003,
+        "max_envelope_distance": 1.293,
         "TP": 0,
         "FN": 666,
         "recall_pct": 0.0,
@@ -146,23 +209,23 @@
       },
       "Moderate OOD": {
         "count": 666,
-        "mean_envelope_distance": 0.876,
-        "min_envelope_distance": 0.714,
-        "max_envelope_distance": 1.03,
-        "TP": 0,
-        "FN": 666,
-        "recall_pct": 0.0,
-        "FNR_pct": 100.0
+        "mean_envelope_distance": 1.876,
+        "min_envelope_distance": 1.583,
+        "max_envelope_distance": 2.164,
+        "TP": 666,
+        "FN": 0,
+        "recall_pct": 100.0,
+        "FNR_pct": 0.0
       },
       "Severe OOD": {
         "count": 666,
-        "mean_envelope_distance": 1.725,
-        "min_envelope_distance": 1.39,
-        "max_envelope_distance": 2.024,
-        "TP": 643,
-        "FN": 23,
-        "recall_pct": 96.55,
-        "FNR_pct": 3.45
+        "mean_envelope_distance": 3.087,
+        "min_envelope_distance": 2.369,
+        "max_envelope_distance": 3.832,
+        "TP": 666,
+        "FN": 0,
+        "recall_pct": 100.0,
+        "FNR_pct": 0.0
       }
     }
   }

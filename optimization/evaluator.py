@@ -13,6 +13,7 @@ import pandas as pd
 from prediction.safe_objective import SafeFuelObjective
 from prediction.domain_checker import DomainChecker
 from .emissions_model import FleetEmissionsEngine
+from .berth_model import DEFAULT_PORT_HOURS, berth_accounting, grid_emission_factor_g_per_kwh
 from .cost_model import FleetCostEngine
 from .regulatory import FleetRegulatoryEngine
 from .voyage_model import VoyageKinematicsEngine
@@ -288,14 +289,16 @@ class FleetEvaluationEngine:
                 ttw_co2_tonnes=emis["ttw_co2_tonnes"],
                 voyage_duration_hours=leg_duration_h,
                 schedule_deadline_hours=schedule_deadline_hours,
-                use_shore_power=decision.use_shore_power_at_dest,
-                port_hours=2.0,
-                hotel_load_kw=hotel_kw,
                 fueleu_penalty_usd=leg_fueleu_penalty,
             )
-            total_fuel_cost += costs["fuel_cost_usd"]
-            total_carbon_cost += costs["carbon_cost_usd"]
-            total_shore_cost += costs["shore_power_cost_usd"]
+            # Berth: shore electricity OR onboard generation in the selected fuel (optimization/berth_model.py)
+            berth = berth_accounting(hotel_kw, DEFAULT_PORT_HOURS, target_fuel, decision.use_shore_power_at_dest,
+                                     self.emissions_engine, self.cost_engine, grid_emission_factor_g_per_kwh())
+            total_fuel_t += berth.fuel_kg / 1000.0
+            total_wtw_ghg_t += berth.ghg_t
+            total_fuel_cost += costs["fuel_cost_usd"] + berth.fuel_cost_usd
+            total_carbon_cost += costs["carbon_cost_usd"] + berth.carbon_cost_usd
+            total_shore_cost += berth.electricity_cost_usd
             total_schedule_cost += costs["schedule_penalty_cost_usd"]
 
             # 6. Constraints Validation

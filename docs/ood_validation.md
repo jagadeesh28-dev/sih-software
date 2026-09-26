@@ -5,6 +5,56 @@
 
 ---
 
+## 0. Revalidation (2026-09-24) — CURRENT. Sections 1 onward are HISTORICAL.
+
+### 0.1 Findings from the forensic analysis
+1. **Distance.** For each feature *j*, $\delta_j = \max(0, x_j-\max_j, \min_j-x_j)\,/\,\max(\max_j-\min_j, \sigma_j)$, using training-split statistics (`models/domain_checker.json`). Any point inside the training box scores exactly 0.
+2. **Normalisation.** Each exceedance is expressed in units of that feature's training span.
+3. **Dilution (defect).** The previous score was $\sqrt{\sum_j\delta_j^2/n}$ over every feature present in the *sanitized* input. The serving contract imputes five missing environmental fields (wind/wave direction, wave period, current speed/direction). They count as in-range dimensions, which inflates *n* and lowers the score. For the storm demo, the score over the 7 supplied features is 1.789; with the 5 imputed zeros it becomes $1.789\sqrt{7/12}=1.366$.
+4. **Dominant features.** For the storm: displacement 3.28 spans, draft 2.75, wave height 1.46, wind 1.18, STW 0.56, SOG 0.52, depth 0.
+5. **Threshold origin.** The thresholds 1.00, 1.50 and 3.00 are production config defaults in units of training spans. Because every in-envelope point scores 0, they are not statistically fitted; they state how far beyond the observed range a value may lie.
+6. **Evidence that depended on the old implementation:** `results/audit/detailed_ood_metrics.json`, `results/audit/safety_test_matrix.json`, claims C-05 and CQ-03, release gates G6 and G12, and demo scene 5.
+7. **Demo scenes exercising OOD:** scene 5 (storm), plus scene 6 for routing under failure.
+8. **Single-feature bypass (defect).** With RMS aggregation, a single extreme feature is diluted by the normal ones. Draft 22 m (2.75 spans beyond the envelope) with normal speed and displacement scored 0.79, which is IN DOMAIN.
+9. **Evaluation/serving mismatch (defect).** The published 96.55% severe recall was scored on raw, non-imputed samples. Scored the way serving actually scores inputs, the severe recall of the deployed guard was **3.15%**. The storm's WARNING/FALLBACK result was therefore not the intended design: every storm-like generator sample was meant to be severe OOD.
+
+### 0.2 Change (no threshold changed, no special cases)
+- **Distance = L∞ over supplied features.** $d_{env}=\max_{j\in S}\delta_j$, where *S* is the set of features actually supplied; serving-contract defaults are excluded. This makes the score invariant to how many in-range measurements accompany an extreme one, and in-envelope points still score 0.
+- **Unknown vessel type → REJECT** as categorical out-of-distribution. Previously it was scored with the `passenger_cruise` category, which was silent generic mapping.
+- **`vessel_type` is a required input.** A missing type was previously defaulted to "ContainerShip" and then mapped as above; it is now an invalid-input rejection with a field-level message.
+- **Warnings name the dominant feature** and its exceedance in spans.
+
+### 0.3 Fresh results — FRESHLY COMPUTED (`results/audit/detailed_ood_metrics.json`, seed 42, serving path)
+In-domain: 2,000 real test-split records. Synthetic sets: 666 each of modest, moderate and severe (same generator as before).
+
+| Band (d_env >) | In-domain FPR | Modest | Moderate | Severe | Precision | Balanced acc. |
+|---|---|---|---|---|---|---|
+| 1.00 warning | 0.0% | 100% | 100% | 100% | 100% | 100.0% |
+| 1.50 OOD | 0.0% | 0% (warning band) | 100% | 100% | 100% | 83.33% |
+| 3.00 reject | 0.0% | 0% | 0% | 55.41% | 100% | 59.23% |
+
+Distance ranges: modest 1.003–1.293, moderate 1.583–2.164, severe 2.369–3.832. The full 34,796-row test split also gives 0% at both the 1.00 and 1.50 bands.
+
+Routing under the new guard:
+
+| Case | Result |
+|---|---|
+| Normal Poseidon | NORMAL routing (WARNING only for the router's own high-uncertainty flag) |
+| Modest excursion (draft 13.5 m, d = 1.10) | WARNING + MODEL-REAL-04 FALLBACK |
+| Single extreme feature (draft 22 m, d = 2.75) | OOD, physics emergency estimate, LOW confidence |
+| Storm demo (d = 3.28, dominant: displacement) | REJECT, no prediction |
+| Unknown vessel type | REJECT (categorical OOD) |
+
+### 0.4 Superseded reference — HISTORICAL, not current
+The earlier figures (0.0% FPR; severe recall 96.55% at 1.50, 100% at 1.00; modest and moderate 0% at both) were produced by RMS aggregation on non-imputed samples. They are retained below for traceability only.
+
+### 0.5 Remaining limitations
+- The synthetic OOD populations are generator-defined, not observed storms. No real extreme-weather telemetry exists in the dataset.
+- The envelope is an axis-aligned box. Joint combinations that are individually in range but never co-occurred are not detected; a density- or hull-based detector would be needed for that.
+- `prediction/domain_checker.py`, used by the optimizer surrogates, has its own distance and was not changed.
+
+---
+
 ## 1. OOD Detection Methodology & Mathematics
 The OOD guard evaluates whether incoming operational telemetry falls within the empirical multidimensional convex hull of the training data.
 For each continuous feature $j \in \{1, \dots, D\}$, let $[\min_j, \max_j]$ and $\sigma_j$ denote the empirical bounds and standard deviation observed on the **training split** ($104,384$ records).

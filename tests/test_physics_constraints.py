@@ -99,3 +99,43 @@ def test_physical_non_negativity_check():
     assert audit_invalid["is_physically_bounded"] is False
     assert audit_invalid["negative_count"] == 1
     assert audit_invalid["extreme_flow_count"] == 1
+
+
+def test_real_vessels_use_declared_proxy_hull():
+    """Real FuelCast vessels map to a declared proxy hull; unknown types warn instead of mapping silently."""
+    from prediction.physics_predictor import resolve_hull_profile
+
+    for vt in ("passenger_cruise", "passenger_cruise_small", "offshore_supply"):
+        assert resolve_hull_profile(vt) == ("container_feeder", True)
+    assert resolve_hull_profile("bulk_handymax") == ("bulk_handymax", False)
+    with pytest.warns(RuntimeWarning, match="No hull profile"):
+        assert resolve_hull_profile("tanker_vlcc") == ("container_feeder", True)
+
+    out = PhysicsFuelPredictor().predict_record({"stw_kn": 12.0, "vessel_type": "offshore_supply"})
+    assert out["physics_diagnostics"]["hull_profile"] == "container_feeder"
+    assert out["physics_diagnostics"]["hull_profile_is_proxy"] is True
+
+
+def test_serving_rejects_when_physics_baseline_fails():
+    """A physics failure must reject, not serve a residual-only prediction on a zero baseline."""
+    from src.qi_prediction.serving import get_production_predictor
+
+    p = get_production_predictor()
+    original = p.physics.predict
+
+    def broken(_df):
+        raise RuntimeError("injected physics failure")
+
+    p.physics.predict = broken
+    try:
+        res = p.predict_fuel_with_uncertainty(
+            {"vessel_type": "passenger_cruise", "fuel_type": "vlsfo", "stw_kn": 14.5, "sog_kn": 14.5,
+             "draft_m": 7.5, "displacement_t": 35000.0, "wind_speed_ms": 5.0, "wave_height_m": 1.0,
+             "water_depth_m": 60.0},
+            raise_on_error=False,
+        )
+    finally:
+        p.physics.predict = original
+    assert res["routing_status"] == "REJECT"
+    assert res["fuel_prediction"] is None
+    assert "Physics baseline failure" in res["warning"]

@@ -10,7 +10,7 @@
 
 ## 1. Executive Overview & Scientific Directive
 
-Phase 5 heterogeneous fleet optimization has been conclusively audited, verified, and **FROZEN** (Status: `PASS`, see [PHASE5_STATUS.md](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/PHASE5_STATUS.md)).
+Phase 5 heterogeneous fleet optimization has been conclusively audited, verified, and **FROZEN** (Status: `PASS`, see [PHASE5_STATUS.md](../PHASE5_STATUS.md)).
 The objective of Phase 6 is to resolve the central scientific question:
 
 > **"Can a genuinely quantum-inspired prediction mechanism predict maritime fuel consumption accurately on real multi-vessel telemetry, and does it provide measurable value compared with a strong classical physics + ML residual baseline?"**

@@ -1,5 +1,8 @@
 # Slide 10: Master Experimental Results & Conformal Uncertainty
 
+> **OOD figures updated (FRESHLY COMPUTED):** the OOD guard was revalidated. Earlier figures in this document (e.g. 96.55% severe recall) are HISTORICAL and did not describe deployed behaviour. Current: 0.0% in-domain FPR; severe 100.0%, moderate 100.0% recall at d_env 1.50. See docs/ood_validation.md.
+
+
 ## 1. Conformal Uncertainty Quantification (Nominal 90% Level)
 
 | Model Architecture | Non-Conformity Quantile ($\hat{q}$) | Empirical Test Coverage (PICP) | Interval Width (MPIW) | Width / Mean Fuel Ratio | Sharpness Gain |

@@ -61,12 +61,27 @@ from src.algorithms.de import DEOptimizer
 from src.algorithms.qpso import PlainQPSOOptimizer
 from src.algorithms.ga import GeneticAlgorithmOptimizer
 from src.algorithms.nsga3 import NSGA3Optimizer
+from src.algorithms.hybrid_qi import A5CompleteHybridQIOptimizer
 from src.benchmark.metrics import is_pareto_efficient, compute_2d_hypervolume
+
+OBJ3 = ["fuel_tonnes", "cost_usd", "ghg_tonnes"]
+PARETO_SEEDS = [1001 + i for i in range(10)]
+PARETO_BUDGET = 10000
 
 RESULTS_DIR = REPO_ROOT / "results"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 SEEDS = [1001 + i for i in range(30)]
+
+# Formulation weight definitions [Fuel, Cost, GHG, Schedule, Risk]
+# Scales: [50 t, $50,000, 150 t, 10 h, $10,000]
+FORMULATIONS = {
+    "A_Fuel_Only": np.array([1.0, 0.0, 0.0, 0.0, 0.0]),
+    "B_Fuel_Cost": np.array([0.5, 0.5, 0.0, 0.0, 0.0]),
+    "C_Fuel_GHG": np.array([0.5, 0.0, 0.5, 0.0, 0.0]),
+    "D_Fuel_Cost_GHG": np.array([0.35, 0.35, 0.30, 0.0, 0.0]),
+    "E_Full_Schedule_Risk": np.array([0.30, 0.30, 0.25, 0.10, 0.05]),
+}
 
 
 def run_formulation_comparison(base_evaluator: Phase4FleetEvaluator) -> pd.DataFrame:
@@ -75,15 +90,7 @@ def run_formulation_comparison(base_evaluator: Phase4FleetEvaluator) -> pd.DataF
     print("SIH26138: EXECUTING 30-SEED MULTI-OBJECTIVE FORMULATION BENCHMARK")
     print("=" * 70)
 
-    # Formulation weight definitions [Fuel, Cost, GHG, Schedule, Risk]
-    # Scales: [50 t, $50,000, 150 t, 10 h, $10,000]
-    formulations = {
-        "A_Fuel_Only": np.array([1.0, 0.0, 0.0, 0.0, 0.0]),
-        "B_Fuel_Cost": np.array([0.5, 0.5, 0.0, 0.0, 0.0]),
-        "C_Fuel_GHG": np.array([0.5, 0.0, 0.5, 0.0, 0.0]),
-        "D_Fuel_Cost_GHG": np.array([0.35, 0.35, 0.30, 0.0, 0.0]),
-        "E_Full_Schedule_Risk": np.array([0.30, 0.30, 0.25, 0.10, 0.05]),
-    }
+    formulations = FORMULATIONS
 
     xl, xu = base_evaluator.get_bounds()
     all_records = []
@@ -109,6 +116,8 @@ def run_formulation_comparison(base_evaluator: Phase4FleetEvaluator) -> pd.DataF
                 "operational_cost_usd": round(out.opex_usd, 2) if out else 0.0,
                 "wtw_ghg_tonnes": round(out.ghg_tonnes, 4) if out else 0.0,
                 "schedule_delay_hours": round(out.delay_hours, 2) if out else 0.0,
+                "penalty": round(out.penalty, 2) if out else None,
+                "penalty_free": bool(out is not None and out.is_feasible and out.penalty <= 0.0),
                 "runtime_seconds": round(res.runtime_seconds, 3),
                 "evaluations": res.objective_evaluations,
             }
@@ -118,8 +127,91 @@ def run_formulation_comparison(base_evaluator: Phase4FleetEvaluator) -> pd.DataF
     return df_form
 
 
+class RecordingEvaluator(CommonFleetEvaluator):
+    """CommonFleetEvaluator that also records every penalty-free feasible evaluation (same scoring)."""
+
+    def __init__(self, base_evaluator, max_budget=2500):
+        super().__init__(base_evaluator, max_budget=max_budget)
+        self.penalty_free: List[Tuple[np.ndarray, EvaluationOutput]] = []
+        self.unique: set = set()
+
+    def evaluate(self, x):
+        out = super().evaluate(x)
+        self.unique.add(tuple(np.round(np.asarray(x, float), 3)))
+        if out.is_feasible and out.penalty <= 0.0:
+            self.penalty_free.append((np.asarray(x, float).copy(), out))
+        return out
+
+    def front(self) -> List[Tuple[np.ndarray, EvaluationOutput]]:
+        """Distinct non-dominated (fuel, cost, GHG) penalty-free evaluations, in evaluation order."""
+        return nondominated(self.penalty_free)
+
+
+def nondominated(entries: List[Tuple[np.ndarray, EvaluationOutput]]) -> List[Tuple[np.ndarray, EvaluationOutput]]:
+    if not entries:
+        return []
+    costs = np.array([[o.fuel_tonnes, o.opex_usd, o.ghg_tonnes] for _, o in entries])
+    keep, seen = [], set()
+    for (x, o), eff in zip(entries, is_pareto_efficient(costs)):
+        key = (o.fuel_tonnes, o.opex_usd, o.ghg_tonnes)
+        if eff and key not in seen:
+            seen.add(key)
+            keep.append((x, o))
+    return keep
+
+
+def run_pareto_search(base_evaluator: Phase4FleetEvaluator) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """
+    Operator Pareto front: true multi-objective NSGA-III (fuel, cost, GHG; constraint-domination on
+    total penalty) with structured initialisation. Pipeline: candidate -> Phase4FleetEvaluator (domain,
+    physics, penalties) -> hard-feasible AND penalty-free filter -> non-dominated sort -> dedup.
+    Each row stores its full decision vector so the point is re-evaluated, not reconstructed.
+    """
+    print("\n" + "=" * 70)
+    print(f"SIH26138: MULTI-OBJECTIVE PARETO SEARCH (NSGA-III, {len(PARETO_SEEDS)} seeds x {PARETO_BUDGET} evals)")
+    print("=" * 70)
+    ev = copy.deepcopy(base_evaluator)
+    ev.weights = FORMULATIONS["D_Fuel_Cost_GHG"].copy()
+    xl, xu = ev.get_bounds()
+    entries, runs = [], []
+    for s in PARETO_SEEDS:
+        rec = RecordingEvaluator(ev, max_budget=PARETO_BUDGET)
+        opt = NSGA3Optimizer(seed=s, population_size=50, max_generations=PARETO_BUDGET // 50, init="structured")
+        res = opt.optimize(rec, xl=xl, xu=xu, budget=PARETO_BUDGET)
+        run_front = rec.front()
+        runs.append({"seed": s, "evaluations": rec.evaluation_count, "feasible_evaluations": rec.feasible_evaluations_count,
+                     "penalty_free_evaluations": len(rec.penalty_free), "unique_solutions": len(rec.unique),
+                     "nondominated_in_run": len(run_front), "runtime_seconds": round(res.runtime_seconds, 3)})
+        entries += [(s, x, o) for x, o in run_front]
+    kept = nondominated([(np.concatenate([[s], x]), o) for s, x, o in entries])
+    rows = []
+    for i, (sx, o) in enumerate(sorted(kept, key=lambda e: e[1].opex_usd)):
+        r = o.raw_result
+        rows.append({
+            "solution_id": f"PS-{i + 1:02d}",
+            "formulation": "MO_NSGA3_fuel_cost_ghg",
+            "algorithm": "NSGA_III",
+            "seed": int(sx[0]),
+            "evaluation_index": o.evaluation_index,
+            "evaluations": PARETO_BUDGET,
+            "is_feasible": o.is_feasible,
+            "penalty": o.penalty,
+            "domain_status": r.domain_status,
+            "fuel_tonnes": o.fuel_tonnes,
+            "cost_usd": o.opex_usd,
+            "ghg_tonnes": o.ghg_tonnes,
+            "delay_hours": o.delay_hours,
+            "risk_metric": o.risk_metric,
+            "decisions": json.dumps({vid: {"demand": r.assigned_demands[vid], "cargo_t": r.cargo_allocations[vid],
+                                           "speed_kn": round(r.speed_decisions[vid], 4), "fuel": r.fuel_decisions[vid],
+                                           "shore_power": r.shore_power_decisions[vid]} for vid in r.speed_decisions}),
+            "x_vector": json.dumps([float(v) for v in sx[1:]]),
+        })
+    return pd.DataFrame(rows), pd.DataFrame(runs)
+
+
 def run_algorithm_comparison(base_evaluator: Phase4FleetEvaluator) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    """Compare DE, QPSO, Classical GA, and NSGA-III under Formulation D (Fuel + Cost + GHG) across 30 seeds."""
+    """Compare DE, QPSO, Classical GA, NSGA-III and Hybrid QI (A5) under Formulation D (Fuel + Cost + GHG) across 30 seeds."""
     print("\n" + "=" * 70)
     print("SIH26138: RUNNING ALGORITHM COMPARISON ON FUEL + COST + GHG OBJECTIVES")
     print("=" * 70)
@@ -133,16 +225,16 @@ def run_algorithm_comparison(base_evaluator: Phase4FleetEvaluator) -> Tuple[pd.D
         ("QPSO", PlainQPSOOptimizer),
         ("Classical_GA", GeneticAlgorithmOptimizer),
         ("NSGA_III", NSGA3Optimizer),
+        ("Hybrid_QI_A5", A5CompleteHybridQIOptimizer),
     ]
 
     records = []
-    pareto_candidates = []
     convergence_records = []
 
     for alg_name, cls in alg_classes:
         print(f"Benchmarking algorithm: {alg_name} across {len(SEEDS)} seeds...")
         for s in SEEDS:
-            comm_eval = CommonFleetEvaluator(eval_form, max_budget=2500)
+            comm_eval = RecordingEvaluator(eval_form, max_budget=2500)
             if alg_name in ["DE", "Classical_GA", "NSGA_III"]:
                 opt = cls(seed=s, population_size=50, max_generations=50)
             else:
@@ -150,46 +242,28 @@ def run_algorithm_comparison(base_evaluator: Phase4FleetEvaluator) -> Tuple[pd.D
 
             res = opt.optimize(comm_eval, xl=xl, xu=xu, budget=2500)
             out = res.best_output
-
-            # Collect Pareto candidate solutions
-            if hasattr(opt, "pareto_archive") and opt.pareto_archive:
-                for cost_2d, child, out_i in opt.pareto_archive:
-                    if out_i and out_i.is_feasible:
-                        pareto_candidates.append({
-                            "algorithm": alg_name,
-                            "seed": s,
-                            "fuel_tonnes": out_i.fuel_tonnes,
-                            "cost_usd": out_i.opex_usd,
-                            "ghg_tonnes": out_i.ghg_tonnes,
-                            "delay_hours": out_i.delay_hours,
-                            "assigned_demands": str(out_i.assigned_demands),
-                            "fuel_decisions": str(out_i.fuel_decisions),
-                            "speed_decisions": str(out_i.speed_decisions),
-                            "x_vector": list(np.round(child, 4)),
-                        })
-            elif out and out.is_feasible:
-                pareto_candidates.append({
-                    "algorithm": alg_name,
-                    "seed": s,
-                    "fuel_tonnes": out.fuel_tonnes,
-                    "cost_usd": out.opex_usd,
-                    "ghg_tonnes": out.ghg_tonnes,
-                    "delay_hours": out.delay_hours,
-                    "assigned_demands": str(out.assigned_demands),
-                    "fuel_decisions": str(out.fuel_decisions),
-                    "speed_decisions": str(out.speed_decisions),
-                    "x_vector": list(np.round(res.best_x, 4)),
-                })
+            run_front = comm_eval.front()
+            pf_objs = np.array([[o.fuel_tonnes, o.opex_usd, o.ghg_tonnes] for _, o in comm_eval.penalty_free]) \
+                if comm_eval.penalty_free else np.full((1, 3), np.nan)
 
             rec = {
                 "algorithm": alg_name,
                 "seed": s,
                 "feasibility": 1.0 if res.feasible_at_end else 0.0,
+                "best_penalty_free": bool(out is not None and out.is_feasible and out.penalty <= 0.0),
                 "fitness": round(res.best_fitness, 4),
+                "best_penalty": round(out.penalty, 2) if out else None,
                 "fuel_tonnes": round(out.fuel_tonnes, 4) if out else 0.0,
                 "cost_usd": round(out.opex_usd, 2) if out else 0.0,
                 "ghg_tonnes": round(out.ghg_tonnes, 4) if out else 0.0,
                 "delay_hours": round(out.delay_hours, 2) if out else 0.0,
+                "feasible_evaluations": comm_eval.feasible_evaluations_count,
+                "penalty_free_evaluations": len(comm_eval.penalty_free),
+                "unique_solutions": len(comm_eval.unique),
+                "nondominated_penalty_free": len(run_front),
+                "pf_min_fuel_tonnes": float(np.nanmin(pf_objs[:, 0])),
+                "pf_min_cost_usd": float(np.nanmin(pf_objs[:, 1])),
+                "pf_min_ghg_tonnes": float(np.nanmin(pf_objs[:, 2])),
                 "runtime_seconds": round(res.runtime_seconds, 3),
                 "evaluations": res.objective_evaluations,
             }
@@ -208,64 +282,45 @@ def run_algorithm_comparison(base_evaluator: Phase4FleetEvaluator) -> Tuple[pd.D
                     })
 
     df_algs = pd.DataFrame(records)
-    df_pareto_raw = pd.DataFrame(pareto_candidates)
     df_conv = pd.DataFrame(convergence_records)
 
-    # Extract non-dominated Pareto front across (Fuel, Cost, GHG)
-    if len(df_pareto_raw) > 0:
-        cost_matrix = df_pareto_raw[["fuel_tonnes", "cost_usd", "ghg_tonnes"]].values
-        mask_pareto = is_pareto_efficient(cost_matrix)
-        df_pareto = df_pareto_raw[mask_pareto].copy()
-    else:
-        df_pareto = pd.DataFrame()
-
-    return df_algs, df_pareto, df_conv
+    return df_algs, df_conv
 
 
-def run_tradeoff_demonstrations(base_evaluator: Phase4FleetEvaluator) -> pd.DataFrame:
+def run_tradeoff_demonstrations(df_front: pd.DataFrame) -> pd.DataFrame:
     """
-    Constructs the four reproducible demonstration scenarios:
-    1. Lowest Fuel focus
-    2. Lowest Cost focus
-    3. Lowest Lifecycle GHG focus
-    4. Balanced Pareto solution
+    Four demonstration strategies selected FROM the verified Pareto front (penalty-free, non-dominated),
+    each by an explicit criterion: minimum fuel, minimum cost, minimum WtW GHG, and "balanced" =
+    minimum sum of range-normalised (fuel, cost, GHG). The balanced criterion is a stated demonstration
+    rule, not a claim that the point is best.
     """
     print("\n" + "=" * 70)
-    print("SIH26138: EXECUTING REPRODUCIBLE TRADE-OFF DEMONSTRATION SCENARIOS")
+    print("SIH26138: TRADE-OFF DEMONSTRATIONS SELECTED FROM THE PARETO FRONT")
     print("=" * 70)
-
-    xl, xu = base_evaluator.get_bounds()
-    seed = 42
-
-    scenarios = [
-        ("Fuel-Focused", np.array([1.0, 0.0, 0.0, 0.0, 0.0])),
-        ("Cost-Focused", np.array([0.0, 1.0, 0.0, 0.0, 0.0])),
-        ("GHG-Focused", np.array([0.0, 0.0, 1.0, 0.0, 0.0])),
-        ("Balanced Pareto", np.array([0.33, 0.33, 0.34, 0.0, 0.0])),
-    ]
-
-    demo_rows = []
-    for sc_name, w in scenarios:
-        ev = copy.deepcopy(base_evaluator)
-        ev.weights = w
-        comm_eval = CommonFleetEvaluator(ev, max_budget=3000)
-        opt = DEOptimizer(seed=seed, population_size=60, max_generations=50)
-        res = opt.optimize(comm_eval, xl=xl, xu=xu, budget=3000)
-
-        out = res.best_output
-        demo_rows.append({
-            "Strategy": sc_name,
-            "Fuel (t)": round(out.fuel_tonnes, 4) if out else 0.0,
-            "Operational Cost ($)": f"${out.opex_usd:,.2f}" if out else "$0.00",
-            "WtW GHG (t CO2e)": round(out.ghg_tonnes, 4) if out else 0.0,
-            "Schedule Delay (h)": round(out.delay_hours, 2) if out else 0.0,
-            "Feasible": "YES" if res.feasible_at_end else "NO",
-            "Fuel Decisions": str(out.fuel_decisions) if out else "",
-            "Speed Decisions (kn)": str(out.speed_decisions) if out else "",
+    f = df_front.reset_index(drop=True)
+    span = (f[OBJ3].max() - f[OBJ3].min()).replace(0, 1.0)
+    balanced = ((f[OBJ3] - f[OBJ3].min()) / span).sum(axis=1).idxmin()
+    picks = [("Fuel-Focused", f["fuel_tonnes"].idxmin(), "min fuel"),
+             ("Cost-Focused", f["cost_usd"].idxmin(), "min operational cost"),
+             ("GHG-Focused", f["ghg_tonnes"].idxmin(), "min WtW GHG"),
+             ("Balanced (stated rule)", balanced, "min sum of range-normalised fuel, cost, GHG")]
+    rows = []
+    for name, i, rule in picks:
+        r = f.loc[i]
+        dec = json.loads(r["decisions"])
+        rows.append({
+            "Strategy": name,
+            "Selection rule": rule,
+            "Solution": r["solution_id"],
+            "Fuel (t)": r["fuel_tonnes"],
+            "Operational Cost ($)": f"${r['cost_usd']:,.2f}",
+            "WtW GHG (t CO2e)": r["ghg_tonnes"],
+            "Schedule Delay (h)": r["delay_hours"],
+            "Feasible": "YES (penalty-free)",
+            "Fuel Decisions": str({k: v["fuel"] for k, v in dec.items()}),
+            "Speed Decisions (kn)": str({k: v["speed_kn"] for k, v in dec.items()}),
         })
-
-    df_demo = pd.DataFrame(demo_rows)
-    return df_demo
+    return pd.DataFrame(rows)
 
 
 def run_scalability_suite(base_evaluator: Phase4FleetEvaluator) -> pd.DataFrame:
@@ -328,13 +383,18 @@ def main():
     df_ghg.to_csv(RESULTS_DIR / "ghg_objective_results.csv", index=False)
 
     # 2. Algorithm benchmarking on Fuel + Cost + GHG
-    df_algs, df_pareto, df_conv = run_algorithm_comparison(base_evaluator)
+    df_algs, df_conv = run_algorithm_comparison(base_evaluator)
     df_algs.to_csv(RESULTS_DIR / "algorithm_multiobjective_results.csv", index=False)
-    df_pareto.to_csv(RESULTS_DIR / "pareto_front.csv", index=False)
+
+    # 3. Operator Pareto front from a true multi-objective search (penalty-free, non-dominated).
+    df_front, df_runs = run_pareto_search(base_evaluator)
+    df_front.to_csv(RESULTS_DIR / "pareto_front.csv", index=False)
+    df_runs.to_csv(RESULTS_DIR / "pareto_search_runs.csv", index=False)
+    print(f"Pareto front: {len(df_front)} non-dominated penalty-free plans")
     df_conv.to_csv(RESULTS_DIR / "convergence_results.csv", index=False)
 
     # 3. Four Trade-off Demonstration Scenarios
-    df_demo = run_tradeoff_demonstrations(base_evaluator)
+    df_demo = run_tradeoff_demonstrations(df_front)
     df_demo.to_csv(RESULTS_DIR / "tradeoff_scenarios.csv", index=False)
 
     # 4. Scalability benchmark

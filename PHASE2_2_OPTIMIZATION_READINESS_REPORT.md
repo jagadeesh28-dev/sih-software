@@ -44,7 +44,7 @@ In strict compliance with **Non-Negotiable Rule 1**, the Phase 2 prediction mode
 ---
 
 ## 4. Operating Domain & Empirical Envelope
-Documented in [`results/experiments/optimization_readiness/domain_envelope.md`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/results/experiments/optimization_readiness/domain_envelope.md) and [`domain_envelope.csv`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/results/experiments/optimization_readiness/domain_envelope.csv):
+Documented in [`results/experiments/optimization_readiness/domain_envelope.md`](./results/experiments/optimization_readiness/domain_envelope.md) and [`domain_envelope.csv`](./results/experiments/optimization_readiness/domain_envelope.csv):
 
 The empirical validity envelope was extracted from the chronological training partition ($N_{\text{train}} = 833$):
 
@@ -68,7 +68,7 @@ The empirical validity envelope was extracted from the chronological training pa
 ---
 
 ## 5. Operating-Domain Response Surface (EXP-READ-01)
-Recorded in [`results/experiments/optimization_readiness/response_surface.csv`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/results/experiments/optimization_readiness/response_surface.csv) and [`response_surface.md`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/results/experiments/optimization_readiness/response_surface.md):
+Recorded in [`results/experiments/optimization_readiness/response_surface.csv`](./results/experiments/optimization_readiness/response_surface.csv) and [`response_surface.md`](./results/experiments/optimization_readiness/response_surface.md):
 
 1. **Shaft Power Sweep (500 to 8,000 kW)**: Fuel rate increases monotonically with power, exhibiting physically plausible scaling:
    - 500 kW $\to$ 123.4 kg/h
@@ -81,7 +81,7 @@ Recorded in [`results/experiments/optimization_readiness/response_surface.csv`](
 ---
 
 ## 6. Physical Sanity & Monotonicity Audit (EXP-READ-02)
-Documented in [`results/experiments/optimization_readiness/sanity_audit.md`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/results/experiments/optimization_readiness/sanity_audit.md) and [`sanity_audit.csv`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/results/experiments/optimization_readiness/sanity_audit.csv):
+Documented in [`results/experiments/optimization_readiness/sanity_audit.md`](./results/experiments/optimization_readiness/sanity_audit.md) and [`sanity_audit.csv`](./results/experiments/optimization_readiness/sanity_audit.csv):
 
 | Check ID | Sanity Test Name | Status | Violations | Classification | Finding |
 | :--- | :--- | :---: | :---: | :--- | :--- |
@@ -105,7 +105,7 @@ $$d_{\text{norm}}(X) = \sqrt{\frac{1}{D} \sum_{j=1}^D \max\left(0, \frac{x_j - \
 ---
 
 ## 8. Optimizer Exploitability & Adversarial Audit (EXP-READ-04)
-Documented in [`results/experiments/optimization_readiness/optimizer_exploitability.md`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/results/experiments/optimization_readiness/optimizer_exploitability.md):
+Documented in [`results/experiments/optimization_readiness/optimizer_exploitability.md`](./results/experiments/optimization_readiness/optimizer_exploitability.md):
 
 To answer **"Can an optimizer game the predictor?"**, we simulated an adversarial search comparing an unconstrained optimizer against the guarded `SafeFuelObjective`:
 
@@ -139,7 +139,7 @@ Implemented in `prediction/safe_objective.py`:
 ---
 
 ## 10. Uncertainty-to-Optimization Interface (EXP-READ-05/06)
-Documented in [`results/experiments/optimization_readiness/uncertainty_optimization_interface.md`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/results/experiments/optimization_readiness/uncertainty_optimization_interface.md):
+Documented in [`results/experiments/optimization_readiness/uncertainty_optimization_interface.md`](./results/experiments/optimization_readiness/uncertainty_optimization_interface.md):
 
 We evaluated candidate robust objective formulations using the non-crossing quantile predictions:
 $$J(\lambda) = q_{50} + \lambda \cdot (q_{95} - q_{05})$$
@@ -163,7 +163,7 @@ We evaluated the diagnostic correlation between model disagreement ($|F_{\text{M
 ---
 
 ## 12. Real Data Readiness Audit (EXP-READ-09)
-Full specification documented in [`REAL_DATA_VALIDATION_PLAN.md`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/REAL_DATA_VALIDATION_PLAN.md):
+Full specification documented in [`REAL_DATA_VALIDATION_PLAN.md`](./REAL_DATA_VALIDATION_PLAN.md):
 - **Missing Telemetry Requirements**: Real commercial Coriolis fuel mass flow meter telemetry ($\pm 0.2\%$), dual-axis acoustic Doppler speed logs, and high-precision shaft torsionmeters are currently **NOT AVAILABLE**.
 - **Scope Boundary**: All existing platform findings are strictly bounded to `SYNTHETIC_TEST_DATA`.
 - **Pre-requisite for Operational Deployment**: A minimum of 12 consecutive months of continuous 15-minute steady-state telemetry across at least 6 commercial hulls (3 vessel classes, 2 sister ships each) is mandatory before real-world claims can be made.

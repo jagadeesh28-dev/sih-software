@@ -1,5 +1,8 @@
 # Egreen Quanta — Master SIH 2026 Jury Defense Handbook (45 Questions)
 
+> **OOD figures updated (FRESHLY COMPUTED):** the OOD guard was revalidated. Earlier figures in this document (e.g. 96.55% severe recall) are HISTORICAL and did not describe deployed behaviour. Current: 0.0% in-domain FPR; severe 100.0%, moderate 100.0% recall at d_env 1.50. See docs/ood_validation.md.
+
+
 **System**: Controlled Maritime Decision-Support Prototype  
 **Problem Statement**: SIH26138  
 **Verification Level**: Verified Controlled Release (v1.0.0-verified)  

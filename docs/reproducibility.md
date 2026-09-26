@@ -1,4 +1,7 @@
 # Clean-Environment Reproducibility Guide
+
+> **OOD figures updated (FRESHLY COMPUTED):** the OOD guard was revalidated. Earlier figures in this document (e.g. 96.55% severe recall) are HISTORICAL and did not describe deployed behaviour. Current: 0.0% in-domain FPR; severe 100.0%, moderate 100.0% recall at d_env 1.50. See docs/ood_validation.md.
+
 **Project**: SIH26138 — Egreen Quanta  
 **Release**: 1.0.0-verified  
 **Target Environment**: Python 3.10 to 3.14 on Linux / Windows / macOS  

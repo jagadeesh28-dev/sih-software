@@ -160,7 +160,7 @@ In accordance with strict research integrity, the project’s claims are formall
 
 All result artifacts have been verified, unit-tested, and saved to the repository:
 
-### CSV Result Tables ([results/experiments/optimization/](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/results/experiments/optimization/))
+### CSV Result Tables ([results/experiments/optimization/](./results/experiments/optimization/))
 1. `exp_opt_01_baseline.csv` — Full baseline policy evaluation (30 records).
 2. `exp_opt_02_fuel_minimization.csv` — Single-objective fuel optimization.
 3. `exp_opt_03_cost_minimization.csv` — Single-objective OPEX cost optimization.
@@ -175,7 +175,7 @@ All result artifacts have been verified, unit-tested, and saved to the repositor
 12. `scalability_results.csv` — Synthetic fleet scalability scaling table.
 13. `constraint_statistics.csv` — Domain feasibility and constraint statistics.
 
-### High-Resolution Diagnostic Figures ([results/figures/optimization/](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/results/figures/optimization/))
+### High-Resolution Diagnostic Figures ([results/figures/optimization/](./results/figures/optimization/))
 1. `01_optimizer_convergence_curves.png` — Mean convergence trajectories.
 2. `02_boxplots_30_seed_comparison.png` — Distribution of 30-seed objective losses.
 3. `03_qpso_vs_pso_paired.png` — Paired scatter comparison: QPSO vs PSO.

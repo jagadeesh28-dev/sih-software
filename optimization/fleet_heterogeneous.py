@@ -371,10 +371,20 @@ def decode_fleet_vector(
                 is_comp = False
                 reason = f"Cargo demand ({dem.cargo_quantity_tonnes} t) exceeds {v.name} deadweight capacity ({v.deadweight_tonnes} t)"
 
+            # A voyage leg can only be completed while under way. "port" and "dp" model a stationary
+            # vessel (fixed 2 h / 1 h, no distance covered), so they cannot fulfil an assigned demand.
+            if is_comp and mode_str in ("port", "dp"):
+                is_comp = False
+                reason = f"Operating mode '{mode_str}' cannot complete the {dem.distance_nm:.0f} nm leg of {demand_key} (vessel is stationary)"
+
+        # Exactly-once assignment means the assigned vessel carries the whole demand, so the carried cargo is
+        # determined by the assignment. The raw cargo dimension is retained for vector compatibility but is inert.
+        carried = OPERATIONAL_DEMANDS[demand_key].cargo_quantity_tonnes if demand_key != "UNASSIGNED" else 0.0
+
         decisions.append(DecodedVesselDecision(
             vessel_id=v.vessel_id,
             assigned_demand=demand_key,
-            cargo_tonnes=raw_cargo,
+            cargo_tonnes=carried,
             speed_knots=raw_speed,
             fuel_type=fuel_str,
             operating_mode=mode_str,

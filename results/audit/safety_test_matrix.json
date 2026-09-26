@@ -56,7 +56,7 @@
       "name": "Extra Features / Permuted Dict",
       "expected_behavior": "PREDICT",
       "actual_behavior": "FALLBACK",
-      "warning": "Cross-check discrepancy (699.8 kg/h > 500 kg/h); routed to reference MODEL-REAL-04.",
+      "warning": "Cross-check discrepancy (819.2 kg/h > 500 kg/h); routed to reference MODEL-REAL-04.",
       "pass": true
     },
     {
@@ -64,15 +64,15 @@
       "name": "Wrong Feature Order",
       "expected_behavior": "PREDICT",
       "actual_behavior": "FALLBACK",
-      "warning": "Cross-check discrepancy (699.8 kg/h > 500 kg/h); routed to reference MODEL-REAL-04.",
+      "warning": "Cross-check discrepancy (819.2 kg/h > 500 kg/h); routed to reference MODEL-REAL-04.",
       "pass": true
     },
     {
       "case_id": "EC-09",
       "name": "Extreme RPM / Load State",
-      "expected_behavior": "PREDICT_OR_FALLBACK",
-      "actual_behavior": "EMERGENCY_PHYSICS",
-      "warning": "Operating outside valid ML envelope or ML failure. Output is unadjusted first-principles physics estimate.",
+      "expected_behavior": "REJECT",
+      "actual_behavior": "REJECT",
+      "warning": "Severe Out-of-Distribution condition: distance 9.67 > 3.00; dominant feature displacement_t is 9.67 training spans outside its range",
       "pass": true
     },
     {
@@ -80,7 +80,7 @@
       "name": "Corrupted Model Artifact Simulation",
       "expected_behavior": "FALLBACK",
       "actual_behavior": "FALLBACK",
-      "warning": "QI-C1 inference exception (Injected C++ core segmentation fault).",
+      "warning": "Cross-check discrepancy (819.2 kg/h > 500 kg/h); routed to reference MODEL-REAL-04.",
       "pass": true
     },
     {
@@ -88,7 +88,7 @@
       "name": "Missing Model Artifact Simulation",
       "expected_behavior": "FALLBACK",
       "actual_behavior": "FALLBACK",
-      "warning": "Elevated prediction uncertainty: 90% interval width (2273.7 kg/h) exceeds threshold (1200.0 kg/h).",
+      "warning": "Cross-check discrepancy (819.2 kg/h > 500 kg/h); routed to reference MODEL-REAL-04.",
       "pass": true
     },
     {
@@ -96,12 +96,12 @@
       "name": "Corrupted Configuration Simulation",
       "expected_behavior": "HANDLED_SAFELY",
       "actual_behavior": "FALLBACK",
-      "warning": "Cross-check discrepancy (699.8 kg/h > 500 kg/h); routed to reference MODEL-REAL-04.",
+      "warning": "Cross-check discrepancy (819.2 kg/h > 500 kg/h); routed to reference MODEL-REAL-04.",
       "pass": true
     },
     {
       "case_id": "EC-13",
-      "name": "Severe OOD State",
+      "name": "Physically Impossible State (beyond hard bounds)",
       "expected_behavior": "REJECT",
       "actual_behavior": "REJECT",
       "warning": "Input validation failure: Feature 'stw_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'sog_kn'=45.0 out of physical bounds [0.0, 35.0]; Feature 'draft_m'=35.0 out of physical bounds [1.0, 25.0]; Feature 'displacement_t'=500000.0 out of physical bounds [500.0, 400000.0]",
@@ -112,7 +112,7 @@
       "name": "Inference Timeout / Exception",
       "expected_behavior": "FALLBACK_OR_EMERGENCY",
       "actual_behavior": "EMERGENCY_PHYSICS",
-      "warning": "Operating outside valid ML envelope or ML failure. Output is unadjusted first-principles physics estimate.",
+      "warning": "Operating outside valid ML envelope (dist=0.03; dominant feature draft_m is 0.03 training spans outside its range) or ML failure. Output is unadjusted first-principles physics estimate.",
       "pass": true
     },
     {
@@ -129,6 +129,30 @@
       "expected_behavior": "REJECT",
       "actual_behavior": "REJECT",
       "warning": "Input validation failure: Feature 'stw_kn' contains NaN or Inf value",
+      "pass": true
+    },
+    {
+      "case_id": "EC-17",
+      "name": "Unknown Vessel Type",
+      "expected_behavior": "REJECT",
+      "actual_behavior": "REJECT",
+      "warning": "Unsupported vessel_type 'bulk_carrier': outside the model's training categories ['offshore_supply', 'passenger_cruise', 'passenger_cruise_small'] (categorical out-of-distribution); no prediction produced.",
+      "pass": true
+    },
+    {
+      "case_id": "EC-18",
+      "name": "Missing Vessel Type",
+      "expected_behavior": "REJECT",
+      "actual_behavior": "REJECT",
+      "warning": "Input validation failure: Missing mandatory required feature: 'vessel_type'",
+      "pass": true
+    },
+    {
+      "case_id": "EC-19",
+      "name": "Single-Feature Extreme (draft 22 m)",
+      "expected_behavior": "NOT_NORMAL_OOD",
+      "actual_behavior": "EMERGENCY_PHYSICS",
+      "warning": "Operating outside valid ML envelope (dist=2.75; dominant feature draft_m is 2.75 training spans outside its range) or ML failure. Output is unadjusted first-principles physics estimate.",
       "pass": true
     }
   ]

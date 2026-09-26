@@ -1,4 +1,7 @@
 # Final Scientific Validation & Engineering Audit Report
+
+> **OOD figures updated (FRESHLY COMPUTED):** the OOD guard was revalidated. Earlier figures in this document (e.g. 96.55% severe recall) are HISTORICAL and did not describe deployed behaviour. Current: 0.0% in-domain FPR; severe 100.0%, moderate 100.0% recall at d_env 1.50. See docs/ood_validation.md.
+
 **Project**: SIH26138 — Egreen Quanta: Quantum-Inspired Fuel Consumption Prediction and Green Fleet Optimization  
 **Classification**: Controlled Decision-Support Prototype (Verified Release v1.0.0)  
 **Lead Roles**: Final Release Engineer, Scientific Auditor, ML Validation Engineer, Systems Architect  

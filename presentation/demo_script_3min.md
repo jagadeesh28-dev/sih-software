@@ -1,5 +1,8 @@
 # Egreen Quanta: 3-Minute SIH 2026 Jury Demonstration Script
 
+> **OOD figures updated (FRESHLY COMPUTED):** the OOD guard was revalidated. Earlier figures in this document (e.g. 96.55% severe recall) are HISTORICAL and did not describe deployed behaviour. Current: 0.0% in-domain FPR; severe 100.0%, moderate 100.0% recall at d_env 1.50. See docs/ood_validation.md.
+
+
 **System**: Controlled Maritime Decision-Support Prototype  
 **Problem Statement**: SIH26138  
 **Total Duration**: Exactly 180 Seconds (3 Minutes)  
@@ -71,7 +74,7 @@
 - **Speaker Action**: Highlight **Scene 5** (Storm) and **Scene 6** (Failure Injection).
 - **Spoken Narration**:
   > "What happens when conditions turn dangerous?
-  > In Scene 5, we inject a Beaufort 10 hurricane state: 33 knots speed and 14-meter wave height. The OOD guard detects an envelope distance of 1.37, triggers a WARNING, and reroutes away from QI-C1 to reference models. Across 2,000 real in-domain samples, our guard had a **0.0% false-positive rate**, while achieving **96.55% interception of severe OOD states**.
+  > In Scene 5, we inject a Beaufort 10 hurricane state: 33 knots speed and 14-meter wave height. The OOD guard finds displacement 3.28 training spans beyond anything the models were trained on, classifies the state as severe out-of-distribution and rejects it: no ML recommendation is produced. Across 2,000 real in-domain samples the guard had a **0.0% false-positive rate**, and it intercepted **100.0% of severe** and **100.0% of moderate** synthetic OOD states.
   > In Scene 6, we inject a runtime C++ memory fault into the booster. The safety supervisor catches the fault in under 2 milliseconds and automatically falls back to our secondary model. In total, the system passed 1,000 adversarial stress tests and 10 live fault injections."
 
 ---

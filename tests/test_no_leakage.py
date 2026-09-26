@@ -27,27 +27,23 @@ def sample_vessel_data():
 
 
 def test_chronological_split_timestamp_monotonicity(sample_vessel_data):
-    """Verify train, val, and test partitions are strictly monotonic in time with zero overlap."""
+    """Verify the harness's train/val/test partitions are forward-in-time per vessel with zero overlap."""
     dfs = sample_vessel_data
     fleet_train, fleet_val, fleet_test = ValidationHarness.forward_temporal_splits(dfs)
 
+    assert len(fleet_train) + len(fleet_val) + len(fleet_test) == sum(len(d) for d in dfs.values())
+
     for v_name, df in dfs.items():
+        vt = df["vessel_type"].iloc[0]
+        ts = {
+            name: pd.to_datetime(part.loc[part["vessel_type"] == vt, "timestamp"])
+            for name, part in (("train", fleet_train), ("val", fleet_val), ("test", fleet_test))
+        }
         n = len(df)
-        n_tr = int(n * 0.6)
-        n_va = int(n * 0.2)
-
-        df_tr = df.iloc[:n_tr]
-        df_va = df.iloc[n_tr : n_tr + n_va]
-        df_te = df.iloc[n_tr + n_va :]
-
-        # Index check (since parquet is sorted chronologically)
-        assert df_tr.index[-1] < df_va.index[0]
-        assert df_va.index[-1] < df_te.index[0]
-
-        # Timestamp check if timestamp column exists
-        if "timestamp" in df.columns:
-            assert pd.to_datetime(df_tr["timestamp"].max()) <= pd.to_datetime(df_va["timestamp"].min())
-            assert pd.to_datetime(df_va["timestamp"].max()) <= pd.to_datetime(df_te["timestamp"].min())
+        assert len(ts["train"]) == int(n * 0.6), v_name
+        assert len(ts["val"]) == int(n * 0.2), v_name
+        assert ts["train"].max() <= ts["val"].min(), v_name
+        assert ts["val"].max() <= ts["test"].min(), v_name
 
 
 def test_target_excluded_from_features():
@@ -61,13 +57,18 @@ def test_scaler_and_categorical_fit_train_only(sample_vessel_data):
     dfs = sample_vessel_data
     fleet_train, fleet_val, fleet_test = ValidationHarness.forward_temporal_splits(dfs)
 
+    # Exercise the encoder fit path fit() uses, without native LightGBM training
+    # (training here crashed natively on Windows with NumPy 2.x and tested nothing extra).
     predictor = PureMLPredictor(feature_cols=["vessel_type", "fuel_type", "stw_kn"], seed=42)
-    # Fit strictly on train
-    predictor.fit(fleet_train)
+    predictor._prepare_features(fleet_train, is_train=True)
 
-    # Check stored categorical dtypes
     for cat_col in ["vessel_type", "fuel_type"]:
-        if cat_col in predictor.categorical_dtypes:
-            train_cats = set(fleet_train[cat_col].dropna().unique())
-            stored_cats = set(predictor.categorical_dtypes[cat_col].categories)
-            assert stored_cats == train_cats
+        train_cats = set(fleet_train[cat_col].dropna().astype(str).unique())
+        assert set(predictor.categorical_dtypes[cat_col].categories) == train_cats
+
+    # A level that exists only outside TRAIN must not become a known category
+    leaked = fleet_test.head(5).copy()
+    leaked["fuel_type"] = "unseen_test_only_fuel"
+    X_leaked = predictor._prepare_features(leaked, is_train=False)
+    assert X_leaked["fuel_type"].isna().all()
+    assert "unseen_test_only_fuel" not in predictor.categorical_dtypes["fuel_type"].categories

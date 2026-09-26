@@ -9,7 +9,7 @@ This guide provides instructions for installing and configuring Egreen Quanta in
 - **Operating System:** Windows 10/11 (x86_64), Linux (Ubuntu 20.04+, RHEL 8+), or macOS (12.0+).
 - **CPU:** 4+ physical cores recommended (16 cores utilized for master benchmarks).
 - **RAM:** Minimum 8 GB (16 GB recommended for full fleet simulation).
-- **Python Version:** Python 3.10 to 3.14 (tested and locked on CPython 3.14.0).
+- **Python Version:** Python 3.11+ (`requirements-lock.txt` verified on CPython 3.12.10, Windows 11 x86_64).
 - **Disk Space:** ~500 MB for repository, telemetry parquet files, and cached physics arrays.
 
 ---
@@ -43,9 +43,15 @@ Install the frozen production dependencies from `requirements-lock.txt`:
 pip install -r requirements-lock.txt
 ```
 
-Alternatively, standard dependencies can be installed via:
+Alternatively, install the unpinned ranges (release gate G2 will then report version drift):
 ```bash
-pip install numpy scipy pandas pyarrow scikit-learn lightgbm matplotlib pyyaml pytest
+pip install -r requirements.txt
+```
+
+Launch the operator HMI (two terminals, from the repository root):
+```bash
+python -m uvicorn api.main:app --port 8000
+cd web && npm install && npm run dev   # http://localhost:3000
 ```
 
 ---

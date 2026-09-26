@@ -21,12 +21,12 @@ The legacy synthetic UI prototype (`dashboard/app.py` v0.1) was audited during P
 
 | Component | File Path | Purpose |
 | :--- | :--- | :--- |
-| **Top Navigation Bar** | [`dashboard/components/top_bar.py`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/dashboard/components/top_bar.py) | Global status strip: `Egreen Quanta \| mode \| fleet \| model \| scenario \| time` |
-| **Status Footer Strip** | [`dashboard/components/status_strip.py`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/dashboard/components/status_strip.py) | Telemetry freshness, model routing state, OOD envelope distance, advisory status |
-| **Vessel Telemetry Card** | [`dashboard/components/vessel_card.py`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/dashboard/components/vessel_card.py) | 10-field vessel card: Name, type, speed, fuel, prediction, interval, OOD, model, schedule, alert |
-| **Authoritative Bridge** | [`dashboard/backend_bridge.py`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/dashboard/backend_bridge.py) | Cached singleton access to `ProductionFuelPredictor`, `SIHObjectiveEngine`, audit logger |
-| **Operational Cost Page** | [`dashboard/pages/operational_cost.py`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/dashboard/pages/operational_cost.py) | Dedicated $C_{\text{total}}$ breakdown: Fuel, Electricity, OPS, Carbon, Schedule, FuelEU |
-| **Lifecycle GHG Page** | [`dashboard/pages/lifecycle_ghg.py`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/dashboard/pages/lifecycle_ghg.py) | Dedicated IMO MEPC.391(81) WtW breakdown: $\text{WtW} = \text{WtT} + \text{TtW} + \text{Slip}$ |
+| **Top Navigation Bar** | [`dashboard/components/top_bar.py`](../dashboard/components/top_bar.py) | Global status strip: `Egreen Quanta \| mode \| fleet \| model \| scenario \| time` |
+| **Status Footer Strip** | [`dashboard/components/status_strip.py`](../dashboard/components/status_strip.py) | Telemetry freshness, model routing state, OOD envelope distance, advisory status |
+| **Vessel Telemetry Card** | [`dashboard/components/vessel_card.py`](../dashboard/components/vessel_card.py) | 10-field vessel card: Name, type, speed, fuel, prediction, interval, OOD, model, schedule, alert |
+| **Authoritative Bridge** | [`dashboard/backend_bridge.py`](../dashboard/backend_bridge.py) | Cached singleton access to `ProductionFuelPredictor`, `SIHObjectiveEngine`, audit logger |
+| **Operational Cost Page** | [`dashboard/pages/operational_cost.py`](../dashboard/pages/operational_cost.py) | Dedicated $C_{\text{total}}$ breakdown: Fuel, Electricity, OPS, Carbon, Schedule, FuelEU |
+| **Lifecycle GHG Page** | [`dashboard/pages/lifecycle_ghg.py`](../dashboard/pages/lifecycle_ghg.py) | Dedicated IMO MEPC.391(81) WtW breakdown: $\text{WtW} = \text{WtT} + \text{TtW} + \text{Slip}$ |
 
 ---
 

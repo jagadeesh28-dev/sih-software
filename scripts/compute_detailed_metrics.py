@@ -256,10 +256,17 @@ def evaluate_ood(df_test: pd.DataFrame, predictor: ProductionFuelPredictor):
     all_ood_samples = modest_ood_samples + moderate_ood_samples + severe_ood_samples
 
     # Compute distances and decisions across thresholds
-    thresholds = [1.00, 1.50]
+    thresholds = [1.00, 1.50, 3.00]
     thresh_results = {}
 
-    in_domain_dists = [predictor.compute_envelope_distance(s) for s in in_domain_samples]
+    def serving_distance(raw):
+        """Distance as computed inside the serving router: sanitized point, supplied features only."""
+        clean_raw = {k: v for k, v in raw.items() if k in predictor.domain_stats or k in ("vessel_type", "fuel_type")}
+        supplied = {k for k, v in clean_raw.items() if v is not None and not (isinstance(v, float) and math.isnan(v))}
+        _, _, clean = predictor.validate_and_sanitize_point({k: clean_raw[k] for k in supplied})
+        return predictor.compute_envelope_distance(clean, supplied)
+
+    in_domain_dists = [serving_distance(s) for s in in_domain_samples]
     ood_subsets = {
         "Modest OOD": modest_ood_samples,
         "Moderate OOD": moderate_ood_samples,
@@ -275,7 +282,7 @@ def evaluate_ood(df_test: pd.DataFrame, predictor: ProductionFuelPredictor):
         total_FN = 0
 
         for cat_name, s_list in ood_subsets.items():
-            dists = [predictor.compute_envelope_distance(s) for s in s_list]
+            dists = [serving_distance(s) for s in s_list]
             tp = sum(1 for d in dists if d > th)
             fn = sum(1 for d in dists if d <= th)
             total_TP += tp
@@ -306,7 +313,7 @@ def evaluate_ood(df_test: pd.DataFrame, predictor: ProductionFuelPredictor):
 
         thresh_results[str(th)] = {
             "threshold": th,
-            "role": "Near-Boundary Warning Gate" if th == 1.00 else "OOD Routing/Fallback Guard",
+            "role": {1.0: "Near-Boundary Warning Gate", 1.5: "OOD Routing/Fallback Guard", 3.0: "Severe OOD Rejection"}[th],
             "confusion_matrix": {
                 "TP": TP,
                 "TN": TN,
@@ -331,7 +338,18 @@ def evaluate_ood(df_test: pd.DataFrame, predictor: ProductionFuelPredictor):
             "threshold_parameter": "envelope_distance_threshold_ood",
             "primary_guard_threshold": 1.50,
             "warning_gate_threshold": 1.00,
-            "threshold_selection_procedure": "Calibrated strictly on Training Set envelope statistics; zero tuning on test data.",
+            "threshold_selection_procedure": "Thresholds are in units of training spans beyond the training min/max envelope (any in-envelope point scores 0); unchanged from the original release; zero tuning on test data.",
+            "distance_definition": "L-infinity: maximum over SUPPLIED features of exceedance beyond [train_min, train_max] divided by max(train_max - train_min, train_std). Serving-contract defaults are excluded.",
+            "scoring_path": "Sanitized input exactly as inside ProductionFuelPredictor._predict_point",
+            "evidence_status": "FRESHLY COMPUTED",
+            "superseded_reference": {
+                "label": "HISTORICAL REFERENCE — superseded, not current",
+                "definition": "RMS over all features incl. imputed defaults in serving; published metrics were scored on raw (non-imputed) samples",
+                "published_severe_recall_pct_at_1_5": 96.55,
+                "published_in_domain_fpr_pct": 0.0,
+                "actual_serving_path_severe_recall_pct_at_1_5": 3.15,
+                "note": "The published 96.55% did not describe deployed behaviour: serving counted imputed defaults as in-range dimensions, diluting the RMS.",
+            },
             "in_domain_population_description": "2,000 randomly drawn records from the held-out forward temporal test split (34,796 total rows).",
             "ood_population_description": "2,000 synthetic operational scenarios categorized into Modest, Moderate, and Severe OOD based on multidimensional feature boundary exceedance.",
             "synthetic_ood_generation_method": "Documented parameter sweeps beyond empirical training min/max bounds in speed, draught, wave height, and wind velocity.",
@@ -351,22 +369,26 @@ def run_safety_and_stress_tests(predictor: ProductionFuelPredictor):
     print("--- Running 1,000 Invalid Input Stress Tests & Edge-Case Matrix ---")
     # 1. Edge Case Matrix explicitly required by Section 10:
     edge_cases = [
-        ("EC-01", "NaN Speed", {"stw_kn": float("nan"), "draft_m": 8.0, "displacement_t": 25000.0}, "REJECT", "Feature 'stw_kn' contains NaN"),
-        ("EC-02", "Negative Speed", {"stw_kn": -5.0, "draft_m": 8.0, "displacement_t": 25000.0}, "REJECT", "out of physical bounds [0.0, 35.0]"),
-        ("EC-03", "Zero Draft", {"stw_kn": 14.0, "draft_m": 0.0, "displacement_t": 25000.0}, "REJECT", "out of physical bounds [1.0, 25.0]"),
-        ("EC-04", "Negative Draft", {"stw_kn": 14.0, "draft_m": -2.0, "displacement_t": 25000.0}, "REJECT", "out of physical bounds [1.0, 25.0]"),
-        ("EC-05", "Impossible Wind (150 m/s)", {"stw_kn": 14.0, "draft_m": 8.0, "displacement_t": 25000.0, "wind_speed_ms": 150.0}, "REJECT", "out of physical bounds [0.0, 60.0]"),
-        ("EC-06", "Missing Mandatory Feature ('draft_m')", {"stw_kn": 14.0, "displacement_t": 25000.0}, "REJECT", "Missing mandatory required feature: 'draft_m'"),
-        ("EC-07", "Extra Features / Permuted Dict", {"stw_kn": 14.0, "draft_m": 8.0, "displacement_t": 25000.0, "unrecognized_col": 999.0, "custom_sensor": "ok"}, "PREDICT", None),
-        ("EC-08", "Wrong Feature Order", {"displacement_t": 25000.0, "draft_m": 8.0, "stw_kn": 14.0}, "PREDICT", None),
-        ("EC-09", "Extreme RPM / Load State", {"stw_kn": 34.9, "draft_m": 24.5, "displacement_t": 390000.0, "wind_speed_ms": 55.0}, "PREDICT_OR_FALLBACK", None),
+        ("EC-01", "NaN Speed", {"vessel_type": "passenger_cruise", "stw_kn": float("nan"), "draft_m": 8.0, "displacement_t": 25000.0}, "REJECT", "Feature 'stw_kn' contains NaN"),
+        ("EC-02", "Negative Speed", {"vessel_type": "passenger_cruise", "stw_kn": -5.0, "draft_m": 8.0, "displacement_t": 25000.0}, "REJECT", "out of physical bounds [0.0, 35.0]"),
+        ("EC-03", "Zero Draft", {"vessel_type": "passenger_cruise", "stw_kn": 14.0, "draft_m": 0.0, "displacement_t": 25000.0}, "REJECT", "out of physical bounds [1.0, 25.0]"),
+        ("EC-04", "Negative Draft", {"vessel_type": "passenger_cruise", "stw_kn": 14.0, "draft_m": -2.0, "displacement_t": 25000.0}, "REJECT", "out of physical bounds [1.0, 25.0]"),
+        ("EC-05", "Impossible Wind (150 m/s)", {"vessel_type": "passenger_cruise", "stw_kn": 14.0, "draft_m": 8.0, "displacement_t": 25000.0, "wind_speed_ms": 150.0}, "REJECT", "out of physical bounds [0.0, 60.0]"),
+        ("EC-06", "Missing Mandatory Feature ('draft_m')", {"vessel_type": "passenger_cruise", "stw_kn": 14.0, "displacement_t": 25000.0}, "REJECT", "Missing mandatory required feature: 'draft_m'"),
+        ("EC-07", "Extra Features / Permuted Dict", {"vessel_type": "passenger_cruise", "stw_kn": 14.0, "draft_m": 8.0, "displacement_t": 25000.0, "unrecognized_col": 999.0, "custom_sensor": "ok"}, "PREDICT", None),
+        ("EC-08", "Wrong Feature Order", {"vessel_type": "passenger_cruise", "displacement_t": 25000.0, "draft_m": 8.0, "stw_kn": 14.0}, "PREDICT", None),
+        # EC-09 previously expected a prediction; 390,000 t is ~10 training spans beyond the envelope, so REJECT is the safe contract.
+        ("EC-09", "Extreme RPM / Load State", {"vessel_type": "passenger_cruise", "stw_kn": 34.9, "draft_m": 24.5, "displacement_t": 390000.0, "wind_speed_ms": 55.0}, "REJECT", "Severe Out-of-Distribution condition"),
         ("EC-10", "Corrupted Model Artifact Simulation", "SIMULATE_BOOSTER_EXCEPTION", "FALLBACK", "routed to reference MODEL-REAL-04"),
         ("EC-11", "Missing Model Artifact Simulation", "SIMULATE_MISSING_BOOSTER", "FALLBACK", "routed to reference MODEL-REAL-04"),
         ("EC-12", "Corrupted Configuration Simulation", "SIMULATE_CORRUPT_CONFIG", "HANDLED_SAFELY", None),
-        ("EC-13", "Severe OOD State", {"stw_kn": 45.0, "draft_m": 35.0, "displacement_t": 500000.0}, "REJECT", "Severe Out-of-Distribution condition"),
+        ("EC-13", "Physically Impossible State (beyond hard bounds)", {"vessel_type": "passenger_cruise", "stw_kn": 45.0, "draft_m": 35.0, "displacement_t": 500000.0}, "REJECT", "out of physical bounds"),
         ("EC-14", "Inference Timeout / Exception", "SIMULATE_EXCEPTION", "FALLBACK_OR_EMERGENCY", None),
-        ("EC-15", "Prediction NaN Injection", {"stw_kn": 14.0, "draft_m": 8.0, "displacement_t": float("nan")}, "REJECT", "contains NaN or Inf value"),
-        ("EC-16", "Prediction Infinity Injection", {"stw_kn": float("inf"), "draft_m": 8.0, "displacement_t": 25000.0}, "REJECT", "contains NaN or Inf value"),
+        ("EC-15", "Prediction NaN Injection", {"vessel_type": "passenger_cruise", "stw_kn": 14.0, "draft_m": 8.0, "displacement_t": float("nan")}, "REJECT", "contains NaN or Inf value"),
+        ("EC-16", "Prediction Infinity Injection", {"vessel_type": "passenger_cruise", "stw_kn": float("inf"), "draft_m": 8.0, "displacement_t": 25000.0}, "REJECT", "contains NaN or Inf value"),
+        ("EC-17", "Unknown Vessel Type", {"vessel_type": "bulk_carrier", "stw_kn": 14.0, "draft_m": 8.0, "displacement_t": 25000.0}, "REJECT", "Unsupported vessel_type"),
+        ("EC-18", "Missing Vessel Type", {"stw_kn": 14.0, "draft_m": 8.0, "displacement_t": 25000.0}, "REJECT", "Missing mandatory required feature: 'vessel_type'"),
+        ("EC-19", "Single-Feature Extreme (draft 22 m)", {"vessel_type": "passenger_cruise", "stw_kn": 14.5, "draft_m": 22.0, "displacement_t": 35000.0}, "NOT_NORMAL_OOD", "Operating outside valid ML envelope"),
     ]
 
     edge_case_report = []
@@ -385,13 +407,17 @@ def run_safety_and_stress_tests(predictor: ProductionFuelPredictor):
                 pass_test = act_action in ["NORMAL", "FALLBACK"] and res["fuel_prediction"] is not None and res["fuel_prediction"] > 0
             elif exp == "PREDICT_OR_FALLBACK":
                 pass_test = act_action in ["NORMAL", "FALLBACK", "EMERGENCY_PHYSICS"] and res["fuel_prediction"] is not None
+            elif exp == "NOT_NORMAL_OOD":
+                pass_test = act_action in ["EMERGENCY_PHYSICS", "REJECT"] and res["confidence"] == "LOW"
+            if pass_test and exp_substr:
+                pass_test = exp_substr in act_warning
         elif inp == "SIMULATE_BOOSTER_EXCEPTION":
             old_b = predictor.qi_c1_booster
             class Broken:
                 def predict(self, *args, **kwargs):
                     raise RuntimeError("Injected C++ core segmentation fault")
             predictor.qi_c1_booster = Broken()
-            res = predictor.predict_fuel_with_uncertainty({"stw_kn": 14.0, "draft_m": 8.0, "displacement_t": 25000.0}, raise_on_error=False)
+            res = predictor.predict_fuel_with_uncertainty({"vessel_type": "passenger_cruise", "stw_kn": 14.0, "draft_m": 8.0, "displacement_t": 25000.0}, raise_on_error=False)
             predictor.qi_c1_booster = old_b
             act_action = res["routing_status"]
             act_warning = res.get("warning") or ""
@@ -399,7 +425,7 @@ def run_safety_and_stress_tests(predictor: ProductionFuelPredictor):
         elif inp == "SIMULATE_MISSING_BOOSTER":
             old_b = predictor.qi_c1_booster
             predictor.qi_c1_booster = None
-            res = predictor.predict_fuel_with_uncertainty({"stw_kn": 14.0, "draft_m": 8.0, "displacement_t": 25000.0}, raise_on_error=False)
+            res = predictor.predict_fuel_with_uncertainty({"vessel_type": "passenger_cruise", "stw_kn": 14.0, "draft_m": 8.0, "displacement_t": 25000.0}, raise_on_error=False)
             predictor.qi_c1_booster = old_b
             act_action = res["routing_status"]
             act_warning = res.get("warning") or ""
@@ -407,7 +433,7 @@ def run_safety_and_stress_tests(predictor: ProductionFuelPredictor):
         elif inp == "SIMULATE_CORRUPT_CONFIG":
             old_c = predictor.config
             predictor.config = {}
-            res = predictor.predict_fuel_with_uncertainty({"stw_kn": 14.0, "draft_m": 8.0, "displacement_t": 25000.0}, raise_on_error=False)
+            res = predictor.predict_fuel_with_uncertainty({"vessel_type": "passenger_cruise", "stw_kn": 14.0, "draft_m": 8.0, "displacement_t": 25000.0}, raise_on_error=False)
             predictor.config = old_c
             act_action = res["routing_status"]
             act_warning = res.get("warning") or ""
@@ -415,11 +441,14 @@ def run_safety_and_stress_tests(predictor: ProductionFuelPredictor):
         elif inp == "SIMULATE_EXCEPTION":
             old_qi = predictor.qi_c1_booster
             old_m04 = predictor.model_real_04_booster
+            old_vt = predictor.qi_c1_vessel_type_booster
             predictor.qi_c1_booster = None
+            predictor.qi_c1_vessel_type_booster = None
             predictor.model_real_04_booster = None
-            res = predictor.predict_fuel_with_uncertainty({"stw_kn": 14.0, "draft_m": 8.0, "displacement_t": 25000.0}, raise_on_error=False)
+            res = predictor.predict_fuel_with_uncertainty({"vessel_type": "passenger_cruise", "stw_kn": 14.0, "draft_m": 8.0, "displacement_t": 25000.0}, raise_on_error=False)
             predictor.qi_c1_booster = old_qi
             predictor.model_real_04_booster = old_m04
+            predictor.qi_c1_vessel_type_booster = old_vt
             act_action = res["routing_status"]
             act_warning = res.get("warning") or ""
             pass_test = res["prediction_source"] == "PHYSICS_EMERGENCY" and res["fuel_prediction"] > 0

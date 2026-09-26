@@ -1,4 +1,7 @@
 # EGREEN QUANTA — HOSTILE RED-TEAM AUDIT RAW EVIDENCE LOG
+
+> **Optimizer figures superseded (2026-09-24):** optimizer results in this report were produced before the optimizer domain-check fix (the calibration-grid path skipped the domain check, so plans at out-of-domain speeds were reported feasible). They are HISTORICAL. Current results: results/pareto_front.csv and results/algorithm_multiobjective_results.csv; pre-fix copies: results/superseded/2026-09-24_pre_optimizer_domain_fix/.
+
 **Project**: SIH26138 (Smart India Hackathon 2026)  
 **System**: Quantum-Inspired Fuel Consumption Prediction and Green Fleet Optimization  
 **Auditor Role**: Independent Senior Systems Architect & Scientific Verification Engineer  

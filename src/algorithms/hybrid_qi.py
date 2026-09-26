@@ -338,7 +338,8 @@ class A5CompleteHybridQIOptimizer(BaseFleetOptimizer):
                 if first_feas_eval == -1:
                     first_feas_eval = out.evaluation_index
                     first_feas_iter = 0
-                pareto_archive.append((out.objectives[:2].copy(), X[i].copy(), out))
+                if out.penalty <= 0.0:  # penalty-free only (speed band, schedule)
+                    pareto_archive.append((out.objectives[:2].copy(), X[i].copy(), out))
 
         # Initial gbest via Deb's selection
         gbest_idx = 0
@@ -404,7 +405,8 @@ class A5CompleteHybridQIOptimizer(BaseFleetOptimizer):
                     if first_feas_eval == -1:
                         first_feas_eval = out.evaluation_index
                         first_feas_iter = t + 1
-                    pareto_archive.append((out.objectives[:2].copy(), X[i].copy(), out))
+                    if out.penalty <= 0.0:  # penalty-free only (speed band, schedule)
+                        pareto_archive.append((out.objectives[:2].copy(), X[i].copy(), out))
 
                 # 2D. Deb's Feasibility-First Selection for pbest and gbest
                 if CommonFleetEvaluator.deb_prefers(out, P_outputs[i]):

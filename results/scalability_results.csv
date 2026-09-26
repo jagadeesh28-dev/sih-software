@@ -1,7 +1,7 @@
 dimension,evaluations,total_time_seconds,eval_time_ms_per_eval,feasibility_rate_pct,complexity_scaling
-18,2000,0.0018,0.0003,100.0,O(D) linear
-50,2000,0.0042,0.0005,100.0,O(D) linear
-100,2000,0.0082,0.0017,100.0,O(D) linear
-250,2000,0.0176,0.0033,100.0,O(D) linear
-500,2000,0.1691,0.0081,100.0,O(D) linear
-600,2000,0.0501,0.0086,100.0,O(D) linear
+18,2000,0.0005,0.0001,100.0,O(D) linear
+50,2000,0.0011,0.0002,100.0,O(D) linear
+100,2000,0.0022,0.0004,100.0,O(D) linear
+250,2000,0.0058,0.0011,100.0,O(D) linear
+500,2000,0.0117,0.0024,100.0,O(D) linear
+600,2000,0.0145,0.0029,100.0,O(D) linear

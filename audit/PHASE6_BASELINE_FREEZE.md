@@ -3,7 +3,7 @@
 **Audit Date:** 2026-09-19  
 **Status:** `CONFIRMED & FROZEN`  
 **Execution Environment:** Windows 11 AMD64, Python 3.14.0, LightGBM 4.7.0, NumPy 2.2.6, SciPy 1.17.0, Pandas 2.3.0  
-**Verification Script:** [`scripts/phase6_baseline_reproduce.py`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/scripts/phase6_baseline_reproduce.py)  
+**Verification Script:** [`scripts/phase6_baseline_reproduce.py`](../scripts/phase6_baseline_reproduce.py)  
 
 ---
 

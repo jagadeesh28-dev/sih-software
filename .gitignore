@@ -11,8 +11,9 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
+/lib/
+/lib64/
+!web/src/lib/
 parts/
 sdist/
 var/
@@ -52,3 +53,6 @@ results/figures/*.png
 results/figures/*.pdf
 scratch/*.npy
 scratch/*.npz
+
+# HMI runtime audit ledger (local operational data, not evidence)
+data/runtime/

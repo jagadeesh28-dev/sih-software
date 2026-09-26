@@ -19,6 +19,7 @@ from .emissions_model import FleetEmissionsEngine
 from .cost_model import FleetCostEngine
 from .regulatory import FleetRegulatoryEngine
 from .voyage_model import VoyageKinematicsEngine
+from .berth_model import DEFAULT_PORT_HOURS, SFOC_KG_VLSFO_PER_KWH, berth_accounting, grid_emission_factor_g_per_kwh
 from .fleet_heterogeneous import (
     FleetVesselProfile,
     CargoDemand,
@@ -131,6 +132,9 @@ class Phase4FleetEvaluator:
         self.lambda_robust = lambda_robust
         self.cvar_alpha = cvar_alpha
         self.require_all_demands = require_all_demands
+        # Berth phase per assigned demand (assumed scenario input) and grid factor for shore power
+        self.port_hours = DEFAULT_PORT_HOURS
+        self.grid_factor_g_per_kwh = grid_emission_factor_g_per_kwh()
 
         # Normalization reference scales for 5-objective vector
         # [Fuel (t), Cost ($), GHG (t), Delay (h), Risk ($)]
@@ -342,7 +346,19 @@ class Phase4FleetEvaluator:
                     clipped_speed = float(np.clip(act_speed, grid["speeds"][0], grid["speeds"][-1]))
                     f_rate_kg_h = float(np.interp(clipped_speed, grid["speeds"], grid["medians"]))
                     unc_width_kg_h = float(np.interp(clipped_speed, grid["speeds"], grid["uncs"]))
-                    domain_status_i = "VALID"
+                    # The grid only accelerates the fuel lookup; the domain check must still run on the
+                    # actual operating state, otherwise extrapolated speeds pass as feasible.
+                    grid_surrogate = self.surrogates.get(d.vessel_id) or list(self.surrogates.values())[0]
+                    domain_status_i = grid_surrogate.domain_checker.evaluate_point({
+                        "stw_kn": act_speed, "sog_kn": act_speed,
+                        "draft_m": v_prof.design_draft_m, "displacement_t": v_prof.displacement_t,
+                        "wind_speed_ms": scen.wind_speed_ms, "wind_direction_deg": scen.wind_direction_deg,
+                        "wave_height_m": scen.wave_height_m, "wave_period_s": scen.wave_period_s,
+                        "wave_direction_deg": 180.0, "current_speed_ms": scen.current_speed_ms,
+                        "current_direction_deg": scen.current_direction_deg, "water_depth_m": scen.water_depth_m,
+                        "vessel_type": canonicalize_vessel_type(v_class),
+                        "fuel_type": get_baseline_fuel_for_vessel(d.vessel_id),
+                    })["domain_status"]
                     if not (v_prof.min_speed_knots <= act_speed <= v_prof.max_speed_knots):
                         soft_penalties["speed_bound"] = soft_penalties.get("speed_bound", 0.0) + 5000.0
                         total_penalty += 5000.0
@@ -382,7 +398,7 @@ class Phase4FleetEvaluator:
 
                 # Hotel load floor for cruise ships
                 if canonicalize_vessel_type(v_class) in ["passenger_cruise", "passenger_cruise_small"]:
-                    hotel_fuel_kg_h = v_prof.hotel_load_kw * 0.220
+                    hotel_fuel_kg_h = v_prof.hotel_load_kw * SFOC_KG_VLSFO_PER_KWH
                     f_rate_kg_h = max(f_rate_kg_h, hotel_fuel_kg_h)
 
                 baseline_vlsfo_kg = f_rate_kg_h * duration_h
@@ -426,14 +442,16 @@ class Phase4FleetEvaluator:
                     ttw_co2_tonnes=emis["ttw_co2_tonnes"],
                     voyage_duration_hours=duration_h,
                     schedule_deadline_hours=demand.deadline_hours,
-                    use_shore_power=d.use_shore_power,
-                    port_hours=2.0,
-                    hotel_load_kw=v_prof.hotel_load_kw,
                     fueleu_penalty_usd=fueleu_res["penalty_usd"],
                 )
-                scen_fuel_cost += costs["fuel_cost_usd"]
-                scen_carbon_cost += costs["carbon_cost_usd"]
-                scen_shore_cost += costs["shore_power_cost_usd"]
+                # Berth: shore electricity OR onboard generation in the selected fuel, never both
+                berth = berth_accounting(v_prof.hotel_load_kw, self.port_hours, d.fuel_type, d.use_shore_power,
+                                         self.emissions_engine, self.cost_engine, self.grid_factor_g_per_kwh)
+                scen_fuel_t += berth.fuel_kg / 1000.0
+                scen_ghg_t += berth.ghg_t
+                scen_fuel_cost += costs["fuel_cost_usd"] + berth.fuel_cost_usd
+                scen_carbon_cost += costs["carbon_cost_usd"] + berth.carbon_cost_usd
+                scen_shore_cost += berth.electricity_cost_usd
                 scen_schedule_cost += costs["schedule_penalty_cost_usd"]
 
             scen_opex_usd = (

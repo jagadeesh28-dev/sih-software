@@ -19,8 +19,8 @@ Evaluates 16 Non-Negotiable Release Gates (G1 to G16):
   G16: TRACEABILITY - Git SHA, Artifact Hashes & Requirement Mapping
 
 Generates:
-  release/release_manifest.json
-  release/release_gate.json
+  RELEASE/release_manifest.json
+  RELEASE/release_gate.json
 """
 
 import hashlib
@@ -40,8 +40,51 @@ AUDIT_DIR = REPO_ROOT / "results" / "audit"
 MODELS_DIR = REPO_ROOT / "models"
 DATA_DIR = REPO_ROOT / "data" / "processed" / "real" / "fuelcast"
 RESULTS_DIR = REPO_ROOT / "results"
-RELEASE_DIR = REPO_ROOT / "release"
+RELEASE_DIR = REPO_ROOT / "RELEASE"
 RELEASE_DIR.mkdir(parents=True, exist_ok=True)
+
+# How each gate's verdict is obtained. FRESH gates execute the computation now;
+# REFERENCE gates only verify committed evidence artifacts produced earlier.
+FRESH = "FRESHLY COMPUTED"
+REFERENCE = "REFERENCE ARTIFACT VERIFIED"
+GATE_EVIDENCE = {
+    "G1_DATA": FRESH,
+    "G2_REPRODUCIBILITY": FRESH,
+    "G3_PREDICTION": FRESH,
+    "G4_VESSEL_TYPE": REFERENCE,
+    "G5_UNCERTAINTY": FRESH,
+    "G6_OOD": FRESH,
+    "G7_COST_OBJECTIVE": FRESH,
+    "G8_LIFECYCLE_GHG": FRESH,
+    "G9_MULTIOBJECTIVE": REFERENCE,
+    "G10_BENCHMARK": REFERENCE,
+    "G11_SCALABILITY": REFERENCE,
+    "G12_SAFETY": FRESH,
+    "G13_ALTERNATIVE_FUELS": FRESH,
+    "G14_DEMO": FRESH,
+    "G15_CLAIM_CONSISTENCY": FRESH,
+    "G16_TRACEABILITY": FRESH,
+}
+
+# Allowed drift between a fresh inference run and the frozen reference metrics.
+MAE_TOLERANCE_KG_H = 0.5
+R2_TOLERANCE = 0.0005
+PICP_TOLERANCE_PCT = 0.05
+
+
+def rel(path: Path) -> str:
+    return path.relative_to(REPO_ROOT).as_posix()
+
+
+_FRESH_METRICS: Dict[str, Any] = {}
+
+
+def fresh_metrics() -> Dict[str, Any]:
+    """Run the frozen boosters on the test split once and reuse for G3 and G5."""
+    if not _FRESH_METRICS:
+        from fresh_metrics import compute_fresh_metrics
+        _FRESH_METRICS.update(compute_fresh_metrics())
+    return _FRESH_METRICS
 
 
 def get_file_sha256(path: Path) -> str:
@@ -117,31 +160,48 @@ def run_gate_g2_reproducibility() -> Tuple[bool, Dict[str, Any]]:
         "split_manifest": (REPO_ROOT / "07_REAL_SPLIT_MANIFEST.json").exists(),
         "random_seed": 42,
     }
-    passed = env_info["split_manifest"]
+    from importlib.metadata import PackageNotFoundError, version
+    mismatches = {}
+    for line in (REPO_ROOT / "requirements-lock.txt").read_text(encoding="utf-8").splitlines():
+        line = line.split("#")[0].strip()
+        if "==" not in line:
+            continue
+        pkg, pinned = (s.strip() for s in line.split("==", 1))
+        try:
+            installed = version(pkg)
+        except PackageNotFoundError:
+            installed = None
+        if installed != pinned:
+            mismatches[pkg] = {"pinned": pinned, "installed": installed}
+    env_info["lockfile_mismatches"] = mismatches
+    passed = env_info["split_manifest"] and not mismatches
     return passed, env_info
 
 
 def run_gate_g3_prediction() -> Tuple[bool, Dict[str, Any]]:
-    """G3: Frozen baseline MODEL-REAL-04 and candidate QI-C1 accuracy."""
-    m04_meta_p = MODELS_DIR / "model_real_04_meta.json"
-    qi_meta_p = MODELS_DIR / "qi_c1_meta.json"
-    if not m04_meta_p.exists() or not qi_meta_p.exists():
-        return False, {"error": "Missing baseline or QI-C1 metadata"}
-
-    with open(m04_meta_p, "r") as f:
-        m04 = json.load(f)
-    with open(qi_meta_p, "r") as f:
-        qi = json.load(f)
-
-    m04_pass = (m04.get("test_r2", 0.0) >= 0.945) and (m04.get("test_mae_kg_h", 999.0) <= 250.0)
-    qi_pass = (qi.get("test_r2", 0.0) >= 0.945) and (qi.get("test_mae_kg_h", 999.0) <= 250.0)
-    passed = m04_pass and qi_pass
-
-    details = {
-        "MODEL-REAL-04": {"mae_kg_h": m04.get("test_mae_kg_h"), "r2": m04.get("test_r2")},
-        "QI-C1": {"mae_kg_h": qi.get("test_mae_kg_h"), "r2": qi.get("test_r2")},
-        "frozen_status": "VERIFIED_COMPLIANT" if passed else "NON_COMPLIANT",
-    }
+    """G3: Frozen baseline MODEL-REAL-04 and candidate QI-C1 accuracy, re-run on the test split."""
+    fm = fresh_metrics()
+    details: Dict[str, Any] = {"test_rows": fm["test_rows"]}
+    passed = True
+    for name in ("MODEL-REAL-04", "QI-C1", "QI-C1-vessel-type"):
+        m = fm[name]
+        reproduced = (
+            abs(m["fresh_test_mae_kg_h"] - m["reference_test_mae_kg_h"]) <= MAE_TOLERANCE_KG_H
+            and abs(m["fresh_test_r2"] - m["reference_test_r2"]) <= R2_TOLERANCE
+        )
+        # Acceptance thresholds apply to the frozen primary/anchor models only.
+        meets_threshold = name == "QI-C1-vessel-type" or (
+            m["fresh_test_r2"] >= 0.945 and m["fresh_test_mae_kg_h"] <= 250.0
+        )
+        passed = passed and reproduced and meets_threshold
+        details[name] = {
+            "fresh_mae_kg_h": m["fresh_test_mae_kg_h"],
+            "fresh_r2": m["fresh_test_r2"],
+            "reference_mae_kg_h": round(m["reference_test_mae_kg_h"], 4),
+            "reference_r2": round(m["reference_test_r2"], 6),
+            "reproduced_within_tolerance": reproduced,
+        }
+    details["note"] = "Inference re-run with committed boosters on the forward temporal test split; no retraining."
     return passed, details
 
 
@@ -155,9 +215,9 @@ def run_gate_g4_vessel_type() -> Tuple[bool, Dict[str, Any]]:
     if not (model_txt.exists() and model_meta.exists() and ablation_csv.exists() and metrics_json.exists()):
         return False, {"error": "Missing vessel_type model artifacts or ablation results"}
 
-    with open(model_meta, "r") as f:
+    with open(model_meta, "r", encoding="utf-8") as f:
         meta = json.load(f)
-    with open(metrics_json, "r") as f:
+    with open(metrics_json, "r", encoding="utf-8") as f:
         metrics = json.load(f)
 
     has_feature = "vessel_type" in meta.get("features", [])
@@ -187,30 +247,35 @@ def run_gate_g5_uncertainty() -> Tuple[bool, Dict[str, Any]]:
     unc_path = AUDIT_DIR / "detailed_uncertainty_metrics.json"
     if not unc_path.exists():
         return False, {"error": "Missing detailed_uncertainty_metrics.json"}
-    with open(unc_path, "r") as f:
+    with open(unc_path, "r", encoding="utf-8") as f:
         unc = json.load(f)
 
-    qi_90 = unc.get("QI-C1", {}).get("0.9", {})
-    m04_90 = unc.get("MODEL-REAL-04", {}).get("0.9", {})
-
-    passed = (qi_90.get("PICP_pct", 0.0) >= 90.0) and (m04_90.get("PICP_pct", 0.0) >= 90.0)
-    details = {
-        "nominal_level": "90%",
-        "QI-C1_coverage_pct": qi_90.get("PICP_pct"),
-        "QI-C1_mpiw_kg_h": qi_90.get("MPIW_kg_h"),
-        "MODEL-REAL-04_coverage_pct": m04_90.get("PICP_pct"),
-        "sharpness_gain_pct": unc.get("tradeoff_comparison", {}).get("0.9", {}).get("sharpness_gain_pct"),
-    }
+    fm = fresh_metrics()
+    details: Dict[str, Any] = {"nominal_level": "90%"}
+    passed = True
+    for name in ("QI-C1", "MODEL-REAL-04"):
+        m = fm[name]
+        reproduced = abs(m["fresh_picp_90_pct"] - m["reference_picp_90_pct"]) <= PICP_TOLERANCE_PCT
+        passed = passed and reproduced and m["fresh_picp_90_pct"] >= 90.0
+        details[name] = {
+            "fresh_picp_pct": m["fresh_picp_90_pct"],
+            "reference_picp_pct": round(m["reference_picp_90_pct"], 4),
+            "mpiw_kg_h": m["mpiw_90_kg_h"],
+            "reproduced_within_tolerance": reproduced,
+        }
+    details["reference_sharpness_gain_pct"] = unc.get("tradeoff_comparison", {}).get("0.9", {}).get("sharpness_gain_pct")
     return passed, details
 
 
 def run_gate_g6_ood() -> Tuple[bool, Dict[str, Any]]:
     """G6: OOD Guard confusion matrix and threshold audit."""
-    ood_path = AUDIT_DIR / "detailed_ood_metrics.json"
-    if not ood_path.exists():
-        return False, {"error": "Missing detailed_ood_metrics.json"}
-    with open(ood_path, "r") as f:
-        ood = json.load(f)
+    # Re-runs the OOD evaluation through the serving path and rewrites the artifact.
+    import compute_detailed_metrics as cdm
+    from src.qi_prediction.validation import ValidationHarness
+    import pandas as pd
+    dfs = {v: pd.read_parquet(DATA_DIR / f"{v}.parquet") for v in cdm.VESSELS}
+    _, _, test = ValidationHarness.forward_temporal_splits(dfs)
+    ood = cdm.evaluate_ood(test, cdm.get_production_predictor())
 
     summary = ood.get("primary_ood_guard_summary", {})
     perf = summary.get("performance_metrics", {})
@@ -247,20 +312,46 @@ def run_gate_g7_cost_objective() -> Tuple[bool, Dict[str, Any]]:
         hotel_load_kw=1200.0,
     )
 
+    berth_kw = dict(vessel_id="CPS_Poseidon", vessel_type="passenger_cruise", speed_knots=14.5,
+                    voyage_distance_nm=300.0, schedule_deadline_hours=24.0, baseline_fuel_rate_kg_h=2700.0,
+                    fuel_type="vlsfo")
+    voyage_only = engine.evaluate_voyage(**berth_kw)
+    onboard = engine.evaluate_voyage(**berth_kw, use_shore_power=False, port_hours=10.0, hotel_load_kw=1200.0)
+    # Symmetric berth accounting: ON = voyage + electricity only; OFF = voyage + onboard berth fuel only.
+    berth_symmetric = (
+        obj.berth_source == "SHORE POWER" and obj.berth_fuel_tonnes == 0.0
+        and abs(obj.operational_cost_usd - (voyage_only.operational_cost_usd + obj.shore_power_cost_usd)) <= 0.05
+        and onboard.berth_source == "ONBOARD GENERATION" and onboard.shore_power_cost_usd == 0.0
+        and onboard.berth_fuel_tonnes > 0.0
+        and abs(onboard.operational_cost_usd - (voyage_only.operational_cost_usd + onboard.berth_cost_usd)) <= 0.05
+    )
+    components = (
+        obj.fuel_cost_usd + obj.shore_power_cost_usd + obj.carbon_cost_usd
+        + obj.schedule_penalty_usd + obj.fueleu_penalty_usd
+    )
+    # Total may add fixed operating costs, but must never be less than its named parts.
+    components_covered = obj.operational_cost_usd >= components - 0.05
     passed = (
         obj.operational_cost_usd > 0
         and obj.fuel_cost_usd > 0
         and obj.shore_power_cost_usd > 0
         and obj.carbon_cost_usd > 0
+        and components_covered
+        and berth_symmetric
     )
     details = {
         "formula": "C_total = C_fuel + C_elec + C_ops + C_carbon + C_sched + C_fueleu",
+        "berth_accounting_symmetric": berth_symmetric,
+        "berth_shore_on_electricity_usd": round(obj.shore_power_cost_usd, 2),
+        "berth_onboard_cost_usd": round(onboard.berth_cost_usd, 2),
+        "berth_onboard_fuel_t": round(onboard.berth_fuel_tonnes, 4),
         "sample_evaluation_usd": round(obj.operational_cost_usd, 2),
         "fuel_cost_usd": round(obj.fuel_cost_usd, 2),
         "shore_power_cost_usd": round(obj.shore_power_cost_usd, 2),
         "carbon_cost_usd": round(obj.carbon_cost_usd, 2),
-        "zero_double_counting_verified": True,
-        "artifact": str(cost_csv),
+        "named_components_sum_usd": round(components, 2),
+        "total_covers_components": components_covered,
+        "artifact": rel(cost_csv),
     }
     return passed, details
 
@@ -292,18 +383,33 @@ def run_gate_g8_lifecycle_ghg() -> Tuple[bool, Dict[str, Any]]:
         fuel_type="bio_methanol",
     )
 
+    g8_kw = dict(vessel_id="CPS_Poseidon", vessel_type="passenger_cruise", speed_knots=14.5, voyage_distance_nm=300.0,
+                 schedule_deadline_hours=24.0, baseline_fuel_rate_kg_h=2700.0, fuel_type="vlsfo",
+                 port_hours=10.0, hotel_load_kw=1200.0)
+    berth_off = engine.evaluate_voyage(**g8_kw, use_shore_power=False)
+    berth_on = engine.evaluate_voyage(**g8_kw, use_shore_power=True)
+    grid_t = 1200.0 * 10.0 * engine.shore_power_grid_emission_factor / 1e6
+    berth_ghg_symmetric = (
+        abs(berth_off.lifecycle_ghg_tonnes - (vlsfo_res.lifecycle_ghg_tonnes + berth_off.berth_ghg_tonnes)) <= 1e-3
+        and berth_off.berth_ghg_tonnes > 0.0
+        and abs(berth_on.lifecycle_ghg_tonnes - (vlsfo_res.lifecycle_ghg_tonnes + grid_t)) <= 1e-3
+    )
     passed = (
         vlsfo_res.lifecycle_ghg_tonnes > 0
         and vlsfo_res.wtt_ghg_tonnes > 0
         and vlsfo_res.ttw_ghg_tonnes > 0
         and bio_res.lifecycle_ghg_tonnes < vlsfo_res.lifecycle_ghg_tonnes
+        and berth_ghg_symmetric
     )
     details = {
         "standard": "IMO Resolution MEPC.391(81) & EU MRV",
         "formula": "GHG_WtW = GHG_WtT + GHG_TtW + Slip",
         "vlsfo_wtw_tco2e": round(vlsfo_res.lifecycle_ghg_tonnes, 2),
         "biomethanol_wtw_tco2e": round(bio_res.lifecycle_ghg_tonnes, 2),
-        "artifact": str(ghg_csv),
+        "berth_ghg_symmetric": berth_ghg_symmetric,
+        "berth_onboard_wtw_tco2e": round(berth_off.berth_ghg_tonnes, 3),
+        "berth_shore_grid_tco2e": round(grid_t, 3),
+        "artifact": rel(ghg_csv),
     }
     return passed, details
 
@@ -319,12 +425,21 @@ def run_gate_g9_multiobjective() -> Tuple[bool, Dict[str, Any]]:
     df_p = pd.read_csv(pareto_csv)
     df_t = pd.read_csv(tradeoffs_csv)
 
-    passed = (len(df_p) >= 1) and (len(df_t) >= 4)
+    from src.benchmark.metrics import is_pareto_efficient
+    df_u = df_p.drop_duplicates(subset=["fuel_tonnes", "cost_usd", "ghg_tonnes", "delay_hours"])
+    distinct = len(df_u)
+    penalty_free = bool("penalty" in df_p and df_p["is_feasible"].astype(str).str.lower().eq("true").all()
+                        and (df_p["penalty"] <= 0.0).all())
+    non_dominated = bool(distinct and is_pareto_efficient(df_u[["fuel_tonnes", "cost_usd", "ghg_tonnes"]].values).all())
+    passed = (distinct >= 2) and penalty_free and non_dominated and (len(df_t) >= 4)
     details = {
-        "pareto_points_count": len(df_p),
+        "pareto_rows": len(df_p),
+        "distinct_pareto_points": distinct,
+        "all_points_feasible_and_penalty_free": penalty_free,
+        "all_points_mutually_non_dominated": non_dominated,
         "objectives": ["operational_cost_usd", "wtw_ghg_tonnes", "schedule_penalty_usd"],
         "tradeoff_scenarios_evaluated": len(df_t),
-        "pareto_artifact": str(pareto_csv),
+        "pareto_artifact": rel(pareto_csv),
     }
     return passed, details
 
@@ -344,16 +459,18 @@ def run_gate_g10_benchmark() -> Tuple[bool, Dict[str, Any]]:
     has_nsga = any("NSGA" in a for a in algorithms)
 
     passed = has_de and has_qpso and has_ga and has_nsga and (len(df_b) >= 100)
-    de_feas = float(df_b[df_b["algorithm"].str.contains("DE")]["feasibility"].mean())
-    qpso_feas = float(df_b[df_b["algorithm"].str.contains("QPSO")]["feasibility"].mean())
+    de_rows = df_b[df_b["algorithm"].str.contains("DE")]
+    qpso_rows = df_b[df_b["algorithm"].str.contains("QPSO")]
+    de_feas = float(de_rows["feasibility"].mean())
+    qpso_feas = float(qpso_rows["feasibility"].mean())
 
     details = {
-        "algorithms_evaluated": list(algorithms),
-        "seeds_per_algorithm": 30,
+        "algorithms_evaluated": sorted(algorithms),
+        "seeds_per_algorithm": {a: int(n) for a, n in df_b.groupby("algorithm")["seed"].nunique().items()},
         "de_feasible_rate_pct": round(de_feas * 100, 1),
         "qpso_feasible_rate_pct": round(qpso_feas * 100, 1),
-        "unsupported_winner_claim": False,
-        "honest_disclosure": "Classical DE achieved 100% feasibility and lower fitness vs QPSO (80% feasibility).",
+        "de_median_fitness": round(float(de_rows["fitness"].median()), 4),
+        "qpso_median_fitness": round(float(qpso_rows["fitness"].median()), 4),
     }
     return passed, details
 
@@ -373,19 +490,16 @@ def run_gate_g11_scalability() -> Tuple[bool, Dict[str, Any]]:
     details = {
         "max_dimension_evaluated": max_d,
         "eval_time_per_call_ms": round(max_ms, 4),
-        "complexity": "O(D) strictly linear",
-        "artifact": str(scale_csv),
+        "artifact": rel(scale_csv),
     }
     return passed, details
 
 
 def run_gate_g12_safety() -> Tuple[bool, Dict[str, Any]]:
     """G12: 1,000 invalid stress tests, 16 edge cases, domain guard fallback."""
-    safe_path = AUDIT_DIR / "safety_test_matrix.json"
-    if not safe_path.exists():
-        return False, {"error": "Missing safety_test_matrix.json"}
-    with open(safe_path, "r") as f:
-        safe = json.load(f)
+    # Re-runs 1,000 invalid inputs and the edge-case matrix against the live predictor.
+    import compute_detailed_metrics as cdm
+    safe = cdm.run_safety_and_stress_tests(cdm.get_production_predictor())
 
     rate = safe.get("safe_rejection_rate_pct", 0.0)
     edge_cases = safe.get("edge_case_matrix", [])
@@ -396,7 +510,7 @@ def run_gate_g12_safety() -> Tuple[bool, Dict[str, Any]]:
         "invalid_stress_tests": safe.get("total_invalid_stress_tests"),
         "safe_rejection_rate_pct": rate,
         "edge_cases_passed": len([ec for ec in edge_cases if ec.get("pass")]),
-        "fallback_domain_guard": "MODEL-REAL-04 on unknown vessel_type",
+        "unknown_vessel_type": "REJECT (categorical out-of-distribution)",
     }
     return passed, details
 
@@ -419,11 +533,13 @@ def run_gate_g13_alternative_fuels() -> Tuple[bool, Dict[str, Any]]:
             fuel_type=f,
         )
         fuel_data[f] = {
+            "resolved_pathway": res.fuel_type,
             "fuel_tonnes": res.fuel_tonnes,
             "cost_usd": res.operational_cost_usd,
             "wtw_tco2e": res.lifecycle_ghg_tonnes,
         }
-        if res.lifecycle_ghg_tonnes < 0:
+        # Each fuel must resolve to its own pathway; a silent VLSFO substitution fails the gate.
+        if res.lifecycle_ghg_tonnes < 0 or res.fuel_type != f:
             all_ok = False
 
     details = {
@@ -435,20 +551,25 @@ def run_gate_g13_alternative_fuels() -> Tuple[bool, Dict[str, Any]]:
 
 
 def run_gate_g14_demo() -> Tuple[bool, Dict[str, Any]]:
-    """G14: All 11 demonstration scenes executable with Exit Code 0."""
-    status_p = RELEASE_DIR / "FINAL_DEMO_STATUS.json"
-    if not status_p.exists():
-        return False, {"error": "Missing FINAL_DEMO_STATUS.json"}
-    with open(status_p, "r") as f:
-        status_data = json.load(f)
-
-    passed = (status_data.get("overall_demo_status") == "ALL_SCENES_PASS") and (status_data.get("scenes_passed") == 11)
+    """G14: Run all 11 demonstration scenes now; pass only on exit code 0 with 11/11 scene checks."""
+    import re
+    demo = REPO_ROOT / "scripts" / "demo_scenarios.py"
+    proc = subprocess.run(
+        [sys.executable, str(demo)], cwd=REPO_ROOT, capture_output=True, text=True,
+        encoding="utf-8", errors="replace", timeout=600,
+    )
+    m = re.search(r"DEMO RESULT: (\d+)/(\d+) scenes passed", proc.stdout)
+    scenes_passed, total = (int(m.group(1)), int(m.group(2))) if m else (0, 0)
+    passed = proc.returncode == 0 and total == 11 and scenes_passed == 11
     details = {
-        "total_scenes": status_data.get("total_scenes"),
-        "scenes_passed": status_data.get("scenes_passed"),
-        "overall_status": status_data.get("overall_demo_status"),
-        "demo_script": status_data.get("demo_script"),
+        "demo_script": rel(demo),
+        "exit_code": proc.returncode,
+        "total_scenes": total,
+        "scenes_passed": scenes_passed,
+        "failed_checks": [ln.strip() for ln in proc.stdout.splitlines() if "CHECK FAILED" in ln],
     }
+    if proc.returncode != 0:
+        details["stderr_tail"] = proc.stderr.strip().splitlines()[-5:]
     return passed, details
 
 
@@ -457,20 +578,28 @@ def run_gate_g15_claim_consistency() -> Tuple[bool, Dict[str, Any]]:
     claims_p = RELEASE_DIR / "FINAL_CLAIMS.json"
     if not claims_p.exists():
         return False, {"error": "Missing FINAL_CLAIMS.json"}
-    with open(claims_p, "r") as f:
+    with open(claims_p, "r", encoding="utf-8") as f:
         claims = json.load(f)
 
     prohibited = claims.get("prohibited_claims", [])
-    verified = claims.get("verified_claims", [])
-    passed = len(prohibited) >= 7 and len(verified) >= 14
+    verified = claims.get("verified_claims", []) + claims.get("verified_with_qualification_claims", [])
+    required = {"quantum supremacy", "quantum speedup", "quantum advantage"}
+    listed = {p.lower() for p in prohibited}
+    # Every positive claim is scanned for any prohibited phrase.
+    violations = [
+        {"claim_id": c.get("claim_id"), "phrase": p}
+        for c in verified
+        for p in listed
+        if p in str(c.get("statement", "")).lower()
+    ]
+    missing_required = sorted(r for r in required if not any(r in x for x in listed))
+    passed = not violations and not missing_required and len(verified) >= 14
 
     details = {
         "prohibited_claims_count": len(prohibited),
-        "verified_claims_count": len(verified),
-        "quantum_supremacy_claimed": False,
-        "autonomous_controller_claimed": False,
-        "alternative_fuels_empirical_claimed": False,
-        "decision_support_prototype": True,
+        "positive_claims_scanned": len(verified),
+        "prohibited_phrase_violations": violations,
+        "required_prohibitions_missing": missing_required,
     }
     return passed, details
 
@@ -544,12 +673,13 @@ def main():
 
         status_str = "PASS" if passed else "FAIL"
         dots = "." * max(2, (30 - len(gid)))
-        print(f"    {gid} {dots} {status_str}  ({name})")
+        print(f"    {gid} {dots} {status_str}  [{GATE_EVIDENCE[gid]}]  ({name})")
 
         gate_results[gid] = {
             "name": name,
             "status": status_str,
             "passed": passed,
+            "evidence": GATE_EVIDENCE[gid],
             "details": details,
         }
         if not passed:
@@ -570,6 +700,8 @@ def main():
         "timestamp_utc": datetime.now(timezone.utc).isoformat(),
         "gates_evaluated": len(gates),
         "gates_passed": sum(1 for g in gate_results.values() if g["passed"]),
+        "gates_freshly_computed": sum(1 for g in gate_results.values() if g["evidence"] == FRESH),
+        "gates_reference_artifact_verified": sum(1 for g in gate_results.values() if g["evidence"] == REFERENCE),
         "gates": gate_results,
     }
 

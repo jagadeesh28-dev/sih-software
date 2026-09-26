@@ -18,7 +18,36 @@ from typing import Any, Dict, List, Optional
 import numpy as np
 import pandas as pd
 
+import warnings
+
 from physics.resistance_model import VesselResistanceModel
+
+# Hull profiles with published dimensions in configs/physics.yaml.
+REFERENCE_HULL_PROFILES = {"container_feeder", "bulk_handymax"}
+
+# The FuelCast vessels have no public hull dimensions, so the physics baseline runs on a
+# declared proxy hull. MODEL-REAL-04 / QI-C1 residuals were trained against exactly this
+# proxy baseline and absorb the hull mismatch; changing it invalidates the frozen models.
+PROXY_HULL_PROFILES = {
+    "passenger_cruise": "container_feeder",        # CPS_Poseidon
+    "passenger_cruise_small": "container_feeder",  # CPS_Triton
+    "offshore_supply": "container_feeder",         # OSS_Ceto
+}
+
+
+def resolve_hull_profile(vessel_type: str, default: str = "container_feeder") -> tuple:
+    """Return (hull_profile, is_proxy). Unknown vessel types warn instead of mapping silently."""
+    if vessel_type in REFERENCE_HULL_PROFILES:
+        return vessel_type, False
+    if vessel_type in PROXY_HULL_PROFILES:
+        return PROXY_HULL_PROFILES[vessel_type], True
+    warnings.warn(
+        f"No hull profile for vessel_type '{vessel_type}'; physics baseline uses generic "
+        f"'{default}' hull. Treat physics output as low-confidence.",
+        RuntimeWarning,
+        stacklevel=3,
+    )
+    return default, True
 
 
 class PhysicsFuelPredictor:
@@ -31,13 +60,13 @@ class PhysicsFuelPredictor:
         self.default_vessel_type = default_vessel_type
         # Cache models for each vessel type to avoid reloading configs per record
         self._vessel_models: Dict[str, VesselResistanceModel] = {}
+        self._hull_profiles: Dict[str, tuple] = {}
 
     def _get_model(self, vessel_type: str) -> VesselResistanceModel:
         if vessel_type not in self._vessel_models:
-            mapped_type = vessel_type
-            if mapped_type not in ["container_feeder", "bulk_handymax"]:
-                mapped_type = self.default_vessel_type
-            self._vessel_models[vessel_type] = VesselResistanceModel(vessel_type=mapped_type)
+            profile, is_proxy = resolve_hull_profile(vessel_type, self.default_vessel_type)
+            self._hull_profiles[vessel_type] = (profile, is_proxy)
+            self._vessel_models[vessel_type] = VesselResistanceModel(vessel_type=profile)
         return self._vessel_models[vessel_type]
 
     def predict_record(self, record: Dict[str, Any]) -> Dict[str, Any]:
@@ -95,6 +124,8 @@ class PhysicsFuelPredictor:
                 "eta_s": float(res["power"].get("eta_s", 0.98)),
                 "engine_load_fraction": float(res["fuel"]["load_fraction"]),
                 "effective_sfc_g_kwh": float(res["fuel"]["effective_sfc_g_kwh"]),
+                "hull_profile": self._hull_profiles[v_type][0],
+                "hull_profile_is_proxy": self._hull_profiles[v_type][1],
             },
         }
 

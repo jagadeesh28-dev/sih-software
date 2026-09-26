@@ -8,7 +8,10 @@ Integrates transparent, configuration-driven formulations for:
 Mathematical Formulations:
 - C_total = C_fuel + C_electricity + C_OPS + C_carbon + C_schedule_penalty
     C_fuel = m_fuel * fuel_price
-    C_OPS  = (P_aux * t_berth * electricity_price) + connection_fee  (if shore power enabled, else 0)
+    Berth (hotel load H for t_berth, optimization/berth_model.py), mutually exclusive:
+      shore power ON : C_OPS = H * t_berth * electricity_price + connection_fee ; GHG = H * t_berth * grid_factor
+      shore power OFF: onboard generation, m = H * t_berth * SFOC (VLSFO-eq, LHV-converted to the pathway),
+                       costed and emitted exactly like voyage fuel
     C_carbon = fossil_CO2_TtW * carbon_price * ets_scope
     C_schedule = max(0, t_voyage - t_deadline) * demurrage_rate
 
@@ -25,6 +28,7 @@ from common.config_loader import load_config
 from lca.fuel_registry import FuelPathwayRegistry
 from optimization.cost_model import FleetCostEngine
 from optimization.emissions_model import FleetEmissionsEngine
+from optimization.berth_model import berth_accounting
 
 
 @dataclass
@@ -55,6 +59,13 @@ class SIHOptimizationObjectives:
     fuel_type: str = ""
     speed_knots: float = 0.0
     use_shore_power: bool = False
+
+    # Berth phase (included in the totals above): source, energy, onboard fuel and GHG
+    berth_source: str = "NONE"
+    berth_energy_kwh: float = 0.0
+    berth_fuel_tonnes: float = 0.0
+    berth_cost_usd: float = 0.0
+    berth_ghg_tonnes: float = 0.0
 
     def as_vector(self, mode: str = "FULL") -> np.ndarray:
         """
@@ -156,8 +167,14 @@ class SIHObjectiveEngine:
         try:
             f_type = canonicalize_fuel_type(fuel_type)
         except Exception:
-            f_type = "vlsfo"
+            f_type = None
         if f_type not in self.registry.pathways:
+            import warnings
+            warnings.warn(
+                f"Unsupported fuel_type '{fuel_type}'; evaluated as VLSFO. Result's fuel_type field is 'vlsfo'.",
+                RuntimeWarning,
+                stacklevel=2,
+            )
             f_type = "vlsfo"
         if speed_knots <= 0.0:
             voyage_hours = 1000.0
@@ -185,49 +202,51 @@ class SIHObjectiveEngine:
         wtw_ghg_t = emissions_res["wtw_total_tonnes_co2e"]
         ttw_co2_t = emissions_res["ttw_co2_tonnes"]
 
-        # Shore power grid emissions if cold ironing at berth
-        if use_shore_power and port_hours > 0.0 and hotel_load_kw > 0.0:
-            shore_kwh = hotel_load_kw * port_hours
-            shore_ghg_t = (shore_kwh * self.shore_power_grid_emission_factor) / 1e6
-            wtw_ghg_t += shore_ghg_t
-
-        # 2. Operational Cost Calculation
+        # 2. Operational Cost Calculation (sea passage; berth handled below)
         costs_res = self.cost_engine.compute_leg_costs(
             fuel_mass_tonnes=fuel_tonnes,
             fuel_type=f_type,
             ttw_co2_tonnes=ttw_co2_t,
             voyage_duration_hours=voyage_hours,
             schedule_deadline_hours=schedule_deadline_hours,
-            use_shore_power=use_shore_power,
-            port_hours=port_hours,
-            hotel_load_kw=hotel_load_kw,
             fueleu_penalty_usd=fueleu_penalty_usd,
         )
 
-        # 3. Feasibility check
+        # 3. Berth: shore electricity OR onboard generation, never both
+        berth = berth_accounting(hotel_load_kw, port_hours, f_type, use_shore_power,
+                                 self.emissions_engine, self.cost_engine, self.shore_power_grid_emission_factor)
+        fuel_tonnes += berth.fuel_kg / 1000.0
+        wtw_ghg_t += berth.ghg_t
+
+        # 4. Feasibility check
         is_feas = bool(leg_delay_h == 0.0 and speed_knots > 0.0)
         penalty = 500.0 * leg_delay_h if leg_delay_h > 0.0 else 0.0
 
         return SIHOptimizationObjectives(
             fuel_tonnes=round(fuel_tonnes, 4),
-            operational_cost_usd=round(costs_res["total_opex_usd"], 2),
+            operational_cost_usd=round(costs_res["total_opex_usd"] + berth.cost_usd, 2),
             lifecycle_ghg_tonnes=round(wtw_ghg_t, 4),
             schedule_delay_hours=round(leg_delay_h, 2),
             total_penalty=round(penalty, 2),
             is_feasible=is_feas,
-            fuel_cost_usd=round(costs_res["fuel_cost_usd"], 2),
-            carbon_cost_usd=round(costs_res["carbon_cost_usd"], 2),
-            shore_power_cost_usd=round(costs_res["shore_power_cost_usd"], 2),
+            fuel_cost_usd=round(costs_res["fuel_cost_usd"] + berth.fuel_cost_usd, 2),
+            carbon_cost_usd=round(costs_res["carbon_cost_usd"] + berth.carbon_cost_usd, 2),
+            shore_power_cost_usd=round(berth.electricity_cost_usd, 2),
             schedule_penalty_usd=round(costs_res["schedule_penalty_cost_usd"], 2),
             fueleu_penalty_usd=round(costs_res["fueleu_penalty_usd"], 2),
-            wtt_ghg_tonnes=round(emissions_res["wtt_tonnes_co2e"], 4),
-            ttw_ghg_tonnes=round(emissions_res["ttw_total_tonnes_co2e"], 4),
-            methane_slip_tonnes=round(emissions_res["methane_slip_tonnes_co2e"], 4),
+            wtt_ghg_tonnes=round(emissions_res["wtt_tonnes_co2e"] + berth.wtt_ghg_t, 4),
+            ttw_ghg_tonnes=round(emissions_res["ttw_total_tonnes_co2e"] + berth.ttw_ghg_t, 4),
+            methane_slip_tonnes=round(emissions_res["methane_slip_tonnes_co2e"] + berth.methane_slip_t, 4),
             vessel_id=vessel_id,
             vessel_type=vessel_type,
             fuel_type=f_type,
             speed_knots=speed_knots,
             use_shore_power=use_shore_power,
+            berth_source=berth.source,
+            berth_energy_kwh=round(berth.energy_kwh, 2),
+            berth_fuel_tonnes=round(berth.fuel_kg / 1000.0, 4),
+            berth_cost_usd=round(berth.cost_usd, 2),
+            berth_ghg_tonnes=round(berth.ghg_t, 4),
         )
 
     @staticmethod

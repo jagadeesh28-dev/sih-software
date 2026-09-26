@@ -1,0 +1,33 @@
+{
+  "timestamp_utc": "2026-09-24T15:36:37.203820+00:00",
+  "git_sha": "0804bf23a5d2a44dee9ce5a2fffa39a367a6161d",
+  "release_status": "PASSED",
+  "data_status": "PASS",
+  "model_status": "PASS",
+  "baseline_status": "PASS",
+  "qi_status": "PASS",
+  "uncertainty_status": "PASS",
+  "ood_status": "PASS",
+  "safety_status": "PASS",
+  "optimizer_status": "PASS",
+  "claim_status": "PASS",
+  "overall_status": "VERIFIED CONTROLLED RELEASE",
+  "e2e_status": "PASS",
+  "checks_passed": "10/10",
+  "evidence": {
+    "FRESHLY REPRODUCED": [
+      "data",
+      "model_load",
+      "baseline",
+      "qi",
+      "uncertainty",
+      "optimizer",
+      "e2e",
+      "claims"
+    ],
+    "REFERENCE ARTIFACT VERIFIED": [
+      "ood",
+      "safety"
+    ]
+  }
+}

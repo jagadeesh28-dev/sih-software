@@ -1,9 +1,10 @@
 import os
+from pathlib import Path
 import numpy as np
 import pandas as pd
 from scipy import stats
 
-base_dir = r"c:\Users\JAGADEESH M\OneDrive\Documents\SIH-software\sih26138_platform\PHASE5"
+base_dir = str(Path(__file__).resolve().parents[1] / "PHASE5")
 val_dir = os.path.join(base_dir, "validation")
 
 print("=== RUNTIME POWER-LAW FIT T(D) = a * D^b ===")

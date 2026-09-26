@@ -156,7 +156,8 @@ class ProductionFuelPredictor:
         clean = dict(raw_input)
 
         # 1. Required features check
-        required_fields = ["stw_kn", "draft_m", "displacement_t"]
+        # vessel_type is required: every model is conditioned on it, and a guessed default would be silent generic mapping.
+        required_fields = ["stw_kn", "draft_m", "displacement_t", "vessel_type"]
         for rf in required_fields:
             if rf not in clean or clean[rf] is None:
                 errors.append(f"Missing mandatory required feature: '{rf}'")
@@ -184,7 +185,6 @@ class ProductionFuelPredictor:
             "current_speed_ms": 0.0,
             "current_direction_deg": 0.0,
             "water_depth_m": 100.0,
-            "vessel_type": "ContainerShip",
             "fuel_type": "VLSFO",
         }
         for k, def_v in defaults.items():
@@ -213,29 +213,39 @@ class ProductionFuelPredictor:
         is_valid = len(errors) == 0
         return is_valid, errors, clean
 
-    def compute_envelope_distance(self, clean_point: Dict[str, Any]) -> float:
-        """Calculate normalized multi-dimensional distance outside training envelope."""
-        if not self.domain_stats:
-            return 0.0
-
-        dist_sq = 0.0
-        n_dim = 0
+    def envelope_deviations(self, point: Dict[str, Any], supplied: Optional[set] = None) -> Dict[str, float]:
+        """
+        Per-feature exceedance beyond the training envelope, in units of that feature's
+        training span (0.0 inside [min, max]). Only supplied features are scored:
+        serving-contract defaults are imputations, not observations.
+        """
+        keys = supplied if supplied is not None else {k for k, v in point.items() if v is not None}
+        out: Dict[str, float] = {}
         for col, stats in self.domain_stats.items():
-            if col in clean_point and clean_point[col] is not None:
-                try:
-                    val = float(clean_point[col])
-                    span = max(stats["max"] - stats["min"], stats["std"])
-                    if val > stats["max"]:
-                        delta = (val - stats["max"]) / span
-                        dist_sq += delta ** 2
-                    elif val < stats["min"]:
-                        delta = (stats["min"] - val) / span
-                        dist_sq += delta ** 2
-                    n_dim += 1
-                except (ValueError, TypeError):
-                    pass
+            if col not in keys or point.get(col) is None:
+                continue
+            try:
+                val = float(point[col])
+            except (ValueError, TypeError):
+                continue
+            span = max(stats["max"] - stats["min"], stats["std"])
+            if val > stats["max"]:
+                out[col] = (val - stats["max"]) / span
+            elif val < stats["min"]:
+                out[col] = (stats["min"] - val) / span
+            else:
+                out[col] = 0.0
+        return out
 
-        return float(np.sqrt(dist_sq / max(n_dim, 1)))
+    def compute_envelope_distance(self, point: Dict[str, Any], supplied: Optional[set] = None) -> float:
+        """
+        Worst single-feature exceedance beyond the training envelope (L-infinity norm).
+
+        The previous RMS average diluted extreme features with in-range ones (including
+        imputed defaults), so the reported distance fell as more normal measurements were
+        added. The maximum is invariant to that; in-envelope points still score exactly 0.
+        """
+        return float(max(self.envelope_deviations(point, supplied).values(), default=0.0))
 
     def _predict_point(
         self,
@@ -280,14 +290,18 @@ class ProductionFuelPredictor:
                 "timestamp": now_ts,
             }
 
-        # Step 2: Domain Checking & OOD Distance
-        env_dist = self.compute_envelope_distance(clean)
+        # Step 2: Domain Checking & OOD Distance (supplied measurements only)
+        supplied = {k for k, v in point.items() if v is not None}
+        deviations = self.envelope_deviations(clean, supplied)
+        env_dist = float(max(deviations.values(), default=0.0))
+        dominant = max(deviations, key=deviations.get) if deviations and env_dist > 0 else None
+        dominant_txt = f"; dominant feature {dominant} is {env_dist:.2f} training spans outside its range" if dominant else ""
         crit_thresh = self.config.get("domain_guard", {}).get("envelope_distance_threshold_critical", 3.00)
         ood_thresh = self.config.get("domain_guard", {}).get("envelope_distance_threshold_ood", 1.50)
         warn_thresh = self.config.get("domain_guard", {}).get("envelope_distance_threshold_warning", 1.00)
 
         if env_dist > crit_thresh:
-            reason = f"Severe Out-of-Distribution condition: distance {env_dist:.2f} > {crit_thresh:.2f}"
+            reason = f"Severe Out-of-Distribution condition: distance {env_dist:.2f} > {crit_thresh:.2f}{dominant_txt}"
             if raise_on_error:
                 raise ValueError(f"Input rejected: {reason}")
             return {
@@ -309,25 +323,64 @@ class ProductionFuelPredictor:
         in_domain = env_dist <= ood_thresh
         near_boundary = env_dist > warn_thresh
 
+        # Categorical OOD: no model was trained on this vessel type, so any number would be
+        # an extrapolation under a borrowed category. Reject instead of mapping generically.
+        v_req = clean.get("vessel_type")
+        if canonicalize_vessel_type(str(v_req)) not in self.v_cats:
+            reason = (f"Unsupported vessel_type '{point.get('vessel_type', v_req)}': outside the model's training "
+                      f"categories {self.v_cats} (categorical out-of-distribution); no prediction produced.")
+            if raise_on_error:
+                raise ValueError(f"Input rejected: {reason}")
+            return {
+                "fuel_prediction": None,
+                "prediction_source": "REJECT",
+                "confidence": "LOW",
+                "uncertainty": None,
+                "model": "None",
+                "model_version": "1.0.0-production",
+                "routing_status": "REJECT",
+                "in_domain": False,
+                "envelope_distance": round(env_dist, 3),
+                "cross_check": None,
+                "warning": reason,
+                "fuel_warning": fuel_warning,
+                "timestamp": now_ts,
+            }
+
         # Step 3: First-Principles Physics Computation
         df_single = pd.DataFrame([clean])
         try:
             f_phys = float(self.physics.predict(df_single)[0])
             f_phys = max(0.0, f_phys)
-        except Exception:
-            f_phys = 0.0
+        except Exception as exc:
+            # Every model output is physics + residual; a zero baseline would emit a
+            # residual-only number that looks valid, so reject instead.
+            reason = f"Physics baseline failure: {type(exc).__name__}: {exc}"
+            if raise_on_error:
+                raise ValueError(f"Input rejected: {reason}") from exc
+            return {
+                "fuel_prediction": None,
+                "prediction_source": "REJECT",
+                "confidence": "LOW",
+                "uncertainty": None,
+                "model": "None",
+                "model_version": "1.0.0-production",
+                "routing_status": "REJECT",
+                "in_domain": in_domain,
+                "envelope_distance": round(env_dist, 3),
+                "cross_check": None,
+                "warning": reason,
+                "fuel_warning": fuel_warning,
+                "timestamp": now_ts,
+            }
 
         # Step 4: Multi-Model Evaluation & Cross-Check
         v_raw = clean.get("vessel_type")
         v_val_canonical = canonicalize_vessel_type(str(v_raw)) if v_raw is not None else "passenger_cruise"
         f_val_canonical = canonicalize_fuel_type(str(clean.get("fuel_type", "vlsfo")))
 
-        vessel_type_unsupported = False
-        if v_raw is not None and v_val_canonical not in self.v_cats:
-            vessel_type_unsupported = True
-            v_val = "passenger_cruise"
-        else:
-            v_val = v_val_canonical
+        vessel_type_unsupported = False  # unsupported vessel types were rejected in Step 2
+        v_val = v_val_canonical
 
         if fuel_type_unsupported:
             f_val = "vlsfo"
@@ -422,7 +475,7 @@ class ProductionFuelPredictor:
             confidence = "MEDIUM"
             routing_status = "FALLBACK"
             if near_boundary:
-                warning_msg = f"Operating state near training envelope (dist={env_dist:.2f}); routed to reference MODEL-REAL-04."
+                warning_msg = f"Operating state near training envelope (dist={env_dist:.2f}{dominant_txt}); routed to reference MODEL-REAL-04."
         elif in_domain and primary_qi_pred is not None:
             predicted_fuel = primary_qi_pred
             selected_model = primary_qi_name
@@ -435,7 +488,8 @@ class ProductionFuelPredictor:
             prediction_source = "PHYSICS_EMERGENCY"
             confidence = "LOW"
             routing_status = "EMERGENCY_PHYSICS"
-            warning_msg = "Operating outside valid ML envelope or ML failure. Output is unadjusted first-principles physics estimate."
+            warning_msg = (f"Operating outside valid ML envelope (dist={env_dist:.2f}{dominant_txt}) or ML failure. "
+                           "Output is unadjusted first-principles physics estimate.")
 
         # Step 6: Conformal Uncertainty Calibration
         cov_key = str(coverage) if str(coverage) in ["0.9", "0.95"] else "0.9"

@@ -1,36 +1,99 @@
 """
-Classical Multi-Objective Baseline: NSGA-III / Multi-Objective GA.
-Reference-point based non-dominated sorting across multi-objective space:
-[Fuel (t), OPEX ($), WtW GHG (t), Delay (h), CVaR Risk ($)].
+Classical Multi-Objective Baseline: NSGA-III (pymoo 0.6).
+
+Minimises [Fuel (t), OPEX ($), WtW GHG (t)] with Das-Dennis reference directions and
+constraint-domination on one inequality constraint g = total penalty (hard + soft) <= 0, so a
+candidate is feasible in the multi-objective sense only if it is hard-feasible AND penalty-free
+(on time, actual speed within the vessel band, inside the model domain).
+
+The previous implementation bred every generation from the initial random population and never
+applied non-dominated sorting or survivor selection (random search, mislabelled as NSGA-III).
+
+`best_output` keeps the scalar Deb-preferred solution so the algorithm can still be benchmarked
+against DE / GA / QPSO on penalized fitness; `pareto_archive` holds every feasible, penalty-free
+evaluation, which is what the operator Pareto front is built from.
 """
 
 import time
-from typing import Any, Dict, List, Optional, Tuple
+from typing import List, Optional, Tuple
+
 import numpy as np
+from pymoo.algorithms.moo.nsga3 import NSGA3
+from pymoo.core.problem import ElementwiseProblem
+from pymoo.optimize import minimize
+from pymoo.util.ref_dirs import get_reference_directions
 
 from src.algorithms.base import BaseFleetOptimizer, OptimizationResult
+from src.benchmark.metrics import compute_2d_hypervolume, is_pareto_efficient
 from src.evaluator.common_evaluator import CommonFleetEvaluator, EvaluationOutput
-from src.benchmark.metrics import is_pareto_efficient, compute_2d_hypervolume
+
+N_OBJ = 3  # fuel, OPEX, WtW GHG
+
+
+def is_pareto_feasible(out: EvaluationOutput) -> bool:
+    """Hard-feasible and free of every soft penalty (speed band, schedule delay)."""
+    return bool(out.is_feasible and out.penalty <= 0.0)
+
+
+class _FleetProblem(ElementwiseProblem):
+    def __init__(self, evaluator: CommonFleetEvaluator, xl: np.ndarray, xu: np.ndarray, on_eval):
+        super().__init__(n_var=len(xl), n_obj=N_OBJ, n_ieq_constr=1, xl=xl, xu=xu)
+        self.evaluator = evaluator
+        self.on_eval = on_eval
+
+    def _evaluate(self, x, out, *args, **kwargs):
+        res = self.evaluator.evaluate(np.asarray(x, dtype=float))
+        self.on_eval(np.asarray(x, dtype=float), res)
+        out["F"] = res.objectives[:N_OBJ]
+        out["G"] = [res.penalty]
+
+
+def structured_initial_population(vessels, n: int, xl: np.ndarray, xu: np.ndarray, rng) -> np.ndarray:
+    """
+    Initial vectors whose categorical genes are individually valid: each vessel gets a demand it is
+    compatible with, a compatible fuel and an under-way mode (transit / maneuvering); speed, cargo and
+    shore power are uniform in their bounds. Validity is judged by the evaluator's own decoder, and
+    fleet-level rules (exactly-once demands, deadlines, domain) are NOT pre-satisfied: every candidate
+    is still scored by the full evaluator under constraint-domination.
+    """
+    from optimization.fleet_heterogeneous import DECISION_DIMS_PER_VESSEL as D, DEMAND_KEYS, decode_fleet_vector
+    from optimization.variables import FUEL_MAP, REV_MODE_MAP
+
+    options = []
+    for i, v in enumerate(vessels):
+        fuels = [k for k, f in FUEL_MAP.items() if f in v.compatible_fuels]
+        probe = lambda dem: np.array([dem, 0.0, v.min_speed_knots, fuels[0], REV_MODE_MAP["transit"], 0.0])
+        demands = [d for d in range(1, len(DEMAND_KEYS)) if decode_fleet_vector(probe(d), [v])[0].is_compatible]
+        options.append((demands or [0], fuels))
+    X = rng.uniform(xl, xu, size=(n, len(xl)))
+    for i, (demands, fuels) in enumerate(options):
+        X[:, i * D + 0] = rng.choice(demands, size=n)
+        X[:, i * D + 3] = rng.choice(fuels, size=n)
+        X[:, i * D + 4] = rng.choice([REV_MODE_MAP["transit"], REV_MODE_MAP["maneuvering"]], size=n)
+    return X
 
 
 class NSGA3Optimizer(BaseFleetOptimizer):
-    """Multi-Objective Evolutionary Baseline (NSGA-III inspired)."""
+    """NSGA-III with reference directions and constraint-domination (pymoo)."""
 
     def __init__(
         self,
         seed: int = 42,
         population_size: int = 50,
         max_generations: int = 50,
-        crossover_rate: float = 0.9,
-        mutation_rate: float = 0.1,
+        n_partitions: int = 8,
         ref_point: Optional[np.ndarray] = None,
+        init: str = "random",
     ):
         super().__init__(name="NSGA3", seed=seed)
         self.population_size = population_size
         self.max_generations = max_generations
-        self.crossover_rate = crossover_rate
-        self.mutation_rate = mutation_rate
+        self.n_partitions = n_partitions  # 45 reference directions for 3 objectives
+        # "random": uniform in the box (equal footing with DE/GA/QPSO in the benchmark);
+        # "structured": structured_initial_population (used for the operator Pareto search).
+        self.init = init
         self.ref_point = ref_point if ref_point is not None else np.array([500.0, 500000.0])
+        self.pareto_archive: List[Tuple[np.ndarray, np.ndarray, EvaluationOutput]] = []
 
     def optimize(
         self,
@@ -40,105 +103,47 @@ class NSGA3Optimizer(BaseFleetOptimizer):
         budget: int = 2500,
     ) -> OptimizationResult:
         t0 = time.perf_counter()
-        rng = np.random.default_rng(self.seed)
-        np.random.seed(self.seed)
+        state = {"best": None, "best_x": None, "feas": 0, "first_eval": -1}
+        archive: List[Tuple[np.ndarray, np.ndarray, EvaluationOutput]] = []
+        unique: set = set()
+        conv: List[float] = []
+        evals: List[int] = []
 
-        dim = len(xl)
-        eval_cap = budget
-
-        pop = rng.uniform(xl, xu, size=(self.population_size, dim))
-        pop_outputs: List[Optional[EvaluationOutput]] = [None] * self.population_size
-        pareto_archive: List[Tuple[np.ndarray, np.ndarray, EvaluationOutput]] = []
-
-        first_feas_eval = -1
-        first_feas_iter = -1
-        feas_count = 0
-        convergence_traj: List[float] = []
-        eval_traj: List[int] = []
-        unique_solutions: set = set()
-
-        for i in range(self.population_size):
-            if evaluator.evaluation_count >= eval_cap:
-                break
-            out = evaluator.evaluate(pop[i])
-            pop_outputs[i] = out
-            unique_solutions.add(tuple(np.round(pop[i], 3)))
-
+        def on_eval(x: np.ndarray, out: EvaluationOutput) -> None:
+            unique.add(tuple(np.round(x, 3)))
             if out.is_feasible:
-                feas_count += 1
-                if first_feas_eval == -1:
-                    first_feas_eval = out.evaluation_index
-                    first_feas_iter = 0
-                pareto_archive.append((out.objectives[:2].copy(), pop[i].copy(), out))
+                state["feas"] += 1
+                if state["first_eval"] == -1:
+                    state["first_eval"] = out.evaluation_index
+            if is_pareto_feasible(out):
+                archive.append((out.objectives[:N_OBJ].copy(), x.copy(), out))
+            if state["best"] is None or CommonFleetEvaluator.deb_prefers(out, state["best"]):
+                state["best"], state["best_x"] = out, x.copy()
+            if evaluator.evaluation_count % self.population_size == 0:
+                conv.append(state["best"].fitness)
+                evals.append(evaluator.evaluation_count)
 
-        best_idx = 0
-        for i in range(1, self.population_size):
-            if pop_outputs[i] is not None and CommonFleetEvaluator.deb_prefers(pop_outputs[i], pop_outputs[best_idx]):
-                best_idx = i
-
-        best_output = pop_outputs[best_idx]
-        best_x = pop[best_idx].copy()
-        best_score = best_output.fitness if best_output else np.inf
-
-        convergence_traj.append(best_score)
-        eval_traj.append(evaluator.evaluation_count)
-
-        # Generational loop with non-dominated dominance selection
-        gen = 0
-        while gen < self.max_generations and evaluator.evaluation_count < eval_cap:
-            # Generate offspring
-            offspring = []
-            for i in range(0, self.population_size, 2):
-                p1_idx, p2_idx = rng.integers(0, self.population_size, size=2)
-                p1, p2 = pop[p1_idx].copy(), pop[p2_idx].copy()
-                if rng.uniform(0.0, 1.0) < self.crossover_rate:
-                    mask = rng.uniform(0.0, 1.0, size=dim) < 0.5
-                    c1 = np.where(mask, p1, p2)
-                    c2 = np.where(mask, p2, p1)
-                else:
-                    c1, c2 = p1.copy(), p2.copy()
-
-                # Mutation
-                for c in [c1, c2]:
-                    mut_mask = rng.uniform(0.0, 1.0, size=dim) < self.mutation_rate
-                    c[mut_mask] += rng.normal(0.0, (xu[mut_mask] - xl[mut_mask]) * 0.05)
-                    c = np.clip(c, xl, xu)
-                    offspring.append(c)
-
-            for child in offspring:
-                if evaluator.evaluation_count >= eval_cap:
-                    break
-                out = evaluator.evaluate(child)
-                unique_solutions.add(tuple(np.round(child, 3)))
-
-                if out.is_feasible:
-                    feas_count += 1
-                    if first_feas_eval == -1:
-                        first_feas_eval = out.evaluation_index
-                        first_feas_iter = gen + 1
-                    pareto_archive.append((out.objectives[:2].copy(), child.copy(), out))
-
-                if CommonFleetEvaluator.deb_prefers(out, best_output):
-                    best_output = out
-                    best_x = child.copy()
-                    best_score = out.fitness
-
-            convergence_traj.append(best_score)
-            eval_traj.append(evaluator.evaluation_count)
-            gen += 1
-
+        ref_dirs = get_reference_directions("das-dennis", N_OBJ, n_partitions=self.n_partitions)
+        kwargs = {}
+        if self.init == "structured":
+            vessels = evaluator.base_evaluator.vessels
+            kwargs["sampling"] = structured_initial_population(
+                vessels, self.population_size, np.asarray(xl, float), np.asarray(xu, float), np.random.default_rng(self.seed))
+        algorithm = NSGA3(ref_dirs=ref_dirs, pop_size=self.population_size, eliminate_duplicates=True, **kwargs)
+        problem = _FleetProblem(evaluator, np.asarray(xl, float), np.asarray(xu, float), on_eval)
+        n_gen = max(1, min(self.max_generations, budget // self.population_size))
+        minimize(problem, algorithm, ("n_gen", n_gen), seed=self.seed, verbose=False)
         t1 = time.perf_counter()
-        self.pareto_archive = pareto_archive
 
-        if len(pareto_archive) > 0:
-            archive_costs = np.array([item[0] for item in pareto_archive])
-            eff_mask = is_pareto_efficient(archive_costs)
-            pareto_pts = archive_costs[eff_mask]
-            archive_size = len(pareto_pts)
-            hv = compute_2d_hypervolume(pareto_pts, self.ref_point)
+        self.pareto_archive = archive
+        best: Optional[EvaluationOutput] = state["best"]
+        if archive:
+            costs = np.array([a[0] for a in archive])
+            front = costs[is_pareto_efficient(costs)]
+            archive_size = len(np.unique(front, axis=0))
+            hv = compute_2d_hypervolume(front[:, :2], self.ref_point)
         else:
-            archive_size = 0
-            hv = 0.0
+            archive_size, hv = 0, 0.0
 
         return OptimizationResult(
             algorithm="NSGA3",
@@ -146,29 +151,25 @@ class NSGA3Optimizer(BaseFleetOptimizer):
             run_id=f"NSGA3_seed_{self.seed}",
             runtime_seconds=round(t1 - t0, 4),
             objective_evaluations=evaluator.evaluation_count,
-            iterations=gen,
-            best_x=best_x,
-            best_fitness=float(best_score),
-            best_physical_objective=float(best_output.physical_fitness) if best_output else float(best_score),
-            best_penalty=float(best_output.penalty) if best_output else 0.0,
-            feasible_at_end=bool(best_output.is_feasible) if best_output else False,
-            best_output=best_output,
-            first_feasible_evaluation=first_feas_eval,
-            first_feasible_iteration=first_feas_iter,
-            number_of_feasible_evaluations=feas_count,
-            candidate_level_feasibility_rate=float(feas_count / max(1, evaluator.evaluation_count)),
-            constraint_violation_total=float(best_output.total_constraint_violation) if best_output else 0.0,
-            hard_violations=list(best_output.hard_violations) if best_output else [],
-            convergence_trajectory=convergence_traj,
-            eval_trajectory=eval_traj,
-            population_diversity=[],
-            categorical_entropy=[],
-            repair_count=0,
-            repair_rate=0.0,
-            unique_solution_count=len(unique_solutions),
+            iterations=n_gen,
+            best_x=state["best_x"],
+            best_fitness=float(best.fitness) if best else float("inf"),
+            best_physical_objective=float(best.physical_fitness) if best else float("inf"),
+            best_penalty=float(best.penalty) if best else 0.0,
+            feasible_at_end=bool(best.is_feasible) if best else False,
+            best_output=best,
+            first_feasible_evaluation=state["first_eval"],
+            first_feasible_iteration=-1 if state["first_eval"] == -1 else (state["first_eval"] - 1) // self.population_size,
+            number_of_feasible_evaluations=state["feas"],
+            candidate_level_feasibility_rate=float(state["feas"] / max(1, evaluator.evaluation_count)),
+            constraint_violation_total=float(best.total_constraint_violation) if best else 0.0,
+            hard_violations=list(best.hard_violations) if best else [],
+            convergence_trajectory=conv,
+            eval_trajectory=evals,
+            unique_solution_count=len(unique),
             pareto_archive_size=archive_size,
             pareto_hypervolume=round(hv, 2),
-            assigned_demands=dict(best_output.assigned_demands) if best_output else {},
-            fuel_decisions=dict(best_output.fuel_decisions) if best_output else {},
-            speed_decisions=dict(best_output.speed_decisions) if best_output else {},
+            assigned_demands=dict(best.assigned_demands) if best else {},
+            fuel_decisions=dict(best.fuel_decisions) if best else {},
+            speed_decisions=dict(best.speed_decisions) if best else {},
         )

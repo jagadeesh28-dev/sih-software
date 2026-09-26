@@ -1,16 +1,16 @@
 {
   "version": "v1.1.0-sih-complete",
-  "timestamp_utc": "2026-09-22T15:01:03.681821+00:00",
-  "git_commit_head": "25c0384cd2e06e1c62a5eaf57b3ab85875966c35",
+  "timestamp_utc": "2026-09-24T17:46:36.305853+00:00",
+  "git_commit_head": "0804bf23a5d2a44dee9ce5a2fffa39a367a6161d",
   "dataset_hashes": {
     "CPS_Poseidon.parquet": "da85f2e21b6e8724c8350f9aadbda4e457593d77412b8cefaa077da9e1e260c2",
     "CPS_Triton.parquet": "fa8cc7f9f6a92d330088e41e3f275b8d8428d3604cfb35dfa46eaa753d545f89",
     "OSS_Ceto.parquet": "ac3f8d5e865f11cd40f147d6153de9915b543f675684719245a2d5d6d8e752cd"
   },
   "model_hashes": {
-    "model_real_04.txt": "bb909845bdd26ac9485f4350143e6df8468d74b288063d97e3bf68ed6cbbcfa0",
-    "qi_c1.txt": "b2ff5709c8794273770a23a668e9d0de35e4945447bc557370e7389908bd887c",
-    "qi_c1_vessel_type.txt": "aeea4d710275aca00039d1782cc5d86d7084583c0855fd13cacc69c327d2e14e"
+    "model_real_04.txt": "1049a1687946296244fa0dfa1ebf6ff86db8f59140f24eb7de452aae50736225",
+    "qi_c1.txt": "f3486614f3322436980e1c14619d8171f47c498a54172ab6f41696c81dbc1bb6",
+    "qi_c1_vessel_type.txt": "a6223b370d47cf5daec00de8da43ff306f50607deef1e0c40a2e0bca60ace481"
   },
   "compliance_matrix_exists": true,
   "release_checklist_exists": true

@@ -14,15 +14,20 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from dashboard.backend_bridge import (
-    get_cached_predictor,
-    get_cached_sih_engine,
-    get_default_fleet_state,
-    get_verified_pareto_front,
-    log_audit_event,
-)
-from src.qi_prediction.serving import ProductionFuelPredictor
+import os
+import tempfile
+
+# Isolated audit ledger (set before api.main is imported).
+os.environ.setdefault("EQ_AUDIT_DB", os.path.join(tempfile.mkdtemp(prefix="eq_audit_"), "audit.sqlite"))
+
+from common.fleet_defaults import get_default_fleet_state
+from src.qi_prediction.serving import ProductionFuelPredictor, get_production_predictor as get_cached_predictor
 from optimization.sih_objective_engine import SIHObjectiveEngine
+import api.main as hmi_api
+
+
+def get_cached_sih_engine() -> SIHObjectiveEngine:
+    return hmi_api.ENGINE
 
 
 # =========================================================================
@@ -61,9 +66,11 @@ def test_failure_03_unknown_vessel_type():
         "vessel_id": "TEST_VESSEL", "vessel_type": "intergalactic_cruiser", "fuel_type": "vlsfo",
         "stw_kn": 14.0, "sog_kn": 14.0, "draft_m": 7.0, "displacement_t": 30000.0,
     }
-    res = p.predict_fuel_with_uncertainty(inp)
-    assert res["routing_status"] == "FALLBACK"
-    assert "Unknown or unsupported vessel_type" in res["warning"]
+    res = p.predict_fuel_with_uncertainty(inp, raise_on_error=False)
+    # Categorical OOD: rejected, never scored under a borrowed vessel category.
+    assert res["routing_status"] == "REJECT"
+    assert res["fuel_prediction"] is None
+    assert "Unsupported vessel_type" in res["warning"]
 
 
 def test_failure_04_missing_input():
@@ -79,7 +86,8 @@ def test_failure_05_invalid_input():
     """5. Physically invalid input (negative speed, impossible draft)."""
     p = get_cached_predictor()
     inp = {
-        "vessel_id": "CPS_Poseidon", "stw_kn": -10.0, "draft_m": 0.2, "displacement_t": 35000.0
+        "vessel_id": "CPS_Poseidon", "vessel_type": "passenger_cruise",
+        "stw_kn": -10.0, "draft_m": 0.2, "displacement_t": 35000.0
     }
     is_valid, errors, _ = p.validate_and_sanitize_point(inp)
     assert is_valid is False
@@ -106,8 +114,11 @@ def test_failure_07_ood():
         "wind_speed_ms": 48.0, "wave_height_m": 14.0, "water_depth_m": 15.0,
     }
     res = p.predict_fuel_with_uncertainty(inp, raise_on_error=False)
-    assert res["envelope_distance"] > 1.0
-    assert res["routing_status"] in ("WARNING", "FALLBACK", "EMERGENCY_PHYSICS")
+    # Displacement is 3.28 training spans beyond the envelope: severe OOD, no prediction.
+    assert res["envelope_distance"] > 3.0
+    assert res["routing_status"] == "REJECT"
+    assert res["fuel_prediction"] is None
+    assert "Severe Out-of-Distribution" in res["warning"]
 
 
 def test_failure_08_model_failure():
@@ -130,10 +141,12 @@ def test_failure_09_fallback():
     """9. Verification that fallback activates MODEL-REAL-04 on boundary state."""
     p = get_cached_predictor()
     inp = {
-        "vessel_id": "CPS_Poseidon", "vessel_type": "space_freighter", "fuel_type": "vlsfo",
-        "stw_kn": 14.0, "draft_m": 7.5, "displacement_t": 35000.0,
+        "vessel_id": "CPS_Poseidon", "vessel_type": "passenger_cruise", "fuel_type": "vlsfo",
+        "stw_kn": 14.0, "draft_m": 13.5, "displacement_t": 35000.0,
     }
     res = p.predict_fuel_with_uncertainty(inp)
+    # Draft 13.5 m is ~1.1 training spans beyond the envelope: warning band -> reference model.
+    assert 1.0 < res["envelope_distance"] <= 1.5
     assert res["routing_status"] == "FALLBACK"
     assert res["model"] == "MODEL-REAL-04"
 
@@ -265,28 +278,20 @@ def test_phase19_end_to_end_operator_journey():
     assert scen_eval.wtt_ghg_tonnes > 0
     assert scen_eval.ttw_ghg_tonnes >= 0
 
-    # 9. Optimizer
-    df_p = get_verified_pareto_front()
-    assert not df_p.empty
+    # 9. Optimizer (stored Pareto archive, feasible + deduplicated by the API)
+    points = hmi_api.pareto_points()
+    assert points
 
     # 10. Pareto Selection
-    selected_solution = df_p.iloc[0]
-    assert selected_solution["is_feasible"] == True
+    selected_solution = points[0]
+    assert str(selected_solution["is_feasible"]).lower() == "true"
 
-    # 11. Operator Review & Audit
-    import streamlit as st
-    st.session_state.audit_ledger = []
-    log_audit_event(
-        action="E2E_VERIFICATION_COMPLETE",
+    # 11. Operator Review & Audit (persisted SQLite ledger)
+    event = hmi_api.record(
+        "E2E_VERIFICATION_COMPLETE",
         scenario_id="E2E-TEST-001",
         vessel_id=selected_vessel["id"],
-        details={
-            "fuel_prediction": pred_res["fuel_prediction"],
-            "operational_cost": scen_eval.operational_cost_usd,
-            "lifecycle_ghg": scen_eval.lifecycle_ghg_tonnes,
-            "solution_id": selected_solution["formulation"],
-            "notes": "Full end-to-end operator workflow transition verified with zero mocked data.",
-        }
+        prediction=pred_res["fuel_prediction"],
+        solution_id=selected_solution["solution_id"],
     )
-    assert len(st.session_state.audit_ledger) == 1
-    assert st.session_state.audit_ledger[0]["action"] == "E2E_VERIFICATION_COMPLETE"
+    assert any(e["event_id"] == event["event_id"] for e in hmi_api.audit_events())

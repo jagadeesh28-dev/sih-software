@@ -1,0 +1,5 @@
+Strategy,Selection rule,Solution,Fuel (t),Operational Cost ($),WtW GHG (t CO2e),Schedule Delay (h),Feasible,Fuel Decisions,Speed Decisions (kn)
+Fuel-Focused,min fuel,PS-01,177.23,"$170,688.96",727.85,0.0,YES (penalty-free),"{'CPS_Poseidon': 'fossil_lng', 'CPS_Triton': 'vlsfo', 'OSS_Ceto': 'vlsfo'}","{'CPS_Poseidon': 19.1354, 'CPS_Triton': 15.6518, 'OSS_Ceto': 11.6265}"
+Cost-Focused,min operational cost,PS-01,177.23,"$170,688.96",727.85,0.0,YES (penalty-free),"{'CPS_Poseidon': 'fossil_lng', 'CPS_Triton': 'vlsfo', 'OSS_Ceto': 'vlsfo'}","{'CPS_Poseidon': 19.1354, 'CPS_Triton': 15.6518, 'OSS_Ceto': 11.6265}"
+GHG-Focused,min WtW GHG,PS-06,406.57,"$437,974.01",610.22,0.0,YES (penalty-free),"{'CPS_Poseidon': 'bio_methanol', 'CPS_Triton': 'bio_methanol', 'OSS_Ceto': 'green_ammonia'}","{'CPS_Poseidon': 19.135, 'CPS_Triton': 15.6515, 'OSS_Ceto': 11.6267}"
+Balanced (stated rule),"min sum of range-normalised fuel, cost, GHG",PS-03,206.26,"$205,554.69",650.59,0.0,YES (penalty-free),"{'CPS_Poseidon': 'fossil_lng', 'CPS_Triton': 'vlsfo', 'OSS_Ceto': 'green_ammonia'}","{'CPS_Poseidon': 19.135, 'CPS_Triton': 15.6515, 'OSS_Ceto': 11.6267}"

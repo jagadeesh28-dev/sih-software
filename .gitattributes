@@ -1,0 +1,2 @@
+# LightGBM native text models store byte offsets (tree_sizes=); CRLF conversion corrupts them.
+models/*.txt text eol=lf

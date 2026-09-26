@@ -1,0 +1,337 @@
+{
+  "project": "SIH26138 - Egreen Quanta",
+  "release_version": "v1.1.0-sih-complete",
+  "release_classification": "SIH26138 CORE REQUIREMENTS COMPLETE",
+  "system_type": "Controlled Decision-Support Prototype",
+  "timestamp_utc": "2026-09-24T15:37:42.141428+00:00",
+  "gates_evaluated": 16,
+  "gates_passed": 16,
+  "gates_freshly_computed": 12,
+  "gates_reference_artifact_verified": 4,
+  "gates": {
+    "G1_DATA": {
+      "name": "Dataset Integrity & Cleaning Reconciliation",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "FRESHLY COMPUTED",
+      "details": {
+        "raw_records": 173986,
+        "validated_records": 173974,
+        "removed_records": 12,
+        "removal_reason": "Trailing null timestamps and sensor dropouts during logger shutdown",
+        "total_records": 173974,
+        "vessel_counts": {
+          "CPS_Poseidon.parquet": 105422,
+          "CPS_Triton.parquet": 25347,
+          "OSS_Ceto.parquet": 43205
+        },
+        "file_hashes": {
+          "CPS_Poseidon.parquet": "da85f2e21b6e8724c8350f9aadbda4e457593d77412b8cefaa077da9e1e260c2",
+          "CPS_Triton.parquet": "fa8cc7f9f6a92d330088e41e3f275b8d8428d3604cfb35dfa46eaa753d545f89",
+          "OSS_Ceto.parquet": "ac3f8d5e865f11cd40f147d6153de9915b543f675684719245a2d5d6d8e752cd"
+        }
+      }
+    },
+    "G2_REPRODUCIBILITY": {
+      "name": "Environment & Deterministic Execution",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "FRESHLY COMPUTED",
+      "details": {
+        "python": "3.12.10",
+        "numpy": "2.5.3",
+        "pandas": "3.0.6",
+        "scipy": "1.18.1",
+        "lightgbm": "4.7.0",
+        "scikit_learn": "1.9.1",
+        "split_manifest": true,
+        "random_seed": 42,
+        "lockfile_mismatches": {}
+      }
+    },
+    "G3_PREDICTION": {
+      "name": "Model Prediction Accuracy & Frozen Baselines",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "FRESHLY COMPUTED",
+      "details": {
+        "test_rows": 34796,
+        "MODEL-REAL-04": {
+          "fresh_mae_kg_h": 246.9083,
+          "fresh_r2": 0.950253,
+          "reference_mae_kg_h": 246.9083,
+          "reference_r2": 0.950253,
+          "reproduced_within_tolerance": true
+        },
+        "QI-C1": {
+          "fresh_mae_kg_h": 244.8608,
+          "fresh_r2": 0.950039,
+          "reference_mae_kg_h": 244.8608,
+          "reference_r2": 0.950039,
+          "reproduced_within_tolerance": true
+        },
+        "QI-C1-vessel-type": {
+          "fresh_mae_kg_h": 252.7747,
+          "fresh_r2": 0.947597,
+          "reference_mae_kg_h": 252.7747,
+          "reference_r2": 0.947597,
+          "reproduced_within_tolerance": true
+        },
+        "note": "Inference re-run with committed boosters on the forward temporal test split; no retraining."
+      }
+    },
+    "G4_VESSEL_TYPE": {
+      "name": "Explicit Vessel-Type Categorical Feature",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "REFERENCE ARTIFACT VERIFIED",
+      "details": {
+        "model_id": "QI-C1-vessel-type",
+        "features": [
+          "stw_kn",
+          "sog_kn",
+          "draft_m",
+          "wave_height_m",
+          "water_depth_m",
+          "vessel_type",
+          "fuel_type"
+        ],
+        "encoding": {
+          "passenger_cruise": 0,
+          "passenger_cruise_small": 1,
+          "offshore_supply": 2
+        },
+        "seeds_evaluated": 30,
+        "model_a_mean_mae": 247.38,
+        "model_b_mean_mae": 252.62,
+        "qiea_selection_frequency": 7,
+        "per_vessel_metrics": {
+          "CPS_Poseidon_mae": 321.07,
+          "CPS_Triton_mae": 80.42,
+          "OSS_Ceto_mae": 186.6
+        }
+      }
+    },
+    "G5_UNCERTAINTY": {
+      "name": "Split Conformal Uncertainty Calibration",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "FRESHLY COMPUTED",
+      "details": {
+        "nominal_level": "90%",
+        "QI-C1": {
+          "fresh_picp_pct": 93.5567,
+          "reference_picp_pct": 93.5567,
+          "mpiw_kg_h": 1564.93,
+          "reproduced_within_tolerance": true
+        },
+        "MODEL-REAL-04": {
+          "fresh_picp_pct": 95.0483,
+          "reference_picp_pct": 95.0483,
+          "mpiw_kg_h": 2273.7,
+          "reproduced_within_tolerance": true
+        },
+        "reference_sharpness_gain_pct": 31.17
+      }
+    },
+    "G6_OOD": {
+      "name": "Out-of-Distribution Guard & Confusion Matrix",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "FRESHLY COMPUTED",
+      "details": {
+        "threshold": 1.5,
+        "false_positive_rate_pct": 0.0,
+        "severe_ood_recall_pct": 100.0,
+        "balanced_accuracy_pct": 83.33
+      }
+    },
+    "G7_COST_OBJECTIVE": {
+      "name": "Multi-Component Operational Cost Minimization",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "FRESHLY COMPUTED",
+      "details": {
+        "formula": "C_total = C_fuel + C_elec + C_ops + C_carbon + C_sched + C_fueleu",
+        "sample_evaluation_usd": 52950.39,
+        "fuel_cost_usd": 34634.48,
+        "shore_power_cost_usd": 2660.0,
+        "carbon_cost_usd": 15655.9,
+        "named_components_sum_usd": 52950.38,
+        "total_covers_components": true,
+        "artifact": "results/cost_objective_results.csv"
+      }
+    },
+    "G8_LIFECYCLE_GHG": {
+      "name": "IMO MEPC.391(81) Well-to-Wake Accounting",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "FRESHLY COMPUTED",
+      "details": {
+        "standard": "IMO Resolution MEPC.391(81) & EU MRV",
+        "formula": "GHG_WtW = GHG_WtT + GHG_TtW + Slip",
+        "vlsfo_wtw_tco2e": 207.1,
+        "biomethanol_wtw_tco2e": 190.39,
+        "artifact": "results/ghg_objective_results.csv"
+      }
+    },
+    "G9_MULTIOBJECTIVE": {
+      "name": "Multi-Objective Cost/GHG Pareto Optimization",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "REFERENCE ARTIFACT VERIFIED",
+      "details": {
+        "pareto_rows": 6,
+        "distinct_pareto_points": 6,
+        "all_points_feasible_and_penalty_free": true,
+        "all_points_mutually_non_dominated": true,
+        "objectives": [
+          "operational_cost_usd",
+          "wtw_ghg_tonnes",
+          "schedule_penalty_usd"
+        ],
+        "tradeoff_scenarios_evaluated": 150,
+        "pareto_artifact": "results/pareto_front.csv"
+      }
+    },
+    "G10_BENCHMARK": {
+      "name": "Multi-Algorithm Benchmark (DE, QPSO, GA, NSGA-III)",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "REFERENCE ARTIFACT VERIFIED",
+      "details": {
+        "algorithms_evaluated": [
+          "Classical_GA",
+          "DE",
+          "Hybrid_QI_A5",
+          "NSGA_III",
+          "QPSO"
+        ],
+        "seeds_per_algorithm": {
+          "Classical_GA": 30,
+          "DE": 30,
+          "Hybrid_QI_A5": 30,
+          "NSGA_III": 30,
+          "QPSO": 30
+        },
+        "de_feasible_rate_pct": 80.0,
+        "qpso_feasible_rate_pct": 40.0,
+        "de_median_fitness": 20371.4845,
+        "qpso_median_fitness": 51000.0
+      }
+    },
+    "G11_SCALABILITY": {
+      "name": "Dimensional Scalability & O(D) Profiling",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "REFERENCE ARTIFACT VERIFIED",
+      "details": {
+        "max_dimension_evaluated": 600,
+        "eval_time_per_call_ms": 0.0033,
+        "artifact": "results/scalability_results.csv"
+      }
+    },
+    "G12_SAFETY": {
+      "name": "1,000 Stress Tests, Edge Cases & Fault Recovery",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "FRESHLY COMPUTED",
+      "details": {
+        "invalid_stress_tests": 1000,
+        "safe_rejection_rate_pct": 100.0,
+        "edge_cases_passed": 19,
+        "unknown_vessel_type": "REJECT (categorical out-of-distribution)"
+      }
+    },
+    "G13_ALTERNATIVE_FUELS": {
+      "name": "Invariant Shaft Work Alternative Fuel Scenarios",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "FRESHLY COMPUTED",
+      "details": {
+        "thermodynamic_basis": "Invariant shaft work (E_shaft = m * LHV * eta)",
+        "scenario_status": "Strictly scenario modeling, not empirical sensor telemetry",
+        "fuels_profiled": {
+          "vlsfo": {
+            "resolved_pathway": "vlsfo",
+            "fuel_tonnes": 55.8621,
+            "cost_usd": 50290.39,
+            "wtw_tco2e": 207.0991
+          },
+          "mgo": {
+            "resolved_pathway": "mgo",
+            "fuel_tonnes": 52.5915,
+            "cost_usd": 56196.07,
+            "wtw_tco2e": 203.6083
+          },
+          "bio_methanol": {
+            "resolved_pathway": "bio_methanol",
+            "fuel_tonnes": 112.847,
+            "cost_usd": 121169.46,
+            "wtw_tco2e": 190.3898
+          },
+          "green_ammonia": {
+            "resolved_pathway": "green_ammonia",
+            "fuel_tonnes": 120.7341,
+            "cost_usd": 132807.56,
+            "wtw_tco2e": 34.4455
+          },
+          "liquid_hydrogen": {
+            "resolved_pathway": "liquid_hydrogen",
+            "fuel_tonnes": 18.7138,
+            "cost_usd": 78597.93,
+            "wtw_tco2e": 26.9479
+          }
+        }
+      }
+    },
+    "G14_DEMO": {
+      "name": "11 Executable Demonstration Scenes",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "FRESHLY COMPUTED",
+      "details": {
+        "demo_script": "scripts/demo_scenarios.py",
+        "exit_code": 0,
+        "total_scenes": 11,
+        "scenes_passed": 11,
+        "failed_checks": []
+      }
+    },
+    "G15_CLAIM_CONSISTENCY": {
+      "name": "Claim Consistency & Scientific Honesty",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "FRESHLY COMPUTED",
+      "details": {
+        "prohibited_claims_count": 11,
+        "positive_claims_scanned": 17,
+        "prohibited_phrase_violations": [],
+        "required_prohibitions_missing": []
+      }
+    },
+    "G16_TRACEABILITY": {
+      "name": "Artifact Hashes, Git SHA & Compliance Matrix",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "FRESHLY COMPUTED",
+      "details": {
+        "version": "v1.1.0-sih-complete",
+        "timestamp_utc": "2026-09-24T15:37:42.108514+00:00",
+        "git_commit_head": "0804bf23a5d2a44dee9ce5a2fffa39a367a6161d",
+        "dataset_hashes": {
+          "CPS_Poseidon.parquet": "da85f2e21b6e8724c8350f9aadbda4e457593d77412b8cefaa077da9e1e260c2",
+          "CPS_Triton.parquet": "fa8cc7f9f6a92d330088e41e3f275b8d8428d3604cfb35dfa46eaa753d545f89",
+          "OSS_Ceto.parquet": "ac3f8d5e865f11cd40f147d6153de9915b543f675684719245a2d5d6d8e752cd"
+        },
+        "model_hashes": {
+          "model_real_04.txt": "1049a1687946296244fa0dfa1ebf6ff86db8f59140f24eb7de452aae50736225",
+          "qi_c1.txt": "f3486614f3322436980e1c14619d8171f47c498a54172ab6f41696c81dbc1bb6",
+          "qi_c1_vessel_type.txt": "a6223b370d47cf5daec00de8da43ff306f50607deef1e0c40a2e0bca60ace481"
+        },
+        "compliance_matrix_exists": true,
+        "release_checklist_exists": true
+      }
+    }
+  }
+}

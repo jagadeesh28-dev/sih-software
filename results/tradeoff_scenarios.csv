@@ -1,5 +1,5 @@
-Strategy,Fuel (t),Operational Cost ($),WtW GHG (t CO2e),Schedule Delay (h),Feasible,Fuel Decisions,Speed Decisions (kn)
-Fuel-Focused,254.04,"$257,805.96",754.33,0.0,YES,"{'CPS_Poseidon': 'fossil_lng', 'CPS_Triton': 'bio_methanol', 'OSS_Ceto': 'bio_methanol'}","{'CPS_Poseidon': 20.578910183521288, 'CPS_Triton': 18.0, 'OSS_Ceto': 15.0}"
-Cost-Focused,254.04,"$257,805.96",754.33,0.0,YES,"{'CPS_Poseidon': 'fossil_lng', 'CPS_Triton': 'bio_methanol', 'OSS_Ceto': 'bio_methanol'}","{'CPS_Poseidon': 20.578910183521288, 'CPS_Triton': 18.0, 'OSS_Ceto': 15.0}"
-GHG-Focused,254.04,"$257,805.96",754.33,0.0,YES,"{'CPS_Poseidon': 'fossil_lng', 'CPS_Triton': 'bio_methanol', 'OSS_Ceto': 'bio_methanol'}","{'CPS_Poseidon': 20.578910183521288, 'CPS_Triton': 18.0, 'OSS_Ceto': 15.0}"
-Balanced Pareto,254.04,"$257,805.96",754.33,0.0,YES,"{'CPS_Poseidon': 'fossil_lng', 'CPS_Triton': 'bio_methanol', 'OSS_Ceto': 'bio_methanol'}","{'CPS_Poseidon': 20.578910183521288, 'CPS_Triton': 18.0, 'OSS_Ceto': 15.0}"
+Strategy,Selection rule,Solution,Fuel (t),Operational Cost ($),WtW GHG (t CO2e),Schedule Delay (h),Feasible,Fuel Decisions,Speed Decisions (kn)
+Fuel-Focused,min fuel,PS-05,177.24,"$175,466.98",736.05,0.0,YES (penalty-free),"{'CPS_Poseidon': 'fossil_lng', 'CPS_Triton': 'vlsfo', 'OSS_Ceto': 'vlsfo'}","{'CPS_Poseidon': 19.1351, 'CPS_Triton': 15.6523, 'OSS_Ceto': 11.6283}"
+Cost-Focused,min operational cost,PS-01,180.78,"$173,942.50",742.45,0.0,YES (penalty-free),"{'CPS_Poseidon': 'fossil_lng', 'CPS_Triton': 'vlsfo', 'OSS_Ceto': 'vlsfo'}","{'CPS_Poseidon': 19.1351, 'CPS_Triton': 15.6524, 'OSS_Ceto': 11.6283}"
+GHG-Focused,min WtW GHG,PS-31,407.34,"$442,810.01",617.92,0.0,YES (penalty-free),"{'CPS_Poseidon': 'bio_methanol', 'CPS_Triton': 'bio_methanol', 'OSS_Ceto': 'green_ammonia'}","{'CPS_Poseidon': 19.1351, 'CPS_Triton': 15.6523, 'OSS_Ceto': 11.6283}"
+Balanced (stated rule),"min sum of range-normalised fuel, cost, GHG",PS-21,207.03,"$210,388.02",658.29,0.0,YES (penalty-free),"{'CPS_Poseidon': 'fossil_lng', 'CPS_Triton': 'vlsfo', 'OSS_Ceto': 'green_ammonia'}","{'CPS_Poseidon': 19.1351, 'CPS_Triton': 15.6523, 'OSS_Ceto': 11.6283}"

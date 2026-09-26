@@ -7,7 +7,7 @@ and marine fuel types between raw telemetry schemas, naval architectural profile
 and optimization decision vectors.
 """
 
-from typing import Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional, Set
 
 # Canonical Vessel Category Vocabulary
 # Derived directly from FuelCast telemetry, MARPOL Annex VI, and fleet configuration.

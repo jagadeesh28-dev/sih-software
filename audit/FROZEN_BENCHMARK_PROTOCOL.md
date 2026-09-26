@@ -32,6 +32,6 @@ M14   Uniform Random Search       Uniform Random Sampling        Post-hoc Constr
 1. **Instances:** Standard Heterogeneous Fleet Instance ($D=18$, 3 vessels $	imes$ 6 decision variables: demand, speed, fuel, shore power, cargo, draft).
 2. **Seeds:** Exactly 30 matched random seeds (`1001` to `1030`).
 3. **Budget:** Exactly 2,500 objective evaluations per run ($50 	ext{ pop} 	imes 50 	ext{ iterations}$).
-4. **Evaluator:** Strict singleton [`CommonFleetEvaluator`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/src/evaluator/common_evaluator.py) wrapping calibrated GBDT residual models on real FuelCast data.
+4. **Evaluator:** Strict singleton [`CommonFleetEvaluator`](../src/evaluator/common_evaluator.py) wrapping calibrated GBDT residual models on real FuelCast data.
 5. **Hypervolume Reference Point:** Fixed at $[500.0	ext{ tonnes}, \$500,000]$ for unnormalized Fuel vs OPEX, or $[1.2, 1.2, 1.2, 1.2, 1.2]$ for normalized 5D frontiers.
 6. **Hardware:** AMD64 x86_64, Windows, single CPU thread per run.

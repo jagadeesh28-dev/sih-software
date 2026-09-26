@@ -1,4 +1,7 @@
 # Master Final Results & Audit Reconciliation
+
+> **OOD figures updated (FRESHLY COMPUTED):** the OOD guard was revalidated. Earlier figures in this document (e.g. 96.55% severe recall) are HISTORICAL and did not describe deployed behaviour. Current: 0.0% in-domain FPR; severe 100.0%, moderate 100.0% recall at d_env 1.50. See docs/ood_validation.md.
+
 **System**: Egreen Quanta  
 **Release**: 1.0.0-verified | **Audit Date**: September 2026  
 
@@ -76,6 +79,8 @@ Evaluated across $2,000$ real held-out in-domain test records and $1,998$ synthe
 ---
 
 ## 6. Alternative Fuels & Emissions Scenarios (Invariant Shaft Work)
+
+> **HISTORICAL REFERENCE — superseded.** This table was hand-entered and is not reproduced by the current backend. Its LHV/efficiency values differ from `configs/fuels.yaml` (backend VLSFO LHV = 40.2 MJ/kg, equal-energy basis), and the VLSFO/MGO rows are model-derived, not measured telemetry. Current backend-computed values: `python scripts/demo_scenarios.py` (Scene 4).
 
 Evaluated at normal cruise condition ($\text{STW} = 14.5\text{ kn}$, delivered shaft power equivalent to $2,740.86\text{ kg/h}$ of VLSFO):
 

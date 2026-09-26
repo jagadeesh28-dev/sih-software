@@ -60,12 +60,12 @@
       "feature_count": 6,
       "seed_42": {
         "mae_kg_h": 244.86,
-        "r2": 0.9500
+        "r2": 0.95
       },
       "matched_30_seed_mean": {
         "mae_kg_h": 237.96,
         "mae_std": 5.46,
-        "r2": 0.9530,
+        "r2": 0.953,
         "r2_std": 0.0018
       }
     },
@@ -104,7 +104,7 @@
     },
     "MODEL_REAL_04": {
       "PICP_pct": 95.05,
-      "MPIW_kg_h": 2273.70,
+      "MPIW_kg_h": 2273.7,
       "calibrated_quantile_kg_h": 1136.85
     },
     "sharpness_gain_pct": 31.17,
@@ -118,19 +118,20 @@
       "moderate_ood": 666,
       "severe_ood": 666
     },
-    "primary_threshold_d_env": 1.50,
+    "primary_threshold_d_env": 1.5,
     "confusion_matrix": {
       "TN": 2000,
       "FP": 0,
-      "TP": 643,
-      "FN": 1355
+      "TP": 1332,
+      "FN": 666
     },
     "false_positive_rate_pct": 0.0,
     "precision_pct": 100.0,
-    "severe_ood_recall_pct": 96.55,
-    "warning_threshold_d_env": 1.00,
+    "severe_ood_recall_pct": 100.0,
+    "warning_threshold_d_env": 1.0,
     "warning_threshold_severe_recall_pct": 100.0,
-    "qualification": "Synthetic set contains multiple OOD severity tiers. Modest and moderate extrapolations are intentionally permitted through with uncertainty inflation, while severe OOD is intercepted with 96.55% recall at primary threshold and 100.0% at warning threshold."
+    "qualification": "FRESHLY COMPUTED via the serving path (worst single supplied feature). Moderate 100.0% and severe 100.0% intercepted at 1.50; modest excursions flagged at the 1.00 warning band (100.0%).",
+    "superseded_reference": "96.55% severe recall (HISTORICAL; not the deployed behaviour)"
   },
   "software_safety": {
     "invalid_stress_tests": {
@@ -153,8 +154,15 @@
   "alternative_fuels_methodology": {
     "status": "Thermodynamic scenario simulation (invariant shaft work energy basis)",
     "equation": "E_shaft = P_B * t = m_f * LHV_f * eta_f",
-    "measured_telemetry_fuels": ["VLSFO", "MGO"],
-    "simulated_fuels": ["Bio-Methanol", "Green Ammonia", "Liquid Hydrogen"],
+    "measured_telemetry_fuels": [
+      "VLSFO",
+      "MGO"
+    ],
+    "simulated_fuels": [
+      "Bio-Methanol",
+      "Green Ammonia",
+      "Liquid Hydrogen"
+    ],
     "emissions_accounting": "Strict separation of Well-to-Tank (WtT), Tank-to-Wake (TtW), and Well-to-Wake (WtW)",
     "ui_label": "Scenario Estimate"
   },

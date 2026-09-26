@@ -58,8 +58,9 @@ def test_vessel_type_unknown_handling():
         "wave_height_m": 1.0,
         "water_depth_m": 60.0,
     }
-    res = p.predict_fuel_with_uncertainty(raw_input)
-    assert res["routing_status"] == "FALLBACK"
+    res = p.predict_fuel_with_uncertainty(raw_input, raise_on_error=False)
+    assert res["routing_status"] == "REJECT" and res["fuel_prediction"] is None
+    assert "Unsupported vessel_type" in res["warning"]
     assert "nuclear_submarine" in res["warning"]
     assert res["confidence"] in ("LOW", "MEDIUM")
 

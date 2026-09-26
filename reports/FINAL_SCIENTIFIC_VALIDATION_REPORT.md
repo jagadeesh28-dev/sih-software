@@ -29,9 +29,9 @@ The mandate of this investigation was not to promote quantum-inspired optimizati
 
 ## 2. Repository Forensic Mapping & Traceability
 
-Every architectural component has been inventoried, mapped, and verified in [`audit/FINAL_REPOSITORY_MAP.md`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/audit/FINAL_REPOSITORY_MAP.md):
-- **Canonical Evaluator:** [`src/evaluator/common_evaluator.py`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/src/evaluator/common_evaluator.py) (`CommonFleetEvaluator`). Wraps `Phase4FleetEvaluator` with `lambda_robust=0.50` and GBDT residual models calibrated on real FuelCast telemetry. Strictly enforces an exact 2,500-evaluation budget.
-- **Constraint Handling & Repair:** [`src/representation/repair.py`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/src/representation/repair.py) (`FleetSolutionRepairer`). Executes deterministic C0 bipartite matching for mandatory demands, fuel technical compatibility mapping, cargo DWT clamping, and speed boundary clipping.
+Every architectural component has been inventoried, mapped, and verified in [`audit/FINAL_REPOSITORY_MAP.md`](../audit/FINAL_REPOSITORY_MAP.md):
+- **Canonical Evaluator:** [`src/evaluator/common_evaluator.py`](../src/evaluator/common_evaluator.py) (`CommonFleetEvaluator`). Wraps `Phase4FleetEvaluator` with `lambda_robust=0.50` and GBDT residual models calibrated on real FuelCast telemetry. Strictly enforces an exact 2,500-evaluation budget.
+- **Constraint Handling & Repair:** [`src/representation/repair.py`](../src/representation/repair.py) (`FleetSolutionRepairer`). Executes deterministic C0 bipartite matching for mandatory demands, fuel technical compatibility mapping, cargo DWT clamping, and speed boundary clipping.
 - **Tournament Comparator:** `CommonFleetEvaluator.deb_prefers`. Evaluates Deb's feasibility-first rules: 1. Feasible beats infeasible; 2. Between feasible solutions, lower objective wins; 3. Between infeasible solutions, lower constraint violation magnitude wins.
 - **Prediction Subsystem:** Hydrodynamic Holtrop-Mennen resistance coupled with LightGBM GBDT residual learning trained on 173,986 sensor records from 3 commercial vessels (`CPS_Poseidon`, `CPS_Triton`, `OSS_Ceto`).
 - **Domain Barrier:** `prediction/inference.py:SafeFuelObjective` and `DomainChecker` (Mahalanobis distance barrier) preventing unphysical numerical exploitation.
@@ -41,7 +41,7 @@ Every architectural component has been inventoried, mapped, and verified in [`au
 
 ## 3. Canonical Frozen Benchmark Protocol
 
-All experimental results are locked under the frozen protocol documented in [`audit/FINAL_FROZEN_BENCHMARK_PROTOCOL.md`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/audit/FINAL_FROZEN_BENCHMARK_PROTOCOL.md):
+All experimental results are locked under the frozen protocol documented in [`audit/FINAL_FROZEN_BENCHMARK_PROTOCOL.md`](../audit/FINAL_FROZEN_BENCHMARK_PROTOCOL.md):
 - **Matched Seeds:** Exactly 30 seeds (`1001, 1002, ..., 1030`).
 - **Budget:** Exactly 2,500 objective evaluations ($50\text{ population} \times 50\text{ iterations}$).
 - **Problem Instance:** Heterogeneous 3-vessel commercial fleet ($D = 18$ decision variables: route demand, cargo, speed, fuel type, operating mode, shore power).
@@ -62,8 +62,8 @@ We executed the pure representation experiment across all 30 matched seeds:
 - **C2 (Q-Bit Categorical + DE):** Multi-state Q-bits, Dirichlet-Q vectors, and conditional demand observation operators + DE continuous mutation ($F=0.8, CR=0.9$) + C0 repair + Deb + Pareto archive.
 
 ### Summary of Representation Metrics (30 Paired Seeds)
-*Raw data: [`results/raw/final_representation_benchmark.csv`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/results/raw/final_representation_benchmark.csv)*  
-*Full statistics: [`results/tables/final_representation_comparison.csv`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/results/tables/final_representation_comparison.csv)*
+*Raw data: [`results/raw/final_representation_benchmark.csv`](../results/raw/final_representation_benchmark.csv)*  
+*Full statistics: [`results/tables/final_representation_comparison.csv`](../results/tables/final_representation_comparison.csv)*
 
 | Metric | C1 (Classical Categorical) | C2 (Q-Bit Probabilistic) | Difference (C2 - C1) | Hodges-Lehmann Median Diff | Wilcoxon Signed-Rank p | Holm-Bonferroni Corrected p | Rank-Biserial Effect Size | Statistical Interpretation |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -133,8 +133,8 @@ A6 / C2 (Q-Bit + DE + Deb + Repair + Archive): Feasibility = 100.0%, Phys Obj = 
 ---
 
 ## 7. Master Multi-Algorithm Comparison (450 Verified Runs)
-*Consolidated Ledger: [`results/raw/final_benchmark_master.csv`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/results/raw/final_benchmark_master.csv)*  
-*Master Table: [`results/tables/final_algorithm_comparison.csv`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/results/tables/final_algorithm_comparison.csv)*
+*Consolidated Ledger: [`results/raw/final_benchmark_master.csv`](../results/raw/final_benchmark_master.csv)*  
+*Master Table: [`results/tables/final_algorithm_comparison.csv`](../results/tables/final_algorithm_comparison.csv)*
 
 ```text
 ========================================================================================================================
@@ -173,7 +173,7 @@ Across all 30 seeds, Hypervolume was re-evaluated under 4 distinct reference poi
 **Conclusion:** Qualitative multi-objective performance is robust to reference point selection. Fair NSGA-III, A5, and C2 are statistically equivalent in Hypervolume ($p > 0.05$).
 
 ### 8.2 Small-Instance Exact Optimum Certificate ($J^* = 873.2265$)
-*Artifact: [`results/optimality/small_instance_certificate.csv`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/results/optimality/small_instance_certificate.csv)*  
+*Artifact: [`results/optimality/small_instance_certificate.csv`](../results/optimality/small_instance_certificate.csv)*  
 - Exhaustive discrete enumeration of 750 configurations (~1.03 million continuous grid points) proved an exact global penalized optimum of **$J^*_{\text{pen}} = 873.2265$** ($3.7861$ physical robust loss + $\$869.44$ soft schedule delay penalty).
 - Pure physical loss ground truth on the $0.5\text{ kn}$ grid is **$J^*_{\text{phys}} = 3.2369$**.
 - Continuous cruising speed optimization in DE and QPSO discovered intermediate speeds ($V \approx 16.4\text{ kn}$), achieving a zero-delay physical loss of **$3.1666$**, eliminating all penalties and demonstrating an exact **$0.0\%$ optimality gap**.
@@ -247,7 +247,7 @@ The human fleet superintendent selects the strategy. The system is decision supp
 ---
 
 ## 11. Final Scientific Claim Ledger Summary
-*Complete Ledger: [`audit/FINAL_CLAIM_LEDGER.md`](file:///c:/Users/JAGADEESH%20M/OneDrive/Documents/SIH-software/sih26138_platform/audit/FINAL_CLAIM_LEDGER.md)*
+*Complete Ledger: [`audit/FINAL_CLAIM_LEDGER.md`](../audit/FINAL_CLAIM_LEDGER.md)*
 
 - **Supported Claims (6):** Real-data fuel prediction, Physics-informed residual modelling, Deb feasibility improvement, Deterministic C0 repair, Q-bit diversity preservation, CVaR robustness.
 - **Conditionally Supported Claims (8):** Q-bit causal benefit, Fair NSGA-III comparison, Pareto front quality, Hypervolume improvement, Small-instance global optimum, Regulatory awareness, Empirical scalability, Domain novelty.

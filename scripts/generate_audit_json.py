@@ -1,9 +1,10 @@
 import json
 import os
+from pathlib import Path
 import pandas as pd
 import numpy as np
 
-base_dir = r"c:\Users\JAGADEESH M\OneDrive\Documents\SIH-software\sih26138_platform\PHASE5"
+base_dir = str(Path(__file__).resolve().parents[1] / "PHASE5")
 audit_dir = os.path.join(base_dir, "final_audit")
 res_dir = os.path.join(base_dir, "results")
 val_dir = os.path.join(base_dir, "validation")
