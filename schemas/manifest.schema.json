@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://egreen-quanta.maritime.org/schemas/manifest.schema.json",
+  "title": "EgreenQuantaExportPackageManifest",
+  "description": "Cryptographic tamper-evident manifest for EGREEN QUANTA decision record export packages.",
+  "type": "object",
+  "required": [
+    "manifest_version",
+    "record_id",
+    "trace_id",
+    "system",
+    "software_version",
+    "git_commit",
+    "generated_at_utc",
+    "integrity_type",
+    "artifacts",
+    "verification_procedure"
+  ],
+  "properties": {
+    "manifest_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "record_id": { "type": "string", "pattern": "^REC-[A-Za-z0-9_-]+$" },
+    "trace_id": { "type": "string" },
+    "system": { "type": "string", "enum": ["EGREEN_QUANTA"] },
+    "software_version": { "type": "string" },
+    "git_commit": { "type": "string" },
+    "generated_at_utc": { "type": "string", "format": "date-time" },
+    "parent_record_hash": { "type": ["string", "null"] },
+    "integrity_type": { "type": "string", "enum": ["TAMPER_EVIDENT_HASH_MANIFEST"] },
+    "security_declaration": { "type": "string" },
+    "artifacts": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["filename", "sha256", "size_bytes", "content_type", "role"],
+        "properties": {
+          "filename": { "type": "string" },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "size_bytes": { "type": "integer", "minimum": 0 },
+          "content_type": { "type": "string" },
+          "role": {
+            "type": "string",
+            "enum": [
+              "canonical_decision_record",
+              "human_readable_csv_derivative",
+              "integrity_manifest",
+              "operator_readme",
+              "pareto_front_archive",
+              "calculation_summary"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "verification_procedure": {
+      "type": "object",
+      "required": ["algorithm", "command_example"],
+      "properties": {
+        "algorithm": { "type": "string" },
+        "command_example": { "type": "string" },
+        "expected_result": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

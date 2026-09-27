@@ -22,13 +22,25 @@ import uuid
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from functools import lru_cache
+import io
+import zipfile
 from pathlib import Path
 from typing import Any, Dict, List, Literal, Optional
 
 import numpy as np
 import pandas as pd
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse, Response
 from pydantic import BaseModel, ConfigDict, Field
+
+from src.export.decision_exporter import (
+    build_optimization_decision_record,
+    build_scenario_decision_record,
+    export_decision_package,
+    verify_export_package,
+    sanitize_filename,
+    EXPORTS_DIR,
+)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 for p in (REPO_ROOT, REPO_ROOT / "scripts"):
@@ -286,6 +298,7 @@ def latest_record(vessel_id: str) -> Dict[str, Any]:
 EVALUATOR: Dict[str, Any] = {"ready": False, "error": None, "value": None}
 OPT_LOCK = threading.Lock()  # ponytail: one optimizer run at a time; add a worker pool if concurrent users matter
 JOBS: Dict[str, Dict[str, Any]] = {}
+SCENARIOS: Dict[str, Dict[str, Any]] = {}
 
 
 def _build_evaluator() -> None:
@@ -438,6 +451,19 @@ class DecisionRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     decision: Literal["ACCEPT", "REJECT"]
     note: str = Field("", max_length=500)
+
+
+class ConfirmDecisionRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    operator_id: str = Field("Chief Navigation Officer", max_length=100)
+    note: str = Field("Confirmed dispatch schedule after bridge verification.", max_length=500)
+
+
+class ExportPackageRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    operator_id: Optional[str] = Field(None, max_length=100)
+    note: Optional[str] = Field(None, max_length=500)
+    include_pareto: bool = True
 
 
 # --------------------------------------------------------------------------- routes: status / fleet / vessel
@@ -606,6 +632,7 @@ def scenario(req: ScenarioRequest) -> Dict[str, Any]:
                            "hotel_load_kw": v["hotel_load_kw"], "hotel_load_provenance": "ASSUMED (fleet default)"}}
     scen_id = f"SCEN-{req.vessel_id}-{uuid.uuid4().hex[:6]}"
     out["scenario_id"] = scen_id
+    SCENARIOS[scen_id] = out
     record("SCENARIO", scenario_id=scen_id, vessel_id=v["id"], vessel_type=v["vessel_type"], inputs=point,
            fuel_scenario=req.fuel_type, prediction=rate, trust=pred["trust"], voyage=result,
            fuel_price_config=out["assumptions"]["fuel"]["price_usd_per_tonne"],
@@ -708,18 +735,220 @@ def optimize_status(job_id: str) -> Dict[str, Any]:
     return job_view(job_id)
 
 
+@app.post("/api/recommendations/{job_id}/review")
+def review_recommendation(job_id: str) -> Dict[str, Any]:
+    job = JOBS.get(job_id)
+    if job is None:
+        raise HTTPException(404, f"Unknown recommendation '{job_id}'")
+    if job.get("status") != "DONE":
+        raise HTTPException(409, f"Job status is {job.get('status')}, not DONE")
+    job["recommendation_status"] = "REVIEWED"
+    record("OPERATOR_REVIEW", recommendation_id=job_id, status="REVIEWED",
+           actuation="NONE — advisory review step; no command issued")
+    return job_view(job_id)
+
+
+@app.post("/api/recommendations/{job_id}/confirm")
+def confirm_recommendation(job_id: str, req: ConfirmDecisionRequest) -> Dict[str, Any]:
+    job = JOBS.get(job_id)
+    if job is None:
+        raise HTTPException(404, f"Unknown recommendation '{job_id}'")
+    if job.get("status") != "DONE":
+        raise HTTPException(409, f"Job status is {job.get('status')}, not DONE")
+    job["recommendation_status"] = "CONFIRMED"
+    job["operator_id"] = req.operator_id
+    job["operator_note"] = req.note
+    record("OPERATOR_CONFIRMATION", recommendation_id=job_id, decision="CONFIRMED",
+           operator=req.operator_id, note=req.note, selected_solution=job["result"]["vessels"],
+           objectives=job["result"]["objectives"], actuation="NONE — advisory human sign-off")
+    return job_view(job_id)
+
+
 @app.post("/api/recommendations/{job_id}/decision")
 def decide(job_id: str, req: DecisionRequest) -> Dict[str, Any]:
     job = JOBS.get(job_id)
     if job is None:
         raise HTTPException(404, f"Unknown recommendation '{job_id}'")
-    if job.get("recommendation_status") != "PENDING_REVIEW":
+    if job.get("recommendation_status") not in ("PENDING_REVIEW", "DRAFT", "REVIEWED"):
         raise HTTPException(409, f"Recommendation is {job.get('recommendation_status')}, not PENDING_REVIEW")
     job["recommendation_status"] = "ACCEPTED" if req.decision == "ACCEPT" else "REJECTED"
     record("OPERATOR_DECISION", recommendation_id=job_id, decision=job["recommendation_status"], note=req.note,
            selected_solution=job["result"]["vessels"], objectives=job["result"]["objectives"],
            actuation="NONE — advisory only; no vessel or engine commands are issued")
     return job_view(job_id)
+
+
+@app.post("/api/recommendations/{job_id}/export")
+def export_recommendation(job_id: str, req: Optional[ExportPackageRequest] = None) -> Dict[str, Any]:
+    if req is None:
+        req = ExportPackageRequest()
+    job = JOBS.get(job_id)
+    if job is None:
+        raise HTTPException(404, f"Unknown recommendation '{job_id}'")
+    if job.get("status") != "DONE" or not job.get("result"):
+        raise HTTPException(409, f"Cannot export job with status {job.get('status')}")
+
+    op_id = req.operator_id or job.get("operator_id") or "Chief Navigation Officer"
+    op_note = req.note or job.get("operator_note") or "Exported confirmed operational dispatch plan."
+    job["recommendation_status"] = "EXPORTED"
+
+    trace_id = f"TRC-OPT-{uuid.uuid4().hex[:12]}"
+    record_obj = build_optimization_decision_record(
+        job_id=job_id,
+        job_data=job,
+        operator_status="EXPORTED",
+        operator_id=op_id,
+        operator_note=op_note,
+        trace_id=trace_id
+    )
+
+    pkg_dir = export_decision_package(record_obj, include_pareto=req.include_pareto)
+    manifest = json.loads((pkg_dir / "manifest.json").read_text(encoding="utf-8"))
+    rec_id = record_obj["record_metadata"]["record_id"]
+
+    record("DECISION_EXPORT", recommendation_id=job_id, record_id=rec_id, trace_id=trace_id,
+           package_dir=str(pkg_dir.relative_to(REPO_ROOT)), manifest_sha=manifest["artifacts"][0]["sha256"])
+
+    return {
+        "status": "EXPORTED",
+        "record_id": rec_id,
+        "trace_id": trace_id,
+        "package_directory": str(pkg_dir.relative_to(REPO_ROOT)).replace("\\", "/"),
+        "manifest": manifest,
+        "download_urls": {
+            "json": f"/api/exports/{rec_id}/download/decision_record.json",
+            "csv": f"/api/exports/{rec_id}/download/decision_record.csv",
+            "manifest": f"/api/exports/{rec_id}/download/manifest.json",
+            "readme": f"/api/exports/{rec_id}/download/README.txt",
+            "archive": f"/api/exports/{rec_id}/archive"
+        }
+    }
+
+
+@app.post("/api/scenarios/{scen_id}/export")
+def export_scenario(scen_id: str, req: Optional[ExportPackageRequest] = None) -> Dict[str, Any]:
+    if req is None:
+        req = ExportPackageRequest()
+    scen = SCENARIOS.get(scen_id)
+    if scen is None:
+        raise HTTPException(404, f"Unknown scenario '{scen_id}'")
+
+    op_id = req.operator_id or "Chief Marine Engineer"
+    op_note = req.note or "Exported voyage fuel and GHG scenario analysis."
+    trace_id = f"TRC-SCEN-{uuid.uuid4().hex[:12]}"
+
+    record_obj = build_scenario_decision_record(
+        scen_id=scen_id,
+        scenario_result=scen,
+        operator_status="EXPORTED",
+        operator_id=op_id,
+        operator_note=op_note,
+        trace_id=trace_id
+    )
+
+    pkg_dir = export_decision_package(record_obj, include_pareto=False)
+    manifest = json.loads((pkg_dir / "manifest.json").read_text(encoding="utf-8"))
+    rec_id = record_obj["record_metadata"]["record_id"]
+
+    record("SCENARIO_EXPORT", scenario_id=scen_id, record_id=rec_id, trace_id=trace_id,
+           package_dir=str(pkg_dir.relative_to(REPO_ROOT)), manifest_sha=manifest["artifacts"][0]["sha256"])
+
+    return {
+        "status": "EXPORTED",
+        "record_id": rec_id,
+        "trace_id": trace_id,
+        "package_directory": str(pkg_dir.relative_to(REPO_ROOT)).replace("\\", "/"),
+        "manifest": manifest,
+        "download_urls": {
+            "json": f"/api/exports/{rec_id}/download/decision_record.json",
+            "csv": f"/api/exports/{rec_id}/download/decision_record.csv",
+            "manifest": f"/api/exports/{rec_id}/download/manifest.json",
+            "readme": f"/api/exports/{rec_id}/download/README.txt",
+            "archive": f"/api/exports/{rec_id}/archive"
+        }
+    }
+
+
+@app.get("/api/exports")
+def list_exports() -> Dict[str, Any]:
+    packages = []
+    if EXPORTS_DIR.exists():
+        for d in sorted(EXPORTS_DIR.glob("EGREEN_QUANTA_*"), reverse=True):
+            if d.is_dir():
+                m_file = d / "manifest.json"
+                if m_file.exists():
+                    try:
+                        m_data = json.loads(m_file.read_text(encoding="utf-8"))
+                        packages.append({
+                            "directory": d.name,
+                            "record_id": m_data.get("record_id"),
+                            "trace_id": m_data.get("trace_id"),
+                            "generated_at_utc": m_data.get("generated_at_utc"),
+                            "software_version": m_data.get("software_version"),
+                            "artifacts_count": len(m_data.get("artifacts", []))
+                        })
+                    except Exception:
+                        pass
+    return {"packages_count": len(packages), "packages": packages}
+
+
+@app.get("/api/exports/{record_id}/download/{filename}")
+def download_export_file(record_id: str, filename: str):
+    try:
+        clean_rec = sanitize_filename(record_id)
+        clean_file = sanitize_filename(filename)
+    except ValueError as exc:
+        raise HTTPException(400, f"Invalid filename parameter: {exc}")
+
+    pkg_dir = EXPORTS_DIR / f"EGREEN_QUANTA_{clean_rec}"
+    target = pkg_dir / clean_file
+    if not target.exists() or not target.is_file():
+        raise HTTPException(404, f"File '{clean_file}' not found in package '{clean_rec}'")
+
+    media_type = "application/json" if clean_file.endswith(".json") else "text/csv" if clean_file.endswith(".csv") else "text/plain"
+    return FileResponse(path=str(target), media_type=media_type, filename=clean_file)
+
+
+@app.get("/api/exports/{record_id}/archive")
+def download_export_archive(record_id: str):
+    try:
+        clean_rec = sanitize_filename(record_id)
+    except ValueError as exc:
+        raise HTTPException(400, f"Invalid record ID: {exc}")
+
+    pkg_dir = EXPORTS_DIR / f"EGREEN_QUANTA_{clean_rec}"
+    if not pkg_dir.exists() or not pkg_dir.is_dir():
+        raise HTTPException(404, f"Export package for record '{clean_rec}' not found")
+
+    mem_zip = io.BytesIO()
+    with zipfile.ZipFile(mem_zip, mode="w", compression=zipfile.ZIP_DEFLATED) as zf:
+        for f in pkg_dir.glob("*"):
+            if f.is_file():
+                zf.write(f, arcname=f.name)
+    mem_zip.seek(0)
+
+    return Response(
+        content=mem_zip.getvalue(),
+        media_type="application/zip",
+        headers={"Content-Disposition": f'attachment; filename="EGREEN_QUANTA_{clean_rec}.zip"'}
+    )
+
+
+@app.post("/api/exports/{record_id}/verify")
+def verify_export(record_id: str) -> Dict[str, Any]:
+    try:
+        clean_rec = sanitize_filename(record_id)
+    except ValueError as exc:
+        raise HTTPException(400, f"Invalid record ID: {exc}")
+
+    pkg_dir = EXPORTS_DIR / f"EGREEN_QUANTA_{clean_rec}"
+    if not pkg_dir.exists() or not pkg_dir.is_dir():
+        raise HTTPException(404, f"Export package for record '{clean_rec}' not found")
+
+    res = verify_export_package(pkg_dir)
+    record("EXPORT_VERIFICATION", record_id=clean_rec, verified=res["verified"], tampered=res["tampered"],
+           status=res["status_label"], errors=res["errors"])
+    return res
 
 
 def pareto_points() -> List[Dict[str, Any]]:

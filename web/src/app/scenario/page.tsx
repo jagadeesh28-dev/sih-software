@@ -1,11 +1,24 @@
 "use client";
 
-import { FlaskConical } from "lucide-react";
+import { Anchor, ArrowRight, Clock, Compass, DollarSign, Droplets, Gauge, Leaf, ShieldAlert, Sliders, Wind } from "lucide-react";
 import { useState } from "react";
 import { useHmi } from "@/components/hmi/app-shell";
 import { PredictionReadout } from "@/components/hmi/prediction-view";
 import {
-  ErrorBox, Field, Kpi, Loading, Notice, PageHeader, Panel, ProvenanceTag, StateBadge, ToneChip, provenanceKind,
+  ConfidenceBand,
+  DataState,
+  ErrorBox,
+  Field,
+  Kpi,
+  Loading,
+  Notice,
+  PageHeader,
+  Panel,
+  ProvenanceTag,
+  StateBadge,
+  TechnicalDetails,
+  ToneChip,
+  provenanceKind,
 } from "@/components/hmi/primitives";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,14 +26,15 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { api, type Scenario } from "@/lib/api";
 import { fmt, fmtUsd, humanize, UNITS, useApi } from "@/lib/hmi";
+import { cn } from "@/lib/utils";
 
 const OVERRIDES = [
-  { key: "stw_kn", label: "Speed (STW)", unit: UNITS.speed },
-  { key: "draft_m", label: "Draft", unit: UNITS.length },
-  { key: "displacement_t", label: "Displacement / loading", unit: UNITS.displacement },
-  { key: "wind_speed_ms", label: "Wind speed", unit: UNITS.windSpeed },
-  { key: "wave_height_m", label: "Wave height (Hs)", unit: UNITS.length },
-  { key: "water_depth_m", label: "Water depth", unit: UNITS.length },
+  { key: "stw_kn", label: "Speed Through Water (STW)", unit: UNITS.speed, placeholder: "14.5" },
+  { key: "draft_m", label: "Operational Draft", unit: UNITS.length, placeholder: "8.2" },
+  { key: "displacement_t", label: "Displacement / Loading", unit: UNITS.displacement, placeholder: "25000" },
+  { key: "wind_speed_ms", label: "Wind Speed", unit: UNITS.windSpeed, placeholder: "6.5" },
+  { key: "wave_height_m", label: "Significant Wave Height (Hs)", unit: UNITS.length, placeholder: "1.8" },
+  { key: "water_depth_m", label: "Under-Keel Water Depth", unit: UNITS.length, placeholder: "45.0" },
 ];
 
 export default function ScenarioPage() {
@@ -39,16 +53,32 @@ export default function ScenarioPage() {
   const [busy, setBusy] = useState(false);
 
   const run = async () => {
-    setBusy(true); setError(undefined);
-    const overrides = Object.fromEntries(Object.entries(ov).filter(([, v]) => v !== "").map(([k, v]) => [k, Number(v)]));
+    setBusy(true);
+    setError(undefined);
+    const overrides = Object.fromEntries(
+      Object.entries(ov)
+        .filter(([, v]) => v !== "")
+        .map(([k, v]) => [k, Number(v)])
+    );
     try {
       const r = await api.scenario({
-        vessel_id: activeVessel, base, overrides, fuel_type: fuel, use_shore_power: shore,
-        port_hours: Number(portH), distance_nm: Number(dist), deadline_h: Number(deadline),
+        vessel_id: activeVessel,
+        base,
+        overrides,
+        fuel_type: fuel,
+        use_shore_power: shore,
+        port_hours: Number(portH),
+        distance_nm: Number(dist),
+        deadline_h: Number(deadline),
       });
-      setRes(r); setScenarioId(r.scenario_id);
-    } catch (e) { setError((e as Error).message); setRes(undefined); }
-    finally { setBusy(false); }
+      setRes(r);
+      setScenarioId(r.scenario_id);
+    } catch (e) {
+      setError((e as Error).message);
+      setRes(undefined);
+    } finally {
+      setBusy(false);
+    }
   };
 
   const fuels = Array.from(new Map((fuelOptions.data?.rows ?? []).filter((r) => !r.shore_power).map((r) => [r.fuel, r.assumptions.name])));
@@ -56,152 +86,346 @@ export default function ScenarioPage() {
 
   return (
     <>
-      <PageHeader title="Scenario Lab" badge={<ToneChip tone="info">What-if workspace</ToneChip>}
-        description="Change operating and voyage parameters, then evaluate fuel, cost, lifecycle GHG and schedule through the production predictor and SIH objective engine. Outputs are SCENARIO ESTIMATES, never measured telemetry." />
-      <div className="grid gap-3 xl:grid-cols-[400px_minmax(0,1fr)]">
-        <Panel title="Scenario inputs">
-          <form className="grid gap-3" onSubmit={(e) => { e.preventDefault(); run(); }}>
-            <div className="grid grid-cols-2 gap-2">
+      <PageHeader
+        title="Voyage Scenario Simulation"
+        badge={<ToneChip tone="info">Decision Support</ToneChip>}
+        description="Simulate what-if voyage configurations with speed, weather, alternative fuel pathways, and port shore power. All predictions and emissions estimates use the verified hydrodynamics and lifecycle carbon accounting engines."
+      />
+
+      <div className="grid gap-4 xl:grid-cols-[420px_minmax(0,1fr)]">
+        {/* Left Column: Parameter Configuration */}
+        <Panel title="Voyage Simulation Parameters" subtitle="Specify vessel, voyage conditions, and environmental overrides">
+          <form className="grid gap-4" onSubmit={(e) => { e.preventDefault(); run(); }}>
+            {/* Vessel & Baseline State */}
+            <div className="grid grid-cols-2 gap-3">
               <div className="grid gap-1">
-                <Label htmlFor="vessel" className="text-xs">Vessel</Label>
-                <select id="vessel" value={activeVessel} onChange={(e) => setActiveVessel(e.target.value)} className="h-8 w-full min-w-0 rounded-md border bg-input/30 px-2 text-sm">
-                  {vessels.map((id) => <option key={id}>{id}</option>)}
+                <Label htmlFor="vessel" className="text-xs font-medium">Target Vessel</Label>
+                <select
+                  id="vessel"
+                  value={activeVessel}
+                  onChange={(e) => setActiveVessel(e.target.value)}
+                  className="h-8 w-full min-w-0 rounded-md border border-input/60 bg-input/20 px-2 text-xs font-medium focus:border-cyan-500 focus:outline-none"
+                >
+                  {vessels.map((id) => (
+                    <option key={id} value={id}>{id}</option>
+                  ))}
                 </select>
               </div>
+
               <div className="grid gap-1">
-                <Label htmlFor="base" className="text-xs">Baseline state</Label>
-                <select id="base" value={base} onChange={(e) => setBase(e.target.value as typeof base)} className="h-8 w-full min-w-0 rounded-md border bg-input/30 px-2 text-sm">
-                  <option value="fleet_default">Fleet default (ASSUMED)</option>
-                  <option value="dataset_latest">Latest recorded (MEASURED)</option>
+                <Label htmlFor="base" className="text-xs font-medium">Initial Baseline State</Label>
+                <select
+                  id="base"
+                  value={base}
+                  onChange={(e) => setBase(e.target.value as typeof base)}
+                  className="h-8 w-full min-w-0 rounded-md border border-input/60 bg-input/20 px-2 text-xs font-medium focus:border-cyan-500 focus:outline-none"
+                >
+                  <option value="fleet_default">Fleet Default Telemetry</option>
+                  <option value="dataset_latest">Latest Recorded Telemetry</option>
                 </select>
               </div>
             </div>
-            <fieldset className="grid grid-cols-2 gap-2 rounded-md border p-2">
-              <legend className="px-1 text-[11px] uppercase tracking-wider text-muted-foreground">Overrides — blank keeps baseline</legend>
-              {OVERRIDES.map((o) => (
-                <div key={o.key} className="grid gap-1">
-                  <Label htmlFor={o.key} className="text-xs">{o.label} ({o.unit})</Label>
-                  <Input id={o.key} inputMode="decimal" className="num h-8" placeholder="baseline" value={ov[o.key] ?? ""}
-                    onChange={(e) => { const v = e.target.value; setOv((cur) => ({ ...cur, [o.key]: v })); }} />
+
+            {/* Vessel Hydrodynamics & Environmental Overrides */}
+            <div className="rounded-md border border-panel-border bg-panel-2/40 p-3">
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
+                <Sliders className="size-3.5 text-cyan-400" /> Operational & Weather Overrides
+              </div>
+              <div className="grid grid-cols-2 gap-2.5">
+                {OVERRIDES.map((o) => (
+                  <div key={o.key} className="grid gap-1">
+                    <Label htmlFor={o.key} className="text-[11px] text-muted-foreground flex justify-between">
+                      <span>{o.label}</span>
+                      <span className="font-mono text-[10px]">{o.unit}</span>
+                    </Label>
+                    <Input
+                      id={o.key}
+                      inputMode="decimal"
+                      className="num h-7 text-xs font-mono"
+                      placeholder={o.placeholder}
+                      value={ov[o.key] ?? ""}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setOv((cur) => ({ ...cur, [o.key]: val }));
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+              <p className="mt-2 text-[10px] text-muted-foreground">Leaving a field blank uses the baseline vessel operating point.</p>
+            </div>
+
+            {/* Route & Energy Management */}
+            <div className="rounded-md border border-panel-border bg-panel-2/40 p-3">
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
+                <Compass className="size-3.5 text-cyan-400" /> Route & Energy Pathways
+              </div>
+
+              <div className="grid gap-3">
+                <div className="grid gap-1">
+                  <Label htmlFor="fuel" className="text-xs">Fuel Pathway Selection</Label>
+                  <select
+                    id="fuel"
+                    value={fuel}
+                    onChange={(e) => setFuel(e.target.value)}
+                    className="h-8 w-full rounded-md border border-input/60 bg-input/20 px-2 text-xs font-medium focus:border-cyan-500 focus:outline-none"
+                  >
+                    {fuels.length ? (
+                      fuels.map(([k, name]) => (
+                        <option key={k} value={k}>{name}</option>
+                      ))
+                    ) : (
+                      <option value="vlsfo">Very Low Sulphur Fuel Oil (VLSFO)</option>
+                    )}
+                  </select>
                 </div>
-              ))}
-            </fieldset>
-            <fieldset className="grid grid-cols-2 gap-2 rounded-md border p-2">
-              <legend className="px-1 text-[11px] uppercase tracking-wider text-muted-foreground">Voyage — SCENARIO INPUT</legend>
-              <div className="col-span-2 grid gap-1">
-                <Label htmlFor="fuel" className="text-xs">Fuel pathway (configs/fuels.yaml)</Label>
-                <select id="fuel" value={fuel} onChange={(e) => setFuel(e.target.value)} className="h-8 w-full min-w-0 rounded-md border bg-input/30 px-2 text-sm">
-                  {fuels.length ? fuels.map(([k, name]) => <option key={k} value={k}>{name}</option>) : <option value="vlsfo">vlsfo</option>}
-                </select>
+
+                <div className="grid grid-cols-2 gap-2.5">
+                  <div className="grid gap-1">
+                    <Label htmlFor="dist" className="text-xs">Voyage Distance ({UNITS.distance})</Label>
+                    <Input
+                      id="dist"
+                      inputMode="decimal"
+                      className="num h-7 text-xs font-mono"
+                      value={dist}
+                      onChange={(e) => setDist(e.target.value)}
+                    />
+                  </div>
+                  <div className="grid gap-1">
+                    <Label htmlFor="deadline" className="text-xs">Schedule Deadline ({UNITS.hours})</Label>
+                    <Input
+                      id="deadline"
+                      inputMode="decimal"
+                      className="num h-7 text-xs font-mono"
+                      value={deadline}
+                      onChange={(e) => setDeadline(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2.5 items-center pt-1 border-t border-panel-border/50">
+                  <div className="grid gap-1">
+                    <Label htmlFor="port" className="text-xs">Berth Duration ({UNITS.hours})</Label>
+                    <Input
+                      id="port"
+                      inputMode="decimal"
+                      className="num h-7 text-xs font-mono"
+                      value={portH}
+                      onChange={(e) => setPortH(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex items-center gap-2 pt-4">
+                    <Switch id="shore" checked={shore} onCheckedChange={setShore} />
+                    <Label htmlFor="shore" className="text-xs cursor-pointer">Cold Ironing (Shore Power)</Label>
+                  </div>
+                </div>
               </div>
-              <div className="grid gap-1">
-                <Label htmlFor="dist" className="text-xs">Route distance ({UNITS.distance})</Label>
-                <Input id="dist" inputMode="decimal" className="num h-8" value={dist} onChange={(e) => setDist(e.target.value)} />
-              </div>
-              <div className="grid gap-1">
-                <Label htmlFor="deadline" className="text-xs">Schedule deadline ({UNITS.hours})</Label>
-                <Input id="deadline" inputMode="decimal" className="num h-8" value={deadline} onChange={(e) => setDeadline(e.target.value)} />
-              </div>
-              <div className="flex items-center gap-2">
-                <Switch id="shore" checked={shore} onCheckedChange={setShore} />
-                <Label htmlFor="shore" className="text-xs">Shore power at berth</Label>
-              </div>
-              <div className="grid gap-1">
-                <Label htmlFor="port" className="text-xs">Berth duration ({UNITS.hours})</Label>
-                <Input id="port" inputMode="decimal" className="num h-8" value={portH} onChange={(e) => setPortH(e.target.value)} />
-              </div>
-              <div className="col-span-2 grid gap-1 opacity-60">
-                <Label htmlFor="cargo" className="text-xs">Cargo (t)</Label>
-                <Input id="cargo" disabled placeholder="Not supported by the voyage engine — see Fleet Optimizer" className="h-8" />
-              </div>
-            </fieldset>
-            <Button type="submit" disabled={busy}><FlaskConical className="size-4" aria-hidden /> {busy ? "Evaluating…" : "Evaluate scenario"}</Button>
+            </div>
+
+            <Button type="submit" disabled={busy} className="h-9 w-full text-xs font-semibold">
+              <Compass className="size-4 mr-1.5" /> {busy ? "Computing Hydrodynamic & Carbon Simulation..." : "Simulate Scenario Voyage"}
+            </Button>
           </form>
         </Panel>
 
-        <div className="grid content-start gap-3">
+        {/* Right Column: Scenario Results */}
+        <div className="grid content-start gap-4">
           {error && <ErrorBox error={error} />}
-          {busy && <Loading label="Running predictor and SIH objective engine…" />}
-          {!res && !busy && !error && <Notice title="No scenario evaluated yet">Configure inputs and press Evaluate scenario.</Notice>}
+          {busy && <Loading label="Evaluating physics resistance, conformal uncertainty, and lifecycle emissions..." />}
+
+          {!res && !busy && !error && (
+            <Panel title="Scenario Evaluation Status" subtitle="Awaiting operator input">
+              <div className="py-16 text-center text-sm text-muted-foreground">
+                <Compass className="mx-auto mb-3 size-10 opacity-30" />
+                <p className="font-medium text-foreground">Configure voyage parameters and run the simulation</p>
+                <p className="text-xs mt-1 max-w-md mx-auto">
+                  The engine will calculate hydrodynamic shaft resistance, predicted fuel consumption, lifecycle emissions (WtW), and financial OPEX including carbon pricing and shore power tariffs.
+                </p>
+              </div>
+            </Panel>
+          )}
+
           {res && (
             <>
-              <Notice tone="warning" title="SCENARIO ESTIMATE — NOT MEASURED TELEMETRY">{res.basis}</Notice>
-              <Panel title={`Result ${res.scenario_id}`} actions={<StateBadge state={res.prediction.trust.state} />}>
-                <div className="grid gap-4 lg:grid-cols-5">
-                  <div className="lg:col-span-2">
-                    <div className="mb-1 text-[11px] uppercase tracking-wider text-muted-foreground">VLSFO-basis fuel rate at scenario state</div>
-                    <PredictionReadout prediction={res.prediction} />
-                    {res.prediction.trust.fallback && <ToneChip tone="fallback" className="mt-2">{res.prediction.trust.fallback_label}</ToneChip>}
+              {/* Dignified Operational Notice */}
+              <div className="rounded-md border border-cyan-800/60 bg-cyan-950/20 px-4 py-2.5 flex items-start gap-3">
+                <Compass className="size-5 text-cyan-400 mt-0.5 shrink-0" />
+                <div className="text-xs text-cyan-200/90 leading-relaxed">
+                  <span className="font-semibold text-cyan-300">SCENARIO ESTIMATE · MODELLED LIFECYCLE EVALUATION: </span>
+                  {res.basis}
+                </div>
+              </div>
+
+              {/* Primary KPI Strip */}
+              <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+                <Kpi
+                  label="Predicted Fuel Burn"
+                  value={v ? fmt(v.fuel_t, 2) : "—"}
+                  unit={UNITS.mass}
+                  note={v ? `${fmt(v.fuel_rate_kg_h, 0)} kg/h average rate` : undefined}
+                />
+                <Kpi
+                  label="Operational Expenditure"
+                  value={v ? fmtUsd(v.cost.total_usd) : "—"}
+                  note={v ? `Includes bunkers, carbon & port berth` : undefined}
+                />
+                <Kpi
+                  label="Lifecycle WtW GHG"
+                  value={v ? fmt(v.ghg.wtw_tco2e, 2) : "—"}
+                  unit={UNITS.ghg}
+                  note={v ? `Well-to-Wake total impact` : undefined}
+                />
+                <Kpi
+                  label="Schedule Adherence"
+                  value={v ? (v.feasible ? "ON SCHEDULE" : "DELAYED") : "—"}
+                  note={v ? `${fmt(v.voyage_hours, 1)} h total voyage time` : undefined}
+                />
+              </div>
+
+              {/* Fuel Prediction & Uncertainty Card */}
+              <Panel
+                title="At-Sea Predicted Consumption Rate"
+                subtitle={`Calculated at ${fmt(res.prediction.input.stw_kn as number, 1)} kn STW`}
+                actions={<StateBadge state={res.prediction.trust.state} />}
+              >
+                <div className="grid gap-4 md:grid-cols-2 items-center">
+                  <div className="rounded-md bg-panel-2/60 p-4 border border-panel-border/60">
+                    <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1 font-medium">Predicted Fuel Burn Rate</div>
+                    <div className="text-3xl font-bold font-mono text-cyan-300">
+                      {fmt(res.prediction.result.fuel_prediction, 1)}{" "}
+                      <span className="text-sm font-normal text-muted-foreground">{UNITS.fuelRate}</span>
+                    </div>
+                    <div className="mt-1 text-xs text-muted-foreground font-mono">
+                      ~ {fmt(((res.prediction.result.fuel_prediction ?? 0) * 24) / 1000, 2)} tonnes / day
+                    </div>
                   </div>
-                  {v ? (
-                    <>
-                      <Kpi label={`Voyage fuel (${humanize(v.fuel_type)})`} value={v.fuel_t} digits={2} unit={UNITS.mass} note={`${fmt(v.fuel_rate_kg_h, 0)} ${UNITS.fuelRate} over ${fmt(v.voyage_hours, 1)} ${UNITS.hours}`} />
-                      <Kpi label="Operational cost" value={fmtUsd(v.cost.total_usd)} unit={UNITS.currency} />
-                      <Kpi label="Lifecycle GHG (WtW)" value={v.ghg.wtw_tco2e} digits={2} unit={UNITS.ghg} />
-                    </>
-                  ) : (
-                    <p className="text-sm text-st-ood lg:col-span-3">No voyage evaluation: the predictor produced no fuel rate ({humanize(res.prediction.trust.state)}).</p>
-                  )}
+
+                  <div>
+                    <ConfidenceBand
+                      lower={res.prediction.result.uncertainty?.lower_bound_kg_h}
+                      upper={res.prediction.result.uncertainty?.upper_bound_kg_h}
+                      value={res.prediction.result.fuel_prediction}
+                      confidence={res.prediction.result.uncertainty?.coverage}
+                    />
+                    <div className="mt-2 text-xs text-muted-foreground">
+                      Reliability Assessment:{" "}
+                      <span className={cn(
+                        "font-semibold",
+                        res.prediction.trust.state === "NORMAL" ? "text-emerald-400" : "text-amber-400"
+                      )}>
+                        {res.prediction.trust.state === "NORMAL" ? "High Confidence (Within Operational Envelope)" : "Attention Required"}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </Panel>
+
+              {/* Breakdown Grid: Cost vs GHG vs Schedule */}
               {v && (
-                <div className="grid gap-3 lg:grid-cols-3">
-                  <Panel title="Cost breakdown" subtitle={UNITS.currency}>
-                    <dl>
-                      <Field label="Fuel" value={fmtUsd(v.cost.fuel_usd)} />
-                      <Field label="Carbon (EU ETS)" value={fmtUsd(v.cost.carbon_usd)} />
-                      <Field label="Shore power (electricity)" value={fmtUsd(v.cost.shore_power_usd)} />
-                      <Field label="Schedule penalty" value={fmtUsd(v.cost.schedule_penalty_usd)} />
-                      <Field label="FuelEU penalty" value={fmtUsd(v.cost.fueleu_penalty_usd)} />
-                      <Field label="Total" value={fmtUsd(v.cost.total_usd)} />
-                      <Field label={`Berth (${humanize(v.berth.source)}), included above`} value={fmtUsd(v.berth.cost_usd)} />
+                <div className="grid gap-4 lg:grid-cols-3">
+                  {/* Financial Breakdown */}
+                  <Panel title="Voyage OPEX Breakdown" subtitle="Bunkers, Carbon & Berth Tariffs">
+                    <dl className="grid gap-1.5 text-xs">
+                      <Field label="Bunker Fuel Cost" value={fmtUsd(v.cost.fuel_usd)} />
+                      <Field label="EU ETS Carbon Cost" value={fmtUsd(v.cost.carbon_usd)} />
+                      <Field label="Shore Power Tariff" value={fmtUsd(v.cost.shore_power_usd)} />
+                      <Field label="Schedule Delay Penalty" value={fmtUsd(v.cost.schedule_penalty_usd)} />
+                      <Field label="FuelEU Maritime Penalty" value={fmtUsd(v.cost.fueleu_penalty_usd)} />
+                      <div className="border-t pt-1.5 mt-1 font-semibold">
+                        <Field label="Total Voyage OPEX" value={<span className="text-cyan-300 font-mono text-sm">{fmtUsd(v.cost.total_usd)}</span>} />
+                      </div>
+                      <Field
+                        label={`Berth Energy (${humanize(v.berth.source)})`}
+                        value={fmtUsd(v.berth.cost_usd)}
+                        tag={<span className="text-[10px] text-muted-foreground">(included above)</span>}
+                      />
                     </dl>
                   </Panel>
-                  <Panel title="Lifecycle GHG" subtitle={UNITS.ghg}>
-                    <dl>
-                      <Field label="Well-to-tank" value={fmt(v.ghg.wtt_tco2e, 2)} />
-                      <Field label="Tank-to-wake" value={fmt(v.ghg.ttw_tco2e, 2)} />
-                      <Field label="Methane slip" value={fmt(v.ghg.methane_slip_tco2e, 2)} />
-                      {v.berth.source === "SHORE POWER" && <Field label="Shore grid electricity" value={fmt(v.berth.ghg_tco2e, 2)} />}
-                      <Field label="Well-to-wake" value={fmt(v.ghg.wtw_tco2e, 2)} />
-                      <Field label={`Berth ${fmt(v.berth.energy_kwh, 0)} kWh via ${humanize(v.berth.source)}${v.berth.fuel_t > 0 ? ` (${fmt(v.berth.fuel_t, 3)} t fuel)` : ""}, included`} value={fmt(v.berth.ghg_tco2e, 2)} />
+
+                  {/* Carbon Accounting */}
+                  <Panel title="Lifecycle GHG Breakdown" subtitle="Well-to-Tank & Tank-to-Wake (tCO2e)">
+                    <dl className="grid gap-1.5 text-xs">
+                      <Field label="Well-to-Tank (Upstream)" value={fmt(v.ghg.wtt_tco2e, 2)} unit={UNITS.ghg} />
+                      <Field label="Tank-to-Wake (Combustion)" value={fmt(v.ghg.ttw_tco2e, 2)} unit={UNITS.ghg} />
+                      <Field label="Methane Slip Factor" value={fmt(v.ghg.methane_slip_tco2e, 2)} unit={UNITS.ghg} />
+                      {v.berth.source === "SHORE POWER" && (
+                        <Field label="Shore Grid Upstream GHG" value={fmt(v.berth.ghg_tco2e, 2)} unit={UNITS.ghg} />
+                      )}
+                      <div className="border-t pt-1.5 mt-1 font-semibold">
+                        <Field label="Total Well-to-Wake GHG" value={<span className="text-emerald-300 font-mono text-sm">{fmt(v.ghg.wtw_tco2e, 2)} tCO2e</span>} />
+                      </div>
+                      <Field
+                        label={`Berth: ${fmt(v.berth.energy_kwh, 0)} kWh via ${humanize(v.berth.source)}`}
+                        value={fmt(v.berth.ghg_tco2e, 2)}
+                        unit={UNITS.ghg}
+                      />
                     </dl>
                   </Panel>
-                  <Panel title="Schedule & feasibility">
-                    <dl>
-                      <Field label="Voyage time" value={fmt(v.voyage_hours, 2)} unit={UNITS.hours} />
-                      <Field label="Deadline" value={fmt(v.schedule.deadline_h, 1)} unit={UNITS.hours} />
-                      <Field label="Delay" value={fmt(v.schedule.delay_h, 2)} unit={UNITS.hours} />
-                      <Field label="Feasible" value={v.feasible ? "YES" : "NO — deadline missed"} />
+
+                  {/* Schedule & Feasibility */}
+                  <Panel title="Voyage Schedule & Constraints" subtitle="Transit Time and Berth Duration">
+                    <dl className="grid gap-1.5 text-xs">
+                      <Field label="Sea Transit Duration" value={fmt(v.voyage_hours, 1)} unit={UNITS.hours} />
+                      <Field label="Berth Time at Port" value={fmt(Number(portH), 1)} unit={UNITS.hours} />
+                      <Field label="Total Voyage Time" value={fmt(v.voyage_hours + Number(portH), 1)} unit={UNITS.hours} />
+                      <Field label="Contractual Deadline" value={fmt(v.schedule.deadline_h, 1)} unit={UNITS.hours} />
+                      <Field label="Estimated Delay" value={fmt(v.schedule.delay_h, 1)} unit={UNITS.hours} />
+                      <div className="border-t pt-1.5 mt-1">
+                        <Field
+                          label="Schedule Feasibility"
+                          value={
+                            v.feasible ? (
+                              <ToneChip tone="normal">FEASIBLE (ON SCHEDULE)</ToneChip>
+                            ) : (
+                              <ToneChip tone="ood">DEADLINE MISSED</ToneChip>
+                            )
+                          }
+                        />
+                      </div>
                     </dl>
                   </Panel>
                 </div>
               )}
-              <div className="grid gap-3 lg:grid-cols-2">
-                <Panel title="Input provenance" subtitle="MEASURED vs ASSUMED vs SCENARIO INPUT, per field">
-                  <dl>
-                    {Object.entries(res.provenance).map(([k, p]) => (
-                      <Field key={k} label={k} value={<ProvenanceTag kind={provenanceKind(p)} title={p} />}
-                        tag={res.prediction.input[k] !== undefined ? <span className="num text-[11px]">= {typeof res.prediction.input[k] === "number" ? Number((res.prediction.input[k] as number).toFixed(3)) : String(res.prediction.input[k])}</span> : undefined} />
-                    ))}
-                  </dl>
-                  <p className="mt-2 text-[11px] text-muted-foreground">Unsupported here: {res.unsupported_inputs.join("; ")}</p>
-                </Panel>
-                <Panel title="Assumptions & configuration" subtitle={<>{res.assumptions.fuels_config} · sha256 {res.assumptions.fuels_config_sha256.slice(0, 12)}…</>}>
-                  <dl>
-                    <Field label="Fuel pathway" value={res.assumptions.fuel.name} />
-                    <Field label="Lower heating value" value={fmt(res.assumptions.fuel.lhv_mj_kg, 1)} unit="MJ/kg" />
-                    <Field label="Bunker price" value={fmtUsd(res.assumptions.fuel.price_usd_per_tonne)} unit="/t" />
-                    <Field label="WtT factor" value={fmt(res.assumptions.fuel.wtt_ghg_g_co2e_mj, 1)} unit="gCO2e/MJ" />
-                    <Field label="TtW CO2 factor" value={fmt(res.assumptions.fuel.ttw_co2_g_per_g_fuel, 3)} unit="g/g fuel" />
-                    <Field label="Carbon price" value={fmtUsd(res.assumptions.carbon_price_usd_per_tco2)} unit="/tCO2" />
-                    <Field label="Shore tariff" value={fmt(res.assumptions.shore_power_tariff_usd_per_kwh, 2)} unit="USD/kWh" />
-                    <Field label="Grid emission factor" value={fmt(res.assumptions.shore_power_grid_factor_g_co2e_per_kwh, 0)} unit="gCO2e/kWh" />
-                    <Field label="Hotel load" value={fmt(res.assumptions.hotel_load_kw, 0)} unit="kW" tag={<ProvenanceTag kind="ASSUMED" />} />
-                    <Field label="Factor source" value={<span className="text-xs">{res.assumptions.fuel.source ?? "—"}</span>} />
-                  </dl>
-                </Panel>
-              </div>
+
+              {/* Technical Details Progressive Disclosure */}
+              <TechnicalDetails title="Scientific Assumptions & Data Provenance">
+                <div className="grid gap-3 lg:grid-cols-2 text-xs">
+                  <div>
+                    <div className="font-semibold text-foreground mb-1">Input Variable Provenance</div>
+                    <dl className="grid gap-1">
+                      {Object.entries(res.provenance).map(([k, p]) => (
+                        <Field
+                          key={k}
+                          label={k}
+                          value={<ProvenanceTag kind={provenanceKind(p)} title={p} />}
+                          tag={
+                            res.prediction.input[k] !== undefined ? (
+                              <span className="num text-[11px] font-mono">
+                                = {typeof res.prediction.input[k] === "number"
+                                  ? Number((res.prediction.input[k] as number).toFixed(2))
+                                  : String(res.prediction.input[k])}
+                              </span>
+                            ) : undefined
+                          }
+                        />
+                      ))}
+                    </dl>
+                  </div>
+
+                  <div>
+                    <div className="font-semibold text-foreground mb-1">Fuel Pathway Parameters ({res.assumptions.fuel.name})</div>
+                    <dl className="grid gap-1">
+                      <Field label="Lower Heating Value (LHV)" value={fmt(res.assumptions.fuel.lhv_mj_kg, 1)} unit="MJ/kg" />
+                      <Field label="Bunker Fuel Price" value={fmtUsd(res.assumptions.fuel.price_usd_per_tonne)} unit="/t" />
+                      <Field label="Upstream WtT Factor" value={fmt(res.assumptions.fuel.wtt_ghg_g_co2e_mj, 1)} unit="gCO2e/MJ" />
+                      <Field label="Combustion TtW CO2 Factor" value={fmt(res.assumptions.fuel.ttw_co2_g_per_g_fuel, 3)} unit="g/g fuel" />
+                      <Field label="EU ETS Carbon Allowance" value={fmtUsd(res.assumptions.carbon_price_usd_per_tco2)} unit="/tCO2" />
+                      <Field label="Shore Electricity Tariff" value={fmt(res.assumptions.shore_power_tariff_usd_per_kwh, 2)} unit="USD/kWh" />
+                      <Field label="Hotel Load Demand" value={fmt(res.assumptions.hotel_load_kw, 0)} unit="kW" />
+                    </dl>
+                  </div>
+                </div>
+              </TechnicalDetails>
             </>
           )}
         </div>

@@ -2,7 +2,7 @@
 
 import { AlertOctagon, AlertTriangle, CheckCircle2, CircleSlash, FileWarning, Info, Loader2, RefreshCw, ShieldAlert, Unplug, Wrench } from "lucide-react";
 import Link from "next/link";
-import { Component, type ReactNode } from "react";
+import { Component, useEffect, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { STATE_META, TONE_CLASS, asHmiState, fmt, humanize, type HmiState, type Tone } from "@/lib/hmi";
@@ -155,19 +155,94 @@ export function Loading({ label = "Loading from backend…" }: { label?: string 
   );
 }
 
-export function ErrorBox({ error, onRetry }: { error: string; onRetry?: () => void }) {
+export function FreshnessIndicator({
+  freshness,
+  lastValidTimestamp,
+  className,
+}: {
+  freshness?: "CURRENT" | "STALE" | "UNAVAILABLE";
+  lastValidTimestamp?: string;
+  className?: string;
+}) {
+  const [age, setAge] = useState<string>(() => {
+    if (!lastValidTimestamp) return "unavailable";
+    const diff = Math.max(0, Math.round((Date.now() - new Date(lastValidTimestamp).getTime()) / 1000));
+    if (diff < 60) return `${diff}s ago`;
+    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+    return `${Math.floor(diff / 3600)}h ago`;
+  });
+
+  useEffect(() => {
+    if (!lastValidTimestamp) return;
+    const update = () => {
+      const diff = Math.max(0, Math.round((Date.now() - new Date(lastValidTimestamp).getTime()) / 1000));
+      if (diff < 60) setAge(`${diff}s ago`);
+      else if (diff < 3600) setAge(`${Math.floor(diff / 60)}m ago`);
+      else setAge(`${Math.floor(diff / 3600)}h ago`);
+    };
+    update();
+    const id = setInterval(update, 5000);
+    return () => clearInterval(id);
+  }, [lastValidTimestamp]);
+
+  const f = freshness ?? (lastValidTimestamp ? "CURRENT" : "UNAVAILABLE");
+  const dotColor =
+    f === "CURRENT" ? "bg-st-normal" : f === "STALE" ? "bg-st-warning animate-pulse" : "bg-st-ood";
+
   return (
-    <div role="alert" className="flex items-start justify-between gap-3 rounded-md border border-st-ood bg-st-ood/10 p-3 text-sm">
+    <div className={cn("inline-flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground", className)}>
+      <span className={cn("size-2 rounded-full shrink-0", dotColor)} />
+      <span>DATA</span>
+      <span className="font-semibold text-foreground">
+        ● {f === "CURRENT" ? `Current — ${age}` : f === "STALE" ? `Stale — ${age}` : "Unavailable"}
+      </span>
+    </div>
+  );
+}
+
+export function ErrorBox({
+  error,
+  onRetry,
+  lastValidTimestamp,
+  cachedDataNotice,
+}: {
+  error: string;
+  onRetry?: () => void;
+  lastValidTimestamp?: string;
+  cachedDataNotice?: boolean;
+}) {
+  return (
+    <div
+      role="alert"
+      className={cn(
+        "flex items-start justify-between gap-3 rounded-md border p-3 text-sm",
+        cachedDataNotice
+          ? "border-st-warning/60 bg-st-warning/10"
+          : "border-st-ood bg-st-ood/10",
+      )}
+    >
       <div className="flex items-start gap-2">
-        <Unplug className="mt-0.5 size-4 text-st-ood" aria-hidden />
+        <Unplug
+          className={cn("mt-0.5 size-4 shrink-0", cachedDataNotice ? "text-st-warning" : "text-st-ood")}
+          aria-hidden
+        />
         <div>
-          <div className="font-semibold text-st-ood">BACKEND ERROR — no value shown</div>
-          <div className="mt-0.5 break-words text-muted-foreground">{error}</div>
+          <div className={cn("font-semibold uppercase tracking-wider", cachedDataNotice ? "text-st-warning" : "text-st-ood")}>
+            {cachedDataNotice
+              ? `CONNECTION LOST — LAST VALID RESULT: ${lastValidTimestamp ? new Date(lastValidTimestamp).toLocaleTimeString() : "CACHED"}`
+              : "CONNECTION LOST — BACKEND UNAVAILABLE"}
+          </div>
+          <div className="mt-0.5 break-words text-xs text-muted-foreground">{error}</div>
+          {cachedDataNotice && (
+            <div className="mt-1 text-[11px] font-medium text-st-warning">
+              Operating with last valid cached result. Never treated as live telemetry.
+            </div>
+          )}
         </div>
       </div>
       {onRetry && (
-        <Button size="sm" variant="outline" onClick={onRetry}>
-          <RefreshCw className="size-3.5" aria-hidden /> Retry
+        <Button size="sm" variant="outline" onClick={onRetry} className="shrink-0 h-7 text-xs">
+          <RefreshCw className="size-3 mr-1" aria-hidden /> Retry
         </Button>
       )}
     </div>
@@ -178,15 +253,51 @@ export function Empty({ children }: { children: ReactNode }) {
   return <div className="rounded-md border border-dashed p-6 text-center text-sm text-muted-foreground">{children}</div>;
 }
 
-/** Standard wrapper for any Loadable: loading → error → empty → content. */
-export function DataState<T>({ state, empty, children }: {
-  state: { data: T | undefined; error?: string; loading: boolean; reload: () => void };
+/** Standard wrapper for any Loadable: loading → error → empty → content. Gracefully handles stale results. */
+export function DataState<T>({
+  state,
+  empty,
+  children,
+}: {
+  state: {
+    data: T | undefined;
+    error?: string;
+    loading: boolean;
+    reload: () => void;
+    lastValidTimestamp?: string;
+    isStale?: boolean;
+    freshness?: "CURRENT" | "STALE" | "UNAVAILABLE";
+  };
   empty?: (d: T) => boolean;
   children: (d: T) => ReactNode;
 }) {
-  if (state.error) return <ErrorBox error={state.error} onRetry={state.reload} />;
-  if (state.data === undefined) return <Loading />;
-  if (empty?.(state.data)) return <Empty>No records returned by the backend.</Empty>;
+  // If we have an error BUT we also have previous data, retain display with warning header (LAST VALID RESULT)
+  if (state.error && state.data !== undefined) {
+    return (
+      <div className="grid gap-3">
+        <ErrorBox
+          error={state.error}
+          onRetry={state.reload}
+          lastValidTimestamp={state.lastValidTimestamp}
+          cachedDataNotice={true}
+        />
+        {children(state.data)}
+      </div>
+    );
+  }
+
+  if (state.error) {
+    return <ErrorBox error={state.error} onRetry={state.reload} />;
+  }
+
+  if (state.data === undefined) {
+    return <Loading />;
+  }
+
+  if (empty?.(state.data)) {
+    return <Empty>No records returned by the backend.</Empty>;
+  }
+
   return <>{children(state.data)}</>;
 }
 
@@ -218,6 +329,58 @@ export function Notice({ tone = "info", title, children }: { tone?: Tone; title:
   );
 }
 
+export function OperationalStatusBadge({ status }: { status: "ON_SCHEDULE" | "OPTIMIZATION_AVAILABLE" | "ATTENTION" | "DEGRADED" | "FALLBACK" | string }) {
+  switch (status) {
+    case "ON_SCHEDULE":
+    case "ON SCHEDULE":
+      return <ToneChip tone="normal">ON SCHEDULE</ToneChip>;
+    case "OPTIMIZATION_AVAILABLE":
+    case "OPTIMIZATION AVAILABLE":
+      return <ToneChip tone="info">OPTIMIZATION AVAILABLE</ToneChip>;
+    case "ATTENTION":
+    case "ATTENTION REQUIRED":
+      return <ToneChip tone="warning">ATTENTION REQUIRED</ToneChip>;
+    case "FALLBACK":
+      return <ToneChip tone="fallback">REFERENCE MODEL</ToneChip>;
+    case "DEGRADED":
+    case "CRITICAL":
+      return <ToneChip tone="ood">DEGRADED / OOD</ToneChip>;
+    default:
+      return <ToneChip tone="info">{status.replace(/_/g, " ")}</ToneChip>;
+  }
+}
+
+export function TechnicalDetails({ title = "Technical & Model Details", children, defaultOpen = false }: {
+  title?: string;
+  children: ReactNode;
+  defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="mt-3 rounded-md border border-rule/70 bg-panel-2/50 overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="flex w-full items-center justify-between px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:bg-accent/40 transition-colors"
+      >
+        <span className="flex items-center gap-2">
+          <Info className="size-3.5 text-primary" aria-hidden />
+          {title}
+        </span>
+        <span className="text-[11px] font-normal text-primary">
+          {open ? "▲ Hide Technical Details" : "▼ View Technical Details"}
+        </span>
+      </button>
+      {open && (
+        <div className="border-t border-rule/60 p-3 text-xs">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
 /** Catches render-time failures (e.g. a payload failing schema validation) and shows them explicitly. */
 export class ErrorBoundary extends Component<{ children: ReactNode; resetKey?: unknown }, { error?: Error }> {
   state: { error?: Error } = {};
@@ -229,3 +392,42 @@ export class ErrorBoundary extends Component<{ children: ReactNode; resetKey?: u
     return this.state.error ? <ErrorBox error={`Render failed: ${this.state.error.message}`} /> : this.props.children;
   }
 }
+
+export function ConfidenceBand({
+  lower,
+  upper,
+  value,
+  confidence,
+  unit = "kg/h",
+}: {
+  lower?: number | null;
+  upper?: number | null;
+  value?: number | null;
+  confidence?: number;
+  unit?: string;
+}) {
+  if (lower == null || upper == null || value == null) return null;
+  const spread = upper - lower;
+  const pct = Math.max(0, Math.min(100, spread > 0 ? ((value - lower) / spread) * 100 : 50));
+
+  return (
+    <div className="rounded-md border border-panel-border/80 bg-panel-2/40 p-2.5 text-xs">
+      <div className="flex items-center justify-between text-[11px] text-muted-foreground font-medium mb-1.5">
+        <span>Expected Conformal Range ({confidence ? `${Math.round(confidence * 100)}%` : "90%"})</span>
+        <span className="font-mono text-cyan-300 font-semibold">{fmt(value, 0)} {unit}</span>
+      </div>
+      <div className="relative h-2 rounded-full bg-panel-2 border border-panel-border overflow-hidden">
+        <div className="absolute inset-y-0 bg-cyan-500/30 w-full" />
+        <div
+          className="absolute inset-y-0 w-2 -ml-1 bg-cyan-400 rounded-full shadow-sm"
+          style={{ left: `${pct}%` }}
+        />
+      </div>
+      <div className="flex justify-between font-mono text-[10px] text-muted-foreground mt-1">
+        <span>Low: {fmt(lower, 0)}</span>
+        <span>High: {fmt(upper, 0)} {unit}</span>
+      </div>
+    </div>
+  );
+}
+

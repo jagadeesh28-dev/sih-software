@@ -4,24 +4,81 @@ import { useCallback, useEffect, useState } from "react";
 
 // ------------------------------------------------------------------ data hook
 
+export type FreshnessState = "CURRENT" | "STALE" | "UNAVAILABLE";
+
 export interface Loadable<T> {
   data: T | undefined;
   error: string | undefined;
   loading: boolean;
   reload: () => void;
+  lastValidTimestamp?: string;
+  isStale?: boolean;
+  freshness: FreshnessState;
+  latencyMs?: number;
+}
+
+export function formatFreshnessAge(iso?: string): string {
+  if (!iso) return "unavailable";
+  try {
+    const diff = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 1000));
+    if (diff < 60) return `${diff}s ago`;
+    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+    return `${Math.floor(diff / 3600)}h ago`;
+  } catch {
+    return "unknown";
+  }
 }
 
 /** Fetch on mount/deps change; optional polling. Errors are kept, never replaced with fake data. */
 export function useApi<T>(fn: () => Promise<T>, deps: unknown[], pollMs?: number): Loadable<T> {
-  const [state, setState] = useState<{ data?: T; error?: string; loading: boolean }>({ loading: true });
+  const [state, setState] = useState<{
+    data?: T;
+    error?: string;
+    loading: boolean;
+    lastValidTimestamp?: string;
+    isStale?: boolean;
+    freshness: FreshnessState;
+    latencyMs?: number;
+  }>({
+    loading: true,
+    freshness: "UNAVAILABLE",
+  });
   const [tick, setTick] = useState(0);
   const key = JSON.stringify(deps);
 
   useEffect(() => {
     let live = true;
-    const run = () => fn()
-      .then((d) => { if (live) setState({ data: d, error: undefined, loading: false }); })
-      .catch((e: Error) => { if (live) setState((s) => ({ ...s, error: e.message, loading: false })); });
+    const run = () => {
+      const t0 = typeof performance !== "undefined" ? performance.now() : Date.now();
+      return fn()
+        .then((d) => {
+          const lat = Math.round((typeof performance !== "undefined" ? performance.now() : Date.now()) - t0);
+          if (live) {
+            setState({
+              data: d,
+              error: undefined,
+              loading: false,
+              lastValidTimestamp: new Date().toISOString(),
+              isStale: false,
+              freshness: "CURRENT",
+              latencyMs: lat,
+            });
+          }
+        })
+        .catch((e: Error) => {
+          const lat = Math.round((typeof performance !== "undefined" ? performance.now() : Date.now()) - t0);
+          if (live) {
+            setState((s) => ({
+              ...s,
+              error: e.message,
+              loading: false,
+              isStale: s.data !== undefined,
+              freshness: s.data !== undefined ? "STALE" : "UNAVAILABLE",
+              latencyMs: lat,
+            }));
+          }
+        });
+    };
     run();
     const id = pollMs ? setInterval(run, pollMs) : undefined;
     return () => { live = false; if (id) clearInterval(id); };
@@ -30,7 +87,16 @@ export function useApi<T>(fn: () => Promise<T>, deps: unknown[], pollMs?: number
   }, [key, tick, pollMs]);
 
   const reload = useCallback(() => setTick((t) => t + 1), []);
-  return { data: state.data, error: state.error, loading: state.loading, reload };
+  return {
+    data: state.data,
+    error: state.error,
+    loading: state.loading,
+    reload,
+    lastValidTimestamp: state.lastValidTimestamp,
+    isStale: state.isStale,
+    freshness: state.freshness,
+    latencyMs: state.latencyMs,
+  };
 }
 
 // ------------------------------------------------------------------ units + formatting

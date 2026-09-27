@@ -1,0 +1,332 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://egreen-quanta.maritime.org/schemas/decision_record.schema.json",
+  "title": "EgreenQuantaMarineDecisionRecord",
+  "description": "Canonical machine-readable decision record for maritime fleet optimization and fuel prediction decisions under EGREEN QUANTA (SIH26138).",
+  "type": "object",
+  "required": [
+    "record_metadata",
+    "input_snapshot",
+    "prediction",
+    "scenario",
+    "objectives",
+    "constraints",
+    "optimization",
+    "decision",
+    "provenance",
+    "integrity"
+  ],
+  "properties": {
+    "record_metadata": {
+      "type": "object",
+      "required": [
+        "record_id",
+        "trace_id",
+        "schema_version",
+        "created_at_utc",
+        "system",
+        "software_version",
+        "git_commit",
+        "environment_id",
+        "record_type"
+      ],
+      "properties": {
+        "record_id": { "type": "string", "pattern": "^REC-[A-Za-z0-9_-]+$" },
+        "trace_id": { "type": "string" },
+        "schema_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "created_at_utc": { "type": "string", "format": "date-time" },
+        "system": { "type": "string", "enum": ["EGREEN_QUANTA"] },
+        "software_version": { "type": "string" },
+        "git_commit": { "type": "string" },
+        "environment_id": { "type": "string" },
+        "record_type": {
+          "type": "string",
+          "enum": ["fleet_optimization_decision", "voyage_decision", "prediction_decision"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "input_snapshot": {
+      "type": "object",
+      "required": [
+        "vessels",
+        "demands",
+        "weather",
+        "fuel_prices",
+        "operational_parameters"
+      ],
+      "properties": {
+        "vessels": {
+          "type": "array",
+          "items": { "type": "object" }
+        },
+        "demands": {
+          "type": "array",
+          "items": { "type": "object" }
+        },
+        "weather": {
+          "type": "array",
+          "items": { "type": "object" }
+        },
+        "fuel_prices": {
+          "type": "object",
+          "additionalProperties": { "type": "number" }
+        },
+        "operational_parameters": {
+          "type": "object",
+          "properties": {
+            "carbon_price_usd_per_tonne": { "type": "number" },
+            "demurrage_usd_per_h": { "type": "number" },
+            "shore_power_tariff_usd_per_kwh": { "type": "number" },
+            "shore_power_connection_fee_usd": { "type": "number" },
+            "shore_power_grid_factor_g_co2e_per_kwh": { "type": "number" }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "prediction": {
+      "type": "object",
+      "required": [
+        "model_id",
+        "model_version",
+        "prediction_status",
+        "ood_status",
+        "fallback_status",
+        "vessel_evaluations"
+      ],
+      "properties": {
+        "model_id": { "type": "string" },
+        "model_version": { "type": "string" },
+        "prediction_status": { "type": "string" },
+        "ood_status": { "type": "string" },
+        "ood_band": { "type": "string" },
+        "fallback_status": { "type": "string" },
+        "vessel_evaluations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["vessel_id", "fuel_consumption_kg_h", "confidence"],
+            "properties": {
+              "vessel_id": { "type": "string" },
+              "vessel_type": { "type": "string" },
+              "fuel_consumption_kg_h": { "type": ["number", "null"] },
+              "lower_bound_kg_h": { "type": ["number", "null"] },
+              "upper_bound_kg_h": { "type": ["number", "null"] },
+              "confidence": { "type": "string" },
+              "envelope_distance": { "type": ["number", "null"] },
+              "ood_band": { "type": "string" },
+              "prediction_source": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "scenario": {
+      "type": "object",
+      "required": [
+        "scenario_type",
+        "scenario_assumptions"
+      ],
+      "properties": {
+        "scenario_type": { "type": "string" },
+        "scenario_assumptions": {
+          "type": "object",
+          "properties": {
+            "basis": { "type": "string" },
+            "fuel_pathways": { "type": "object" },
+            "fuels_config_sha256": { "type": "string" }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "objectives": {
+      "type": "object",
+      "required": [
+        "fuel_tonnes",
+        "operational_cost_usd",
+        "lifecycle_ghg_tco2e",
+        "delay_hours"
+      ],
+      "properties": {
+        "fuel_tonnes": { "type": ["number", "null"] },
+        "operational_cost_usd": { "type": ["number", "null"] },
+        "lifecycle_ghg_tco2e": { "type": ["number", "null"] },
+        "delay_hours": { "type": ["number", "null"] },
+        "risk_cvar_excess": { "type": ["number", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "constraints": {
+      "type": "object",
+      "required": [
+        "feasibility_status",
+        "penalty_free",
+        "penalty_value",
+        "hard_violations"
+      ],
+      "properties": {
+        "feasibility_status": { "type": "string", "enum": ["FEASIBLE", "INFEASIBLE"] },
+        "penalty_free": { "type": "boolean" },
+        "penalty_value": { "type": "number" },
+        "hard_violations": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "soft_penalties": {
+          "type": "object",
+          "additionalProperties": { "type": "number" }
+        },
+        "cargo_demand_met": { "type": "boolean" },
+        "schedule_adherence": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    },
+    "optimization": {
+      "type": "object",
+      "required": [
+        "algorithm",
+        "algorithm_version",
+        "seed",
+        "evaluation_budget",
+        "evaluations_used",
+        "optimization_status"
+      ],
+      "properties": {
+        "algorithm": { "type": "string" },
+        "algorithm_version": { "type": "string" },
+        "seed": { "type": "integer" },
+        "evaluation_budget": { "type": "integer" },
+        "evaluations_used": { "type": "integer" },
+        "weights": {
+          "type": "array",
+          "items": { "type": "number" }
+        },
+        "runtime_seconds": { "type": "number" },
+        "pareto_rank": { "type": ["integer", "null"] },
+        "selected_solution_id": { "type": ["string", "null"] },
+        "optimization_status": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "decision": {
+      "type": "object",
+      "required": [
+        "operator_status",
+        "operator_action_required",
+        "operator_id",
+        "operator_note",
+        "recommended_vessel_mix",
+        "decision_rationale",
+        "actuation_disclaimer"
+      ],
+      "properties": {
+        "operator_status": {
+          "type": "string",
+          "enum": ["DRAFT", "REVIEWED", "CONFIRMED", "EXPORTED"]
+        },
+        "operator_action_required": { "type": "boolean" },
+        "operator_id": { "type": "string" },
+        "operator_note": { "type": "string" },
+        "confirmation_timestamp_utc": { "type": ["string", "null"] },
+        "recommended_vessel_mix": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["vessel_id", "assigned_demand", "speed_kn", "fuel", "shore_power"],
+            "properties": {
+              "vessel_id": { "type": "string" },
+              "assigned_demand": { "type": ["string", "null"] },
+              "cargo_tonnes": { "type": ["number", "null"] },
+              "speed_kn": { "type": "number" },
+              "fuel": { "type": "string" },
+              "shore_power": { "type": "boolean" }
+            },
+            "additionalProperties": true
+          }
+        },
+        "decision_rationale": { "type": "string" },
+        "actuation_disclaimer": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "data_sources",
+        "model_artifacts",
+        "regulatory_inputs",
+        "assumptions"
+      ],
+      "properties": {
+        "data_sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "path", "sha256", "type"],
+            "properties": {
+              "name": { "type": "string" },
+              "path": { "type": "string" },
+              "sha256": { "type": "string" },
+              "type": { "type": "string" }
+            }
+          }
+        },
+        "model_artifacts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["model_id", "path", "sha256"],
+            "properties": {
+              "model_id": { "type": "string" },
+              "path": { "type": "string" },
+              "sha256": { "type": "string" },
+              "version": { "type": "string" }
+            }
+          }
+        },
+        "regulatory_inputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["framework", "reference", "treatment"],
+            "properties": {
+              "framework": { "type": "string" },
+              "reference": { "type": "string" },
+              "treatment": { "type": "string" }
+            }
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "integrity": {
+      "type": "object",
+      "required": [
+        "canonicalization",
+        "payload_sha256",
+        "parent_record_hash",
+        "signature",
+        "security_notice"
+      ],
+      "properties": {
+        "canonicalization": { "type": "string" },
+        "payload_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "parent_record_hash": { "type": ["string", "null"] },
+        "signature": { "type": ["string", "null"] },
+        "security_notice": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

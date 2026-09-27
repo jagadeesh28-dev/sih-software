@@ -1,11 +1,11 @@
 {
   "project": "SIH26138 - Egreen Quanta",
   "release_version": "v1.1.0-sih-complete",
-  "release_classification": "SIH26138 CORE REQUIREMENTS COMPLETE",
+  "release_classification": "RELEASE BLOCKED \u2014 CORRECTIONS REQUIRED",
   "system_type": "Controlled Decision-Support Prototype",
-  "timestamp_utc": "2026-09-24T17:46:36.334208+00:00",
+  "timestamp_utc": "2026-09-26T16:49:51.761543+00:00",
   "gates_evaluated": 16,
-  "gates_passed": 16,
+  "gates_passed": 15,
   "gates_freshly_computed": 12,
   "gates_reference_artifact_verified": 4,
   "gates": {
@@ -34,19 +34,164 @@
     },
     "G2_REPRODUCIBILITY": {
       "name": "Environment & Deterministic Execution",
-      "status": "PASS",
-      "passed": true,
+      "status": "FAIL",
+      "passed": false,
       "evidence": "FRESHLY COMPUTED",
       "details": {
-        "python": "3.12.10",
-        "numpy": "2.5.3",
-        "pandas": "3.0.6",
-        "scipy": "1.18.1",
+        "python": "3.14.0",
+        "numpy": "2.2.6",
+        "pandas": "2.3.3",
+        "scipy": "1.17.0",
         "lightgbm": "4.7.0",
-        "scikit_learn": "1.9.1",
+        "scikit_learn": "1.8.0",
         "split_manifest": true,
         "random_seed": 42,
-        "lockfile_mismatches": {}
+        "lockfile_mismatches": {
+          "annotated-doc": {
+            "pinned": "0.0.5",
+            "installed": "0.0.4"
+          },
+          "annotated-types": {
+            "pinned": "0.8.0",
+            "installed": "0.7.0"
+          },
+          "anyio": {
+            "pinned": "4.15.1",
+            "installed": "4.12.1"
+          },
+          "certifi": {
+            "pinned": "2026.7.22",
+            "installed": "2026.1.4"
+          },
+          "cffi": {
+            "pinned": "2.1.1",
+            "installed": "2.0.0"
+          },
+          "cma": {
+            "pinned": "4.5.0",
+            "installed": "4.4.4"
+          },
+          "contourpy": {
+            "pinned": "1.4.0",
+            "installed": "1.3.3"
+          },
+          "fastapi": {
+            "pinned": "0.141.1",
+            "installed": "0.128.1"
+          },
+          "fonttools": {
+            "pinned": "4.66.0",
+            "installed": "4.61.1"
+          },
+          "idna": {
+            "pinned": "3.20",
+            "installed": "3.11"
+          },
+          "joblib": {
+            "pinned": "1.6.0",
+            "installed": "1.5.3"
+          },
+          "kiwisolver": {
+            "pinned": "1.5.1",
+            "installed": "1.4.9"
+          },
+          "matplotlib": {
+            "pinned": "3.11.2",
+            "installed": "3.10.8"
+          },
+          "ml_dtypes": {
+            "pinned": "0.6.0",
+            "installed": "0.5.4"
+          },
+          "narwhals": {
+            "pinned": "2.26.0",
+            "installed": "2.16.0"
+          },
+          "numpy": {
+            "pinned": "2.5.3",
+            "installed": "2.2.6"
+          },
+          "onnx": {
+            "pinned": "1.23.0",
+            "installed": "1.20.1"
+          },
+          "onnxruntime": {
+            "pinned": "1.30.0",
+            "installed": "1.24.2"
+          },
+          "packaging": {
+            "pinned": "26.3",
+            "installed": "25.0"
+          },
+          "pandas": {
+            "pinned": "3.0.6",
+            "installed": "2.3.3"
+          },
+          "pillow": {
+            "pinned": "12.3.0",
+            "installed": "12.1.0"
+          },
+          "platformdirs": {
+            "pinned": "4.11.12",
+            "installed": "4.11.8"
+          },
+          "protobuf": {
+            "pinned": "7.36.2",
+            "installed": "6.33.5"
+          },
+          "pydantic": {
+            "pinned": "2.13.5",
+            "installed": "2.12.5"
+          },
+          "pydantic_core": {
+            "pinned": "2.46.5",
+            "installed": "2.41.5"
+          },
+          "Pygments": {
+            "pinned": "2.21.0",
+            "installed": "2.19.2"
+          },
+          "pyparsing": {
+            "pinned": "3.3.3",
+            "installed": "3.3.1"
+          },
+          "scikit-learn": {
+            "pinned": "1.9.1",
+            "installed": "1.8.0"
+          },
+          "scipy": {
+            "pinned": "1.18.1",
+            "installed": "1.17.0"
+          },
+          "starlette": {
+            "pinned": "1.7.0",
+            "installed": "0.50.0"
+          },
+          "threadpoolctl": {
+            "pinned": "3.7.0",
+            "installed": "3.6.0"
+          },
+          "typing-inspection": {
+            "pinned": "0.4.4",
+            "installed": "0.4.2"
+          },
+          "typing_extensions": {
+            "pinned": "4.16.0",
+            "installed": "4.15.0"
+          },
+          "tzdata": {
+            "pinned": "2026.4",
+            "installed": "2025.3"
+          },
+          "uvicorn": {
+            "pinned": "0.53.0",
+            "installed": "0.40.0"
+          },
+          "xgboost": {
+            "pinned": "3.4.1",
+            "installed": "3.1.3"
+          }
+        }
       }
     },
     "G3_PREDICTION": {
@@ -324,17 +469,17 @@
       "evidence": "FRESHLY COMPUTED",
       "details": {
         "version": "v1.1.0-sih-complete",
-        "timestamp_utc": "2026-09-24T17:46:36.305853+00:00",
-        "git_commit_head": "0804bf23a5d2a44dee9ce5a2fffa39a367a6161d",
+        "timestamp_utc": "2026-09-26T16:49:51.689353+00:00",
+        "git_commit_head": "e28472b4bcae28dc49612062f3d5958888d45284",
         "dataset_hashes": {
           "CPS_Poseidon.parquet": "da85f2e21b6e8724c8350f9aadbda4e457593d77412b8cefaa077da9e1e260c2",
           "CPS_Triton.parquet": "fa8cc7f9f6a92d330088e41e3f275b8d8428d3604cfb35dfa46eaa753d545f89",
           "OSS_Ceto.parquet": "ac3f8d5e865f11cd40f147d6153de9915b543f675684719245a2d5d6d8e752cd"
         },
         "model_hashes": {
-          "model_real_04.txt": "1049a1687946296244fa0dfa1ebf6ff86db8f59140f24eb7de452aae50736225",
-          "qi_c1.txt": "f3486614f3322436980e1c14619d8171f47c498a54172ab6f41696c81dbc1bb6",
-          "qi_c1_vessel_type.txt": "a6223b370d47cf5daec00de8da43ff306f50607deef1e0c40a2e0bca60ace481"
+          "model_real_04.txt": "bb909845bdd26ac9485f4350143e6df8468d74b288063d97e3bf68ed6cbbcfa0",
+          "qi_c1.txt": "b2ff5709c8794273770a23a668e9d0de35e4945447bc557370e7389908bd887c",
+          "qi_c1_vessel_type.txt": "aeea4d710275aca00039d1782cc5d86d7084583c0855fd13cacc69c327d2e14e"
         },
         "compliance_matrix_exists": true,
         "release_checklist_exists": true

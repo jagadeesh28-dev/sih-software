@@ -303,7 +303,7 @@ export const JobSchema = z.looseObject({
   budget: num,
   result: SolutionSchema.nullable(),
   error: z.string().nullable(),
-  recommendation_status: z.enum(["PENDING_REVIEW", "ACCEPTED", "REJECTED", "NOT_RECOMMENDABLE"]).nullable(),
+  recommendation_status: z.enum(["DRAFT", "PENDING_REVIEW", "REVIEWED", "CONFIRMED", "EXPORTED", "ACCEPTED", "REJECTED", "NOT_RECOMMENDABLE"]).nullable(),
   advisory: z.string(),
 });
 export type Job = z.infer<typeof JobSchema>;
@@ -404,12 +404,12 @@ async function call<S extends z.ZodType>(path: string, schema: S, init?: Request
       cache: "no-store",
     });
   } catch (e) {
-    throw new ApiError(0, `Backend unreachable (${(e as Error).message}). Is the API running on port 8000?`);
+    throw new ApiError(0, `Backend unreachable (${(e as Error).message}). Is the API server running?`);
   }
   const body = await res.json().catch(() => null);
   if (!res.ok) {
     if (body === null) {
-      throw new ApiError(res.status, `Backend unreachable or failed without a JSON error (HTTP ${res.status}). Is the API running on port 8000?`);
+      throw new ApiError(res.status, `Backend unreachable or failed without a JSON error (HTTP ${res.status}). Is the API server running?`);
     }
     const detail = body?.detail;
     const msg = typeof detail === "string" ? detail : detail ? JSON.stringify(detail) : res.statusText;
@@ -439,6 +439,15 @@ export const api = {
   job: (id: string) => call(`/optimize/${id}`, JobSchema),
   decide: (id: string, decision: "ACCEPT" | "REJECT", note: string) =>
     call(`/recommendations/${id}/decision`, JobSchema, post({ decision, note })),
+  reviewRecommendation: (id: string) =>
+    call(`/recommendations/${id}/review`, JobSchema, { method: "POST" }),
+  confirmRecommendation: (id: string, operator_id: string, note: string) =>
+    call(`/recommendations/${id}/confirm`, JobSchema, post({ operator_id, note })),
+  exportRecommendation: (id: string, req?: { operator_id?: string; note?: string; include_pareto?: boolean }) =>
+    call(`/recommendations/${id}/export`, z.any(), post(req ?? {})),
+  verifyExport: (record_id: string) =>
+    call(`/exports/${record_id}/verify`, z.any(), { method: "POST" }),
+  listExports: () => call("/exports", z.any()),
   pareto: () => call("/pareto", ParetoSchema),
   resolvePareto: (id: string) => call(`/pareto/${id}/resolve`, ResolveSchema, { method: "POST" }),
   alerts: () => call("/alerts", AlertsSchema),

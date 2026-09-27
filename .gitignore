@@ -56,3 +56,8 @@ scratch/*.npz
 
 # HMI runtime audit ledger (local operational data, not evidence)
 data/runtime/
+
+# Operator decision packages (runtime generated)
+exports/*
+!exports/.gitkeep
+

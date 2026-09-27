@@ -1,8 +1,9 @@
 # EGREEN QUANTA — END-TO-END ARCHITECTURE MAP
 **Problem Statement**: SIH26138 — Quantum-Inspired Fuel Consumption Prediction and Green Fleet Optimization  
 **System Classification**: Controlled Maritime Decision-Support Prototype  
+**Stack**: Next.js 16 (App Router + TypeScript + Tailwind CSS) HMI + FastAPI (Python 3.14) REST Backend  
 **Auditor**: Independent Senior Systems Architect & Scientific Verification Engineer  
-**Date**: 2026-09-22  
+**Date**: 2026-09-26  
 **Verification Level**: Red-Team Executable Source Traceability  
 
 ---
@@ -11,8 +12,8 @@
 
 ```mermaid
 graph TD
-    UI["1. MARITIME OPERATOR HMI (Streamlit 12-Screen Interface)<br/>dashboard/app.py | dashboard/pages/"] -->|User Inputs & Filter Events| BB["2. BACKEND API BRIDGE<br/>dashboard/backend_bridge.py"]
-    BB -->|Clean Dictionary Calls| SL["3. PREDICTION SERVING LAYER<br/>src/qi_prediction/serving.py"]
+    UI["1. MARITIME OPERATOR HMI (Next.js 16 App Router)<br/>web/src/app/ (10 Dedicated Views: trust, vessel, scenario, fuels, alerts, optimizer, fleet, audit, pareto, demo)"] -->|HTTP REST /api/* Proxy| API["2. FASTAPI REST GATEWAY<br/>api/main.py (Pydantic Validation, CORS, Endpoints)"]
+    API -->|Clean DTO Invocations| SL["3. PREDICTION SERVING LAYER<br/>src/qi_prediction/serving.py (ProductionFuelPredictor)"]
     
     subgraph PREDICTION_PIPELINE ["Prediction & Uncertainty Core"]
         SL --> FC["4. PRODUCTION FEATURE CONTRACT & VALIDATION<br/>validate_and_sanitize_point()"]
@@ -36,34 +37,43 @@ graph TD
     COST --> OPT["13. HETEROGENEOUS FLEET OPTIMIZER<br/>optimization/fleet_heterogeneous.py | DE / QPSO / GA / NSGA-III"]
     GHG --> OPT
     
-    OPT --> PAR["14. PARETO FRONT DOMINANCE ENGINE<br/>results/pareto_front.csv | Non-Dominated Sorting"]
-    PAR -->|Authoritative Front & Trade-Offs| BB
-    BB -->|Reactive Re-render| UI
+    OPT --> PAR["14. PARETO FRONT DOMINANCE ENGINE<br/>results/pareto_front.csv (31 Non-Dominated Vectors)"]
+    PAR -->|Authoritative JSON Payloads| API
+    API -->|SWR / React Fetch Reactive Re-render| UI
 ```
 
 ---
 
 ## 2. DETAILED SUBSYSTEM INVENTORY & FILE BINDINGS
 
-### Layer 1: Maritime Operator HMI (Frontend)
-- **Source Files**: `dashboard/app.py`, `dashboard/pages/*.py` (12 Dedicated Screens).
-- **Core Components**:
-  - `top_bar.py`: Displays active vessel profile, selected route, engine operating state, and connectivity status.
-  - `status_strip.py`: Displays system-wide badges (Pipeline Connected, Release Gate Passed, Conformal Calibrated).
-  - `vessel_card.py`: Displays individual vessel telemetry, speed, draft, displacement, and fuel rate.
-- **Responsibility**: Provides the human-in-the-loop superintendent interface. Every displayed value is queried reactively from the backend bridge; no arithmetic or physics estimations are computed within frontend code.
+### Layer 1: Maritime Operator HMI (Next.js 16 Web Frontend)
+- **Source Directory**: `web/src/app/` (TypeScript + React 19 + Tailwind CSS).
+- **Dedicated Operational Views**:
+  - `/` (`page.tsx`): Real-time fleet KPI overview, active vessels summary, system badges.
+  - `/trust` (`trust/page.tsx`): Prediction trust & conformal uncertainty envelope $[q_{\text{low}}, q_{\text{high}}]$.
+  - `/vessel` (`vessel/page.tsx`): Vessel telemetry, dynamic operating demand, and power curve.
+  - `/scenario` (`scenario/page.tsx`): Scenario laboratory and slow steaming speed reduction analysis.
+  - `/fuels` (`fuels/page.tsx`): Alternative fuels comparison under invariant shaft work ($E_{\text{shaft}} = m \cdot \text{LHV} \cdot \eta$).
+  - `/alerts` (`alerts/page.tsx`): Out-of-distribution storm alerts, boundary warnings, and failover status.
+  - `/optimizer` (`optimizer/page.tsx`): Live fleet dispatch optimizer with Deb's feasibility-first constraint handling.
+  - `/fleet` (`fleet/page.tsx`): Fleet-wide vessel-type-aware naval conditioning (Cruise, Small Cruise, Supply).
+  - `/audit` (`audit/page.tsx`): Itemized operational cost (OPEX) and IMO MEPC.391(81) Well-to-Wake GHG emissions.
+  - `/pareto` (`pareto/page.tsx`): Interactive 4D Pareto frontier trade-offs.
+  - `/demo` (`demo/page.tsx`): Deterministic 11-scene live demonstration runner.
+- **Responsibility**: Provides a responsive, zero-mock operator dashboard. All displayed values originate directly from the FastAPI gateway via `/api/*` rewrites.
 
-### Layer 2: Backend API Bridge
-- **Source File**: `dashboard/backend_bridge.py`.
-- **Functions Exposed**:
-  - `get_fleet_summary()`, `get_live_vessels()`, `get_vessel_telemetry(vessel_id)`
-  - `predict_fuel_with_diagnostics(vessel_id, stw, draft, fuel_type, ...)`
-  - `run_speed_sweep(vessel_id, ...)`
-  - `evaluate_cost_breakdown(vessel_id, speed, fuel_type, ...)`
-  - `evaluate_lifecycle_ghg(vessel_id, fuel_type, ...)`
-  - `get_optimization_results()`, `get_pareto_front()`
-  - `get_system_alerts()`, `run_demo_scene(scene_id)`
-- **Responsibility**: Translates UI interactions into structured backend dictionary payloads and formats engine outputs into clean dataframes and status dictionaries.
+### Layer 2: FastAPI REST Gateway
+- **Source File**: `api/main.py`.
+- **Core Endpoints**:
+  - `GET /health`: System readiness, active model identification, and evaluator status.
+  - `POST /predict`: Production fuel prediction, uncertainty bounds, and OOD routing.
+  - `POST /evaluate_voyage`: Single voyage itemized cost and lifecycle GHG calculation.
+  - `POST /optimize_fleet`: Live fleet optimization over user-defined schedules.
+  - `GET /fleet_summary`: Live fleet status, positions, and active fuel rates.
+  - `GET /pareto_front`: 31 non-dominated multi-objective solutions.
+  - `GET /demo_scenes`: Metadata and execution harness for all 11 SIH demo scenes.
+  - `POST /run_demo_scene`: Trigger live execution of a selected demo scene.
+- **Responsibility**: Validates request DTOs with Pydantic, handles CORS, rejects malformed payloads (HTTP 422), and formats engine responses.
 
 ### Layer 3: Prediction Serving Layer
 - **Source File**: `src/qi_prediction/serving.py`.
@@ -84,6 +94,8 @@ graph TD
     - Wind speed: $[0.0, 60.0]\text{ m/s}$
     - Significant wave height: $[0.0, 20.0]\text{ m}$
   - Categorical canonicalization: `canonicalize_vessel_type()`, `canonicalize_fuel_type()`.
+  - Unknown vessel types trigger categorical OOD rejection (`REJECT`).
+  - Unsupported fuels trigger an explicit `FALLBACK` state with warning while safely evaluating energy equivalent.
 
 ### Layer 5: First-Principles Hydrodynamic Physics
 - **Source File**: `prediction/physics_predictor.py`.
@@ -125,7 +137,7 @@ graph TD
 ### Layer 9: Safe Model Routing Policy
 - **Logic**:
   1. *Physical / Extreme OOD*: Return `REJECT` with error summary.
-  2. *Unsupported Vessel Type*: Demote confidence to `LOW` and route to reference anchor `MODEL-REAL-04`.
+  2. *Unsupported Vessel Type*: Demote confidence to `LOW` and return `REJECT` to prevent unphysical extrapolation.
   3. *In-Domain with Dual-Model Agreement ($\Delta \le 500\text{ kg/h}$)*: Route to `QI-C1-vessel-type` (`HIGH` confidence, `NORMAL` routing).
   4. *Dual-Model Discrepancy ($\Delta > 500\text{ kg/h}$)*: Demote to `MEDIUM` confidence and route to reference anchor `MODEL-REAL-04`.
   5. *ML Inference Failure*: Gracefully drop to First-Principles `PhysicsFuelPredictor` (`EMERGENCY_PHYSICS`).
@@ -134,7 +146,7 @@ graph TD
 - **Source Files**: `scripts/demo_scenarios.py`, `optimization/canonical_mapper.py`.
 - **Supported Operational Cases**:
   - Baseline cruise vs slow steaming speed reductions ($[12.0, 18.0]\text{ kn}$).
-  - Invariant shaft work alternative fuel equivalence ($E_{\text{shaft}} = m_{\text{fuel}} \cdot LHV \cdot \eta$).
+  - Invariant shaft work alternative fuel equivalence ($E_{\text{shaft}} = m_{\text{fuel}} \cdot \text{LHV} \cdot \eta$).
   - Cold ironing shore power at berth.
 
 ### Layer 11: Transparent Operational Cost (OPEX) Engine
@@ -149,9 +161,9 @@ graph TD
   - $C_{\text{FuelEU}} = \text{Statutory Deficit Penalty}$
 
 ### Layer 12: IMO MEPC.391(81) Lifecycle GHG Engine
-- **Source Files**: `optimization/emissions_model.py`, `lca/`.
+- **Source Files**: `optimization/emissions_model.py`, `optimization/berth_model.py`.
 - **Formulation**:
-  $$\text{WtW GHG} = \text{WtT (Upstream Fuel Cycle)} + \text{TtW (Direct Combustion)} + \text{Methane Slip}$$
+  $$\text{WtW GHG} = \text{WtT (Upstream Fuel Cycle)} + \text{TtW (Direct Combustion)} + \text{Methane Slip} + \text{Shore Power Grid GHG}$$
   $$\text{TtW} = m_{\text{fuel}} \times \left( C_F \times 1.0 + \text{slip} \times 29.8 + N_2O \times 273 \right)$$
   - Shore power grid footprint at berth: $(E_{\text{shore, kWh}} \times 450\text{ g/kWh}) / 10^6$ added to total lifecycle footprint.
 
@@ -167,7 +179,7 @@ graph TD
 ### Layer 14: Pareto Trade-Off & Dominance Engine
 - **Source Files**: `results/pareto_front.csv`, `scripts/run_multiobjective_tradeoffs.py`.
 - **Dominance Definition**: $A \prec B \iff \forall i, A_i \le B_i \land \exists j, A_j < B_j$ across `(fuel_tonnes, cost_usd, ghg_tonnes, delay_hours)`.
-- **Identified Front**: 13 non-dominated operational vectors exposing the trade-off curve between fuel consumption, operational expenditure, and lifecycle GHG emissions.
+- **Identified Front**: 31 non-dominated operational vectors exposing the trade-off curve between fuel consumption, operational expenditure, and lifecycle GHG emissions.
 
 ---
 
@@ -179,6 +191,7 @@ ARCHITECTURE AUDIT RATING: PASS
 TRACEABILITY: COMPLETE & EXECUTABLE
 CIRCULAR DEPENDENCIES: ZERO FOUND
 ORPHANED COMPONENTS: ZERO FOUND
+HMI COUPLING: CLEAN REST API (NEXT.JS 16 -> FASTAPI)
 ============================================================
 ```
 The architecture demonstrates complete physical and mathematical grounding from raw sensor telemetry to high-level fleet management recommendations.
