@@ -42,7 +42,7 @@ def build_results_summary():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">Empirical Results: Fuel Predictive Inference Performance</div>
         </div>
         <div class="header-right">
@@ -173,7 +173,7 @@ def build_results_summary():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">Empirical Results: Uncertainty Quantification & Runtime Safety</div>
         </div>
         <div class="header-right">
@@ -258,7 +258,7 @@ def build_results_summary():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">Empirical Results: Multi-Objective Fleet Optimization</div>
         </div>
         <div class="header-right">
@@ -381,7 +381,7 @@ def build_results_summary():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">Empirical Results: Dataset Scale & Residual Error Validation</div>
         </div>
         <div class="header-right">
@@ -455,7 +455,7 @@ def build_results_summary():
                 <ul style="font-size: 7.8pt; color: #334155; line-height: 1.45;">
                     <li><strong>Mean Absolute Error (MAE):</strong> 244.86 kg/h across all operational speeds (10 to 19 knots).</li>
                     <li><strong>Root Mean Squared Error (RMSE):</strong> 443.05 kg/h, showing excellent resistance to large outlier penalizations.</li>
-                    <li><strong>Zero-Bias Residuals:</strong> Mean residual error $\mu = +1.12$ kg/h, indicating no systematic over- or under-estimation.</li>
+                    <li><strong>Zero-Bias Residuals:</strong> Mean residual error &mu; = +1.12 kg/h, indicating no systematic over- or under-estimation.</li>
                     <li><strong>High-Speed Stability:</strong> In severe hydrodynamic drag regimes ($V &gt; 16$ kts), the physics baseline prevents exponential prediction divergence.</li>
                 </ul>
 
@@ -486,7 +486,7 @@ def build_results_summary():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">Empirical Results: Adversarial Defense & API Parity</div>
         </div>
         <div class="header-right">
@@ -625,7 +625,7 @@ def build_hmi_overview():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">Operator HMI: Bridge & Fleet Command Interface</div>
         </div>
         <div class="header-right">
@@ -682,7 +682,7 @@ def build_hmi_overview():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">Operator HMI: 7-Step Decision Workflow</div>
         </div>
         <div class="header-right">
@@ -793,7 +793,7 @@ def build_hmi_overview():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">Operator HMI: Demonstration Video & Live Prototype</div>
         </div>
         <div class="header-right">
@@ -928,7 +928,7 @@ def build_prototype_evidence():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">Prototype Evidence: Scenario Analysis & Optimizer Setup</div>
         </div>
         <div class="header-right">
@@ -989,7 +989,7 @@ def build_prototype_evidence():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">Prototype Evidence: Pareto Explorer & Decision Export</div>
         </div>
         <div class="header-right">

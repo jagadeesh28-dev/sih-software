@@ -38,7 +38,7 @@ def build_readme_for_evaluator():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">EGREEN QUANTA: Executive Project Summary</div>
         </div>
         <div class="header-right">
@@ -122,7 +122,7 @@ def build_readme_for_evaluator():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">Evaluator Roadmap: Where to Look (3–5 Minute Tour)</div>
         </div>
         <div class="header-right">
@@ -245,7 +245,7 @@ def build_evidence_index():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">Comprehensive Evidence & Traceability Index</div>
         </div>
         <div class="header-right">
@@ -348,7 +348,7 @@ def build_evidence_index():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">System Evidence & Implementation Traceability</div>
         </div>
         <div class="header-right">
@@ -471,7 +471,7 @@ def build_problem_and_solution():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">Problem Statement & Maritime Industry Context</div>
         </div>
         <div class="header-right">
@@ -545,7 +545,7 @@ def build_problem_and_solution():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">The EGREEN QUANTA Solution</div>
         </div>
         <div class="header-right">
@@ -649,7 +649,7 @@ def build_problem_and_solution():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">End-to-End Operational Workflow</div>
         </div>
         <div class="header-right">
@@ -733,7 +733,7 @@ def build_problem_and_solution():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">Engineering Innovations & Scope Boundaries</div>
         </div>
         <div class="header-right">
@@ -834,7 +834,7 @@ def build_system_architecture():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">System Architecture & Subsystem Boundaries</div>
         </div>
         <div class="header-right">
@@ -975,7 +975,7 @@ def build_system_architecture():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2024 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
             <div class="title">Microservices, Data Flow & Cryptographic Contracts</div>
         </div>
         <div class="header-right">
