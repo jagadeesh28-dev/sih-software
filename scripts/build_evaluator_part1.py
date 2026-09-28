@@ -43,7 +43,7 @@ def build_readme_for_evaluator():
         </div>
         <div class="header-right">
             <div>CONFIDENTIAL EVALUATION PACK</div>
-            <div>Ministry of Ports, Shipping & Waterways</div>
+            <div>Organization: Egreen Quanta</div>
         </div>
     </div>
     
@@ -127,7 +127,7 @@ def build_readme_for_evaluator():
         </div>
         <div class="header-right">
             <div>CONFIDENTIAL EVALUATION PACK</div>
-            <div>Ministry of Ports, Shipping & Waterways</div>
+            <div>Organization: Egreen Quanta</div>
         </div>
     </div>
     
@@ -250,7 +250,7 @@ def build_evidence_index():
         </div>
         <div class="header-right">
             <div>CONFIDENTIAL EVALUATION PACK</div>
-            <div>Ministry of Ports, Shipping & Waterways</div>
+            <div>Organization: Egreen Quanta</div>
         </div>
     </div>
     
@@ -353,7 +353,7 @@ def build_evidence_index():
         </div>
         <div class="header-right">
             <div>CONFIDENTIAL EVALUATION PACK</div>
-            <div>Ministry of Ports, Shipping & Waterways</div>
+            <div>Organization: Egreen Quanta</div>
         </div>
     </div>
     
@@ -476,7 +476,7 @@ def build_problem_and_solution():
         </div>
         <div class="header-right">
             <div>CONFIDENTIAL EVALUATION PACK</div>
-            <div>Ministry of Ports, Shipping & Waterways</div>
+            <div>Organization: Egreen Quanta</div>
         </div>
     </div>
     
@@ -550,7 +550,7 @@ def build_problem_and_solution():
         </div>
         <div class="header-right">
             <div>CONFIDENTIAL EVALUATION PACK</div>
-            <div>Ministry of Ports, Shipping & Waterways</div>
+            <div>Organization: Egreen Quanta</div>
         </div>
     </div>
     
@@ -654,7 +654,7 @@ def build_problem_and_solution():
         </div>
         <div class="header-right">
             <div>CONFIDENTIAL EVALUATION PACK</div>
-            <div>Ministry of Ports, Shipping & Waterways</div>
+            <div>Organization: Egreen Quanta</div>
         </div>
     </div>
     
@@ -738,7 +738,7 @@ def build_problem_and_solution():
         </div>
         <div class="header-right">
             <div>CONFIDENTIAL EVALUATION PACK</div>
-            <div>Ministry of Ports, Shipping & Waterways</div>
+            <div>Organization: Egreen Quanta</div>
         </div>
     </div>
     
@@ -839,7 +839,7 @@ def build_system_architecture():
         </div>
         <div class="header-right">
             <div>CONFIDENTIAL EVALUATION PACK</div>
-            <div>Ministry of Ports, Shipping & Waterways</div>
+            <div>Organization: Egreen Quanta</div>
         </div>
     </div>
     
@@ -980,7 +980,7 @@ def build_system_architecture():
         </div>
         <div class="header-right">
             <div>CONFIDENTIAL EVALUATION PACK</div>
-            <div>Ministry of Ports, Shipping & Waterways</div>
+            <div>Organization: Egreen Quanta</div>
         </div>
     </div>
     

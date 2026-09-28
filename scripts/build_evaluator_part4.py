@@ -203,7 +203,7 @@ table tr:nth-child(even) td {{
     </div>
     <div class="doc-meta">
         <div class="badge-evidence">{doc_type}</div>
-        <div>Ministry of Ports, Shipping & Waterways</div>
+        <div>Organization: Egreen Quanta</div>
     </div>
 </div>
 
