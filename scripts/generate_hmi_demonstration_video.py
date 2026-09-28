@@ -81,7 +81,7 @@ def build_scene_title():
         
         cv2.putText(img, "SMART INDIA HACKATHON 2026", (WIDTH//2 - 320, HEIGHT//2 - 140), cv2.FONT_HERSHEY_SIMPLEX, 0.8, ACCENT_BLUE, 2)
         cv2.putText(img, "EGREEN QUANTA", (WIDTH//2 - 360, HEIGHT//2 - 60), cv2.FONT_HERSHEY_DUPLEX, 2.2, TEXT_WHITE, 3)
-        cv2.putText(img, "Problem Statement: SIH26138", (WIDTH//2 - 220, HEIGHT//2 + 10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, ACCENT_AMBER, 2)
+        cv2.putText(img, "Team: SUPER SYNQRA | Problem Statement: SIH26138", (WIDTH//2 - 340, HEIGHT//2 + 10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, ACCENT_AMBER, 2)
         
         cv2.putText(img, "Quantum-Inspired Fuel Consumption Prediction & Green Fleet Optimization", 
                     (WIDTH//2 - 430, HEIGHT//2 + 70), cv2.FONT_HERSHEY_SIMPLEX, 0.7, TEXT_MUTED, 1)
@@ -381,7 +381,7 @@ def build_scene_closing():
 
         cv2.putText(img, "80 / 80 Automated Tests Passed (49 Verification + 31 API)", (WIDTH//2 - 340, HEIGHT//2 + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.75, TEXT_WHITE, 2)
         cv2.putText(img, "100% Traceable to Commit 29df5de (Repository Branch: arun_hma / main)", (WIDTH//2 - 410, HEIGHT//2 + 80), cv2.FONT_HERSHEY_SIMPLEX, 0.7, TEXT_MUTED, 1)
-        cv2.putText(img, "Smart India Hackathon 2026 — Team EGREEN QUANTA", (WIDTH//2 - 310, HEIGHT//2 + 140), cv2.FONT_HERSHEY_SIMPLEX, 0.75, ACCENT_BLUE, 2)
+        cv2.putText(img, "Smart India Hackathon 2026 — Team SUPER SYNQRA", (WIDTH//2 - 310, HEIGHT//2 + 140), cv2.FONT_HERSHEY_SIMPLEX, 0.75, ACCENT_BLUE, 2)
 
         draw_footer_banner(img, "SIH26138 COMPLIANCE", "Advisory decision support for licensed maritime operators.")
         frames.append(img)

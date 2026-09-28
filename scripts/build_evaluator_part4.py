@@ -198,7 +198,7 @@ table tr:nth-child(even) td {{
 
 <div class="header-box">
     <div>
-        <div class="org">Smart India Hackathon 2026 &bull; SIH26138</div>
+        <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
         <div class="doc-title">{title}</div>
     </div>
     <div class="doc-meta">

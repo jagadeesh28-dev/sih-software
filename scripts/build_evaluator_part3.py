@@ -40,7 +40,7 @@ def build_verification_summary():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Verification & Safety: Automated Test Battery Scorecard</div>
         </div>
         <div class="header-right">
@@ -135,7 +135,7 @@ def build_verification_summary():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 1 OF 3</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -145,7 +145,7 @@ def build_verification_summary():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Verification & Safety: Defensive Safety Architecture</div>
         </div>
         <div class="header-right">
@@ -215,7 +215,7 @@ def build_verification_summary():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 2 OF 3</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -225,7 +225,7 @@ def build_verification_summary():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Verification & Safety: Known Operational Limitations</div>
         </div>
         <div class="header-right">
@@ -279,7 +279,7 @@ def build_verification_summary():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 3 OF 3</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -307,7 +307,7 @@ def build_certification_readiness():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Certification Readiness: 30-Test Automated Battery</div>
         </div>
         <div class="header-right">
@@ -397,7 +397,7 @@ def build_certification_readiness():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 1 OF 2</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -407,7 +407,7 @@ def build_certification_readiness():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Certification Readiness: Specific Test Registry</div>
         </div>
         <div class="header-right">
@@ -497,7 +497,7 @@ def build_certification_readiness():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 2 OF 2</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -525,7 +525,7 @@ def build_adversarial_test_summary():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Adversarial Defense: 18 Hostile Cases Intercepted</div>
         </div>
         <div class="header-right">
@@ -617,7 +617,7 @@ def build_adversarial_test_summary():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 1 OF 2</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -627,7 +627,7 @@ def build_adversarial_test_summary():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Adversarial Defense: Advanced Cases (10 to 18)</div>
         </div>
         <div class="header-right">
@@ -711,7 +711,7 @@ def build_adversarial_test_summary():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 2 OF 2</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -739,7 +739,7 @@ def build_tamper_evidence_summary():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Cryptographic Integrity: Tamper-Evidence Battery</div>
         </div>
         <div class="header-right">
@@ -819,7 +819,7 @@ def build_tamper_evidence_summary():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 1 OF 2</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -829,7 +829,7 @@ def build_tamper_evidence_summary():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Cryptographic Integrity: Architectural Specification</div>
         </div>
         <div class="header-right">
@@ -873,7 +873,7 @@ def build_tamper_evidence_summary():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 2 OF 2</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -901,7 +901,7 @@ def build_integrity_verification():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Decision Record: Live Integrity Verification Proof</div>
         </div>
         <div class="header-right">
@@ -967,7 +967,7 @@ def build_integrity_verification():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 1 OF 2</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -977,7 +977,7 @@ def build_integrity_verification():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Decision Record: Port State Control Audit Guide</div>
         </div>
         <div class="header-right">
@@ -1031,7 +1031,7 @@ def build_integrity_verification():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 2 OF 2</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -1059,7 +1059,7 @@ def build_selected_references():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Selected Scientific References: Physics & Regulations</div>
         </div>
         <div class="header-right">
@@ -1122,7 +1122,7 @@ def build_selected_references():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 1 OF 3</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -1132,7 +1132,7 @@ def build_selected_references():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Selected Scientific References: Machine Learning & Algorithms</div>
         </div>
         <div class="header-right">
@@ -1191,7 +1191,7 @@ def build_selected_references():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 2 OF 3</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -1201,7 +1201,7 @@ def build_selected_references():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Selected Scientific References: Fleet Routing & Data Standards</div>
         </div>
         <div class="header-right">
@@ -1251,7 +1251,7 @@ def build_selected_references():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 3 OF 3</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>

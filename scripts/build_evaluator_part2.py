@@ -42,7 +42,7 @@ def build_results_summary():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Empirical Results: Fuel Predictive Inference Performance</div>
         </div>
         <div class="header-right">
@@ -163,7 +163,7 @@ def build_results_summary():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 1 OF 5</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -173,7 +173,7 @@ def build_results_summary():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Empirical Results: Uncertainty Quantification & Runtime Safety</div>
         </div>
         <div class="header-right">
@@ -248,7 +248,7 @@ def build_results_summary():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 2 OF 5</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -258,7 +258,7 @@ def build_results_summary():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Empirical Results: Multi-Objective Fleet Optimization</div>
         </div>
         <div class="header-right">
@@ -371,7 +371,7 @@ def build_results_summary():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 3 OF 5</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -381,7 +381,7 @@ def build_results_summary():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Empirical Results: Dataset Scale & Residual Error Validation</div>
         </div>
         <div class="header-right">
@@ -476,7 +476,7 @@ def build_results_summary():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 4 OF 5</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -486,7 +486,7 @@ def build_results_summary():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Empirical Results: Adversarial Defense & API Parity</div>
         </div>
         <div class="header-right">
@@ -594,7 +594,7 @@ def build_results_summary():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 5 OF 5</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -625,7 +625,7 @@ def build_hmi_overview():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Operator HMI: Bridge & Fleet Command Interface</div>
         </div>
         <div class="header-right">
@@ -672,7 +672,7 @@ def build_hmi_overview():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 1 OF 3</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -682,7 +682,7 @@ def build_hmi_overview():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Operator HMI: 7-Step Decision Workflow</div>
         </div>
         <div class="header-right">
@@ -783,7 +783,7 @@ def build_hmi_overview():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 2 OF 3</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -793,7 +793,7 @@ def build_hmi_overview():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Operator HMI: Demonstration Video & Live Prototype</div>
         </div>
         <div class="header-right">
@@ -895,7 +895,7 @@ def build_hmi_overview():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 3 OF 3</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -928,7 +928,7 @@ def build_prototype_evidence():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Prototype Evidence: Scenario Analysis & Optimizer Setup</div>
         </div>
         <div class="header-right">
@@ -979,7 +979,7 @@ def build_prototype_evidence():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 1 OF 2</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
@@ -989,7 +989,7 @@ def build_prototype_evidence():
 <div class="page">
     <div class="header">
         <div class="header-left">
-            <div class="org">Smart India Hackathon 2026 &bull; Problem Statement SIH26138</div>
+            <div class="org">Smart India Hackathon 2026 &bull; SIH26138 &bull; Team SUPER SYNQRA</div>
             <div class="title">Prototype Evidence: Pareto Explorer & Decision Export</div>
         </div>
         <div class="header-right">
@@ -1051,7 +1051,7 @@ def build_prototype_evidence():
     </div>
     
     <div class="footer">
-        <div>SIH26138 &bull; EGREEN QUANTA Evidence Repository</div>
+        <div>SIH26138 &bull; Team SUPER SYNQRA &bull; EGREEN QUANTA</div>
         <div class="footer-badge">PAGE 2 OF 2</div>
         <div>OFFICIAL EVALUATION EVIDENCE</div>
     </div>
