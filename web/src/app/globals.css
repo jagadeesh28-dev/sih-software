@@ -119,6 +119,37 @@
     outline: 2px solid var(--ring);
     outline-offset: 2px;
   }
+
+  /* Global maritime HMI select & option contrast enforcement */
+  select {
+    color-scheme: dark;
+    background-color: var(--panel);
+    color: var(--foreground);
+    border-color: var(--border);
+  }
+
+  select option,
+  select optgroup {
+    background-color: #0b1220;
+    color: #f8fafc;
+    font-weight: 500;
+  }
+
+  select option:checked {
+    background-color: #1a2538;
+    color: #38bdf8;
+  }
+
+  select option:hover,
+  select option:focus {
+    background-color: #1e2e4a;
+    color: #ffffff;
+  }
+
+  select option:disabled {
+    background-color: #0b1220;
+    color: #64748b;
+  }
 }
 
 /* Faint engineering grid behind the workspace. */

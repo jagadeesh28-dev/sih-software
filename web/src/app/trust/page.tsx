@@ -180,7 +180,7 @@ export default function PredictionPage() {
                   id="fuel_type"
                   value={form.fuel_type ?? "vlsfo"}
                   onChange={(e) => handleInputChange("fuel_type", e.target.value)}
-                  className="h-8 rounded-md border bg-input/30 px-2 text-xs"
+                  className="h-8 rounded-md border border-rule/70 bg-panel px-2 text-xs font-semibold text-foreground focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none cursor-pointer"
                 >
                   <option value="vlsfo">VLSFO Conventional</option>
                   <option value="mgo">MGO Marine Gas Oil</option>
@@ -220,7 +220,7 @@ export default function PredictionPage() {
                   id="vessel_type"
                   value={form.vessel_type ?? "passenger_cruise"}
                   onChange={(e) => handleInputChange("vessel_type", e.target.value)}
-                  className="h-8 rounded-md border bg-input/30 px-2 text-xs"
+                  className="h-8 rounded-md border border-rule/70 bg-panel px-2 text-xs font-semibold text-foreground focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none cursor-pointer"
                 >
                   <option value="passenger_cruise">Passenger Cruise</option>
                   <option value="passenger_cruise_small">Passenger Cruise (Small)</option>
@@ -233,7 +233,7 @@ export default function PredictionPage() {
                   id="coverage"
                   value={form.coverage ?? "0.9"}
                   onChange={(e) => handleInputChange("coverage", e.target.value)}
-                  className="h-8 rounded-md border bg-input/30 px-2 text-xs"
+                  className="h-8 rounded-md border border-rule/70 bg-panel px-2 text-xs font-semibold text-foreground focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none cursor-pointer"
                 >
                   <option value="0.9">90% Nominal</option>
                   <option value="0.95">95% Conservative</option>

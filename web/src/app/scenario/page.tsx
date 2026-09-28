@@ -104,7 +104,7 @@ export default function ScenarioPage() {
                   id="vessel"
                   value={activeVessel}
                   onChange={(e) => setActiveVessel(e.target.value)}
-                  className="h-8 w-full min-w-0 rounded-md border border-input/60 bg-input/20 px-2 text-xs font-medium focus:border-cyan-500 focus:outline-none"
+                  className="h-8 w-full min-w-0 rounded-md border border-rule/70 bg-panel px-2 text-xs font-semibold text-foreground focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none cursor-pointer"
                 >
                   {vessels.map((id) => (
                     <option key={id} value={id}>{id}</option>
@@ -118,7 +118,7 @@ export default function ScenarioPage() {
                   id="base"
                   value={base}
                   onChange={(e) => setBase(e.target.value as typeof base)}
-                  className="h-8 w-full min-w-0 rounded-md border border-input/60 bg-input/20 px-2 text-xs font-medium focus:border-cyan-500 focus:outline-none"
+                  className="h-8 w-full min-w-0 rounded-md border border-rule/70 bg-panel px-2 text-xs font-semibold text-foreground focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none cursor-pointer"
                 >
                   <option value="fleet_default">Fleet Default Telemetry</option>
                   <option value="dataset_latest">Latest Recorded Telemetry</option>
@@ -168,7 +168,7 @@ export default function ScenarioPage() {
                     id="fuel"
                     value={fuel}
                     onChange={(e) => setFuel(e.target.value)}
-                    className="h-8 w-full rounded-md border border-input/60 bg-input/20 px-2 text-xs font-medium focus:border-cyan-500 focus:outline-none"
+                    className="h-8 w-full rounded-md border border-rule/70 bg-panel px-2 text-xs font-semibold text-foreground focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none cursor-pointer"
                   >
                     {fuels.length ? (
                       fuels.map(([k, name]) => (

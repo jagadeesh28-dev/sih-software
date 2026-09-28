@@ -297,7 +297,7 @@ export default function FleetOptimizerPage() {
                       id="algorithm"
                       value={algorithm}
                       onChange={(e) => setAlgorithm(e.target.value)}
-                      className="h-8 rounded-md border bg-input/30 px-2 text-xs"
+                      className="h-8 rounded-md border border-rule/70 bg-panel px-2 text-xs font-semibold text-foreground focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none cursor-pointer"
                     >
                       <option value="Hybrid_QI_A5">Quantum-Inspired Hybrid Optimizer (QIEA + QPSO)</option>
                       <option value="DE">Differential Evolution (DE Baseline)</option>
@@ -313,7 +313,7 @@ export default function FleetOptimizerPage() {
                       id="budget"
                       value={budget}
                       onChange={(e) => setBudget(Number(e.target.value))}
-                      className="h-8 rounded-md border bg-input/30 px-2 text-xs"
+                      className="h-8 rounded-md border border-rule/70 bg-panel px-2 text-xs font-semibold text-foreground focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none cursor-pointer"
                     >
                       <option value="1000">1,000 Evaluations (Fast)</option>
                       <option value="2500">2,500 Evaluations (Standard)</option>

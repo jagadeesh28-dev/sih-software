@@ -72,7 +72,7 @@ export default function FuelsPage() {
               id="fv"
               value={activeVessel}
               onChange={(e) => setActiveVessel(e.target.value)}
-              className="h-8 rounded-md border border-input/60 bg-input/20 px-2 text-xs font-medium focus:border-cyan-500 focus:outline-none"
+              className="h-8 rounded-md border border-rule/70 bg-panel px-2 text-xs font-semibold text-foreground focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none cursor-pointer"
             >
               {vessels.map((v) => (
                 <option key={v} value={v}>{v}</option>
