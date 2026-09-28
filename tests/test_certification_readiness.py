@@ -49,7 +49,6 @@ POSEIDON_STANDARD = {
     "water_depth_m": 60.0
 }
 
-
 @pytest.fixture(scope="module")
 def client():
     with TestClient(app) as c:

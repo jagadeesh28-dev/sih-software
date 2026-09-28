@@ -13,15 +13,15 @@ import time
 import pytest
 from fastapi.testclient import TestClient
 
-# Isolated audit ledger for tests (must be set before api.main is imported).
-os.environ["EQ_AUDIT_DB"] = os.path.join(tempfile.mkdtemp(prefix="eq_audit_"), "audit.sqlite")
+if "EQ_AUDIT_DB" not in os.environ:
+    os.environ["EQ_AUDIT_DB"] = os.path.join(tempfile.mkdtemp(prefix="eq_audit_"), "audit.sqlite")
+
 
 from api.main import app  # noqa: E402
 
 POSEIDON = {"vessel_id": "CPS_Poseidon", "vessel_type": "passenger_cruise", "fuel_type": "vlsfo",
             "stw_kn": 14.5, "sog_kn": 14.5, "draft_m": 7.5, "displacement_t": 35000.0,
             "wind_speed_ms": 5.0, "wave_height_m": 1.0, "water_depth_m": 60.0}
-
 
 @pytest.fixture(scope="module")
 def client():

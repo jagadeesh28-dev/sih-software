@@ -64,10 +64,11 @@ SAMPLE_JOB_DATA = {
 }
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def client():
     with TestClient(app) as c:
         yield c
+
 
 
 def test_package_structure_and_manifest_schema():
